@@ -3724,11 +3724,16 @@
 <hr />
 <h3 id="final-check"><strong>Final Check</strong></h3>
 <p>After fixing, run:</p>
-<pre><code class="language-bash">git status  # Should show tracked files
+<pre><code class="language-bash">git add .
+git commit -am &quot;new changes&quot;
+python .\gen_index.py
+mkdocs gh-deploy --clean --remote-name origin
+mkdocs build
+git status  # Should show tracked files
+mkdocs serve
 mkdocs gh-deploy  # Should now deploy to GitHub Pages
 </code></pre>
-<p>Your site should deploy successfully! 🚀<br />
-Let me know if you still face issues.</p>
+<p>Your site should deploy successfully! 🚀  </p>
 
 
 
