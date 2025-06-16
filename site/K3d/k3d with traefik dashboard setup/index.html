@@ -1,0 +1,4163 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../k3d%20cluster%20with%20traefik%20dashboard/">
+      
+      
+        <link rel="next" href="../../Keycloak/Efficient%20way%20to%20to%20Set%20Up%20Keycloak%20%28with%20Helm%29/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>K3d with traefik dashboard setup - Homelabs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-updated-k3d-cluster-config-2-create-the-cluster" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Homelabs" class="md-header__button md-logo" aria-label="Homelabs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Homelabs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              K3d with traefik dashboard setup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Homelabs" class="md-nav__button md-logo" aria-label="Homelabs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Homelabs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    My Homelab
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    API Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            API Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API-Resources/k8s-api-resources-details/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    K8s api resources details
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CRDs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            CRDs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CRDs/Custom%20Resource%20Definition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Custom Resource Definition
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CRDs/Deep%20Dive%20into%20CRDs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deep Dive into CRDs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cert manager
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Cert manager
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Cert-manager/install-cert-manager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Install cert manager
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ClusterAccess
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            ClusterAccess
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ClusterAccess/Configuring%20Keycloak%20for%20Kubernetes%20authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuring Keycloak for Kubernetes authentication
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ClusterAccess/Create%20a%20kubeconfig%20file%20for%20the%20external%20users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Create a kubeconfig file for the external users
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ConfigMaps
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            ConfigMaps
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ConfigMaps/ConfigMap%20is%20a%20Kubernetes%20object%20used%20to%20store%20non-confidential%20data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ConfigMap is a Kubernetes object used to store non confidential data
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CronJob
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            CronJob
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CronJob/CronJobs%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CronJobs in Kubernetes: What, Why, When, and How
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CronJob/Real-World%20CronJob%20Example-%20Automated%20Database%20Backup%20n%20Cleanup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-World CronJob Example: Automated Database Backup &amp; Cleanup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CronJob/k8s%20Jobs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    k8s Jobs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DaemonSets
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            DaemonSets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DaemonSets/CronJobs%20Vs%20DaemonSets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CronJobs Vs DaemonSets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DaemonSets/DaemonSets%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DaemonSets in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Deployments
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Deployments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Deployments/Deployments%20Strategies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployments Strategies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Deployments/Deployments%20in%20kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployments in Kubernetes: A Comprehensive Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Helm
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Helm
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Helm/1.%20Check%20Helm%20Release%28deployed%29%20Information/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Check Helm Release(deployed) Information
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Helm/Checking%20Traefik%20Helm%20Configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Checking Traefik Helm Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Helm/Helm%20Commands%20-%20Cheatsheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Helm Commands   Cheatsheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Helm/Helm%20charts%20for%20deployments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Helm charts for deployments
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Ingress
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Ingress
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/1.%20Host%20based%20ingress%20routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Host based ingress routing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/2.%20Path%20based%20ingress%20routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Path based ingress routing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/3.%20subdomain%20based%20ingress%20routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. subdomain based ingress routing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/Access%20Traefik%20Dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Access Traefik Dashboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/Check%20Traefik%20Configuration%20logs%20for%20config%20issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Check Traefik Configuration logs for config issues
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/Diff%20between%20Host-path-subdomain%20based%20ingress%20routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Routing Methods - Real-Time Issues Comparison
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/How%20to%20confirm%20Ingress%20resources%2C%20routes%2C%20and%20active%20requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to confirm Ingress resources, routes, and active requests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/How%20to%20confirm%20the%20exact%20Ingress%20Controller%20used%20in%20your%20Kubernetes%20cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to confirm the exact Ingress Controller used in your Kubernetes cluster
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/Types%20of%20Ingress%20Controllers%20with%20their%20pros%2C%20cons%2C%20and%20pricing%20details/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Types of Ingress Controllers with their pros, cons, and pricing details
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    K3d
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            K3d
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Complete%20Traefik%20Setup%20Guide%20for%20k3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Complete Traefik Setup Guide for k3d
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../K3d%20cluster%20setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    K3d cluster setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../k3d%20cluster%20with%20traefik%20dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    K3d cluster with traefik dashboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    K3d with traefik dashboard setup
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    K3d with traefik dashboard setup
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-updated-k3d-cluster-config-2-create-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Updated k3d cluster config## 2. Create the cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-install-traefik-using-helm" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Install Traefik using Helm
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verify-traefik-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Verify Traefik installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-create-an-ingressroute-for-easier-dashboard-access-optionalapply-the-ingressroute" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Create an IngressRoute for easier dashboard access (optional)Apply the IngressRoute:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-access-the-traefik-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Access the Traefik Dashboard
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-deploy-a-sample-application-to-test-traefikdeploy-the-sample-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Deploy a sample application to test TraefikDeploy the sample app:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Important Notes:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-above-setup-my-observations-on-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      post above setup, my observations on not working
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="post above setup, my observations on not working">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-first-lets-check-the-current-traefik-service-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. First, let's check the current Traefik service configuration:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-update-the-traefik-values-file-to-properly-expose-the-dashboard-port-3-upgrade-traefik-with-the-corrected-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Update the Traefik values file to properly expose the dashboard port:## 3. Upgrade Traefik with the corrected configuration:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-if-the-above-doesnt-work-k3d-sometimes-has-issues-with-loadbalancer-type-lets-patch-the-service-directlyapply-the-patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. If the above doesn't work (k3d sometimes has issues with LoadBalancer type), let's patch the service directly:Apply the patch:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-alternative-create-a-separate-service-for-the-dashboardbash" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Alternative: Create a separate service for the dashboard:```bash
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-check-if-traefik-pod-is-exposing-port-9000" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Check if Traefik pod is exposing port 9000:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-test-access-again" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Test access again:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-if-still-having-issues-check-traefik-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. If still having issues, check Traefik logs:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-debug-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Debug Commands:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-traefik-deployment-arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check Traefik deployment arguments:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-dashboard-is-not-enabled-lets-force-enable-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      If dashboard is not enabled, let's force enable it:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If dashboard is not enabled, let&#39;s force enable it:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Keycloak
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Keycloak
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Keycloak/Efficient%20way%20to%20to%20Set%20Up%20Keycloak%20%28with%20Helm%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Efficient way to to Set Up Keycloak (with Helm)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Keywords
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Keywords
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Keywords/Must%20know%20keywords/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Must know keywords
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Loadbalancers Types
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Loadbalancers Types
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Loadbalancers%20Types/Loadbalancer%20Types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Loadbalancer Types
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Loadbalancers%20Types/Reverse%20proxy%20means/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Reverse proxy means
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Longhorn
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Longhorn
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Longhorn/Common%20Kubernetes%20storage%20types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Common Kubernetes storage types
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Longhorn/Hands-On%20-%20Deploying%20Longhorn%20on%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hands-On Demo: Deploying Longhorn on Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Longhorn/Longhorn%20Access%20Modes%20%26%20Volume%20Resizing%20Guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Longhorn Access Modes & Volume Resizing Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Longhorn/Longhorn%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Longhorn in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Namespace
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_17">
+            <span class="md-nav__icon md-icon"></span>
+            Namespace
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Namespace/Delete%20all%20resources%20from%20namespace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Delete all resources from namespace
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTofu
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTofu
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../OpenTofu/About%20OpenTofu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About OpenTofu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        
+          
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PV n PVCs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            PV n PVCs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PV%20n%20PVCs/PV%27s%20and%20PVC%27s%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PV's and PVC's in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pods
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            Pods
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pods/Debug%20pod%20-%20create%20for%20test%20and%20delete%20on%20post%20test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Debug pod   create for test and delete on post test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pods/List%20all%20pods%20with%20their%20init%20containers%20and%20sidecar%20containers%20info/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    List all pods with their init containers and sidecar containers info
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pods/Types%20of%20Containers%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Types of Containers in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          
+          <label class="md-nav__link" for="__nav_21" id="__nav_21_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Secrets
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_21">
+            <span class="md-nav__icon md-icon"></span>
+            Secrets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Secrets/Deep%20Dive%20into%20securing%20secrets%20in%20specific%20envs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deep Dive into securing secrets in specific envs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Secrets/Secrets%20management%20for%20sensitive%20information/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Secrets management for sensitive information
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Secrets/Some%20real-world%20examples%20of%20secrets%20mismanagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Some real world examples of secrets mismanagement
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_22" >
+        
+          
+          <label class="md-nav__link" for="__nav_22" id="__nav_22_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ServiceAccounts
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_22_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_22">
+            <span class="md-nav__icon md-icon"></span>
+            ServiceAccounts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ServiceAccounts/ServiceAccounts%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ServiceAccounts in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_23" >
+        
+          
+          <label class="md-nav__link" for="__nav_23" id="__nav_23_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Services
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_23_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_23">
+            <span class="md-nav__icon md-icon"></span>
+            Services
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Services/Headless%20Services%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Headless Services in Kubernetes: A Comprehensive Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Services/Types%20of%20Kubernetes%20Services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Types of Kubernetes Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_24" >
+        
+          
+          <label class="md-nav__link" for="__nav_24" id="__nav_24_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Statefulsets
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_24_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_24">
+            <span class="md-nav__icon md-icon"></span>
+            Statefulsets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Statefulsets/Updating%20a%20MongoDB%20StatefulSet%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Updating a MongoDB StatefulSet in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Statefulsets/W3H-Understanding%20StatefulSets%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    W3H Understanding StatefulSets in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_25" >
+        
+          
+          <label class="md-nav__link" for="__nav_25" id="__nav_25_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Taint Tolerations
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_25_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_25">
+            <span class="md-nav__icon md-icon"></span>
+            Taint Tolerations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Taint-Tolerations/Understanding%20Tolerations%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Understanding Tolerations in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Taint-Tolerations/What%20is%20taint%20_/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    What is taint  
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_26" >
+        
+          
+          <label class="md-nav__link" for="__nav_26" id="__nav_26_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Traefik
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_26_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_26">
+            <span class="md-nav__icon md-icon"></span>
+            Traefik
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Traefik/Securing%20Traefik%20Dashboard%20with%20Keycloak%20%28OIDC%20or%20OAuth2%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Securing Traefik Dashboard with Keycloak (OIDC/OAuth2)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Traefik/Traefik%20Dashboard%20only%20for%20Visibility%20not%20for%20Administration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Traefik Dashboard only for Visibility not for Administration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_27" >
+        
+          
+          <label class="md-nav__link" for="__nav_27" id="__nav_27_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Ubuntu
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_27_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_27">
+            <span class="md-nav__icon md-icon"></span>
+            Ubuntu
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ubuntu/list%20of%20good%20tools%20to%20extract%20rar%20part%20files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    List of good tools to extract rar part files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_28" >
+        
+          
+          <label class="md-nav__link" for="__nav_28" id="__nav_28_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Etcdctl
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_28_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_28">
+            <span class="md-nav__icon md-icon"></span>
+            Etcdctl
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../etcdctl/Install%20etcdctl%20tool%20with%20supported%20versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Install etcdctl tool with supported versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../etcdctl/check%20etcd%20is%20running/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Check etcd is running
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../etcdctl/etcdctl%20commands%20for%20get%2C%20put%2C%20snapshot%20save%20and%20restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Etcdctl commands for get, put, snapshot save and restore
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_29" >
+        
+          
+          <label class="md-nav__link" for="__nav_29" id="__nav_29_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Fluentd
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_29_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_29">
+            <span class="md-nav__icon md-icon"></span>
+            Fluentd
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fluentd/Fluentd%20DaemonSet%20deployment%20YAML%20for%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fluentd DaemonSet deployment YAML for Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fluentd/Fluentd%20can%20run%20on%20standalone%20VMs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fluentd can run on standalone VMs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fluentd/Fluentd%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fluentd in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fluentd/Fluentd%20install%20and%20config%20steps%20for%20a%20Linux%20VM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fluentd install and config steps for a Linux VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_30" >
+        
+          
+          <label class="md-nav__link" for="__nav_30" id="__nav_30_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Mailhog
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_30_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_30">
+            <span class="md-nav__icon md-icon"></span>
+            Mailhog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mailhog/Steps%20to%20deploy%20MailHog%20with%20Ingress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Steps to deploy MailHog with Ingress
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_31" >
+        
+          
+          <label class="md-nav__link" for="__nav_31" id="__nav_31_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Mkdocs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_31_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_31">
+            <span class="md-nav__icon md-icon"></span>
+            Mkdocs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mkdocs/mkdocs%20to%20github%20projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mkdocs to github projects
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_32" >
+        
+          
+          <label class="md-nav__link" for="__nav_32" id="__nav_32_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_32_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_32">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%20pyautogui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python pyautogui
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-updated-k3d-cluster-config-2-create-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Updated k3d cluster config## 2. Create the cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-install-traefik-using-helm" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Install Traefik using Helm
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verify-traefik-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Verify Traefik installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-create-an-ingressroute-for-easier-dashboard-access-optionalapply-the-ingressroute" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Create an IngressRoute for easier dashboard access (optional)Apply the IngressRoute:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-access-the-traefik-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Access the Traefik Dashboard
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-deploy-a-sample-application-to-test-traefikdeploy-the-sample-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Deploy a sample application to test TraefikDeploy the sample app:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Important Notes:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-above-setup-my-observations-on-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      post above setup, my observations on not working
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="post above setup, my observations on not working">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-first-lets-check-the-current-traefik-service-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. First, let's check the current Traefik service configuration:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-update-the-traefik-values-file-to-properly-expose-the-dashboard-port-3-upgrade-traefik-with-the-corrected-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Update the Traefik values file to properly expose the dashboard port:## 3. Upgrade Traefik with the corrected configuration:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-if-the-above-doesnt-work-k3d-sometimes-has-issues-with-loadbalancer-type-lets-patch-the-service-directlyapply-the-patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. If the above doesn't work (k3d sometimes has issues with LoadBalancer type), let's patch the service directly:Apply the patch:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-alternative-create-a-separate-service-for-the-dashboardbash" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Alternative: Create a separate service for the dashboard:```bash
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-check-if-traefik-pod-is-exposing-port-9000" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Check if Traefik pod is exposing port 9000:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-test-access-again" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Test access again:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-if-still-having-issues-check-traefik-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. If still having issues, check Traefik logs:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-debug-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Debug Commands:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-traefik-deployment-arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check Traefik deployment arguments:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-dashboard-is-not-enabled-lets-force-enable-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      If dashboard is not enabled, let's force enable it:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="If dashboard is not enabled, let&#39;s force enable it:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p>Your config file looks good, but I notice a few things to optimize. Here's an improved version with some corrections and the steps to deploy Traefik with dashboard access:</p>
+<h2 id="1-updated-k3d-cluster-config-2-create-the-cluster">1. Updated k3d cluster config## 2. Create the cluster</h2>
+<p>create dev-cluster confi file to setup a cluster by disabling traefik </p>
+<pre><code class="language-yaml">apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: dev-cluster
+servers: 1
+agents: 2
+ports:
+  - port: 30907:30907    # Cyclops / Minio
+    nodeFilters:
+      - loadbalancer
+  - port: 31446:31446    # Jenkins
+    nodeFilters:
+      - loadbalancer
+  - port: 31447:31447    # ArgoCD
+    nodeFilters:
+      - loadbalancer
+  - port: 31448:31448    # Gitea
+    nodeFilters:
+      - loadbalancer
+  - port: 30080:80       # Ingress HTTP
+    nodeFilters:
+      - loadbalancer
+  - port: 30443:443      # Ingress HTTPS
+    nodeFilters:
+      - loadbalancer
+  - port: 31000:31000    # Longhorn UI (optional)
+    nodeFilters:
+      - loadbalancer
+  - port: 30090:30090    # Prometheus (optional)
+    nodeFilters:
+      - loadbalancer
+  - port: 30099:30099    # Grafana (optional) - Fixed port mapping
+    nodeFilters:
+      - loadbalancer
+  - port: 30900:30900    # Traefik Dashboard - Fixed port mapping
+    nodeFilters:
+      - loadbalancer
+options:
+  k3s:
+    extraArgs:
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:*
+  kubeconfig:
+    updateDefaultKubeconfig: true
+    switchCurrentContext: true
+</code></pre>
+<p>create a cluster with this config file</p>
+<pre><code class="language-bash">k3d cluster create --config dev-cluster.yaml
+</code></pre>
+<h2 id="3-install-traefik-using-helm">3. Install Traefik using Helm</h2>
+<p>Since we're disabling the default k3s Traefik, we'll install it manually with custom configuration:</p>
+<p>create helm traefik values:</p>
+<pre><code class="language-yaml"># Traefik Helm Chart Values
+image:
+  tag: &quot;3.0&quot;
+
+deployment:
+  replicas: 1
+
+service:
+  type: NodePort
+  # Map standard ports
+  ports:
+    web:
+      port: 80
+      nodePort: 30080
+    websecure:
+      port: 443
+      nodePort: 30443
+    traefik:
+      port: 9000
+      expose: true
+      nodePort: 30900
+
+# Enable dashboard
+ingressRoute:
+  dashboard:
+    enabled: true
+    matchRule: Host(`traefik.localhost`) &amp;&amp; (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+    entryPoints: [&quot;traefik&quot;]
+
+# API and Dashboard settings
+api:
+  dashboard: true
+  debug: true
+  insecure: true  # For development only
+
+# Logs
+logs:
+  general:
+    level: INFO
+  access:
+    enabled: true
+
+# Enable providers
+providers:
+  kubernetesCRD:
+    enabled: true
+    allowCrossNamespace: true
+  kubernetesIngress:
+    enabled: true
+
+# Global arguments
+globalArguments:
+  - &quot;--api.insecure=true&quot;
+  - &quot;--api.dashboard=true&quot;
+
+# Additional arguments
+additionalArguments:
+  - &quot;--log.level=INFO&quot;
+  - &quot;--accesslog=true&quot;
+  - &quot;--metrics.prometheus=true&quot;
+  - &quot;--metrics.prometheus.entryPoint=metrics&quot;
+
+# Prometheus metrics
+metrics:
+  prometheus:
+    entryPoint: metrics
+
+# Enable persistent storage for certificates (optional)
+persistence:
+  enabled: false
+</code></pre>
+<pre><code class="language-bash"># Add Traefik Helm repository
+helm repo add traefik https://traefik.github.io/charts
+helm repo update
+
+# Create namespace
+kubectl create namespace traefik-system
+
+# Create Traefik values file
+## 4. Install Traefik
+
+helm install traefik traefik/traefik \
+  --namespace traefik-system \
+  --values traefik-values.yaml \
+  --wait
+</code></pre>
+<h2 id="5-verify-traefik-installation">5. Verify Traefik installation</h2>
+<pre><code class="language-bash"># Check pods
+kubectl get pods -n traefik-system
+
+# Check services
+kubectl get svc -n traefik-system
+
+# Check if dashboard is accessible
+curl http://localhost:30900/dashboard/
+# checked not accessible, getting below error
+gouse@gouse:~$ curl http://localhost:30900/dashboard/
+curl: (52) Empty reply from server
+</code></pre>
+<h2 id="6-create-an-ingressroute-for-easier-dashboard-access-optionalapply-the-ingressroute">6. Create an IngressRoute for easier dashboard access (optional)Apply the IngressRoute:</h2>
+<p>create traefik dashboard ingress route traefik-dashboard-ingress.yaml</p>
+<pre><code>apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+  namespace: traefik-system
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`traefik.dev.local`)
+      kind: Rule
+      services:
+        - name: api@internal
+          kind: TraefikService
+---
+# Optional: Middleware for basic auth
+apiVersion: v1
+kind: Secret
+metadata:
+  name: traefik-dashboard-auth
+  namespace: traefik-system
+type: kubernetes.io/basic-auth
+stringData:
+  username: admin
+  password: changeme
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-dashboard-auth
+  namespace: traefik-system
+spec:
+  basicAuth:
+    secret: traefik-dashboard-auth
+</code></pre>
+<pre><code class="language-bash">kubectl apply -f traefik-dashboard-ingress.yaml
+
+gouse@gouse:~/DevOps/k3d$ kubectl apply -f traefik-dashboard-ingress.yaml
+Warning: resource ingressroutes/traefik-dashboard is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+ingressroute.traefik.io/traefik-dashboard configured
+secret/traefik-dashboard-auth created
+middleware.traefik.io/traefik-dashboard-auth created
+</code></pre>
+<h2 id="7-access-the-traefik-dashboard">7. Access the Traefik Dashboard</h2>
+<p>You can now access the Traefik dashboard in multiple ways:</p>
+<ol>
+<li><strong>Direct NodePort access</strong>: http://localhost:30900/dashboard/</li>
+</ol>
+<pre><code class="language-html">in browser, it tried but getting as below
+
+# The connection was reset
+The connection to the server was reset while the page was loading.
+</code></pre>
+<ol>
+<li><strong>Via Ingress</strong> (if you added the host to /etc/hosts): http://traefik.dev.local</li>
+</ol>
+<h2 id="8-deploy-a-sample-application-to-test-traefikdeploy-the-sample-app">8. Deploy a sample application to test TraefikDeploy the sample app:</h2>
+<p>create a sample app:</p>
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whoami
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: whoami
+  template:
+    metadata:
+      labels:
+        app: whoami
+    spec:
+      containers:
+      - name: whoami
+        image: traefik/whoami
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoami
+  namespace: default
+spec:
+  selector:
+    app: whoami
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`whoami.dev.local`)
+      kind: Rule
+      services:
+        - name: whoami
+          port: 80
+</code></pre>
+<pre><code class="language-bash">kubectl apply -f sample-app.yaml
+</code></pre>
+<h2 id="important-notes">Important Notes:</h2>
+<ol>
+<li>
+<p><strong>Port mappings</strong>: I fixed the port mappings for Grafana and Traefik dashboard. They should map to the same ports (30099:30099 and 30900:30900).</p>
+</li>
+<li>
+<p><strong>Traefik installation</strong>: Since k3s comes with Traefik by default, I added the <code>--disable=traefik</code> flag to install our own version with custom configuration.</p>
+</li>
+<li>
+<p><strong>Dashboard access</strong>: The dashboard will be available at http://localhost:30900/dashboard/ (note the trailing slash).</p>
+</li>
+<li>
+<p><strong>Security</strong>: For production, always secure the dashboard with authentication and use HTTPS.</p>
+</li>
+<li>
+<p><strong>Host entries</strong>: Add these to your <code>/etc/hosts</code> file for easier access:</p>
+<p><code>127.0.0.1 traefik.dev.local
+127.0.0.1 whoami.dev.local</code></p>
+</li>
+</ol>
+<p>This setup gives you full control over Traefik configuration and makes it easy to add more services with their respective ingress routes.</p>
+<h1 id="post-above-setup-my-observations-on-not-working">post above setup, my observations on not working</h1>
+<pre><code class="language-json">in my k3d conifg file i routed with below details for traefik - port: 30900:30900 # Traefik Dashboard - Fixed port mapping nodeFilters: - loadbalancer
+
+but created service with different port, i think this is the issue which not able to access the curl [http://localhost:30900/dashboard/](http://localhost:30900/dashboard/) curl: (52) Empty reply from server
+
+$ kubectl get svc -n traefik-system NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE traefik NodePort 10.43.48.148 &lt;none&gt; 80:32560/TCP,443:31788/TCP 22m
+
+and also i added values in /etc/hosts 127.0.0.1 traefik.dev.local 127.0.0.1 whoami.dev.local
+
+and i think it should be loadbalancer instead of nodeport for traefik-system svc what could be the issue, that i have not able to access
+</code></pre>
+<p>You're absolutely right! The issue is that the Traefik service isn't exposing port 9000 (the dashboard port) and the NodePort mappings don't match your k3d configuration. Let's fix this:</p>
+<h2 id="1-first-lets-check-the-current-traefik-service-configuration">1. First, let's check the current Traefik service configuration:</h2>
+<pre><code class="language-bash">kubectl get svc traefik -n traefik-system -o yaml
+</code></pre>
+<h2 id="2-update-the-traefik-values-file-to-properly-expose-the-dashboard-port-3-upgrade-traefik-with-the-corrected-configuration">2. Update the Traefik values file to properly expose the dashboard port:## 3. Upgrade Traefik with the corrected configuration:</h2>
+<p>update traefik-values-fixed.yaml</p>
+<pre><code># Traefik Helm Chart Values - Fixed Schema
+image:
+  tag: &quot;3.0&quot;
+
+deployment:
+  replicas: 1
+
+service:
+  type: NodePort
+  spec: {}
+
+ports:
+  web:
+    port: 8000
+    expose:
+      default: true
+    exposedPort: 80
+    nodePort: 30080
+    protocol: TCP
+  websecure:
+    port: 8443
+    expose:
+      default: true
+    exposedPort: 443
+    nodePort: 30443
+    protocol: TCP
+  traefik:
+    port: 9000
+    expose:
+      default: true
+    exposedPort: 9000
+    nodePort: 30900
+    protocol: TCP
+
+# Enable dashboard
+ingressRoute:
+  dashboard:
+    enabled: true
+    matchRule: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+    entryPoints: [&quot;traefik&quot;]
+
+# API and Dashboard settings
+api:
+  dashboard: true
+  debug: true
+  insecure: true  # For development only
+
+# Logs
+logs:
+  general:
+    level: INFO
+  access:
+    enabled: true
+
+# Enable providers
+providers:
+  kubernetesCRD:
+    enabled: true
+    allowCrossNamespace: true
+  kubernetesIngress:
+    enabled: true
+
+# Global arguments
+globalArguments:
+  - &quot;--api.insecure=true&quot;
+  - &quot;--api.dashboard=true&quot;
+
+# Additional arguments
+additionalArguments:
+  - &quot;--log.level=INFO&quot;
+  - &quot;--accesslog=true&quot;
+
+# Enable persistent storage for certificates (optional)
+persistence:
+  enabled: false
+</code></pre>
+<pre><code class="language-bash">helm upgrade traefik traefik/traefik \
+  --namespace traefik-system \
+  --values traefik-values-fixed.yaml \
+  --wait
+</code></pre>
+<pre><code class="language-json">$ helm upgrade traefik traefik/traefik   --namespace traefik-system   --values traefik-values-fixed.yaml   --wait
+Release &quot;traefik&quot; has been upgraded. Happy Helming!
+NAME: traefik
+LAST DEPLOYED: Sat Jun  7 11:15:27 2025
+NAMESPACE: traefik-system
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+NOTES:
+traefik with docker.io/traefik:3.0 has been deployed successfully on traefik-system namespace !
+</code></pre>
+<h2 id="4-if-the-above-doesnt-work-k3d-sometimes-has-issues-with-loadbalancer-type-lets-patch-the-service-directlyapply-the-patch">4. If the above doesn't work (k3d sometimes has issues with LoadBalancer type), let's patch the service directly:Apply the patch:</h2>
+<pre><code class="language-bash">kubectl apply -f traefik-service-patch.yaml
+</code></pre>
+<h2 id="5-alternative-create-a-separate-service-for-the-dashboardbash">5. Alternative: Create a separate service for the dashboard:```bash</h2>
+<p>kubectl apply -f traefik-dashboard-service.yaml</p>
+<pre><code>
+## 6. Verify the service has the correct ports:
+
+```bash
+# Check services
+kubectl get svc -n traefik-system
+
+# You should see something like:
+# NAME                TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)                                     AGE
+# traefik             NodePort   10.43.48.148    &lt;none&gt;        80:30080/TCP,443:30443/TCP,9000:30900/TCP  22m
+</code></pre>
+<h2 id="7-check-if-traefik-pod-is-exposing-port-9000">7. Check if Traefik pod is exposing port 9000:</h2>
+<pre><code class="language-bash"># Get pod name
+kubectl get pods -n traefik-system
+
+# Check if port 9000 is exposed
+kubectl describe pod -n traefik-system &lt;traefik-pod-name&gt; | grep -A 5 &quot;Ports:&quot;
+</code></pre>
+<h2 id="8-test-access-again">8. Test access again:</h2>
+<pre><code class="language-bash"># Direct dashboard access
+curl http://localhost:30900/dashboard/
+
+# Or check the API endpoint
+curl http://localhost:30900/api/rawdata
+</code></pre>
+<h2 id="9-if-still-having-issues-check-traefik-logs">9. If still having issues, check Traefik logs:</h2>
+<pre><code class="language-bash">kubectl logs -n traefik-system -l app.kubernetes.io/name=traefik -f
+</code></pre>
+<h2 id="quick-debug-commands">Quick Debug Commands:</h2>
+<pre><code class="language-bash"># Check if the port is actually listening
+kubectl exec -n traefik-system deployment/traefik -- netstat -tlnp | grep 9000
+
+# Port forward directly to test
+kubectl port-forward -n traefik-system deployment/traefik 9000:9000
+# Then try: curl http://localhost:9000/dashboard/
+</code></pre>
+<p>The main issue was that the Traefik service wasn't configured to expose port 9000 with the correct NodePort (30900) that matches your k3d configuration. The above solutions should fix this issue.</p>
+<p>Still not working:</p>
+<pre><code class="language-json">https://traefik.dev.local:30900/dashboard/` also getting 404 error
+</code></pre>
+<h1 id="check-traefik-deployment-arguments">Check Traefik deployment arguments:</h1>
+<pre><code>kubectl get deployment traefik -n traefik-system -o yaml | grep -A 30 &quot;args:&quot;
+</code></pre>
+<h1 id="if-dashboard-is-not-enabled-lets-force-enable-it">If dashboard is not enabled, let's force enable it:</h1>
+<p>create a script and check</p>
+<pre><code class="language-bash">#!/bin/bash
+
+# Patch Traefik deployment to ensure dashboard is enabled
+kubectl patch deployment traefik -n traefik-system --type='json' -p='[
+  {
+    &quot;op&quot;: &quot;add&quot;,
+    &quot;path&quot;: &quot;/spec/template/spec/containers/0/args/-&quot;,
+    &quot;value&quot;: &quot;--api.dashboard=true&quot;
+  },
+  {
+    &quot;op&quot;: &quot;add&quot;,
+    &quot;path&quot;: &quot;/spec/template/spec/containers/0/args/-&quot;,
+    &quot;value&quot;: &quot;--api.insecure=true&quot;
+  },
+  {
+    &quot;op&quot;: &quot;add&quot;,
+    &quot;path&quot;: &quot;/spec/template/spec/containers/0/args/-&quot;,
+    &quot;value&quot;: &quot;--api.debug=true&quot;
+  }
+]'
+
+# Wait for rollout
+kubectl rollout status deployment/traefik -n traefik-system
+
+# Check the service has the traefik port
+kubectl get svc traefik -n traefik-system -o jsonpath='{.spec.ports[?(@.name==&quot;traefik&quot;)].nodePort}'
+</code></pre>
+<h2 id="summary">Summary:</h2>
+<p><strong>DO NOT USE</strong>: <code>https://traefik.dev.local:30900/dashboard/</code></p>
+<p><strong>USE ONE OF THESE</strong>:</p>
+<ul>
+<li><code>http://localhost:30900/dashboard/</code> (direct dashboard access)</li>
+<li><code>http://traefik.dev.local:30080/</code> (through ingress HTTP)</li>
+<li><code>https://traefik.dev.local:30443/</code> (through ingress HTTPS)</li>
+</ul>
+<p>The key is understanding that:</p>
+<ul>
+<li>Port 30900 = Direct dashboard port (use with localhost)</li>
+<li>Port 30080/30443 = Ingress ports (use with domain names)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.top"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

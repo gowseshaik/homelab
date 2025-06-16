@@ -1,0 +1,9 @@
+site_name: Homelabs
+theme:
+  name: material
+  features:
+#    - navigation.tabs  # Disables top tabs
+    - navigation.instant  # For better sidebar behavior
+    - navigation.top   # Disables header links (Material 9+)
+#    - navigation.sections  # Enables nested sidebar sections
+#  custom_dir: overrides
