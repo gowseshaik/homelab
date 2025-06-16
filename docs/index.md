@@ -1,4 +1,4 @@
-# My Homelab
+# My Knowledge Base
 
 ## Api-resources
 - [k8s-api-resources-details](API-Resources/k8s-api-resources-details.md)
@@ -9,6 +9,9 @@
 
 ## Cert-manager
 - [install-cert-manager](Cert-manager/install-cert-manager.md)
+
+## Choosing kubernetes by usecases
+- [Kubernetes cluster types on your usecases](Choosing Kubernetes by Usecases/Kubernetes cluster types on your usecases.md)
 
 ## Clusteraccess
 - [Configuring Keycloak for Kubernetes authentication](ClusterAccess/Configuring Keycloak for Kubernetes authentication.md)
@@ -26,9 +29,17 @@
 - [CronJobs Vs DaemonSets](DaemonSets/CronJobs Vs DaemonSets.md)
 - [DaemonSets in Kubernetes](DaemonSets/DaemonSets in Kubernetes.md)
 
+## Dailytasks
+- [pod exec and extract info from pods](DailyTasks/pod exec and extract info from pods.md)
+
 ## Deployments
 - [Deployments Strategies](Deployments/Deployments Strategies.md)
 - [Deployments in kubernetes](Deployments/Deployments in kubernetes.md)
+
+## Docker-podman-images
+- [Enterprise-grade images as safer](Docker-Podman-images/Enterprise-grade images as safer.md)
+- [Tag images to push](Docker-Podman-images/Tag images to push.md)
+- [scp images in tar format to remote hosts - offline](Docker-Podman-images/scp images in tar format to remote hosts - offline.md)
 
 ## Helm
 - [1. Check Helm Release(deployed) Information](Helm/1. Check Helm Release(deployed) Information.md)
@@ -71,6 +82,9 @@
 
 ## Namespace
 - [Delete all resources from namespace](Namespace/Delete all resources from namespace.md)
+
+## Nexus
+- [Create a Docker image registry in Nexus](Nexus/Create a Docker image registry in Nexus.md)
 
 ## Opentofu
 - [About OpenTofu](OpenTofu/About OpenTofu.md)
@@ -127,6 +141,9 @@
 ## Mkdocs
 - [mkdocs to github projects](mkdocs/mkdocs to github projects.md)
 
+## Overrides
+
 ## Python
+- [mkdocs to github pages](python/mkdocs to github pages.md)
 - [python pyautogui](python/python pyautogui.md)
 
