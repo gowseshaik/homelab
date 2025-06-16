@@ -1,0 +1,4253 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Hands-On%20-%20Deploying%20Longhorn%20on%20Kubernetes/">
+      
+      
+        <link rel="next" href="../Longhorn%20in%20Kubernetes/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Longhorn Access Modes & Volume Resizing Guide - Homelabs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-understanding-access-modes-in-longhorn" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Homelabs" class="md-header__button md-logo" aria-label="Homelabs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Homelabs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Longhorn Access Modes & Volume Resizing Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Homelabs" class="md-nav__button md-logo" aria-label="Homelabs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Homelabs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    My Homelab
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    API Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            API Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API-Resources/k8s-api-resources-details/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    K8s api resources details
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CRDs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            CRDs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CRDs/Custom%20Resource%20Definition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Custom Resource Definition
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CRDs/Deep%20Dive%20into%20CRDs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deep Dive into CRDs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cert manager
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Cert manager
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Cert-manager/install-cert-manager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Install cert manager
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ClusterAccess
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            ClusterAccess
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ClusterAccess/Configuring%20Keycloak%20for%20Kubernetes%20authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuring Keycloak for Kubernetes authentication
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ClusterAccess/Create%20a%20kubeconfig%20file%20for%20the%20external%20users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Create a kubeconfig file for the external users
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ConfigMaps
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            ConfigMaps
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ConfigMaps/ConfigMap%20is%20a%20Kubernetes%20object%20used%20to%20store%20non-confidential%20data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ConfigMap is a Kubernetes object used to store non confidential data
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CronJob
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            CronJob
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CronJob/CronJobs%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CronJobs in Kubernetes: What, Why, When, and How
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CronJob/Real-World%20CronJob%20Example-%20Automated%20Database%20Backup%20n%20Cleanup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-World CronJob Example: Automated Database Backup &amp; Cleanup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CronJob/k8s%20Jobs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    k8s Jobs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DaemonSets
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            DaemonSets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DaemonSets/CronJobs%20Vs%20DaemonSets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CronJobs Vs DaemonSets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DaemonSets/DaemonSets%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DaemonSets in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Deployments
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Deployments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Deployments/Deployments%20Strategies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployments Strategies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Deployments/Deployments%20in%20kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployments in Kubernetes: A Comprehensive Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Helm
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Helm
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Helm/1.%20Check%20Helm%20Release%28deployed%29%20Information/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Check Helm Release(deployed) Information
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Helm/Checking%20Traefik%20Helm%20Configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Checking Traefik Helm Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Helm/Helm%20Commands%20-%20Cheatsheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Helm Commands   Cheatsheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Helm/Helm%20charts%20for%20deployments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Helm charts for deployments
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Ingress
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Ingress
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/1.%20Host%20based%20ingress%20routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Host based ingress routing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/2.%20Path%20based%20ingress%20routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Path based ingress routing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/3.%20subdomain%20based%20ingress%20routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. subdomain based ingress routing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/Access%20Traefik%20Dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Access Traefik Dashboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/Check%20Traefik%20Configuration%20logs%20for%20config%20issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Check Traefik Configuration logs for config issues
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/Diff%20between%20Host-path-subdomain%20based%20ingress%20routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Routing Methods - Real-Time Issues Comparison
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/How%20to%20confirm%20Ingress%20resources%2C%20routes%2C%20and%20active%20requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to confirm Ingress resources, routes, and active requests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/How%20to%20confirm%20the%20exact%20Ingress%20Controller%20used%20in%20your%20Kubernetes%20cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to confirm the exact Ingress Controller used in your Kubernetes cluster
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ingress/Types%20of%20Ingress%20Controllers%20with%20their%20pros%2C%20cons%2C%20and%20pricing%20details/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Types of Ingress Controllers with their pros, cons, and pricing details
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    K3d
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            K3d
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../K3d/Complete%20Traefik%20Setup%20Guide%20for%20k3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Complete Traefik Setup Guide for k3d
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../K3d/K3d%20cluster%20setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    K3d cluster setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../K3d/k3d%20cluster%20with%20traefik%20dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    K3d cluster with traefik dashboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../K3d/k3d%20with%20traefik%20dashboard%20setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    K3d with traefik dashboard setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Keycloak
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Keycloak
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Keycloak/Efficient%20way%20to%20to%20Set%20Up%20Keycloak%20%28with%20Helm%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Efficient way to to Set Up Keycloak (with Helm)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Keywords
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Keywords
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Keywords/Must%20know%20keywords/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Must know keywords
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Loadbalancers Types
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Loadbalancers Types
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Loadbalancers%20Types/Loadbalancer%20Types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Loadbalancer Types
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Loadbalancers%20Types/Reverse%20proxy%20means/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Reverse proxy means
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Longhorn
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Longhorn
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Common%20Kubernetes%20storage%20types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Common Kubernetes storage types
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Hands-On%20-%20Deploying%20Longhorn%20on%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hands-On Demo: Deploying Longhorn on Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Longhorn Access Modes & Volume Resizing Guide
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Longhorn Access Modes & Volume Resizing Guide
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-understanding-access-modes-in-longhorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Understanding Access Modes in Longhorn
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Understanding Access Modes in Longhorn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-access-modes-in-longhorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Access Modes in Longhorn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#which-access-modes-does-longhorn-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Which Access Modes Does Longhorn Support?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-how-to-change-access-modes-in-longhorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. How to Change Access Modes in Longhorn
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. How to Change Access Modes in Longhorn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a-define-in-pvc-yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option A: Define in PVC YAML
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b-using-rwx-readwritemany" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option B: Using RWX (ReadWriteMany)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-how-to-increase-or-decrease-volume-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. How to Increase or Decrease Volume Size
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. How to Increase or Decrease Volume Size">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-expand-a-volume-increase-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Expand a Volume (Increase Size)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-shrink-a-volume-decrease-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Shrink a Volume (Decrease Size)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-real-world-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Real-World Scenarios
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Real-World Scenarios">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-1-scaling-mysql-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 1: Scaling MySQL Storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-2-shared-storage-for-wordpress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 2: Shared Storage for WordPress
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-demo-resizing-longhorn-volumes-in-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step-by-Step Demo: Resizing Longhorn Volumes in Kubernetes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step-by-Step Demo: Resizing Longhorn Volumes in Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-well-cover" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔥 What We'll Cover
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-deploy-a-test-mysql-pod-with-longhorn-pvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Deploy a Test MySQL Pod with Longhorn PVC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Deploy a Test MySQL Pod with Longhorn PVC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-create-a-pvc-mysql-pvcyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Create a PVC (mysql-pvc.yaml)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-deploy-mysql-mysql-deploymentyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Deploy MySQL (mysql-deployment.yaml)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-verify-pvc-pod" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 Verify PVC &amp; Pod
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-expand-volume-from-5gi-20gi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Expand Volume from 5Gi → 20Gi
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Expand Volume from 5Gi → 20Gi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-edit-pvc-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Edit PVC Live
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-verify-expansion-in-longhorn-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Verify Expansion in Longhorn UI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-resize-filesystem-if-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Resize Filesystem (If Needed)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-safely-shrink-volume-20gi-10gi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Safely Shrink Volume (20Gi → 10Gi)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Safely Shrink Volume (20Gi → 10Gi)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-take-a-snapshot-longhorn-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Take a Snapshot (Longhorn UI)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-create-a-new-smaller-pvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Create a New Smaller PVC
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-restore-data-to-new-pvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Restore Data to New PVC
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Takeaways">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Longhorn%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Longhorn in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Namespace
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_17">
+            <span class="md-nav__icon md-icon"></span>
+            Namespace
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Namespace/Delete%20all%20resources%20from%20namespace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Delete all resources from namespace
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    OpenTofu
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            OpenTofu
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../OpenTofu/About%20OpenTofu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About OpenTofu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        
+          
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PV n PVCs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            PV n PVCs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PV%20n%20PVCs/PV%27s%20and%20PVC%27s%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PV's and PVC's in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pods
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            Pods
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pods/Debug%20pod%20-%20create%20for%20test%20and%20delete%20on%20post%20test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Debug pod   create for test and delete on post test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pods/List%20all%20pods%20with%20their%20init%20containers%20and%20sidecar%20containers%20info/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    List all pods with their init containers and sidecar containers info
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pods/Types%20of%20Containers%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Types of Containers in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          
+          <label class="md-nav__link" for="__nav_21" id="__nav_21_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Secrets
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_21">
+            <span class="md-nav__icon md-icon"></span>
+            Secrets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Secrets/Deep%20Dive%20into%20securing%20secrets%20in%20specific%20envs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deep Dive into securing secrets in specific envs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Secrets/Secrets%20management%20for%20sensitive%20information/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Secrets management for sensitive information
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Secrets/Some%20real-world%20examples%20of%20secrets%20mismanagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Some real world examples of secrets mismanagement
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_22" >
+        
+          
+          <label class="md-nav__link" for="__nav_22" id="__nav_22_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ServiceAccounts
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_22_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_22">
+            <span class="md-nav__icon md-icon"></span>
+            ServiceAccounts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ServiceAccounts/ServiceAccounts%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ServiceAccounts in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_23" >
+        
+          
+          <label class="md-nav__link" for="__nav_23" id="__nav_23_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Services
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_23_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_23">
+            <span class="md-nav__icon md-icon"></span>
+            Services
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Services/Headless%20Services%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Headless Services in Kubernetes: A Comprehensive Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Services/Types%20of%20Kubernetes%20Services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Types of Kubernetes Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_24" >
+        
+          
+          <label class="md-nav__link" for="__nav_24" id="__nav_24_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Statefulsets
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_24_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_24">
+            <span class="md-nav__icon md-icon"></span>
+            Statefulsets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Statefulsets/Updating%20a%20MongoDB%20StatefulSet%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Updating a MongoDB StatefulSet in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Statefulsets/W3H-Understanding%20StatefulSets%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    W3H Understanding StatefulSets in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_25" >
+        
+          
+          <label class="md-nav__link" for="__nav_25" id="__nav_25_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Taint Tolerations
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_25_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_25">
+            <span class="md-nav__icon md-icon"></span>
+            Taint Tolerations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Taint-Tolerations/Understanding%20Tolerations%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Understanding Tolerations in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Taint-Tolerations/What%20is%20taint%20_/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    What is taint  
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_26" >
+        
+          
+          <label class="md-nav__link" for="__nav_26" id="__nav_26_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Traefik
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_26_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_26">
+            <span class="md-nav__icon md-icon"></span>
+            Traefik
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Traefik/Securing%20Traefik%20Dashboard%20with%20Keycloak%20%28OIDC%20or%20OAuth2%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Securing Traefik Dashboard with Keycloak (OIDC/OAuth2)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Traefik/Traefik%20Dashboard%20only%20for%20Visibility%20not%20for%20Administration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Traefik Dashboard only for Visibility not for Administration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_27" >
+        
+          
+          <label class="md-nav__link" for="__nav_27" id="__nav_27_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Ubuntu
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_27_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_27">
+            <span class="md-nav__icon md-icon"></span>
+            Ubuntu
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ubuntu/list%20of%20good%20tools%20to%20extract%20rar%20part%20files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    List of good tools to extract rar part files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_28" >
+        
+          
+          <label class="md-nav__link" for="__nav_28" id="__nav_28_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Etcdctl
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_28_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_28">
+            <span class="md-nav__icon md-icon"></span>
+            Etcdctl
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../etcdctl/Install%20etcdctl%20tool%20with%20supported%20versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Install etcdctl tool with supported versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../etcdctl/check%20etcd%20is%20running/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Check etcd is running
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../etcdctl/etcdctl%20commands%20for%20get%2C%20put%2C%20snapshot%20save%20and%20restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Etcdctl commands for get, put, snapshot save and restore
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_29" >
+        
+          
+          <label class="md-nav__link" for="__nav_29" id="__nav_29_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Fluentd
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_29_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_29">
+            <span class="md-nav__icon md-icon"></span>
+            Fluentd
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fluentd/Fluentd%20DaemonSet%20deployment%20YAML%20for%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fluentd DaemonSet deployment YAML for Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fluentd/Fluentd%20can%20run%20on%20standalone%20VMs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fluentd can run on standalone VMs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fluentd/Fluentd%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fluentd in Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fluentd/Fluentd%20install%20and%20config%20steps%20for%20a%20Linux%20VM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fluentd install and config steps for a Linux VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_30" >
+        
+          
+          <label class="md-nav__link" for="__nav_30" id="__nav_30_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Mailhog
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_30_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_30">
+            <span class="md-nav__icon md-icon"></span>
+            Mailhog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mailhog/Steps%20to%20deploy%20MailHog%20with%20Ingress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Steps to deploy MailHog with Ingress
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_31" >
+        
+          
+          <label class="md-nav__link" for="__nav_31" id="__nav_31_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Mkdocs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_31_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_31">
+            <span class="md-nav__icon md-icon"></span>
+            Mkdocs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mkdocs/mkdocs%20to%20github%20projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mkdocs to github projects
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_32" >
+        
+          
+          <label class="md-nav__link" for="__nav_32" id="__nav_32_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_32_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_32">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%20pyautogui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python pyautogui
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-understanding-access-modes-in-longhorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Understanding Access Modes in Longhorn
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Understanding Access Modes in Longhorn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-access-modes-in-longhorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Access Modes in Longhorn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#which-access-modes-does-longhorn-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Which Access Modes Does Longhorn Support?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-how-to-change-access-modes-in-longhorn" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. How to Change Access Modes in Longhorn
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. How to Change Access Modes in Longhorn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a-define-in-pvc-yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option A: Define in PVC YAML
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b-using-rwx-readwritemany" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option B: Using RWX (ReadWriteMany)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-how-to-increase-or-decrease-volume-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. How to Increase or Decrease Volume Size
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. How to Increase or Decrease Volume Size">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-expand-a-volume-increase-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Expand a Volume (Increase Size)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-shrink-a-volume-decrease-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Shrink a Volume (Decrease Size)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-real-world-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Real-World Scenarios
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Real-World Scenarios">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-1-scaling-mysql-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 1: Scaling MySQL Storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-2-shared-storage-for-wordpress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 2: Shared Storage for WordPress
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-demo-resizing-longhorn-volumes-in-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step-by-Step Demo: Resizing Longhorn Volumes in Kubernetes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step-by-Step Demo: Resizing Longhorn Volumes in Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-well-cover" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔥 What We'll Cover
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-deploy-a-test-mysql-pod-with-longhorn-pvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Deploy a Test MySQL Pod with Longhorn PVC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Deploy a Test MySQL Pod with Longhorn PVC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-create-a-pvc-mysql-pvcyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Create a PVC (mysql-pvc.yaml)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-deploy-mysql-mysql-deploymentyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Deploy MySQL (mysql-deployment.yaml)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-verify-pvc-pod" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 Verify PVC &amp; Pod
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-expand-volume-from-5gi-20gi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Expand Volume from 5Gi → 20Gi
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Expand Volume from 5Gi → 20Gi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-edit-pvc-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Edit PVC Live
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-verify-expansion-in-longhorn-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Verify Expansion in Longhorn UI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-resize-filesystem-if-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Resize Filesystem (If Needed)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-safely-shrink-volume-20gi-10gi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Safely Shrink Volume (20Gi → 10Gi)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Safely Shrink Volume (20Gi → 10Gi)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-take-a-snapshot-longhorn-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Take a Snapshot (Longhorn UI)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-create-a-new-smaller-pvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Create a New Smaller PVC
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-restore-data-to-new-pvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Restore Data to New PVC
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Takeaways">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h2 id="1-understanding-access-modes-in-longhorn"><strong>1. Understanding Access Modes in Longhorn</strong></h2>
+<p>Kubernetes Persistent Volumes (PVs) and Persistent Volume Claims (PVCs) support different <strong>access modes</strong>, which define how volumes can be mounted by pods.</p>
+<h3 id="supported-access-modes-in-longhorn"><strong>Supported Access Modes in Longhorn</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Access Mode</th>
+<th>Description</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>ReadWriteOnce</code> (RWO)</strong></td>
+<td>Only <strong>one pod</strong> (on a single node) can mount the volume in read-write mode.</td>
+<td>Single-instance databases (MySQL, PostgreSQL)</td>
+</tr>
+<tr>
+<td><strong><code>ReadOnlyMany</code> (ROX)</strong></td>
+<td><strong>Multiple pods</strong> (across different nodes) can mount the volume in <strong>read-only</strong> mode.</td>
+<td>Shared configuration files (e.g., <code>nginx.conf</code>)</td>
+</tr>
+<tr>
+<td><strong><code>ReadWriteMany</code> (RWX)</strong></td>
+<td><strong>Multiple pods</strong> (across different nodes) can mount the volume in <strong>read-write</strong> mode.</td>
+<td>Shared file storage (NFS-like, e.g., WordPress uploads)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="which-access-modes-does-longhorn-support"><strong>Which Access Modes Does Longhorn Support?</strong></h3>
+<p>✅ <strong>Longhorn supports:</strong><br />
+- <code>ReadWriteOnce</code> (RWO) – Default and most stable.<br />
+- <code>ReadWriteMany</code> (RWX) – Requires <strong>NFSv4</strong> or <strong>Samba</strong> (experimental).  </p>
+<p>❌ <strong>Longhorn does NOT natively support <code>ReadOnlyMany</code> (ROX).</strong>  </p>
+<hr />
+<h2 id="2-how-to-change-access-modes-in-longhorn"><strong>2. How to Change Access Modes in Longhorn</strong></h2>
+<h3 id="option-a-define-in-pvc-yaml"><strong>Option A: Define in PVC YAML</strong></h3>
+<pre><code class="language-yaml">apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce  # Change to ReadWriteMany for RWX
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 10Gi
+</code></pre>
+<h3 id="option-b-using-rwx-readwritemany"><strong>Option B: Using RWX (ReadWriteMany)</strong></h3>
+<ol>
+<li><strong>Enable RWX in Longhorn UI:</strong>  </li>
+<li>Go to <strong>Settings</strong> → <strong>Enable NFSv4</strong> (or Samba).  </li>
+<li><strong>Create an RWX PVC:</strong><br />
+   ```yaml
+   accessModes:<ul>
+<li>ReadWriteMany
+   ```</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="3-how-to-increase-or-decrease-volume-size"><strong>3. How to Increase or Decrease Volume Size</strong></h2>
+<h3 id="option-1-expand-a-volume-increase-size"><strong>Option 1: Expand a Volume (Increase Size)</strong></h3>
+<ol>
+<li>
+<p><strong>Edit the PVC:</strong><br />
+<code>bash
+   kubectl edit pvc &lt;pvc-name&gt;</code>
+   Change <code>storage: 5Gi</code> → <code>storage: 20Gi</code>.  </p>
+</li>
+<li>
+<p><strong>Verify Expansion in Longhorn UI:</strong>  </p>
+</li>
+<li>
+<p>Go to <strong>Volumes</strong> → Check the new size.  </p>
+</li>
+<li>
+<p><strong>Resize Filesystem (if needed):</strong><br />
+<code>bash
+   kubectl exec -it &lt;pod-name&gt; -- df -h /var/lib/mysql  # Check current size
+   kubectl exec -it &lt;pod-name&gt; -- resize2fs /dev/longhorn/&lt;volume-name&gt;  # For ext4</code></p>
+</li>
+</ol>
+<h3 id="option-2-shrink-a-volume-decrease-size"><strong>Option 2: Shrink a Volume (Decrease Size)</strong></h3>
+<p>⚠ <strong>Shrinking is risky and not officially supported!</strong><br />
+- <strong>Workaround:</strong><br />
+  1. Take a <strong>snapshot</strong>.<br />
+  2. Create a <strong>new smaller volume</strong> and restore data.<br />
+  3. Update the PVC to point to the new volume.  </p>
+<hr />
+<h2 id="4-real-world-scenarios"><strong>4. Real-World Scenarios</strong></h2>
+<h3 id="scenario-1-scaling-mysql-storage"><strong>Scenario 1: Scaling MySQL Storage</strong></h3>
+<ul>
+<li><strong>Problem:</strong> MySQL is running out of space.  </li>
+<li><strong>Solution:</strong><br />
+<code>bash
+  kubectl edit pvc mysql-pvc  # Change 10Gi → 50Gi</code>
+  Longhorn automatically expands the volume.  </li>
+</ul>
+<h3 id="scenario-2-shared-storage-for-wordpress"><strong>Scenario 2: Shared Storage for WordPress</strong></h3>
+<ul>
+<li><strong>Problem:</strong> Multiple WordPress pods need shared uploads.  </li>
+<li><strong>Solution:</strong><br />
+  ```yaml
+  accessModes:<ul>
+<li>ReadWriteMany  # Uses NFS under the hood
+  ```</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="5-best-practices"><strong>5. Best Practices</strong></h2>
+<p>✔ <strong>For databases:</strong> Use <code>ReadWriteOnce</code> (RWO).<br />
+✔ <strong>For shared files:</strong> Use <code>ReadWriteMany</code> (RWX) with NFS.<br />
+✔ <strong>Always take snapshots</strong> before resizing.<br />
+❌ <strong>Avoid shrinking volumes</strong> (data loss risk).  </p>
+<hr />
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<ul>
+<li><strong>Access Modes:</strong>  </li>
+<li><code>RWO</code> = Single pod (default).  </li>
+<li><code>RWX</code> = Multi-pod (requires NFS).  </li>
+<li><strong>Resizing:</strong>  </li>
+<li><strong>Increase size</strong> → Edit PVC.  </li>
+<li><strong>Decrease size</strong> → Backup &amp; restore to a new volume.  </li>
+</ul>
+<p>🚀 <strong>Next Steps:</strong><br />
+- Try <strong>dynamic volume provisioning</strong> with <code>storageClassName: longhorn</code>.<br />
+- Explore <strong>backup &amp; restore</strong> to S3.  </p>
+<h1 id="step-by-step-demo-resizing-longhorn-volumes-in-kubernetes"><strong>Step-by-Step Demo: Resizing Longhorn Volumes in Kubernetes</strong></h1>
+<h2 id="what-well-cover"><strong>🔥 What We'll Cover</strong></h2>
+<ol>
+<li><strong>Creating a PVC</strong> (5Gi → 20Gi expansion)  </li>
+<li><strong>Attaching it to a MySQL Pod</strong>  </li>
+<li><strong>Expanding the Volume</strong> (Live resize)  </li>
+<li><strong>Shrinking Safely</strong> (Via backup &amp; restore)  </li>
+</ol>
+<hr />
+<h1 id="step-1-deploy-a-test-mysql-pod-with-longhorn-pvc"><strong>Step 1: Deploy a Test MySQL Pod with Longhorn PVC</strong></h1>
+<h3 id="11-create-a-pvc-mysql-pvcyaml"><strong>1.1 Create a PVC (<code>mysql-pvc.yaml</code>)</strong></h3>
+<pre><code class="language-yaml">apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 5Gi  # We'll expand this later
+</code></pre>
+<p>Apply it:</p>
+<pre><code class="language-bash">kubectl apply -f mysql-pvc.yaml
+</code></pre>
+<h3 id="12-deploy-mysql-mysql-deploymentyaml"><strong>1.2 Deploy MySQL (<code>mysql-deployment.yaml</code>)</strong></h3>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: &quot;password&quot;
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc
+</code></pre>
+<p>Deploy:</p>
+<pre><code class="language-bash">kubectl apply -f mysql-deployment.yaml
+</code></pre>
+<h3 id="13-verify-pvc-pod"><strong>1.3 Verify PVC &amp; Pod</strong></h3>
+<pre><code class="language-bash">kubectl get pvc  # Should show 5Gi
+kubectl get pods  # Wait for MySQL to run
+</code></pre>
+<hr />
+<h1 id="step-2-expand-volume-from-5gi-20gi"><strong>Step 2: Expand Volume from 5Gi → 20Gi</strong></h1>
+<h3 id="21-edit-pvc-live"><strong>2.1 Edit PVC Live</strong></h3>
+<pre><code class="language-bash">kubectl edit pvc mysql-pvc
+</code></pre>
+<p>Change:</p>
+<pre><code class="language-yaml">resources:
+  requests:
+    storage: 20Gi  # Update from 5Gi → 20Gi
+</code></pre>
+<h3 id="22-verify-expansion-in-longhorn-ui"><strong>2.2 Verify Expansion in Longhorn UI</strong></h3>
+<ol>
+<li>
+<p>Open Longhorn Dashboard:
+   <code>bash
+   kubectl port-forward svc/longhorn-frontend -n longhorn-system 8080:80</code>
+   Visit <strong>http://localhost:8080</strong> → Check volume size.</p>
+</li>
+<li>
+<p>Confirm in Kubernetes:
+   <code>bash
+   kubectl get pvc mysql-pvc  # Should show 20Gi</code></p>
+</li>
+</ol>
+<h3 id="23-resize-filesystem-if-needed"><strong>2.3 Resize Filesystem (If Needed)</strong></h3>
+<p>If MySQL doesn’t see the new space:</p>
+<pre><code class="language-bash"># Enter the MySQL pod
+kubectl exec -it &lt;mysql-pod-name&gt; -- bash
+
+# Check current disk space
+df -h /var/lib/mysql  # Likely still shows 5Gi
+
+# Resize ext4 filesystem (for Longhorn volumes)
+resize2fs /dev/longhorn/&lt;volume-name&gt;  # Autocomplete with `ls /dev/longhorn/`
+
+# Verify
+df -h /var/lib/mysql  # Now shows 20Gi
+</code></pre>
+<hr />
+<h1 id="step-3-safely-shrink-volume-20gi-10gi"><strong>Step 3: Safely Shrink Volume (20Gi → 10Gi)</strong></h1>
+<h3 id="31-take-a-snapshot-longhorn-ui"><strong>3.1 Take a Snapshot (Longhorn UI)</strong></h3>
+<ol>
+<li>Go to <strong>Volumes</strong> → Select <code>mysql-pvc</code>.  </li>
+<li>Click <strong>"Take Snapshot"</strong>.  </li>
+<li>(Optional) <strong>Backup to S3</strong> for disaster recovery.  </li>
+</ol>
+<h3 id="32-create-a-new-smaller-pvc"><strong>3.2 Create a New Smaller PVC</strong></h3>
+<pre><code class="language-yaml"># new-mysql-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc-small
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 10Gi  # Smaller size
+</code></pre>
+<p>Apply:</p>
+<pre><code class="language-bash">kubectl apply -f new-mysql-pvc.yaml
+</code></pre>
+<h3 id="33-restore-data-to-new-pvc"><strong>3.3 Restore Data to New PVC</strong></h3>
+<ol>
+<li>In Longhorn UI:  </li>
+<li>Go to <strong>Snapshot</strong> → <strong>"Create Volume"</strong> from snapshot.  </li>
+<li>
+<p>Attach it to <code>mysql-pvc-small</code>.  </p>
+</li>
+<li>
+<p>Update MySQL Deployment:
+   <code>bash
+   kubectl edit deployment mysql</code>
+   Change:
+   ```yaml
+   volumes:</p>
+</li>
+<li>
+<p>name: mysql-storage
+     persistentVolumeClaim:
+       claimName: mysql-pvc-small  # Point to new PVC
+   ```</p>
+</li>
+<li>
+<p>Verify:
+   <code>bash
+   kubectl get pvc  # Should show mysql-pvc-small (10Gi)
+   kubectl exec -it &lt;mysql-pod&gt; -- df -h /var/lib/mysql  # Should show 10Gi</code></p>
+</li>
+</ol>
+<hr />
+<h1 id="key-takeaways"><strong>Key Takeaways</strong></h1>
+<p>✅ <strong>Expanding is easy:</strong> Just edit PVC → Longhorn handles the rest.<br />
+⚠ <strong>Shrinking is risky:</strong> Requires backup → restore to a new volume.<br />
+🔧 <strong>Always test resizing in staging first!</strong>  </p>
+<h2 id="next-steps"><strong>Next Steps</strong></h2>
+<ul>
+<li><strong>Automate snapshots</strong> with Longhorn’s <strong>Recurring Jobs</strong>.  </li>
+<li>Try <strong>RWX volumes</strong> for shared storage (e.g., WordPress).  </li>
+</ul>
+<p>Need help with <strong>specific workloads</strong> (PostgreSQL, MongoDB)? Ask away! 🚀</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.top"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
