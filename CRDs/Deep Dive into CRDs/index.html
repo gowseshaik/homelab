@@ -9,20 +9,22 @@
       
       
       
+        <link rel="prev" href="../Custom%20Resource%20Definition/">
       
-        <link rel="next" href="API-Resources/k8s-api-resources-details/">
+      
+        <link rel="next" href="../../Cert-manager/install-cert-manager/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
-        <title>Homelabs</title>
+        <title>Deep Dive into CRDs - Homelabs</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
       
       
 
@@ -41,7 +43,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -60,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#my-knowledge-base" class="md-skip">
+        <a href="#deep-dive-into-crds" class="md-skip">
           Skip to content
         </a>
       
@@ -76,7 +78,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Homelabs" class="md-header__button md-logo" aria-label="Homelabs" data-md-component="logo">
+    <a href="../.." title="Homelabs" class="md-header__button md-logo" aria-label="Homelabs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              My Knowledge Base
+              Deep Dive into CRDs
             
           </span>
         </div>
@@ -174,7 +176,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Homelabs" class="md-nav__button md-logo" aria-label="Homelabs" data-md-component="logo">
+    <a href="../.." title="Homelabs" class="md-nav__button md-logo" aria-label="Homelabs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -189,32 +191,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    My Knowledge Base
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -225,350 +205,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#api-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      Api-resources
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#crds" class="md-nav__link">
-    <span class="md-ellipsis">
-      Crds
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cert-manager" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cert-manager
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#choosing-kubernetes-by-usecases" class="md-nav__link">
-    <span class="md-ellipsis">
-      Choosing kubernetes by usecases
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#clusteraccess" class="md-nav__link">
-    <span class="md-ellipsis">
-      Clusteraccess
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configmaps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configmaps
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cronjob" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cronjob
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#daemonsets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Daemonsets
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dailytasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dailytasks
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deployments" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deployments
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#docker-podman-images" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker-podman-images
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#helm" class="md-nav__link">
-    <span class="md-ellipsis">
-      Helm
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ingress" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ingress
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#k3d" class="md-nav__link">
-    <span class="md-ellipsis">
-      K3d
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#keycloak" class="md-nav__link">
-    <span class="md-ellipsis">
-      Keycloak
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#keywords" class="md-nav__link">
-    <span class="md-ellipsis">
-      Keywords
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#loadbalancers-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      Loadbalancers types
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#longhorn" class="md-nav__link">
-    <span class="md-ellipsis">
-      Longhorn
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#namespace" class="md-nav__link">
-    <span class="md-ellipsis">
-      Namespace
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nexus" class="md-nav__link">
-    <span class="md-ellipsis">
-      Nexus
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#opentofu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Opentofu
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pv-n-pvcs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pv n pvcs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pods
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Secrets
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#serviceaccounts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Serviceaccounts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#services" class="md-nav__link">
-    <span class="md-ellipsis">
-      Services
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#statefulsets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Statefulsets
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#taint-tolerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Taint-tolerations
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#traefik" class="md-nav__link">
-    <span class="md-ellipsis">
-      Traefik
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ubuntu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ubuntu
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#etcdctl" class="md-nav__link">
-    <span class="md-ellipsis">
-      Etcdctl
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fluentd" class="md-nav__link">
-    <span class="md-ellipsis">
-      Fluentd
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mailhog" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mailhog
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mkdocs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mkdocs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overrides" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overrides
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#python" class="md-nav__link">
-    <span class="md-ellipsis">
-      Python
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -618,7 +254,7 @@
   
   
     <li class="md-nav__item">
-      <a href="API-Resources/k8s-api-resources-details/" class="md-nav__link">
+      <a href="../../API-Resources/k8s-api-resources-details/" class="md-nav__link">
         
   
   
@@ -645,18 +281,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -672,7 +310,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             CRDs
@@ -686,7 +324,7 @@
   
   
     <li class="md-nav__item">
-      <a href="CRDs/Custom%20Resource%20Definition/" class="md-nav__link">
+      <a href="../Custom%20Resource%20Definition/" class="md-nav__link">
         
   
   
@@ -706,10 +344,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="CRDs/Deep%20Dive%20into%20CRDs/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Deep Dive into CRDs
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -720,6 +378,237 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deep-dive-into-crds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deep Dive into CRDs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep Dive into CRDs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-what-are-crds-extended" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. What are CRDs? (Extended)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-why-use-crds-advanced-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Why Use CRDs? (Advanced Benefits)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Why Use CRDs? (Advanced Benefits)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-declarative-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      a) Declarative APIs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-integration-with-kubernetes-tooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      b) Integration with Kubernetes Tooling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-operator-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      c) Operator Pattern
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-when-to-use-crds-decision-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. When to Use CRDs? (Decision Guide)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-how-to-use-crds-advanced-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. How to Use CRDs? (Advanced Topics)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. How to Use CRDs? (Advanced Topics)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-crd-schema-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      a) CRD Schema Validation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-versioning-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      b) Versioning &amp; Conversion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-finalizers-deletion-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      c) Finalizers &amp; Deletion Control
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d-subresources-statusscale" class="md-nav__link">
+    <span class="md-ellipsis">
+      d) Subresources (Status/Scale)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-admission-webhooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      e) Admission Webhooks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-crd-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. CRD Best Practices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-example-full-crd-operator-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Example: Full CRD + Operator Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Example: Full CRD + Operator Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-define-a-crd-cassandraclusteryaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Define a CRD (cassandracluster.yaml)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-create-a-cr-my-cassandrayaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Create a CR (my-cassandra.yaml)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-deploy-an-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Deploy an Operator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-tools-for-working-with-crds" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Tools for Working with CRDs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-common-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Common Pitfalls
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -777,7 +666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Cert-manager/install-cert-manager/" class="md-nav__link">
+      <a href="../../Cert-manager/install-cert-manager/" class="md-nav__link">
         
   
   
@@ -845,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Choosing%20Kubernetes%20by%20Usecases/Kubernetes%20cluster%20types%20on%20your%20usecases/" class="md-nav__link">
+      <a href="../../Choosing%20Kubernetes%20by%20Usecases/Kubernetes%20cluster%20types%20on%20your%20usecases/" class="md-nav__link">
         
   
   
@@ -913,7 +802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ClusterAccess/Configuring%20Keycloak%20for%20Kubernetes%20authentication/" class="md-nav__link">
+      <a href="../../ClusterAccess/Configuring%20Keycloak%20for%20Kubernetes%20authentication/" class="md-nav__link">
         
   
   
@@ -936,7 +825,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ClusterAccess/Create%20a%20kubeconfig%20file%20for%20the%20external%20users/" class="md-nav__link">
+      <a href="../../ClusterAccess/Create%20a%20kubeconfig%20file%20for%20the%20external%20users/" class="md-nav__link">
         
   
   
@@ -1004,7 +893,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ConfigMaps/ConfigMap%20is%20a%20Kubernetes%20object%20used%20to%20store%20non-confidential%20data/" class="md-nav__link">
+      <a href="../../ConfigMaps/ConfigMap%20is%20a%20Kubernetes%20object%20used%20to%20store%20non-confidential%20data/" class="md-nav__link">
         
   
   
@@ -1072,7 +961,7 @@
   
   
     <li class="md-nav__item">
-      <a href="CronJob/CronJobs%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../CronJob/CronJobs%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -1095,7 +984,7 @@
   
   
     <li class="md-nav__item">
-      <a href="CronJob/Real-World%20CronJob%20Example-%20Automated%20Database%20Backup%20n%20Cleanup/" class="md-nav__link">
+      <a href="../../CronJob/Real-World%20CronJob%20Example-%20Automated%20Database%20Backup%20n%20Cleanup/" class="md-nav__link">
         
   
   
@@ -1118,7 +1007,7 @@
   
   
     <li class="md-nav__item">
-      <a href="CronJob/k8s%20Jobs/" class="md-nav__link">
+      <a href="../../CronJob/k8s%20Jobs/" class="md-nav__link">
         
   
   
@@ -1186,7 +1075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="DaemonSets/CronJobs%20Vs%20DaemonSets/" class="md-nav__link">
+      <a href="../../DaemonSets/CronJobs%20Vs%20DaemonSets/" class="md-nav__link">
         
   
   
@@ -1209,7 +1098,7 @@
   
   
     <li class="md-nav__item">
-      <a href="DaemonSets/DaemonSets%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../DaemonSets/DaemonSets%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -1277,7 +1166,7 @@
   
   
     <li class="md-nav__item">
-      <a href="DailyTasks/pod%20exec%20and%20extract%20info%20from%20pods/" class="md-nav__link">
+      <a href="../../DailyTasks/pod%20exec%20and%20extract%20info%20from%20pods/" class="md-nav__link">
         
   
   
@@ -1345,7 +1234,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Deployments/Deployments%20Strategies/" class="md-nav__link">
+      <a href="../../Deployments/Deployments%20Strategies/" class="md-nav__link">
         
   
   
@@ -1368,7 +1257,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Deployments/Deployments%20in%20kubernetes/" class="md-nav__link">
+      <a href="../../Deployments/Deployments%20in%20kubernetes/" class="md-nav__link">
         
   
   
@@ -1436,7 +1325,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Docker-Podman-images/Enterprise-grade%20images%20as%20safer/" class="md-nav__link">
+      <a href="../../Docker-Podman-images/Enterprise-grade%20images%20as%20safer/" class="md-nav__link">
         
   
   
@@ -1459,7 +1348,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Docker-Podman-images/Tag%20images%20to%20push/" class="md-nav__link">
+      <a href="../../Docker-Podman-images/Tag%20images%20to%20push/" class="md-nav__link">
         
   
   
@@ -1482,7 +1371,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Docker-Podman-images/scp%20images%20in%20tar%20format%20to%20remote%20hosts%20-%20offline/" class="md-nav__link">
+      <a href="../../Docker-Podman-images/scp%20images%20in%20tar%20format%20to%20remote%20hosts%20-%20offline/" class="md-nav__link">
         
   
   
@@ -1550,7 +1439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Helm/1.%20Check%20Helm%20Release%28deployed%29%20Information/" class="md-nav__link">
+      <a href="../../Helm/1.%20Check%20Helm%20Release%28deployed%29%20Information/" class="md-nav__link">
         
   
   
@@ -1573,7 +1462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Helm/Checking%20Traefik%20Helm%20Configuration/" class="md-nav__link">
+      <a href="../../Helm/Checking%20Traefik%20Helm%20Configuration/" class="md-nav__link">
         
   
   
@@ -1596,7 +1485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Helm/Helm%20Commands%20-%20Cheatsheet/" class="md-nav__link">
+      <a href="../../Helm/Helm%20Commands%20-%20Cheatsheet/" class="md-nav__link">
         
   
   
@@ -1619,7 +1508,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Helm/Helm%20charts%20for%20deployments/" class="md-nav__link">
+      <a href="../../Helm/Helm%20charts%20for%20deployments/" class="md-nav__link">
         
   
   
@@ -1687,7 +1576,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/1.%20Host%20based%20ingress%20routing/" class="md-nav__link">
+      <a href="../../Ingress/1.%20Host%20based%20ingress%20routing/" class="md-nav__link">
         
   
   
@@ -1710,7 +1599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/2.%20Path%20based%20ingress%20routing/" class="md-nav__link">
+      <a href="../../Ingress/2.%20Path%20based%20ingress%20routing/" class="md-nav__link">
         
   
   
@@ -1733,7 +1622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/3.%20subdomain%20based%20ingress%20routing/" class="md-nav__link">
+      <a href="../../Ingress/3.%20subdomain%20based%20ingress%20routing/" class="md-nav__link">
         
   
   
@@ -1756,7 +1645,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/Access%20Traefik%20Dashboard/" class="md-nav__link">
+      <a href="../../Ingress/Access%20Traefik%20Dashboard/" class="md-nav__link">
         
   
   
@@ -1779,7 +1668,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/Check%20Traefik%20Configuration%20logs%20for%20config%20issues/" class="md-nav__link">
+      <a href="../../Ingress/Check%20Traefik%20Configuration%20logs%20for%20config%20issues/" class="md-nav__link">
         
   
   
@@ -1802,7 +1691,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/Diff%20between%20Host-path-subdomain%20based%20ingress%20routing/" class="md-nav__link">
+      <a href="../../Ingress/Diff%20between%20Host-path-subdomain%20based%20ingress%20routing/" class="md-nav__link">
         
   
   
@@ -1825,7 +1714,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/How%20to%20confirm%20Ingress%20resources%2C%20routes%2C%20and%20active%20requests/" class="md-nav__link">
+      <a href="../../Ingress/How%20to%20confirm%20Ingress%20resources%2C%20routes%2C%20and%20active%20requests/" class="md-nav__link">
         
   
   
@@ -1848,7 +1737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/How%20to%20confirm%20the%20exact%20Ingress%20Controller%20used%20in%20your%20Kubernetes%20cluster/" class="md-nav__link">
+      <a href="../../Ingress/How%20to%20confirm%20the%20exact%20Ingress%20Controller%20used%20in%20your%20Kubernetes%20cluster/" class="md-nav__link">
         
   
   
@@ -1871,7 +1760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/Types%20of%20Ingress%20Controllers%20with%20their%20pros%2C%20cons%2C%20and%20pricing%20details/" class="md-nav__link">
+      <a href="../../Ingress/Types%20of%20Ingress%20Controllers%20with%20their%20pros%2C%20cons%2C%20and%20pricing%20details/" class="md-nav__link">
         
   
   
@@ -1939,7 +1828,7 @@
   
   
     <li class="md-nav__item">
-      <a href="K3d/Complete%20Traefik%20Setup%20Guide%20for%20k3d/" class="md-nav__link">
+      <a href="../../K3d/Complete%20Traefik%20Setup%20Guide%20for%20k3d/" class="md-nav__link">
         
   
   
@@ -1962,7 +1851,7 @@
   
   
     <li class="md-nav__item">
-      <a href="K3d/K3d%20cluster%20setup/" class="md-nav__link">
+      <a href="../../K3d/K3d%20cluster%20setup/" class="md-nav__link">
         
   
   
@@ -1985,7 +1874,7 @@
   
   
     <li class="md-nav__item">
-      <a href="K3d/k3d%20cluster%20with%20traefik%20dashboard/" class="md-nav__link">
+      <a href="../../K3d/k3d%20cluster%20with%20traefik%20dashboard/" class="md-nav__link">
         
   
   
@@ -2008,7 +1897,7 @@
   
   
     <li class="md-nav__item">
-      <a href="K3d/k3d%20with%20traefik%20dashboard%20setup/" class="md-nav__link">
+      <a href="../../K3d/k3d%20with%20traefik%20dashboard%20setup/" class="md-nav__link">
         
   
   
@@ -2076,7 +1965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Keycloak/Efficient%20way%20to%20to%20Set%20Up%20Keycloak%20%28with%20Helm%29/" class="md-nav__link">
+      <a href="../../Keycloak/Efficient%20way%20to%20to%20Set%20Up%20Keycloak%20%28with%20Helm%29/" class="md-nav__link">
         
   
   
@@ -2144,7 +2033,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Keywords/Must%20know%20keywords/" class="md-nav__link">
+      <a href="../../Keywords/Must%20know%20keywords/" class="md-nav__link">
         
   
   
@@ -2212,7 +2101,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Loadbalancers%20Types/Loadbalancer%20Types/" class="md-nav__link">
+      <a href="../../Loadbalancers%20Types/Loadbalancer%20Types/" class="md-nav__link">
         
   
   
@@ -2235,7 +2124,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Loadbalancers%20Types/Reverse%20proxy%20means/" class="md-nav__link">
+      <a href="../../Loadbalancers%20Types/Reverse%20proxy%20means/" class="md-nav__link">
         
   
   
@@ -2303,7 +2192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Longhorn/Common%20Kubernetes%20storage%20types/" class="md-nav__link">
+      <a href="../../Longhorn/Common%20Kubernetes%20storage%20types/" class="md-nav__link">
         
   
   
@@ -2326,7 +2215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Longhorn/Hands-On%20-%20Deploying%20Longhorn%20on%20Kubernetes/" class="md-nav__link">
+      <a href="../../Longhorn/Hands-On%20-%20Deploying%20Longhorn%20on%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -2349,7 +2238,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Longhorn/Longhorn%20Access%20Modes%20%26%20Volume%20Resizing%20Guide/" class="md-nav__link">
+      <a href="../../Longhorn/Longhorn%20Access%20Modes%20%26%20Volume%20Resizing%20Guide/" class="md-nav__link">
         
   
   
@@ -2372,7 +2261,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Longhorn/Longhorn%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Longhorn/Longhorn%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -2440,7 +2329,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Namespace/Delete%20all%20resources%20from%20namespace/" class="md-nav__link">
+      <a href="../../Namespace/Delete%20all%20resources%20from%20namespace/" class="md-nav__link">
         
   
   
@@ -2508,7 +2397,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Nexus/Create%20a%20Docker%20image%20registry%20in%20Nexus/" class="md-nav__link">
+      <a href="../../Nexus/Create%20a%20Docker%20image%20registry%20in%20Nexus/" class="md-nav__link">
         
   
   
@@ -2576,7 +2465,7 @@
   
   
     <li class="md-nav__item">
-      <a href="OpenTofu/About%20OpenTofu/" class="md-nav__link">
+      <a href="../../OpenTofu/About%20OpenTofu/" class="md-nav__link">
         
   
   
@@ -2644,7 +2533,7 @@
   
   
     <li class="md-nav__item">
-      <a href="PV%20n%20PVCs/PV%27s%20and%20PVC%27s%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../PV%20n%20PVCs/PV%27s%20and%20PVC%27s%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -2712,7 +2601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Pods/Debug%20pod%20-%20create%20for%20test%20and%20delete%20on%20post%20test/" class="md-nav__link">
+      <a href="../../Pods/Debug%20pod%20-%20create%20for%20test%20and%20delete%20on%20post%20test/" class="md-nav__link">
         
   
   
@@ -2735,7 +2624,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Pods/List%20all%20pods%20with%20their%20init%20containers%20and%20sidecar%20containers%20info/" class="md-nav__link">
+      <a href="../../Pods/List%20all%20pods%20with%20their%20init%20containers%20and%20sidecar%20containers%20info/" class="md-nav__link">
         
   
   
@@ -2758,7 +2647,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Pods/Types%20of%20Containers%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Pods/Types%20of%20Containers%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -2826,7 +2715,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Secrets/Deep%20Dive%20into%20securing%20secrets%20in%20specific%20envs/" class="md-nav__link">
+      <a href="../../Secrets/Deep%20Dive%20into%20securing%20secrets%20in%20specific%20envs/" class="md-nav__link">
         
   
   
@@ -2849,7 +2738,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Secrets/Secrets%20management%20for%20sensitive%20information/" class="md-nav__link">
+      <a href="../../Secrets/Secrets%20management%20for%20sensitive%20information/" class="md-nav__link">
         
   
   
@@ -2872,7 +2761,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Secrets/Some%20real-world%20examples%20of%20secrets%20mismanagement/" class="md-nav__link">
+      <a href="../../Secrets/Some%20real-world%20examples%20of%20secrets%20mismanagement/" class="md-nav__link">
         
   
   
@@ -2940,7 +2829,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ServiceAccounts/ServiceAccounts%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../ServiceAccounts/ServiceAccounts%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3008,7 +2897,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Services/Headless%20Services%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Services/Headless%20Services%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3031,7 +2920,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Services/Types%20of%20Kubernetes%20Services/" class="md-nav__link">
+      <a href="../../Services/Types%20of%20Kubernetes%20Services/" class="md-nav__link">
         
   
   
@@ -3099,7 +2988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Statefulsets/Updating%20a%20MongoDB%20StatefulSet%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Statefulsets/Updating%20a%20MongoDB%20StatefulSet%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3122,7 +3011,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Statefulsets/W3H-Understanding%20StatefulSets%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Statefulsets/W3H-Understanding%20StatefulSets%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3190,7 +3079,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Taint-Tolerations/Understanding%20Tolerations%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Taint-Tolerations/Understanding%20Tolerations%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3213,7 +3102,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Taint-Tolerations/What%20is%20taint%20_/" class="md-nav__link">
+      <a href="../../Taint-Tolerations/What%20is%20taint%20_/" class="md-nav__link">
         
   
   
@@ -3281,7 +3170,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Traefik/Securing%20Traefik%20Dashboard%20with%20Keycloak%20%28OIDC%20or%20OAuth2%29/" class="md-nav__link">
+      <a href="../../Traefik/Securing%20Traefik%20Dashboard%20with%20Keycloak%20%28OIDC%20or%20OAuth2%29/" class="md-nav__link">
         
   
   
@@ -3304,7 +3193,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Traefik/Traefik%20Dashboard%20only%20for%20Visibility%20not%20for%20Administration/" class="md-nav__link">
+      <a href="../../Traefik/Traefik%20Dashboard%20only%20for%20Visibility%20not%20for%20Administration/" class="md-nav__link">
         
   
   
@@ -3372,7 +3261,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ubuntu/list%20of%20good%20tools%20to%20extract%20rar%20part%20files/" class="md-nav__link">
+      <a href="../../Ubuntu/list%20of%20good%20tools%20to%20extract%20rar%20part%20files/" class="md-nav__link">
         
   
   
@@ -3440,7 +3329,7 @@
   
   
     <li class="md-nav__item">
-      <a href="etcdctl/Install%20etcdctl%20tool%20with%20supported%20versions/" class="md-nav__link">
+      <a href="../../etcdctl/Install%20etcdctl%20tool%20with%20supported%20versions/" class="md-nav__link">
         
   
   
@@ -3463,7 +3352,7 @@
   
   
     <li class="md-nav__item">
-      <a href="etcdctl/check%20etcd%20is%20running/" class="md-nav__link">
+      <a href="../../etcdctl/check%20etcd%20is%20running/" class="md-nav__link">
         
   
   
@@ -3486,7 +3375,7 @@
   
   
     <li class="md-nav__item">
-      <a href="etcdctl/etcdctl%20commands%20for%20get%2C%20put%2C%20snapshot%20save%20and%20restore/" class="md-nav__link">
+      <a href="../../etcdctl/etcdctl%20commands%20for%20get%2C%20put%2C%20snapshot%20save%20and%20restore/" class="md-nav__link">
         
   
   
@@ -3554,7 +3443,7 @@
   
   
     <li class="md-nav__item">
-      <a href="fluentd/Fluentd%20DaemonSet%20deployment%20YAML%20for%20Kubernetes/" class="md-nav__link">
+      <a href="../../fluentd/Fluentd%20DaemonSet%20deployment%20YAML%20for%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3577,7 +3466,7 @@
   
   
     <li class="md-nav__item">
-      <a href="fluentd/Fluentd%20can%20run%20on%20standalone%20VMs/" class="md-nav__link">
+      <a href="../../fluentd/Fluentd%20can%20run%20on%20standalone%20VMs/" class="md-nav__link">
         
   
   
@@ -3600,7 +3489,7 @@
   
   
     <li class="md-nav__item">
-      <a href="fluentd/Fluentd%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../fluentd/Fluentd%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3623,7 +3512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="fluentd/Fluentd%20install%20and%20config%20steps%20for%20a%20Linux%20VM/" class="md-nav__link">
+      <a href="../../fluentd/Fluentd%20install%20and%20config%20steps%20for%20a%20Linux%20VM/" class="md-nav__link">
         
   
   
@@ -3691,7 +3580,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mailhog/Steps%20to%20deploy%20MailHog%20with%20Ingress/" class="md-nav__link">
+      <a href="../../mailhog/Steps%20to%20deploy%20MailHog%20with%20Ingress/" class="md-nav__link">
         
   
   
@@ -3759,7 +3648,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mkdocs/mkdocs%20to%20github%20projects/" class="md-nav__link">
+      <a href="../../mkdocs/mkdocs%20to%20github%20projects/" class="md-nav__link">
         
   
   
@@ -3827,7 +3716,7 @@
   
   
     <li class="md-nav__item">
-      <a href="python/mkdocs%20to%20github%20pages/" class="md-nav__link">
+      <a href="../../python/mkdocs%20to%20github%20pages/" class="md-nav__link">
         
   
   
@@ -3850,7 +3739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="python/python%20pyautogui/" class="md-nav__link">
+      <a href="../../python/python%20pyautogui/" class="md-nav__link">
         
   
   
@@ -3890,8 +3779,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -3900,326 +3787,215 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#api-resources" class="md-nav__link">
+  <a href="#deep-dive-into-crds" class="md-nav__link">
     <span class="md-ellipsis">
-      Api-resources
+      Deep Dive into CRDs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep Dive into CRDs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-what-are-crds-extended" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. What are CRDs? (Extended)
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#crds" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#2-why-use-crds-advanced-benefits" class="md-nav__link">
     <span class="md-ellipsis">
-      Crds
+      2. Why Use CRDs? (Advanced Benefits)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Why Use CRDs? (Advanced Benefits)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-declarative-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      a) Declarative APIs
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#cert-manager" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#b-integration-with-kubernetes-tooling" class="md-nav__link">
     <span class="md-ellipsis">
-      Cert-manager
+      b) Integration with Kubernetes Tooling
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#choosing-kubernetes-by-usecases" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#c-operator-pattern" class="md-nav__link">
     <span class="md-ellipsis">
-      Choosing kubernetes by usecases
+      c) Operator Pattern
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#clusteraccess" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-when-to-use-crds-decision-guide" class="md-nav__link">
     <span class="md-ellipsis">
-      Clusteraccess
+      3. When to Use CRDs? (Decision Guide)
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#configmaps" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#4-how-to-use-crds-advanced-topics" class="md-nav__link">
     <span class="md-ellipsis">
-      Configmaps
+      4. How to Use CRDs? (Advanced Topics)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. How to Use CRDs? (Advanced Topics)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-crd-schema-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      a) CRD Schema Validation
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#cronjob" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#b-versioning-conversion" class="md-nav__link">
     <span class="md-ellipsis">
-      Cronjob
+      b) Versioning &amp; Conversion
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#daemonsets" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#c-finalizers-deletion-control" class="md-nav__link">
     <span class="md-ellipsis">
-      Daemonsets
+      c) Finalizers &amp; Deletion Control
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#dailytasks" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#d-subresources-statusscale" class="md-nav__link">
     <span class="md-ellipsis">
-      Dailytasks
+      d) Subresources (Status/Scale)
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#deployments" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#e-admission-webhooks" class="md-nav__link">
     <span class="md-ellipsis">
-      Deployments
+      e) Admission Webhooks
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#docker-podman-images" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-crd-best-practices" class="md-nav__link">
     <span class="md-ellipsis">
-      Docker-podman-images
+      5. CRD Best Practices
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#helm" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#6-example-full-crd-operator-flow" class="md-nav__link">
     <span class="md-ellipsis">
-      Helm
+      6. Example: Full CRD + Operator Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Example: Full CRD + Operator Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-define-a-crd-cassandraclusteryaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Define a CRD (cassandracluster.yaml)
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#ingress" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#step-2-create-a-cr-my-cassandrayaml" class="md-nav__link">
     <span class="md-ellipsis">
-      Ingress
+      Step 2: Create a CR (my-cassandra.yaml)
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#k3d" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#step-3-deploy-an-operator" class="md-nav__link">
     <span class="md-ellipsis">
-      K3d
+      Step 3: Deploy an Operator
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#keycloak" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-tools-for-working-with-crds" class="md-nav__link">
     <span class="md-ellipsis">
-      Keycloak
+      7. Tools for Working with CRDs
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#keywords" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#8-common-pitfalls" class="md-nav__link">
     <span class="md-ellipsis">
-      Keywords
+      8. Common Pitfalls
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#loadbalancers-types" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
     <span class="md-ellipsis">
-      Loadbalancers types
+      Summary
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#longhorn" class="md-nav__link">
-    <span class="md-ellipsis">
-      Longhorn
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#namespace" class="md-nav__link">
-    <span class="md-ellipsis">
-      Namespace
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nexus" class="md-nav__link">
-    <span class="md-ellipsis">
-      Nexus
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#opentofu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Opentofu
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pv-n-pvcs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pv n pvcs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pods
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Secrets
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#serviceaccounts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Serviceaccounts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#services" class="md-nav__link">
-    <span class="md-ellipsis">
-      Services
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#statefulsets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Statefulsets
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#taint-tolerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Taint-tolerations
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#traefik" class="md-nav__link">
-    <span class="md-ellipsis">
-      Traefik
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ubuntu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ubuntu
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#etcdctl" class="md-nav__link">
-    <span class="md-ellipsis">
-      Etcdctl
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fluentd" class="md-nav__link">
-    <span class="md-ellipsis">
-      Fluentd
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mailhog" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mailhog
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mkdocs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mkdocs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overrides" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overrides
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#python" class="md-nav__link">
-    <span class="md-ellipsis">
-      Python
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4239,188 +4015,259 @@
 
 
 
-<h1 id="my-knowledge-base">My Knowledge Base</h1>
-<h2 id="api-resources">Api-resources</h2>
+  <h1>Deep Dive into CRDs</h1>
+
+<p>Great! Let’s dive deeper into <strong>Custom Resource Definitions (CRDs)</strong>, covering advanced concepts, best practices, and real-world examples.  </p>
+<hr />
+<h2 id="deep-dive-into-crds"><strong>Deep Dive into CRDs</strong></h2>
+<h3 id="1-what-are-crds-extended"><strong>1. What are CRDs? (Extended)</strong></h3>
 <ul>
-<li><a href="API-Resources/k8s-api-resources-details/">k8s-api-resources-details</a></li>
+<li><strong>CRDs vs. Built-in Resources:</strong>  </li>
+<li>Built-in resources (e.g., <code>Pods</code>, <code>Deployments</code>) are defined in the Kubernetes core code.  </li>
+<li>
+<p><strong>CRDs</strong> let users define <strong>new resource types</strong> without modifying the Kubernetes source code.  </p>
+</li>
+<li>
+<p><strong>CRD vs. Operator:</strong>  </p>
+</li>
+<li>A <strong>CRD</strong> defines the schema (structure) of a custom resource.  </li>
+<li>
+<p>An <strong>Operator</strong> is a controller that manages CRs (e.g., handling creation, scaling, backup).  </p>
+</li>
+<li>
+<p><strong>Example CRDs in the Wild:</strong>  </p>
+</li>
+<li><a href="https://cert-manager.io/"><code>CertManager</code></a> (<code>Certificate</code>, <code>Issuer</code>)  </li>
+<li><a href="https://argoproj.github.io/"><code>ArgoCD</code></a> (<code>Application</code>, <code>AppProject</code>)  </li>
+<li><a href="https://prometheus-operator.dev/"><code>Prometheus Operator</code></a> (<code>Prometheus</code>, <code>ServiceMonitor</code>)  </li>
 </ul>
-<h2 id="crds">Crds</h2>
+<hr />
+<h3 id="2-why-use-crds-advanced-benefits"><strong>2. Why Use CRDs? (Advanced Benefits)</strong></h3>
+<h4 id="a-declarative-apis"><strong>a) Declarative APIs</strong></h4>
 <ul>
-<li><a href="CRDs/Custom%20Resource%20Definition/">Custom Resource Definition</a></li>
-<li><a href="CRDs/Deep%20Dive%20into%20CRDs/">Deep Dive into CRDs</a></li>
+<li>Instead of imperative scripts (<code>kubectl run</code>, <code>helm install</code>), CRDs allow:<br />
+<code>yaml
+  apiVersion: databases.example.com/v1
+  kind: PostgreSQL
+  metadata:
+    name: my-db
+  spec:
+    replicas: 3
+    storage: 100Gi</code>
+  Kubernetes <strong>automatically reconciles</strong> the desired state.  </li>
 </ul>
-<h2 id="cert-manager">Cert-manager</h2>
+<h4 id="b-integration-with-kubernetes-tooling"><strong>b) Integration with Kubernetes Tooling</strong></h4>
 <ul>
-<li><a href="Cert-manager/install-cert-manager/">install-cert-manager</a></li>
+<li>CRs work with:  </li>
+<li><code>kubectl</code> (e.g., <code>kubectl get postgresql</code>)  </li>
+<li>RBAC (<code>Role</code>/<code>ClusterRole</code> for CR access)  </li>
+<li><code>kubectl explain postgresql.spec</code> (for self-documenting APIs)  </li>
 </ul>
-<h2 id="choosing-kubernetes-by-usecases">Choosing kubernetes by usecases</h2>
+<h4 id="c-operator-pattern"><strong>c) Operator Pattern</strong></h4>
 <ul>
-<li><a href="Choosing%20Kubernetes%20by%20Usecases/Kubernetes%20cluster%20types%20on%20your%20usecases/">Kubernetes cluster types on your usecases</a></li>
+<li>CRDs + <strong>Controllers</strong> = Operators (e.g., <code>etcd-operator</code>, <code>redis-operator</code>).  </li>
+<li>Operators handle:  </li>
+<li>Provisioning  </li>
+<li>Scaling  </li>
+<li>Backups/restores  </li>
+<li>Upgrades  </li>
 </ul>
-<h2 id="clusteraccess">Clusteraccess</h2>
+<hr />
+<h3 id="3-when-to-use-crds-decision-guide"><strong>3. When to Use CRDs? (Decision Guide)</strong></h3>
+<table>
+<thead>
+<tr>
+<th><strong>Use Case</strong></th>
+<th><strong>CRD?</strong></th>
+<th><strong>Alternative</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Need a custom API object</td>
+<td>✅ Yes</td>
+<td>ConfigMap/Secret (if simple)</td>
+</tr>
+<tr>
+<td>Complex lifecycle logic</td>
+<td>✅ Yes</td>
+<td>Helm (if only templating)</td>
+</tr>
+<tr>
+<td>Reusable across clusters</td>
+<td>✅ Yes</td>
+<td>Ansible/scripts (imperative)</td>
+</tr>
+<tr>
+<td>Just configuration storage</td>
+<td>❌ No</td>
+<td>ConfigMap</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong><br />
+- <strong>✅ Good for CRD:</strong> A <code>SparkJob</code> resource that needs autoscaling, monitoring.<br />
+- <strong>❌ Not needed:</strong> Storing a list of feature flags (use <code>ConfigMap</code>).  </p>
+<hr />
+<h3 id="4-how-to-use-crds-advanced-topics"><strong>4. How to Use CRDs? (Advanced Topics)</strong></h3>
+<h4 id="a-crd-schema-validation"><strong>a) CRD Schema Validation</strong></h4>
+<p>Define data types, required fields, and defaults in the CRD:  </p>
+<pre><code class="language-yaml">schema:
+  openAPIV3Schema:
+    type: object
+    properties:
+      spec:
+        type: object
+        required: [&quot;dbName&quot;]  # Mandatory field
+        properties:
+          dbName:
+            type: string
+          replicas:
+            type: integer
+            default: 1        # Default value
+</code></pre>
+<h4 id="b-versioning-conversion"><strong>b) Versioning &amp; Conversion</strong></h4>
 <ul>
-<li><a href="ClusterAccess/Configuring%20Keycloak%20for%20Kubernetes%20authentication/">Configuring Keycloak for Kubernetes authentication</a></li>
-<li><a href="ClusterAccess/Create%20a%20kubeconfig%20file%20for%20the%20external%20users/">Create a kubeconfig file for the external users</a></li>
+<li>Support multiple API versions (e.g., <code>v1alpha1</code>, <code>v1beta1</code>, <code>v1</code>).  </li>
+<li>Use <strong>conversion webhooks</strong> to migrate between versions.  </li>
 </ul>
-<h2 id="configmaps">Configmaps</h2>
+<h4 id="c-finalizers-deletion-control"><strong>c) Finalizers &amp; Deletion Control</strong></h4>
+<p>Prevent accidental deletion:  </p>
+<pre><code class="language-yaml">metadata:
+  finalizers:
+  - &quot;finalizer.database.example.com&quot;
+</code></pre>
+<p>A controller must clear the finalizer before deletion.  </p>
+<h4 id="d-subresources-statusscale"><strong>d) Subresources (Status/Scale)</strong></h4>
+<p>Enable <code>status</code> updates and horizontal scaling:  </p>
+<pre><code class="language-yaml">subresources:
+  status: {}       # For .status field
+  scale:           # For `kubectl scale`
+    specReplicasPath: .spec.replicas
+    statusReplicasPath: .status.replicas
+</code></pre>
+<h4 id="e-admission-webhooks"><strong>e) Admission Webhooks</strong></h4>
 <ul>
-<li><a href="ConfigMaps/ConfigMap%20is%20a%20Kubernetes%20object%20used%20to%20store%20non-confidential%20data/">ConfigMap is a Kubernetes object used to store non-confidential data</a></li>
+<li><strong>MutatingWebhook:</strong> Modify CRs before creation (e.g., inject defaults).  </li>
+<li><strong>ValidatingWebhook:</strong> Reject invalid CRs (e.g., invalid <code>replicas</code> value).  </li>
 </ul>
-<h2 id="cronjob">Cronjob</h2>
+<hr />
+<h3 id="5-crd-best-practices"><strong>5. CRD Best Practices</strong></h3>
+<ol>
+<li><strong>Naming Conventions</strong>  </li>
+<li>Use <code>&lt;plural&gt;.&lt;group&gt;</code> (e.g., <code>postgresqls.databases.example.com</code>).  </li>
+<li>
+<p>Follow DNS subdomain rules (lowercase, no underscores).  </p>
+</li>
+<li>
+<p><strong>Schema Design</strong>  </p>
+</li>
+<li>Use <code>required</code> fields for critical specs.  </li>
+<li>
+<p>Avoid frequent schema changes (break compatibility).  </p>
+</li>
+<li>
+<p><strong>Operator Integration</strong>  </p>
+</li>
+<li>
+<p>Use <strong>controller-runtime</strong> (Kubebuilder/Operator SDK) for reliable reconciliation.  </p>
+</li>
+<li>
+<p><strong>RBAC</strong>  </p>
+</li>
+<li>Restrict access to CRDs with <code>ClusterRole</code>:<br />
+     ```yaml
+     apiVersion: rbac.authorization.k8s.io/v1
+     kind: ClusterRole
+     metadata:
+       name: postgresql-admin
+     rules:<ul>
+<li>apiGroups: ["databases.example.com"]
+   resources: ["postgresqls"]
+   verbs: ["get", "list", "create", "delete"]
+ ```</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="6-example-full-crd-operator-flow"><strong>6. Example: Full CRD + Operator Flow</strong></h3>
+<h4 id="step-1-define-a-crd-cassandraclusteryaml"><strong>Step 1: Define a CRD (<code>cassandracluster.yaml</code>)</strong></h4>
+<pre><code class="language-yaml">apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: cassandraclusters.db.example.com
+spec:
+  group: db.example.com
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema: { ... }
+  scope: Namespaced
+  names:
+    plural: cassandraclusters
+    singular: cassandracluster
+    kind: CassandraCluster
+</code></pre>
+<h4 id="step-2-create-a-cr-my-cassandrayaml"><strong>Step 2: Create a CR (<code>my-cassandra.yaml</code>)</strong></h4>
+<pre><code class="language-yaml">apiVersion: db.example.com/v1
+kind: CassandraCluster
+metadata:
+  name: my-cassandra
+spec:
+  nodes: 3
+  storage: 50Gi
+</code></pre>
+<h4 id="step-3-deploy-an-operator"><strong>Step 3: Deploy an Operator</strong></h4>
 <ul>
-<li><a href="CronJob/CronJobs%20in%20Kubernetes/">CronJobs in Kubernetes</a></li>
-<li><a href="CronJob/Real-World%20CronJob%20Example-%20Automated%20Database%20Backup%20n%20Cleanup/">Real-World CronJob Example- Automated Database Backup n Cleanup</a></li>
-<li><a href="CronJob/k8s%20Jobs/">k8s Jobs</a></li>
+<li>The operator watches <code>CassandraCluster</code> CRs and:  </li>
+<li>Creates <code>StatefulSet</code> + <code>Services</code>.  </li>
+<li>Handles scaling (<code>kubectl scale cassandracluster my-cassandra --replicas=5</code>).  </li>
 </ul>
-<h2 id="daemonsets">Daemonsets</h2>
+<hr />
+<h3 id="7-tools-for-working-with-crds"><strong>7. Tools for Working with CRDs</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Kubebuilder</strong></td>
+<td>Scaffold CRDs + Operators (Go)</td>
+</tr>
+<tr>
+<td><strong>Operator SDK</strong></td>
+<td>Build Operators (Go/Ansible/Helm)</td>
+</tr>
+<tr>
+<td><strong>kustomize</strong></td>
+<td>Manage CRD YAMLs</td>
+</tr>
+<tr>
+<td><strong>kubeval</strong></td>
+<td>Validate CRD schemas</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="8-common-pitfalls"><strong>8. Common Pitfalls</strong></h3>
 <ul>
-<li><a href="DaemonSets/CronJobs%20Vs%20DaemonSets/">CronJobs Vs DaemonSets</a></li>
-<li><a href="DaemonSets/DaemonSets%20in%20Kubernetes/">DaemonSets in Kubernetes</a></li>
+<li><strong>Schema Changes Breaking Clusters:</strong> Always support backward compatibility.  </li>
+<li><strong>Orphaned CRs:</strong> Ensure your operator handles CRD deletion gracefully.  </li>
+<li><strong>Performance Issues:</strong> Avoid CRDs with high churn (e.g., frequent updates).  </li>
 </ul>
-<h2 id="dailytasks">Dailytasks</h2>
+<hr />
+<h3 id="summary"><strong>Summary</strong></h3>
 <ul>
-<li><a href="DailyTasks/pod%20exec%20and%20extract%20info%20from%20pods/">pod exec and extract info from pods</a></li>
+<li><strong>CRDs = Custom API Objects</strong> in Kubernetes.  </li>
+<li><strong>Operators = Controllers</strong> that manage CRs.  </li>
+<li><strong>Use Cases:</strong> Databases, ML, CI/CD, etc.  </li>
+<li><strong>Advanced Features:</strong> Webhooks, versioning, subresources.  </li>
 </ul>
-<h2 id="deployments">Deployments</h2>
-<ul>
-<li><a href="Deployments/Deployments%20Strategies/">Deployments Strategies</a></li>
-<li><a href="Deployments/Deployments%20in%20kubernetes/">Deployments in kubernetes</a></li>
-</ul>
-<h2 id="docker-podman-images">Docker-podman-images</h2>
-<ul>
-<li><a href="Docker-Podman-images/Enterprise-grade%20images%20as%20safer/">Enterprise-grade images as safer</a></li>
-<li><a href="Docker-Podman-images/Tag%20images%20to%20push/">Tag images to push</a></li>
-<li><a href="Docker-Podman-images/scp%20images%20in%20tar%20format%20to%20remote%20hosts%20-%20offline/">scp images in tar format to remote hosts - offline</a></li>
-</ul>
-<h2 id="helm">Helm</h2>
-<ul>
-<li><a href="Helm/1.%20Check%20Helm%20Release%28deployed%29%20Information/">1. Check Helm Release(deployed) Information</a></li>
-<li><a href="Helm/Checking%20Traefik%20Helm%20Configuration/">Checking Traefik Helm Configuration</a></li>
-<li><a href="Helm/Helm%20Commands%20-%20Cheatsheet/">Helm Commands - Cheatsheet</a></li>
-<li><a href="Helm/Helm%20charts%20for%20deployments/">Helm charts for deployments</a></li>
-</ul>
-<h2 id="ingress">Ingress</h2>
-<ul>
-<li><a href="Ingress/1.%20Host%20based%20ingress%20routing/">1. Host based ingress routing</a></li>
-<li><a href="Ingress/2.%20Path%20based%20ingress%20routing/">2. Path based ingress routing</a></li>
-<li><a href="Ingress/3.%20subdomain%20based%20ingress%20routing/">3. subdomain based ingress routing</a></li>
-<li><a href="Ingress/Access%20Traefik%20Dashboard/">Access Traefik Dashboard</a></li>
-<li><a href="Ingress/Check%20Traefik%20Configuration%20logs%20for%20config%20issues/">Check Traefik Configuration logs for config issues</a></li>
-<li><a href="Ingress/Diff%20between%20Host-path-subdomain%20based%20ingress%20routing/">Diff between Host-path-subdomain based ingress routing</a></li>
-<li><a href="Ingress/How%20to%20confirm%20Ingress%20resources%2C%20routes%2C%20and%20active%20requests/">How to confirm Ingress resources, routes, and active requests</a></li>
-<li><a href="Ingress/How%20to%20confirm%20the%20exact%20Ingress%20Controller%20used%20in%20your%20Kubernetes%20cluster/">How to confirm the exact Ingress Controller used in your Kubernetes cluster</a></li>
-<li><a href="Ingress/Types%20of%20Ingress%20Controllers%20with%20their%20pros%2C%20cons%2C%20and%20pricing%20details/">Types of Ingress Controllers with their pros, cons, and pricing details</a></li>
-</ul>
-<h2 id="k3d">K3d</h2>
-<ul>
-<li><a href="K3d/Complete%20Traefik%20Setup%20Guide%20for%20k3d/">Complete Traefik Setup Guide for k3d</a></li>
-<li><a href="K3d/K3d%20cluster%20setup/">K3d cluster setup</a></li>
-<li><a href="K3d/k3d%20cluster%20with%20traefik%20dashboard/">k3d cluster with traefik dashboard</a></li>
-<li><a href="K3d/k3d%20with%20traefik%20dashboard%20setup/">k3d with traefik dashboard setup</a></li>
-</ul>
-<h2 id="keycloak">Keycloak</h2>
-<ul>
-<li><a href="Keycloak/Efficient%20way%20to%20to%20Set%20Up%20Keycloak%20%28with%20Helm%29/">Efficient way to to Set Up Keycloak (with Helm)</a></li>
-</ul>
-<h2 id="keywords">Keywords</h2>
-<ul>
-<li><a href="Keywords/Must%20know%20keywords/">Must know keywords</a></li>
-</ul>
-<h2 id="loadbalancers-types">Loadbalancers types</h2>
-<ul>
-<li><a href="Loadbalancers%20Types/Loadbalancer%20Types/">Loadbalancer Types</a></li>
-<li><a href="Loadbalancers%20Types/Reverse%20proxy%20means/">Reverse proxy means</a></li>
-</ul>
-<h2 id="longhorn">Longhorn</h2>
-<ul>
-<li><a href="Longhorn/Common%20Kubernetes%20storage%20types/">Common Kubernetes storage types</a></li>
-<li><a href="Longhorn/Hands-On%20-%20Deploying%20Longhorn%20on%20Kubernetes/">Hands-On - Deploying Longhorn on Kubernetes</a></li>
-<li><a href="Longhorn/Longhorn%20Access%20Modes%20%26%20Volume%20Resizing%20Guide/">Longhorn Access Modes &amp; Volume Resizing Guide</a></li>
-<li><a href="Longhorn/Longhorn%20in%20Kubernetes/">Longhorn in Kubernetes</a></li>
-</ul>
-<h2 id="namespace">Namespace</h2>
-<ul>
-<li><a href="Namespace/Delete%20all%20resources%20from%20namespace/">Delete all resources from namespace</a></li>
-</ul>
-<h2 id="nexus">Nexus</h2>
-<ul>
-<li><a href="Nexus/Create%20a%20Docker%20image%20registry%20in%20Nexus/">Create a Docker image registry in Nexus</a></li>
-</ul>
-<h2 id="opentofu">Opentofu</h2>
-<ul>
-<li><a href="OpenTofu/About%20OpenTofu/">About OpenTofu</a></li>
-</ul>
-<h2 id="pv-n-pvcs">Pv n pvcs</h2>
-<ul>
-<li><a href="PV%20n%20PVCs/PV%27s%20and%20PVC%27s%20in%20Kubernetes/">PV's and PVC's in Kubernetes</a></li>
-</ul>
-<h2 id="pods">Pods</h2>
-<ul>
-<li><a href="Pods/Debug%20pod%20-%20create%20for%20test%20and%20delete%20on%20post%20test/">Debug pod - create for test and delete on post test</a></li>
-<li><a href="Pods/List%20all%20pods%20with%20their%20init%20containers%20and%20sidecar%20containers%20info/">List all pods with their init containers and sidecar containers info</a></li>
-<li><a href="Pods/Types%20of%20Containers%20in%20Kubernetes/">Types of Containers in Kubernetes</a></li>
-</ul>
-<h2 id="secrets">Secrets</h2>
-<ul>
-<li><a href="Secrets/Deep%20Dive%20into%20securing%20secrets%20in%20specific%20envs/">Deep Dive into securing secrets in specific envs</a></li>
-<li><a href="Secrets/Secrets%20management%20for%20sensitive%20information/">Secrets management for sensitive information</a></li>
-<li><a href="Secrets/Some%20real-world%20examples%20of%20secrets%20mismanagement/">Some real-world examples of secrets mismanagement</a></li>
-</ul>
-<h2 id="serviceaccounts">Serviceaccounts</h2>
-<ul>
-<li><a href="ServiceAccounts/ServiceAccounts%20in%20Kubernetes/">ServiceAccounts in Kubernetes</a></li>
-</ul>
-<h2 id="services">Services</h2>
-<ul>
-<li><a href="Services/Headless%20Services%20in%20Kubernetes/">Headless Services in Kubernetes</a></li>
-<li><a href="Services/Types%20of%20Kubernetes%20Services/">Types of Kubernetes Services</a></li>
-</ul>
-<h2 id="statefulsets">Statefulsets</h2>
-<ul>
-<li><a href="Statefulsets/Updating%20a%20MongoDB%20StatefulSet%20in%20Kubernetes/">Updating a MongoDB StatefulSet in Kubernetes</a></li>
-<li><a href="Statefulsets/W3H-Understanding%20StatefulSets%20in%20Kubernetes/">W3H-Understanding StatefulSets in Kubernetes</a></li>
-</ul>
-<h2 id="taint-tolerations">Taint-tolerations</h2>
-<ul>
-<li><a href="Taint-Tolerations/Understanding%20Tolerations%20in%20Kubernetes/">Understanding Tolerations in Kubernetes</a></li>
-<li><a href="Taint-Tolerations/What%20is%20taint%20_/">What is taint _</a></li>
-</ul>
-<h2 id="traefik">Traefik</h2>
-<ul>
-<li><a href="Traefik/Securing%20Traefik%20Dashboard%20with%20Keycloak%20%28OIDC%20or%20OAuth2%29/">Securing Traefik Dashboard with Keycloak (OIDC or OAuth2)</a></li>
-<li><a href="Traefik/Traefik%20Dashboard%20only%20for%20Visibility%20not%20for%20Administration/">Traefik Dashboard only for Visibility not for Administration</a></li>
-</ul>
-<h2 id="ubuntu">Ubuntu</h2>
-<ul>
-<li><a href="Ubuntu/list%20of%20good%20tools%20to%20extract%20rar%20part%20files/">list of good tools to extract rar part files</a></li>
-</ul>
-<h2 id="etcdctl">Etcdctl</h2>
-<ul>
-<li><a href="etcdctl/Install%20etcdctl%20tool%20with%20supported%20versions/">Install etcdctl tool with supported versions</a></li>
-<li><a href="etcdctl/check%20etcd%20is%20running/">check etcd is running</a></li>
-<li><a href="etcdctl/etcdctl%20commands%20for%20get%2C%20put%2C%20snapshot%20save%20and%20restore/">etcdctl commands for get, put, snapshot save and restore</a></li>
-</ul>
-<h2 id="fluentd">Fluentd</h2>
-<ul>
-<li><a href="fluentd/Fluentd%20DaemonSet%20deployment%20YAML%20for%20Kubernetes/">Fluentd DaemonSet deployment YAML for Kubernetes</a></li>
-<li><a href="fluentd/Fluentd%20can%20run%20on%20standalone%20VMs/">Fluentd can run on standalone VMs</a></li>
-<li><a href="fluentd/Fluentd%20in%20Kubernetes/">Fluentd in Kubernetes</a></li>
-<li><a href="fluentd/Fluentd%20install%20and%20config%20steps%20for%20a%20Linux%20VM/">Fluentd install and config steps for a Linux VM</a></li>
-</ul>
-<h2 id="mailhog">Mailhog</h2>
-<ul>
-<li><a href="mailhog/Steps%20to%20deploy%20MailHog%20with%20Ingress/">Steps to deploy MailHog with Ingress</a></li>
-</ul>
-<h2 id="mkdocs">Mkdocs</h2>
-<ul>
-<li><a href="mkdocs/mkdocs%20to%20github%20projects/">mkdocs to github projects</a></li>
-</ul>
-<h2 id="overrides">Overrides</h2>
-<h2 id="python">Python</h2>
-<ul>
-<li><a href="python/mkdocs%20to%20github%20pages/">mkdocs to github pages</a></li>
-<li><a href="python/python%20pyautogui/">python pyautogui</a></li>
-</ul>
+<p>Would you like a hands-on lab or a specific CRD example (e.g., <code>PostgresOperator</code>)? Let me know! 🚀</p>
 
 
 
@@ -4475,10 +4322,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.top"], "search": "assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.top"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
     
   </body>

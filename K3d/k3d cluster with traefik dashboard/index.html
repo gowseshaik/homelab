@@ -9,20 +9,22 @@
       
       
       
+        <link rel="prev" href="../K3d%20cluster%20setup/">
       
-        <link rel="next" href="API-Resources/k8s-api-resources-details/">
+      
+        <link rel="next" href="../k3d%20with%20traefik%20dashboard%20setup/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
-        <title>Homelabs</title>
+        <title>K3d cluster with traefik dashboard - Homelabs</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
       
       
 
@@ -41,7 +43,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -60,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#my-knowledge-base" class="md-skip">
+        <a href="#1-enable-traefik-dashboard-via-k3s-arg" class="md-skip">
           Skip to content
         </a>
       
@@ -76,7 +78,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Homelabs" class="md-header__button md-logo" aria-label="Homelabs" data-md-component="logo">
+    <a href="../.." title="Homelabs" class="md-header__button md-logo" aria-label="Homelabs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              My Knowledge Base
+              K3d cluster with traefik dashboard
             
           </span>
         </div>
@@ -174,7 +176,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Homelabs" class="md-nav__button md-logo" aria-label="Homelabs" data-md-component="logo">
+    <a href="../.." title="Homelabs" class="md-nav__button md-logo" aria-label="Homelabs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -189,32 +191,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    My Knowledge Base
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -225,350 +205,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#api-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      Api-resources
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#crds" class="md-nav__link">
-    <span class="md-ellipsis">
-      Crds
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cert-manager" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cert-manager
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#choosing-kubernetes-by-usecases" class="md-nav__link">
-    <span class="md-ellipsis">
-      Choosing kubernetes by usecases
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#clusteraccess" class="md-nav__link">
-    <span class="md-ellipsis">
-      Clusteraccess
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configmaps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configmaps
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cronjob" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cronjob
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#daemonsets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Daemonsets
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dailytasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dailytasks
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deployments" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deployments
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#docker-podman-images" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker-podman-images
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#helm" class="md-nav__link">
-    <span class="md-ellipsis">
-      Helm
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ingress" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ingress
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#k3d" class="md-nav__link">
-    <span class="md-ellipsis">
-      K3d
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#keycloak" class="md-nav__link">
-    <span class="md-ellipsis">
-      Keycloak
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#keywords" class="md-nav__link">
-    <span class="md-ellipsis">
-      Keywords
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#loadbalancers-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      Loadbalancers types
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#longhorn" class="md-nav__link">
-    <span class="md-ellipsis">
-      Longhorn
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#namespace" class="md-nav__link">
-    <span class="md-ellipsis">
-      Namespace
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nexus" class="md-nav__link">
-    <span class="md-ellipsis">
-      Nexus
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#opentofu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Opentofu
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pv-n-pvcs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pv n pvcs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pods
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Secrets
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#serviceaccounts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Serviceaccounts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#services" class="md-nav__link">
-    <span class="md-ellipsis">
-      Services
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#statefulsets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Statefulsets
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#taint-tolerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Taint-tolerations
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#traefik" class="md-nav__link">
-    <span class="md-ellipsis">
-      Traefik
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ubuntu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ubuntu
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#etcdctl" class="md-nav__link">
-    <span class="md-ellipsis">
-      Etcdctl
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fluentd" class="md-nav__link">
-    <span class="md-ellipsis">
-      Fluentd
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mailhog" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mailhog
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mkdocs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mkdocs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overrides" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overrides
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#python" class="md-nav__link">
-    <span class="md-ellipsis">
-      Python
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -618,7 +254,7 @@
   
   
     <li class="md-nav__item">
-      <a href="API-Resources/k8s-api-resources-details/" class="md-nav__link">
+      <a href="../../API-Resources/k8s-api-resources-details/" class="md-nav__link">
         
   
   
@@ -686,7 +322,7 @@
   
   
     <li class="md-nav__item">
-      <a href="CRDs/Custom%20Resource%20Definition/" class="md-nav__link">
+      <a href="../../CRDs/Custom%20Resource%20Definition/" class="md-nav__link">
         
   
   
@@ -709,7 +345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="CRDs/Deep%20Dive%20into%20CRDs/" class="md-nav__link">
+      <a href="../../CRDs/Deep%20Dive%20into%20CRDs/" class="md-nav__link">
         
   
   
@@ -777,7 +413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Cert-manager/install-cert-manager/" class="md-nav__link">
+      <a href="../../Cert-manager/install-cert-manager/" class="md-nav__link">
         
   
   
@@ -845,7 +481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Choosing%20Kubernetes%20by%20Usecases/Kubernetes%20cluster%20types%20on%20your%20usecases/" class="md-nav__link">
+      <a href="../../Choosing%20Kubernetes%20by%20Usecases/Kubernetes%20cluster%20types%20on%20your%20usecases/" class="md-nav__link">
         
   
   
@@ -913,7 +549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ClusterAccess/Configuring%20Keycloak%20for%20Kubernetes%20authentication/" class="md-nav__link">
+      <a href="../../ClusterAccess/Configuring%20Keycloak%20for%20Kubernetes%20authentication/" class="md-nav__link">
         
   
   
@@ -936,7 +572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ClusterAccess/Create%20a%20kubeconfig%20file%20for%20the%20external%20users/" class="md-nav__link">
+      <a href="../../ClusterAccess/Create%20a%20kubeconfig%20file%20for%20the%20external%20users/" class="md-nav__link">
         
   
   
@@ -1004,7 +640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ConfigMaps/ConfigMap%20is%20a%20Kubernetes%20object%20used%20to%20store%20non-confidential%20data/" class="md-nav__link">
+      <a href="../../ConfigMaps/ConfigMap%20is%20a%20Kubernetes%20object%20used%20to%20store%20non-confidential%20data/" class="md-nav__link">
         
   
   
@@ -1072,7 +708,7 @@
   
   
     <li class="md-nav__item">
-      <a href="CronJob/CronJobs%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../CronJob/CronJobs%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -1095,7 +731,7 @@
   
   
     <li class="md-nav__item">
-      <a href="CronJob/Real-World%20CronJob%20Example-%20Automated%20Database%20Backup%20n%20Cleanup/" class="md-nav__link">
+      <a href="../../CronJob/Real-World%20CronJob%20Example-%20Automated%20Database%20Backup%20n%20Cleanup/" class="md-nav__link">
         
   
   
@@ -1118,7 +754,7 @@
   
   
     <li class="md-nav__item">
-      <a href="CronJob/k8s%20Jobs/" class="md-nav__link">
+      <a href="../../CronJob/k8s%20Jobs/" class="md-nav__link">
         
   
   
@@ -1186,7 +822,7 @@
   
   
     <li class="md-nav__item">
-      <a href="DaemonSets/CronJobs%20Vs%20DaemonSets/" class="md-nav__link">
+      <a href="../../DaemonSets/CronJobs%20Vs%20DaemonSets/" class="md-nav__link">
         
   
   
@@ -1209,7 +845,7 @@
   
   
     <li class="md-nav__item">
-      <a href="DaemonSets/DaemonSets%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../DaemonSets/DaemonSets%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -1277,7 +913,7 @@
   
   
     <li class="md-nav__item">
-      <a href="DailyTasks/pod%20exec%20and%20extract%20info%20from%20pods/" class="md-nav__link">
+      <a href="../../DailyTasks/pod%20exec%20and%20extract%20info%20from%20pods/" class="md-nav__link">
         
   
   
@@ -1345,7 +981,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Deployments/Deployments%20Strategies/" class="md-nav__link">
+      <a href="../../Deployments/Deployments%20Strategies/" class="md-nav__link">
         
   
   
@@ -1368,7 +1004,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Deployments/Deployments%20in%20kubernetes/" class="md-nav__link">
+      <a href="../../Deployments/Deployments%20in%20kubernetes/" class="md-nav__link">
         
   
   
@@ -1436,7 +1072,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Docker-Podman-images/Enterprise-grade%20images%20as%20safer/" class="md-nav__link">
+      <a href="../../Docker-Podman-images/Enterprise-grade%20images%20as%20safer/" class="md-nav__link">
         
   
   
@@ -1459,7 +1095,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Docker-Podman-images/Tag%20images%20to%20push/" class="md-nav__link">
+      <a href="../../Docker-Podman-images/Tag%20images%20to%20push/" class="md-nav__link">
         
   
   
@@ -1482,7 +1118,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Docker-Podman-images/scp%20images%20in%20tar%20format%20to%20remote%20hosts%20-%20offline/" class="md-nav__link">
+      <a href="../../Docker-Podman-images/scp%20images%20in%20tar%20format%20to%20remote%20hosts%20-%20offline/" class="md-nav__link">
         
   
   
@@ -1550,7 +1186,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Helm/1.%20Check%20Helm%20Release%28deployed%29%20Information/" class="md-nav__link">
+      <a href="../../Helm/1.%20Check%20Helm%20Release%28deployed%29%20Information/" class="md-nav__link">
         
   
   
@@ -1573,7 +1209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Helm/Checking%20Traefik%20Helm%20Configuration/" class="md-nav__link">
+      <a href="../../Helm/Checking%20Traefik%20Helm%20Configuration/" class="md-nav__link">
         
   
   
@@ -1596,7 +1232,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Helm/Helm%20Commands%20-%20Cheatsheet/" class="md-nav__link">
+      <a href="../../Helm/Helm%20Commands%20-%20Cheatsheet/" class="md-nav__link">
         
   
   
@@ -1619,7 +1255,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Helm/Helm%20charts%20for%20deployments/" class="md-nav__link">
+      <a href="../../Helm/Helm%20charts%20for%20deployments/" class="md-nav__link">
         
   
   
@@ -1687,7 +1323,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/1.%20Host%20based%20ingress%20routing/" class="md-nav__link">
+      <a href="../../Ingress/1.%20Host%20based%20ingress%20routing/" class="md-nav__link">
         
   
   
@@ -1710,7 +1346,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/2.%20Path%20based%20ingress%20routing/" class="md-nav__link">
+      <a href="../../Ingress/2.%20Path%20based%20ingress%20routing/" class="md-nav__link">
         
   
   
@@ -1733,7 +1369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/3.%20subdomain%20based%20ingress%20routing/" class="md-nav__link">
+      <a href="../../Ingress/3.%20subdomain%20based%20ingress%20routing/" class="md-nav__link">
         
   
   
@@ -1756,7 +1392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/Access%20Traefik%20Dashboard/" class="md-nav__link">
+      <a href="../../Ingress/Access%20Traefik%20Dashboard/" class="md-nav__link">
         
   
   
@@ -1779,7 +1415,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/Check%20Traefik%20Configuration%20logs%20for%20config%20issues/" class="md-nav__link">
+      <a href="../../Ingress/Check%20Traefik%20Configuration%20logs%20for%20config%20issues/" class="md-nav__link">
         
   
   
@@ -1802,7 +1438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/Diff%20between%20Host-path-subdomain%20based%20ingress%20routing/" class="md-nav__link">
+      <a href="../../Ingress/Diff%20between%20Host-path-subdomain%20based%20ingress%20routing/" class="md-nav__link">
         
   
   
@@ -1825,7 +1461,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/How%20to%20confirm%20Ingress%20resources%2C%20routes%2C%20and%20active%20requests/" class="md-nav__link">
+      <a href="../../Ingress/How%20to%20confirm%20Ingress%20resources%2C%20routes%2C%20and%20active%20requests/" class="md-nav__link">
         
   
   
@@ -1848,7 +1484,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/How%20to%20confirm%20the%20exact%20Ingress%20Controller%20used%20in%20your%20Kubernetes%20cluster/" class="md-nav__link">
+      <a href="../../Ingress/How%20to%20confirm%20the%20exact%20Ingress%20Controller%20used%20in%20your%20Kubernetes%20cluster/" class="md-nav__link">
         
   
   
@@ -1871,7 +1507,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ingress/Types%20of%20Ingress%20Controllers%20with%20their%20pros%2C%20cons%2C%20and%20pricing%20details/" class="md-nav__link">
+      <a href="../../Ingress/Types%20of%20Ingress%20Controllers%20with%20their%20pros%2C%20cons%2C%20and%20pricing%20details/" class="md-nav__link">
         
   
   
@@ -1898,18 +1534,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" checked>
         
           
           <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
@@ -1925,7 +1563,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_15">
             <span class="md-nav__icon md-icon"></span>
             K3d
@@ -1939,7 +1577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="K3d/Complete%20Traefik%20Setup%20Guide%20for%20k3d/" class="md-nav__link">
+      <a href="../Complete%20Traefik%20Setup%20Guide%20for%20k3d/" class="md-nav__link">
         
   
   
@@ -1962,7 +1600,7 @@
   
   
     <li class="md-nav__item">
-      <a href="K3d/K3d%20cluster%20setup/" class="md-nav__link">
+      <a href="../K3d%20cluster%20setup/" class="md-nav__link">
         
   
   
@@ -1982,10 +1620,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="K3d/k3d%20cluster%20with%20traefik%20dashboard/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    K3d cluster with traefik dashboard
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1996,6 +1654,201 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-enable-traefik-dashboard-via-k3s-arg" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ 1. Enable Traefik Dashboard via k3s Arg
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-expose-traefik-dashboard-port-default-is-9000" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ 2. Expose Traefik Dashboard Port (default is 9000)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-config-k3d-configyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ ✅ Final Config: k3d-config.yaml
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solution-use-k3s-arg-from-cli-instead" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Solution: Use --k3s-arg from CLI instead
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-alias-for-simplicity" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Optional: Alias for Simplicity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-cant-we-use-these-values-in-config-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      why can't we use these values in config file ?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="why can&#39;t we use these values in config file ?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-you-cant-use-k3s-in-k3d-config-anymore" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔴 Why you can't use k3s: in k3d config anymore
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Current Rule:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#legacy-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 Legacy Compatibility?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-traefik-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 Access Traefik Dashboard:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-check-for-docker-conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ 1. Check for Docker Conflicts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-make-sure-ports-arent-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ 2. Make Sure Ports Aren’t Already in Use
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-disable-traefik-temporarily" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ 3. Disable Traefik Temporarily
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-increase-docker-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ 4. Increase Docker Memory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-check-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ 5. Check Logs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix-recreate-cluster-with-dashboard-enabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Fix: Recreate Cluster with Dashboard Enabled
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-also-expose-dashboard-via-ingress-cleaner" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 Optional: Also expose dashboard via ingress (cleaner)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steps-to-add-entry-in-etchosts" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Steps to Add Entry in /etc/hosts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#after-that" class="md-nav__link">
+    <span class="md-ellipsis">
+      📌 After That
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2008,7 +1861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="K3d/k3d%20with%20traefik%20dashboard%20setup/" class="md-nav__link">
+      <a href="../k3d%20with%20traefik%20dashboard%20setup/" class="md-nav__link">
         
   
   
@@ -2076,7 +1929,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Keycloak/Efficient%20way%20to%20to%20Set%20Up%20Keycloak%20%28with%20Helm%29/" class="md-nav__link">
+      <a href="../../Keycloak/Efficient%20way%20to%20to%20Set%20Up%20Keycloak%20%28with%20Helm%29/" class="md-nav__link">
         
   
   
@@ -2144,7 +1997,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Keywords/Must%20know%20keywords/" class="md-nav__link">
+      <a href="../../Keywords/Must%20know%20keywords/" class="md-nav__link">
         
   
   
@@ -2212,7 +2065,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Loadbalancers%20Types/Loadbalancer%20Types/" class="md-nav__link">
+      <a href="../../Loadbalancers%20Types/Loadbalancer%20Types/" class="md-nav__link">
         
   
   
@@ -2235,7 +2088,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Loadbalancers%20Types/Reverse%20proxy%20means/" class="md-nav__link">
+      <a href="../../Loadbalancers%20Types/Reverse%20proxy%20means/" class="md-nav__link">
         
   
   
@@ -2303,7 +2156,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Longhorn/Common%20Kubernetes%20storage%20types/" class="md-nav__link">
+      <a href="../../Longhorn/Common%20Kubernetes%20storage%20types/" class="md-nav__link">
         
   
   
@@ -2326,7 +2179,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Longhorn/Hands-On%20-%20Deploying%20Longhorn%20on%20Kubernetes/" class="md-nav__link">
+      <a href="../../Longhorn/Hands-On%20-%20Deploying%20Longhorn%20on%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -2349,7 +2202,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Longhorn/Longhorn%20Access%20Modes%20%26%20Volume%20Resizing%20Guide/" class="md-nav__link">
+      <a href="../../Longhorn/Longhorn%20Access%20Modes%20%26%20Volume%20Resizing%20Guide/" class="md-nav__link">
         
   
   
@@ -2372,7 +2225,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Longhorn/Longhorn%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Longhorn/Longhorn%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -2440,7 +2293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Namespace/Delete%20all%20resources%20from%20namespace/" class="md-nav__link">
+      <a href="../../Namespace/Delete%20all%20resources%20from%20namespace/" class="md-nav__link">
         
   
   
@@ -2508,7 +2361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Nexus/Create%20a%20Docker%20image%20registry%20in%20Nexus/" class="md-nav__link">
+      <a href="../../Nexus/Create%20a%20Docker%20image%20registry%20in%20Nexus/" class="md-nav__link">
         
   
   
@@ -2576,7 +2429,7 @@
   
   
     <li class="md-nav__item">
-      <a href="OpenTofu/About%20OpenTofu/" class="md-nav__link">
+      <a href="../../OpenTofu/About%20OpenTofu/" class="md-nav__link">
         
   
   
@@ -2644,7 +2497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="PV%20n%20PVCs/PV%27s%20and%20PVC%27s%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../PV%20n%20PVCs/PV%27s%20and%20PVC%27s%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -2712,7 +2565,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Pods/Debug%20pod%20-%20create%20for%20test%20and%20delete%20on%20post%20test/" class="md-nav__link">
+      <a href="../../Pods/Debug%20pod%20-%20create%20for%20test%20and%20delete%20on%20post%20test/" class="md-nav__link">
         
   
   
@@ -2735,7 +2588,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Pods/List%20all%20pods%20with%20their%20init%20containers%20and%20sidecar%20containers%20info/" class="md-nav__link">
+      <a href="../../Pods/List%20all%20pods%20with%20their%20init%20containers%20and%20sidecar%20containers%20info/" class="md-nav__link">
         
   
   
@@ -2758,7 +2611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Pods/Types%20of%20Containers%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Pods/Types%20of%20Containers%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -2826,7 +2679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Secrets/Deep%20Dive%20into%20securing%20secrets%20in%20specific%20envs/" class="md-nav__link">
+      <a href="../../Secrets/Deep%20Dive%20into%20securing%20secrets%20in%20specific%20envs/" class="md-nav__link">
         
   
   
@@ -2849,7 +2702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Secrets/Secrets%20management%20for%20sensitive%20information/" class="md-nav__link">
+      <a href="../../Secrets/Secrets%20management%20for%20sensitive%20information/" class="md-nav__link">
         
   
   
@@ -2872,7 +2725,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Secrets/Some%20real-world%20examples%20of%20secrets%20mismanagement/" class="md-nav__link">
+      <a href="../../Secrets/Some%20real-world%20examples%20of%20secrets%20mismanagement/" class="md-nav__link">
         
   
   
@@ -2940,7 +2793,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ServiceAccounts/ServiceAccounts%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../ServiceAccounts/ServiceAccounts%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3008,7 +2861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Services/Headless%20Services%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Services/Headless%20Services%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3031,7 +2884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Services/Types%20of%20Kubernetes%20Services/" class="md-nav__link">
+      <a href="../../Services/Types%20of%20Kubernetes%20Services/" class="md-nav__link">
         
   
   
@@ -3099,7 +2952,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Statefulsets/Updating%20a%20MongoDB%20StatefulSet%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Statefulsets/Updating%20a%20MongoDB%20StatefulSet%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3122,7 +2975,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Statefulsets/W3H-Understanding%20StatefulSets%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Statefulsets/W3H-Understanding%20StatefulSets%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3190,7 +3043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Taint-Tolerations/Understanding%20Tolerations%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../Taint-Tolerations/Understanding%20Tolerations%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3213,7 +3066,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Taint-Tolerations/What%20is%20taint%20_/" class="md-nav__link">
+      <a href="../../Taint-Tolerations/What%20is%20taint%20_/" class="md-nav__link">
         
   
   
@@ -3281,7 +3134,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Traefik/Securing%20Traefik%20Dashboard%20with%20Keycloak%20%28OIDC%20or%20OAuth2%29/" class="md-nav__link">
+      <a href="../../Traefik/Securing%20Traefik%20Dashboard%20with%20Keycloak%20%28OIDC%20or%20OAuth2%29/" class="md-nav__link">
         
   
   
@@ -3304,7 +3157,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Traefik/Traefik%20Dashboard%20only%20for%20Visibility%20not%20for%20Administration/" class="md-nav__link">
+      <a href="../../Traefik/Traefik%20Dashboard%20only%20for%20Visibility%20not%20for%20Administration/" class="md-nav__link">
         
   
   
@@ -3372,7 +3225,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ubuntu/list%20of%20good%20tools%20to%20extract%20rar%20part%20files/" class="md-nav__link">
+      <a href="../../Ubuntu/list%20of%20good%20tools%20to%20extract%20rar%20part%20files/" class="md-nav__link">
         
   
   
@@ -3440,7 +3293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="etcdctl/Install%20etcdctl%20tool%20with%20supported%20versions/" class="md-nav__link">
+      <a href="../../etcdctl/Install%20etcdctl%20tool%20with%20supported%20versions/" class="md-nav__link">
         
   
   
@@ -3463,7 +3316,7 @@
   
   
     <li class="md-nav__item">
-      <a href="etcdctl/check%20etcd%20is%20running/" class="md-nav__link">
+      <a href="../../etcdctl/check%20etcd%20is%20running/" class="md-nav__link">
         
   
   
@@ -3486,7 +3339,7 @@
   
   
     <li class="md-nav__item">
-      <a href="etcdctl/etcdctl%20commands%20for%20get%2C%20put%2C%20snapshot%20save%20and%20restore/" class="md-nav__link">
+      <a href="../../etcdctl/etcdctl%20commands%20for%20get%2C%20put%2C%20snapshot%20save%20and%20restore/" class="md-nav__link">
         
   
   
@@ -3554,7 +3407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="fluentd/Fluentd%20DaemonSet%20deployment%20YAML%20for%20Kubernetes/" class="md-nav__link">
+      <a href="../../fluentd/Fluentd%20DaemonSet%20deployment%20YAML%20for%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3577,7 +3430,7 @@
   
   
     <li class="md-nav__item">
-      <a href="fluentd/Fluentd%20can%20run%20on%20standalone%20VMs/" class="md-nav__link">
+      <a href="../../fluentd/Fluentd%20can%20run%20on%20standalone%20VMs/" class="md-nav__link">
         
   
   
@@ -3600,7 +3453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="fluentd/Fluentd%20in%20Kubernetes/" class="md-nav__link">
+      <a href="../../fluentd/Fluentd%20in%20Kubernetes/" class="md-nav__link">
         
   
   
@@ -3623,7 +3476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="fluentd/Fluentd%20install%20and%20config%20steps%20for%20a%20Linux%20VM/" class="md-nav__link">
+      <a href="../../fluentd/Fluentd%20install%20and%20config%20steps%20for%20a%20Linux%20VM/" class="md-nav__link">
         
   
   
@@ -3691,7 +3544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mailhog/Steps%20to%20deploy%20MailHog%20with%20Ingress/" class="md-nav__link">
+      <a href="../../mailhog/Steps%20to%20deploy%20MailHog%20with%20Ingress/" class="md-nav__link">
         
   
   
@@ -3759,7 +3612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mkdocs/mkdocs%20to%20github%20projects/" class="md-nav__link">
+      <a href="../../mkdocs/mkdocs%20to%20github%20projects/" class="md-nav__link">
         
   
   
@@ -3827,7 +3680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="python/mkdocs%20to%20github%20pages/" class="md-nav__link">
+      <a href="../../python/mkdocs%20to%20github%20pages/" class="md-nav__link">
         
   
   
@@ -3850,7 +3703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="python/python%20pyautogui/" class="md-nav__link">
+      <a href="../../python/python%20pyautogui/" class="md-nav__link">
         
   
   
@@ -3890,8 +3743,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -3900,326 +3751,179 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#api-resources" class="md-nav__link">
+  <a href="#1-enable-traefik-dashboard-via-k3s-arg" class="md-nav__link">
     <span class="md-ellipsis">
-      Api-resources
+      ✅ 1. Enable Traefik Dashboard via k3s Arg
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#crds" class="md-nav__link">
+  <a href="#2-expose-traefik-dashboard-port-default-is-9000" class="md-nav__link">
     <span class="md-ellipsis">
-      Crds
+      ✅ 2. Expose Traefik Dashboard Port (default is 9000)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#cert-manager" class="md-nav__link">
+  <a href="#final-config-k3d-configyaml" class="md-nav__link">
     <span class="md-ellipsis">
-      Cert-manager
+      ✅ ✅ Final Config: k3d-config.yaml
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#choosing-kubernetes-by-usecases" class="md-nav__link">
+  <a href="#solution-use-k3s-arg-from-cli-instead" class="md-nav__link">
     <span class="md-ellipsis">
-      Choosing kubernetes by usecases
+      ✅ Solution: Use --k3s-arg from CLI instead
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#clusteraccess" class="md-nav__link">
+  <a href="#optional-alias-for-simplicity" class="md-nav__link">
     <span class="md-ellipsis">
-      Clusteraccess
+      ✅ Optional: Alias for Simplicity
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configmaps" class="md-nav__link">
+  <a href="#why-cant-we-use-these-values-in-config-file" class="md-nav__link">
     <span class="md-ellipsis">
-      Configmaps
+      why can't we use these values in config file ?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="why can&#39;t we use these values in config file ?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-you-cant-use-k3s-in-k3d-config-anymore" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔴 Why you can't use k3s: in k3d config anymore
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#cronjob" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#current-rule" class="md-nav__link">
     <span class="md-ellipsis">
-      Cronjob
+      ✅ Current Rule:
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#daemonsets" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#legacy-compatibility" class="md-nav__link">
     <span class="md-ellipsis">
-      Daemonsets
+      🔄 Legacy Compatibility?
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#dailytasks" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#access-traefik-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
-      Dailytasks
+      🌐 Access Traefik Dashboard:
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#deployments" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#1-check-for-docker-conflicts" class="md-nav__link">
     <span class="md-ellipsis">
-      Deployments
+      ✅ 1. Check for Docker Conflicts
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#docker-podman-images" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#2-make-sure-ports-arent-already-in-use" class="md-nav__link">
     <span class="md-ellipsis">
-      Docker-podman-images
+      ✅ 2. Make Sure Ports Aren’t Already in Use
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#helm" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#3-disable-traefik-temporarily" class="md-nav__link">
     <span class="md-ellipsis">
-      Helm
+      ✅ 3. Disable Traefik Temporarily
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#ingress" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#4-increase-docker-memory" class="md-nav__link">
     <span class="md-ellipsis">
-      Ingress
+      ✅ 4. Increase Docker Memory
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#k3d" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#5-check-logs" class="md-nav__link">
     <span class="md-ellipsis">
-      K3d
+      ✅ 5. Check Logs
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#keycloak" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#fix-recreate-cluster-with-dashboard-enabled" class="md-nav__link">
     <span class="md-ellipsis">
-      Keycloak
+      ✅ Fix: Recreate Cluster with Dashboard Enabled
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#keywords" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#optional-also-expose-dashboard-via-ingress-cleaner" class="md-nav__link">
     <span class="md-ellipsis">
-      Keywords
+      🔍 Optional: Also expose dashboard via ingress (cleaner)
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#loadbalancers-types" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#steps-to-add-entry-in-etchosts" class="md-nav__link">
     <span class="md-ellipsis">
-      Loadbalancers types
+      ✅ Steps to Add Entry in /etc/hosts
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#longhorn" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#after-that" class="md-nav__link">
     <span class="md-ellipsis">
-      Longhorn
+      📌 After That
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#namespace" class="md-nav__link">
-    <span class="md-ellipsis">
-      Namespace
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nexus" class="md-nav__link">
-    <span class="md-ellipsis">
-      Nexus
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#opentofu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Opentofu
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pv-n-pvcs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pv n pvcs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pods
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Secrets
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#serviceaccounts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Serviceaccounts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#services" class="md-nav__link">
-    <span class="md-ellipsis">
-      Services
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#statefulsets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Statefulsets
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#taint-tolerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Taint-tolerations
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#traefik" class="md-nav__link">
-    <span class="md-ellipsis">
-      Traefik
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ubuntu" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ubuntu
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#etcdctl" class="md-nav__link">
-    <span class="md-ellipsis">
-      Etcdctl
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fluentd" class="md-nav__link">
-    <span class="md-ellipsis">
-      Fluentd
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mailhog" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mailhog
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mkdocs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mkdocs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overrides" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overrides
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#python" class="md-nav__link">
-    <span class="md-ellipsis">
-      Python
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4239,188 +3943,277 @@
 
 
 
-<h1 id="my-knowledge-base">My Knowledge Base</h1>
-<h2 id="api-resources">Api-resources</h2>
+  <h1>K3d cluster with traefik dashboard</h1>
+
+<p>To enable and expose the <strong>Traefik dashboard</strong> in <code>k3d</code> at cluster creation, you need to do <strong>two things</strong> in the config file:</p>
+<hr />
+<h3 id="1-enable-traefik-dashboard-via-k3s-arg">✅ 1. Enable Traefik Dashboard via k3s Arg</h3>
+<p>Add this under the <code>k3s</code> section:</p>
+<pre><code class="language-yaml">k3s:
+  extraArgs:
+    - arg: &quot;--traefik.dashboard=true&quot;
+      nodeFilters:
+        - server:*
+</code></pre>
+<hr />
+<h3 id="2-expose-traefik-dashboard-port-default-is-9000">✅ 2. Expose Traefik Dashboard Port (default is 9000)</h3>
+<p>Add this under the <code>ports:</code> section:</p>
+<pre><code class="language-yaml">  - port: 30900:9000      # Traefik Dashboard
+    nodeFilters:
+      - loadbalancer
+</code></pre>
+<hr />
+<h3 id="final-config-k3d-configyaml">✅ ✅ Final Config: <code>k3d-config.yaml</code></h3>
+<pre><code>apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: dev-cluster
+servers: 1
+agents: 2
+ports:
+  - port: 30907:30907    # Cyclops / Minio
+    nodeFilters:
+      - loadbalancer
+  - port: 31446:31446    # Jenkins
+    nodeFilters:
+      - loadbalancer
+  - port: 31447:31447    # ArgoCD
+    nodeFilters:
+      - loadbalancer
+  - port: 31448:31448    # Gitea
+    nodeFilters:
+      - loadbalancer
+  - port: 30080:80       # Ingress HTTP
+    nodeFilters:
+      - loadbalancer
+  - port: 30443:443      # Ingress HTTPS
+    nodeFilters:
+      - loadbalancer
+  - port: 31000:31000    # Longhorn UI (optional)
+    nodeFilters:
+      - loadbalancer
+  - port: 30090:30090    # Prometheus (optional)
+    nodeFilters:
+      - loadbalancer
+  - port: 30099:3000     # Grafana (optional)
+    nodeFilters:
+      - loadbalancer
+  - port: 30900:9000     # Traefik Dashboard
+    nodeFilters:
+      - loadbalancer
+k3s:                      # not working for k3s version, so you can remove it.
+  extraArgs:
+    - arg: &quot;--traefik.dashboard=true&quot;
+      nodeFilters:
+        - server:*
+</code></pre>
+<hr />
+<p>but it getting below error for k3s </p>
+<pre><code class="language-bash"> k3d cluster create --config dev-cluster.yaml
+FATA[0000] Schema Validation failed for config file dev-cluster.yaml: - (root): Additional property k3s is not allowed
+</code></pre>
+<p>You're seeing the error because <code>k3d v5+</code> <strong>no longer supports</strong> the <code>k3s:</code> block in the config file.<br />
+That field is <strong>not valid</strong> in the latest schema (v1alpha5).</p>
+<hr />
+<h3 id="solution-use-k3s-arg-from-cli-instead">✅ <strong>Solution: Use <code>--k3s-arg</code> from CLI instead</strong></h3>
+<p>Yes, exactly.</p>
+<p>Remove the entire <code>k3s:</code> section from your config file.</p>
+<p>Use only the cluster definition and port mappings in the YAML, then pass k3s arguments like <code>--traefik.dashboard=true</code> via the CLI when creating the cluster.</p>
+<p>Since the config file doesn't support <code>k3s:</code> anymore, you can enable the Traefik dashboard like this:</p>
+<pre><code class="language-bash">k3d cluster create --config dev-cluster.yaml \
+  --k3s-arg &quot;--traefik.dashboard=true@server:0&quot;
+</code></pre>
+<p>This passes the arg <code>--traefik.dashboard=true</code> to the first server node.</p>
+<hr />
+<h3 id="optional-alias-for-simplicity">✅ Optional: Alias for Simplicity</h3>
+<p>If you want to reuse this, put it in a shell script:</p>
+<pre><code class="language-bash">#!/bin/bash
+k3d cluster create --config dev-cluster.yaml \
+  --k3s-arg &quot;--traefik.dashboard=true@server:*&quot;
+</code></pre>
+<hr />
+<p>Let me know if you want a workaround to fully control the k3s startup args from config (e.g., custom entrypoint container).</p>
+<h2 id="why-cant-we-use-these-values-in-config-file">why can't we use these values in config file ?</h2>
+<p>Great question — here’s a straight answer:</p>
+<hr />
+<h3 id="why-you-cant-use-k3s-in-k3d-config-anymore">🔴 <strong>Why you can't use <code>k3s:</code> in <code>k3d</code> config anymore</strong></h3>
 <ul>
-<li><a href="API-Resources/k8s-api-resources-details/">k8s-api-resources-details</a></li>
+<li>
+<p>In <strong><code>k3d v5+</code></strong>, the config file follows a <strong>strict JSON schema</strong> (<code>v1alpha5</code>) that <strong>does not include</strong> a <code>k3s:</code> field.</p>
+</li>
+<li>
+<p>The field was <strong>removed</strong> to simplify the config format and separate cluster structure (YAML) from runtime behavior (CLI flags).</p>
+</li>
+<li>
+<p>So, <code>k3s:</code> and <code>extraArgs</code> were <strong>deprecated</strong> and <strong>replaced</strong> by <code>--k3s-arg</code> flags in the CLI only.</p>
+</li>
 </ul>
-<h2 id="crds">Crds</h2>
+<hr />
+<h3 id="current-rule">✅ Current Rule:</h3>
 <ul>
-<li><a href="CRDs/Custom%20Resource%20Definition/">Custom Resource Definition</a></li>
-<li><a href="CRDs/Deep%20Dive%20into%20CRDs/">Deep Dive into CRDs</a></li>
+<li>
+<p>Cluster topology (nodes, ports, volumes, registries) → ✅ defined in YAML.</p>
+</li>
+<li>
+<p>Runtime args (like <code>--traefik.*</code>, <code>--disable-*</code>, <code>--tls-san</code>, etc.) → ❌ not in YAML → ✅ only via CLI <code>--k3s-arg</code>.</p>
+</li>
 </ul>
-<h2 id="cert-manager">Cert-manager</h2>
+<hr />
+<h3 id="legacy-compatibility">🔄 Legacy Compatibility?</h3>
+<p>No official backward support. Even if you add <code>k3s:</code> in the YAML, <code>k3d</code> will <strong>fail schema validation</strong>.</p>
+<hr />
+<p>Let me know if you want to build a wrapper that merges YAML + CLI for easier reuse.</p>
+<h3 id="access-traefik-dashboard">🌐 Access Traefik Dashboard:</h3>
+<p>After cluster creation:</p>
+<pre><code>http://localhost:30900/dashboard/
+</code></pre>
+<p>Let me know if you want to secure it or route it via Ingress host like <code>traefik.localhost</code>.</p>
+<p>If your cluster creation <strong>hangs on starting the server</strong>, here are the most common and effective fixes:</p>
+<hr />
+<h3 id="1-check-for-docker-conflicts">✅ <strong>1. Check for Docker Conflicts</strong></h3>
+<p>Run this to see if containers are stuck or conflicting:</p>
+<pre><code class="language-bash">docker ps -a | grep k3d
+</code></pre>
+<p>If any containers are in a <code>Created</code> or <code>Exited</code> state, clean them:</p>
+<pre><code class="language-bash">k3d cluster delete dev-cluster
+docker system prune -f
+</code></pre>
+<p>Then try again.</p>
+<hr />
+<h3 id="2-make-sure-ports-arent-already-in-use">✅ <strong>2. Make Sure Ports Aren’t Already in Use</strong></h3>
+<p>You’re mapping ports like <code>31446</code>, <code>31447</code>, etc.<br />
+Run:</p>
+<pre><code class="language-bash">lsof -i -P -n | grep LISTEN
+</code></pre>
+<p>Look for conflicting ports. If a port is in use, either:</p>
 <ul>
-<li><a href="Cert-manager/install-cert-manager/">install-cert-manager</a></li>
+<li>
+<p>Stop the app using it, or</p>
+</li>
+<li>
+<p>Change the port in <code>dev-cluster.yaml</code></p>
+</li>
 </ul>
-<h2 id="choosing-kubernetes-by-usecases">Choosing kubernetes by usecases</h2>
+<hr />
+<h3 id="3-disable-traefik-temporarily">✅ <strong>3. Disable Traefik Temporarily</strong></h3>
+<p>Test if the arg is causing the issue by removing it:</p>
+<pre><code class="language-bash">k3d cluster create --config dev-cluster.yaml
+</code></pre>
+<p>If that works, try:</p>
+<pre><code class="language-bash">k3d cluster create --config dev-cluster.yaml --k3s-arg &quot;--disable=traefik@server:0&quot;
+</code></pre>
+<p>Then install your own ingress later (e.g., Traefik/NGINX manually).</p>
+<hr />
+<h3 id="4-increase-docker-memory">✅ <strong>4. Increase Docker Memory</strong></h3>
+<p>If your Docker is low on memory (common with 2+ agents), bump it up in Docker Desktop:</p>
+<blockquote>
+<p>Settings → Resources → Memory → Increase to at least <strong>4–6 GB</strong></p>
+</blockquote>
+<hr />
+<h3 id="5-check-logs">✅ <strong>5. Check Logs</strong></h3>
+<p>If it still hangs, grab logs from the server node:</p>
+<pre><code class="language-bash">docker logs k3d-dev-cluster-server-0
+</code></pre>
+<p>Paste the output here if you'd like me to help debug further.</p>
+<p>Thanks — this confirms it clearly:</p>
+<blockquote>
+<p><strong>Port 9000 is mapped</strong>, but <strong>nothing is listening on it inside the cluster.</strong><br />
+→ That means the <strong>Traefik dashboard is not enabled</strong> in your k3s setup.</p>
+</blockquote>
+<hr />
+<h3 id="fix-recreate-cluster-with-dashboard-enabled">✅ Fix: Recreate Cluster with Dashboard Enabled</h3>
+<p>You need to add this flag during cluster creation:</p>
+<pre><code class="language-bash">--k3s-arg &quot;--traefik.dashboard=true@server:0&quot;
+</code></pre>
+<p>So update your <code>k3d</code> create command like:</p>
+<pre><code class="language-bash">k3d cluster delete dev-cluster
+
+k3d cluster create --config dev-cluster.yaml \
+  --k3s-arg &quot;--traefik.dashboard=true@server:0&quot;
+</code></pre>
+<p>Make sure this is already in your <code>dev-cluster.yaml</code>:</p>
+<pre><code class="language-yaml">- port: 30900:9000
+  nodeFilters:
+    - loadbalancer
+</code></pre>
+<hr />
+<h3 id="optional-also-expose-dashboard-via-ingress-cleaner">🔍 Optional: Also expose dashboard via ingress (cleaner)</h3>
+<p>You can create an ingress like this (after cluster up):</p>
+<pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-dashboard
+  namespace: kube-system
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: kube-system-auth@kubernetescrd
+spec:
+  rules:
+    - host: traefik.localhost
+      http:
+        paths:
+          - path: /dashboard/
+            pathType: Prefix
+            backend:
+              service:
+                name: traefik
+                port:
+                  number: 9000
+</code></pre>
+<p>Then access:</p>
+<pre><code>http://traefik.localhost/dashboard/
+</code></pre>
+<p>(using a <code>hosts</code> file entry if needed)</p>
+<hr />
+<p>Let me know once you recreate the cluster with the dashboard flag — you should be able to access:</p>
+<pre><code>http://localhost:30900/dashboard/
+</code></pre>
+<p>To access <code>http://traefik.localhost/dashboard/</code> from your browser, you need to map the custom domain <code>traefik.localhost</code> to your local machine.</p>
+<hr />
+<h3 id="steps-to-add-entry-in-etchosts">✅ Steps to Add Entry in <code>/etc/hosts</code></h3>
+<ol>
+<li>
+<p>Open the <code>/etc/hosts</code> file with root privileges:</p>
+<p><code>bash
+sudo nano /etc/hosts</code></p>
+</li>
+<li>
+<p>Add this line at the end of the file:</p>
+<p><code>127.0.0.1 traefik.localhost</code></p>
+</li>
+<li>
+<p>Save and exit:</p>
 <ul>
-<li><a href="Choosing%20Kubernetes%20by%20Usecases/Kubernetes%20cluster%20types%20on%20your%20usecases/">Kubernetes cluster types on your usecases</a></li>
+<li>
+<p>Press <code>Ctrl + O</code> to save</p>
+</li>
+<li>
+<p>Press <code>Enter</code> to confirm</p>
+</li>
+<li>
+<p>Press <code>Ctrl + X</code> to exit</p>
+</li>
 </ul>
-<h2 id="clusteraccess">Clusteraccess</h2>
+</li>
+</ol>
+<hr />
+<h3 id="after-that">📌 After That</h3>
+<p>Make sure:</p>
 <ul>
-<li><a href="ClusterAccess/Configuring%20Keycloak%20for%20Kubernetes%20authentication/">Configuring Keycloak for Kubernetes authentication</a></li>
-<li><a href="ClusterAccess/Create%20a%20kubeconfig%20file%20for%20the%20external%20users/">Create a kubeconfig file for the external users</a></li>
+<li>
+<p>You’ve created an <strong>Ingress</strong> with <code>host: traefik.localhost</code></p>
+</li>
+<li>
+<p>Traefik is listening on port 80 (mapped via <code>30080:80@loadbalancer</code>)</p>
+</li>
 </ul>
-<h2 id="configmaps">Configmaps</h2>
-<ul>
-<li><a href="ConfigMaps/ConfigMap%20is%20a%20Kubernetes%20object%20used%20to%20store%20non-confidential%20data/">ConfigMap is a Kubernetes object used to store non-confidential data</a></li>
-</ul>
-<h2 id="cronjob">Cronjob</h2>
-<ul>
-<li><a href="CronJob/CronJobs%20in%20Kubernetes/">CronJobs in Kubernetes</a></li>
-<li><a href="CronJob/Real-World%20CronJob%20Example-%20Automated%20Database%20Backup%20n%20Cleanup/">Real-World CronJob Example- Automated Database Backup n Cleanup</a></li>
-<li><a href="CronJob/k8s%20Jobs/">k8s Jobs</a></li>
-</ul>
-<h2 id="daemonsets">Daemonsets</h2>
-<ul>
-<li><a href="DaemonSets/CronJobs%20Vs%20DaemonSets/">CronJobs Vs DaemonSets</a></li>
-<li><a href="DaemonSets/DaemonSets%20in%20Kubernetes/">DaemonSets in Kubernetes</a></li>
-</ul>
-<h2 id="dailytasks">Dailytasks</h2>
-<ul>
-<li><a href="DailyTasks/pod%20exec%20and%20extract%20info%20from%20pods/">pod exec and extract info from pods</a></li>
-</ul>
-<h2 id="deployments">Deployments</h2>
-<ul>
-<li><a href="Deployments/Deployments%20Strategies/">Deployments Strategies</a></li>
-<li><a href="Deployments/Deployments%20in%20kubernetes/">Deployments in kubernetes</a></li>
-</ul>
-<h2 id="docker-podman-images">Docker-podman-images</h2>
-<ul>
-<li><a href="Docker-Podman-images/Enterprise-grade%20images%20as%20safer/">Enterprise-grade images as safer</a></li>
-<li><a href="Docker-Podman-images/Tag%20images%20to%20push/">Tag images to push</a></li>
-<li><a href="Docker-Podman-images/scp%20images%20in%20tar%20format%20to%20remote%20hosts%20-%20offline/">scp images in tar format to remote hosts - offline</a></li>
-</ul>
-<h2 id="helm">Helm</h2>
-<ul>
-<li><a href="Helm/1.%20Check%20Helm%20Release%28deployed%29%20Information/">1. Check Helm Release(deployed) Information</a></li>
-<li><a href="Helm/Checking%20Traefik%20Helm%20Configuration/">Checking Traefik Helm Configuration</a></li>
-<li><a href="Helm/Helm%20Commands%20-%20Cheatsheet/">Helm Commands - Cheatsheet</a></li>
-<li><a href="Helm/Helm%20charts%20for%20deployments/">Helm charts for deployments</a></li>
-</ul>
-<h2 id="ingress">Ingress</h2>
-<ul>
-<li><a href="Ingress/1.%20Host%20based%20ingress%20routing/">1. Host based ingress routing</a></li>
-<li><a href="Ingress/2.%20Path%20based%20ingress%20routing/">2. Path based ingress routing</a></li>
-<li><a href="Ingress/3.%20subdomain%20based%20ingress%20routing/">3. subdomain based ingress routing</a></li>
-<li><a href="Ingress/Access%20Traefik%20Dashboard/">Access Traefik Dashboard</a></li>
-<li><a href="Ingress/Check%20Traefik%20Configuration%20logs%20for%20config%20issues/">Check Traefik Configuration logs for config issues</a></li>
-<li><a href="Ingress/Diff%20between%20Host-path-subdomain%20based%20ingress%20routing/">Diff between Host-path-subdomain based ingress routing</a></li>
-<li><a href="Ingress/How%20to%20confirm%20Ingress%20resources%2C%20routes%2C%20and%20active%20requests/">How to confirm Ingress resources, routes, and active requests</a></li>
-<li><a href="Ingress/How%20to%20confirm%20the%20exact%20Ingress%20Controller%20used%20in%20your%20Kubernetes%20cluster/">How to confirm the exact Ingress Controller used in your Kubernetes cluster</a></li>
-<li><a href="Ingress/Types%20of%20Ingress%20Controllers%20with%20their%20pros%2C%20cons%2C%20and%20pricing%20details/">Types of Ingress Controllers with their pros, cons, and pricing details</a></li>
-</ul>
-<h2 id="k3d">K3d</h2>
-<ul>
-<li><a href="K3d/Complete%20Traefik%20Setup%20Guide%20for%20k3d/">Complete Traefik Setup Guide for k3d</a></li>
-<li><a href="K3d/K3d%20cluster%20setup/">K3d cluster setup</a></li>
-<li><a href="K3d/k3d%20cluster%20with%20traefik%20dashboard/">k3d cluster with traefik dashboard</a></li>
-<li><a href="K3d/k3d%20with%20traefik%20dashboard%20setup/">k3d with traefik dashboard setup</a></li>
-</ul>
-<h2 id="keycloak">Keycloak</h2>
-<ul>
-<li><a href="Keycloak/Efficient%20way%20to%20to%20Set%20Up%20Keycloak%20%28with%20Helm%29/">Efficient way to to Set Up Keycloak (with Helm)</a></li>
-</ul>
-<h2 id="keywords">Keywords</h2>
-<ul>
-<li><a href="Keywords/Must%20know%20keywords/">Must know keywords</a></li>
-</ul>
-<h2 id="loadbalancers-types">Loadbalancers types</h2>
-<ul>
-<li><a href="Loadbalancers%20Types/Loadbalancer%20Types/">Loadbalancer Types</a></li>
-<li><a href="Loadbalancers%20Types/Reverse%20proxy%20means/">Reverse proxy means</a></li>
-</ul>
-<h2 id="longhorn">Longhorn</h2>
-<ul>
-<li><a href="Longhorn/Common%20Kubernetes%20storage%20types/">Common Kubernetes storage types</a></li>
-<li><a href="Longhorn/Hands-On%20-%20Deploying%20Longhorn%20on%20Kubernetes/">Hands-On - Deploying Longhorn on Kubernetes</a></li>
-<li><a href="Longhorn/Longhorn%20Access%20Modes%20%26%20Volume%20Resizing%20Guide/">Longhorn Access Modes &amp; Volume Resizing Guide</a></li>
-<li><a href="Longhorn/Longhorn%20in%20Kubernetes/">Longhorn in Kubernetes</a></li>
-</ul>
-<h2 id="namespace">Namespace</h2>
-<ul>
-<li><a href="Namespace/Delete%20all%20resources%20from%20namespace/">Delete all resources from namespace</a></li>
-</ul>
-<h2 id="nexus">Nexus</h2>
-<ul>
-<li><a href="Nexus/Create%20a%20Docker%20image%20registry%20in%20Nexus/">Create a Docker image registry in Nexus</a></li>
-</ul>
-<h2 id="opentofu">Opentofu</h2>
-<ul>
-<li><a href="OpenTofu/About%20OpenTofu/">About OpenTofu</a></li>
-</ul>
-<h2 id="pv-n-pvcs">Pv n pvcs</h2>
-<ul>
-<li><a href="PV%20n%20PVCs/PV%27s%20and%20PVC%27s%20in%20Kubernetes/">PV's and PVC's in Kubernetes</a></li>
-</ul>
-<h2 id="pods">Pods</h2>
-<ul>
-<li><a href="Pods/Debug%20pod%20-%20create%20for%20test%20and%20delete%20on%20post%20test/">Debug pod - create for test and delete on post test</a></li>
-<li><a href="Pods/List%20all%20pods%20with%20their%20init%20containers%20and%20sidecar%20containers%20info/">List all pods with their init containers and sidecar containers info</a></li>
-<li><a href="Pods/Types%20of%20Containers%20in%20Kubernetes/">Types of Containers in Kubernetes</a></li>
-</ul>
-<h2 id="secrets">Secrets</h2>
-<ul>
-<li><a href="Secrets/Deep%20Dive%20into%20securing%20secrets%20in%20specific%20envs/">Deep Dive into securing secrets in specific envs</a></li>
-<li><a href="Secrets/Secrets%20management%20for%20sensitive%20information/">Secrets management for sensitive information</a></li>
-<li><a href="Secrets/Some%20real-world%20examples%20of%20secrets%20mismanagement/">Some real-world examples of secrets mismanagement</a></li>
-</ul>
-<h2 id="serviceaccounts">Serviceaccounts</h2>
-<ul>
-<li><a href="ServiceAccounts/ServiceAccounts%20in%20Kubernetes/">ServiceAccounts in Kubernetes</a></li>
-</ul>
-<h2 id="services">Services</h2>
-<ul>
-<li><a href="Services/Headless%20Services%20in%20Kubernetes/">Headless Services in Kubernetes</a></li>
-<li><a href="Services/Types%20of%20Kubernetes%20Services/">Types of Kubernetes Services</a></li>
-</ul>
-<h2 id="statefulsets">Statefulsets</h2>
-<ul>
-<li><a href="Statefulsets/Updating%20a%20MongoDB%20StatefulSet%20in%20Kubernetes/">Updating a MongoDB StatefulSet in Kubernetes</a></li>
-<li><a href="Statefulsets/W3H-Understanding%20StatefulSets%20in%20Kubernetes/">W3H-Understanding StatefulSets in Kubernetes</a></li>
-</ul>
-<h2 id="taint-tolerations">Taint-tolerations</h2>
-<ul>
-<li><a href="Taint-Tolerations/Understanding%20Tolerations%20in%20Kubernetes/">Understanding Tolerations in Kubernetes</a></li>
-<li><a href="Taint-Tolerations/What%20is%20taint%20_/">What is taint _</a></li>
-</ul>
-<h2 id="traefik">Traefik</h2>
-<ul>
-<li><a href="Traefik/Securing%20Traefik%20Dashboard%20with%20Keycloak%20%28OIDC%20or%20OAuth2%29/">Securing Traefik Dashboard with Keycloak (OIDC or OAuth2)</a></li>
-<li><a href="Traefik/Traefik%20Dashboard%20only%20for%20Visibility%20not%20for%20Administration/">Traefik Dashboard only for Visibility not for Administration</a></li>
-</ul>
-<h2 id="ubuntu">Ubuntu</h2>
-<ul>
-<li><a href="Ubuntu/list%20of%20good%20tools%20to%20extract%20rar%20part%20files/">list of good tools to extract rar part files</a></li>
-</ul>
-<h2 id="etcdctl">Etcdctl</h2>
-<ul>
-<li><a href="etcdctl/Install%20etcdctl%20tool%20with%20supported%20versions/">Install etcdctl tool with supported versions</a></li>
-<li><a href="etcdctl/check%20etcd%20is%20running/">check etcd is running</a></li>
-<li><a href="etcdctl/etcdctl%20commands%20for%20get%2C%20put%2C%20snapshot%20save%20and%20restore/">etcdctl commands for get, put, snapshot save and restore</a></li>
-</ul>
-<h2 id="fluentd">Fluentd</h2>
-<ul>
-<li><a href="fluentd/Fluentd%20DaemonSet%20deployment%20YAML%20for%20Kubernetes/">Fluentd DaemonSet deployment YAML for Kubernetes</a></li>
-<li><a href="fluentd/Fluentd%20can%20run%20on%20standalone%20VMs/">Fluentd can run on standalone VMs</a></li>
-<li><a href="fluentd/Fluentd%20in%20Kubernetes/">Fluentd in Kubernetes</a></li>
-<li><a href="fluentd/Fluentd%20install%20and%20config%20steps%20for%20a%20Linux%20VM/">Fluentd install and config steps for a Linux VM</a></li>
-</ul>
-<h2 id="mailhog">Mailhog</h2>
-<ul>
-<li><a href="mailhog/Steps%20to%20deploy%20MailHog%20with%20Ingress/">Steps to deploy MailHog with Ingress</a></li>
-</ul>
-<h2 id="mkdocs">Mkdocs</h2>
-<ul>
-<li><a href="mkdocs/mkdocs%20to%20github%20projects/">mkdocs to github projects</a></li>
-</ul>
-<h2 id="overrides">Overrides</h2>
-<h2 id="python">Python</h2>
-<ul>
-<li><a href="python/mkdocs%20to%20github%20pages/">mkdocs to github pages</a></li>
-<li><a href="python/python%20pyautogui/">python pyautogui</a></li>
-</ul>
+<p>Then access:</p>
+<pre><code>http://traefik.localhost:30080/dashboard/
+</code></pre>
+<blockquote>
+<p>(or just <code>http://traefik.localhost/dashboard/</code> if port 80 is directly forwarded)</p>
+</blockquote>
+<p>Let me know if you want the ingress YAML again.</p>
 
 
 
@@ -4475,10 +4268,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.top"], "search": "assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.top"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
     
   </body>
