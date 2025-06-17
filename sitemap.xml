@@ -9,6 +9,10 @@
          <lastmod>2025-06-17</lastmod>
     </url>
     <url>
+         <loc>https://github.com/gowseshaik/homelab/Alertmanager/how%20to%20configure%20Alertmanager%20on%20K3d/</loc>
+         <lastmod>2025-06-17</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/gowseshaik/homelab/CRDs/Custom%20Resource%20Definition/</loc>
          <lastmod>2025-06-17</lastmod>
     </url>
@@ -209,6 +213,14 @@
          <lastmod>2025-06-17</lastmod>
     </url>
     <url>
+         <loc>https://github.com/gowseshaik/homelab/Prometheus%20%2B%20Grafana/Expose%20Prometheus%20and%20Grafana%20using%20Ingress/</loc>
+         <lastmod>2025-06-17</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/Prometheus%20%2B%20Grafana/Set%20up%20Prometheus%20%2B%20Grafana%20for%20your%20Kubernetes%20K3d%20cluster/</loc>
+         <lastmod>2025-06-17</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/gowseshaik/homelab/Secrets/Deep%20Dive%20into%20securing%20secrets%20in%20specific%20envs/</loc>
          <lastmod>2025-06-17</lastmod>
     </url>
@@ -290,6 +302,10 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/mailhog/Steps%20to%20deploy%20MailHog%20with%20Ingress/</loc>
+         <lastmod>2025-06-17</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/mailhog/Usecase%20of%20mailhog/</loc>
          <lastmod>2025-06-17</lastmod>
     </url>
     <url>
