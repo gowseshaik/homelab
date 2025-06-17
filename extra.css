@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Fira+Code&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=JetBrains+Mono&display=swap');
 
 :root {
-  --md-text-font: 'Caveat', cursive;
-  --md-code-font: 'Fira Code', monospace;
+  --md-text-font: 'Patrick Hand', cursive;
+  --md-code-font: 'JetBrains Mono', monospace;
 }
