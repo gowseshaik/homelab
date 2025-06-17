@@ -1,0 +1,849 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/K3d/k3d%20with%20traefik%20dashboard%20setup/">
+      
+      
+      
+      
+      <link rel="icon" href="../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>K3d with traefik dashboard setup - Gouse Shaik</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-updated-k3d-cluster-config-2-create-the-cluster" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Gouse Shaik" class="md-header__button md-logo" aria-label="Gouse Shaik" data-md-component="logo">
+      
+  <img src="../../images/logo-design-4.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gouse Shaik
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              K3d with traefik dashboard setup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/gowseshaik/homelab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Homelab
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Gouse Shaik" class="md-nav__button md-logo" aria-label="Gouse Shaik" data-md-component="logo">
+      
+  <img src="../../images/logo-design-4.png" alt="logo">
+
+    </a>
+    Gouse Shaik
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/gowseshaik/homelab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Homelab
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<p>Your config file looks good, but I notice a few things to optimize. Here's an improved version with some corrections and the steps to deploy Traefik with dashboard access:</p>
+<h2 id="1-updated-k3d-cluster-config-2-create-the-cluster">1. Updated k3d cluster config## 2. Create the cluster<a class="headerlink" href="#1-updated-k3d-cluster-config-2-create-the-cluster" title="Permanent link">&para;</a></h2>
+<p>create dev-cluster confi file to setup a cluster by disabling traefik 
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k3d.io/v1alpha5</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Simple</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev-cluster</span>
+<span class="nt">servers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nt">agents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="nt">ports</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30907:30907</span><span class="w">    </span><span class="c1"># Cyclops / Minio</span>
+<span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">31446:31446</span><span class="w">    </span><span class="c1"># Jenkins</span>
+<span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">31447:31447</span><span class="w">    </span><span class="c1"># ArgoCD</span>
+<span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">31448:31448</span><span class="w">    </span><span class="c1"># Gitea</span>
+<span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30080:80</span><span class="w">       </span><span class="c1"># Ingress HTTP</span>
+<span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30443:443</span><span class="w">      </span><span class="c1"># Ingress HTTPS</span>
+<span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">31000:31000</span><span class="w">    </span><span class="c1"># Longhorn UI (optional)</span>
+<span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30090:30090</span><span class="w">    </span><span class="c1"># Prometheus (optional)</span>
+<span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30099:30099</span><span class="w">    </span><span class="c1"># Grafana (optional) - Fixed port mapping</span>
+<span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30900:30900</span><span class="w">    </span><span class="c1"># Traefik Dashboard - Fixed port mapping</span>
+<span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
+<span class="nt">options</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">k3s</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">extraArgs</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">arg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--disable=traefik</span>
+<span class="w">        </span><span class="nt">nodeFilters</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">server:*</span>
+<span class="w">  </span><span class="nt">kubeconfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">updateDefaultKubeconfig</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">switchCurrentContext</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+create a cluster with this config file
+<div class="highlight"><pre><span></span><code>k3d<span class="w"> </span>cluster<span class="w"> </span>create<span class="w"> </span>--config<span class="w"> </span>dev-cluster.yaml
+</code></pre></div></p>
+<h2 id="3-install-traefik-using-helm">3. Install Traefik using Helm<a class="headerlink" href="#3-install-traefik-using-helm" title="Permanent link">&para;</a></h2>
+<p>Since we're disabling the default k3s Traefik, we'll install it manually with custom configuration:</p>
+<p>create helm traefik values:
+<div class="highlight"><pre><span></span><code><span class="c1"># Traefik Helm Chart Values</span>
+<span class="nt">image</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.0&quot;</span>
+
+<span class="nt">deployment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+
+<span class="nt">service</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NodePort</span>
+<span class="w">  </span><span class="c1"># Map standard ports</span>
+<span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">web</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">      </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30080</span>
+<span class="w">    </span><span class="nt">websecure</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
+<span class="w">      </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30443</span>
+<span class="w">    </span><span class="nt">traefik</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
+<span class="w">      </span><span class="nt">expose</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30900</span>
+
+<span class="c1"># Enable dashboard</span>
+<span class="nt">ingressRoute</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dashboard</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">matchRule</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Host(`traefik.localhost`) &amp;&amp; (PathPrefix(`/dashboard`) || PathPrefix(`/api`))</span>
+<span class="w">    </span><span class="nt">entryPoints</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;traefik&quot;</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># API and Dashboard settings</span>
+<span class="nt">api</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dashboard</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">insecure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># For development only</span>
+
+<span class="c1"># Logs</span>
+<span class="nt">logs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">general</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INFO</span>
+<span class="w">  </span><span class="nt">access</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="c1"># Enable providers</span>
+<span class="nt">providers</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kubernetesCRD</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">allowCrossNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">kubernetesIngress</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="c1"># Global arguments</span>
+<span class="nt">globalArguments</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--api.insecure=true&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--api.dashboard=true&quot;</span>
+
+<span class="c1"># Additional arguments</span>
+<span class="nt">additionalArguments</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--log.level=INFO&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--accesslog=true&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--metrics.prometheus=true&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--metrics.prometheus.entryPoint=metrics&quot;</span>
+
+<span class="c1"># Prometheus metrics</span>
+<span class="nt">metrics</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">prometheus</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">entryPoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">metrics</span>
+
+<span class="c1"># Enable persistent storage for certificates (optional)</span>
+<span class="nt">persistence</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Add Traefik Helm repository</span>
+helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>traefik<span class="w"> </span>https://traefik.github.io/charts
+helm<span class="w"> </span>repo<span class="w"> </span>update
+
+<span class="c1"># Create namespace</span>
+kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>traefik-system
+
+<span class="c1"># Create Traefik values file</span>
+<span class="c1">## 4. Install Traefik</span>
+
+helm<span class="w"> </span>install<span class="w"> </span>traefik<span class="w"> </span>traefik/traefik<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--namespace<span class="w"> </span>traefik-system<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--values<span class="w"> </span>traefik-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--wait
+</code></pre></div>
+<h2 id="5-verify-traefik-installation">5. Verify Traefik installation<a class="headerlink" href="#5-verify-traefik-installation" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check pods</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>traefik-system
+
+<span class="c1"># Check services</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>traefik-system
+
+<span class="c1"># Check if dashboard is accessible</span>
+curl<span class="w"> </span>http://localhost:30900/dashboard/
+<span class="c1"># checked not accessible, getting below error</span>
+gouse@gouse:~$<span class="w"> </span>curl<span class="w"> </span>http://localhost:30900/dashboard/
+curl:<span class="w"> </span><span class="o">(</span><span class="m">52</span><span class="o">)</span><span class="w"> </span>Empty<span class="w"> </span>reply<span class="w"> </span>from<span class="w"> </span>server
+</code></pre></div>
+<h2 id="6-create-an-ingressroute-for-easier-dashboard-access-optionalapply-the-ingressroute">6. Create an IngressRoute for easier dashboard access (optional)Apply the IngressRoute:<a class="headerlink" href="#6-create-an-ingressroute-for-easier-dashboard-access-optionalapply-the-ingressroute" title="Permanent link">&para;</a></h2>
+<p>create traefik dashboard ingress route traefik-dashboard-ingress.yaml
+<div class="highlight"><pre><span></span><code>apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+  namespace: traefik-system
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`traefik.dev.local`)
+      kind: Rule
+      services:
+        - name: api@internal
+          kind: TraefikService
+---
+# Optional: Middleware for basic auth
+apiVersion: v1
+kind: Secret
+metadata:
+  name: traefik-dashboard-auth
+  namespace: traefik-system
+type: kubernetes.io/basic-auth
+stringData:
+  username: admin
+  password: changeme
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-dashboard-auth
+  namespace: traefik-system
+spec:
+  basicAuth:
+    secret: traefik-dashboard-auth
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>traefik-dashboard-ingress.yaml
+
+gouse@gouse:~/DevOps/k3d$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>traefik-dashboard-ingress.yaml
+Warning:<span class="w"> </span>resource<span class="w"> </span>ingressroutes/traefik-dashboard<span class="w"> </span>is<span class="w"> </span>missing<span class="w"> </span>the<span class="w"> </span>kubectl.kubernetes.io/last-applied-configuration<span class="w"> </span>annotation<span class="w"> </span>which<span class="w"> </span>is<span class="w"> </span>required<span class="w"> </span>by<span class="w"> </span>kubectl<span class="w"> </span>apply.<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>should<span class="w"> </span>only<span class="w"> </span>be<span class="w"> </span>used<span class="w"> </span>on<span class="w"> </span>resources<span class="w"> </span>created<span class="w"> </span>declaratively<span class="w"> </span>by<span class="w"> </span>either<span class="w"> </span>kubectl<span class="w"> </span>create<span class="w"> </span>--save-config<span class="w"> </span>or<span class="w"> </span>kubectl<span class="w"> </span>apply.<span class="w"> </span>The<span class="w"> </span>missing<span class="w"> </span>annotation<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>patched<span class="w"> </span>automatically.
+ingressroute.traefik.io/traefik-dashboard<span class="w"> </span>configured
+secret/traefik-dashboard-auth<span class="w"> </span>created
+middleware.traefik.io/traefik-dashboard-auth<span class="w"> </span>created
+</code></pre></div>
+<h2 id="7-access-the-traefik-dashboard">7. Access the Traefik Dashboard<a class="headerlink" href="#7-access-the-traefik-dashboard" title="Permanent link">&para;</a></h2>
+<p>You can now access the Traefik dashboard in multiple ways:</p>
+<ol>
+<li><strong>Direct NodePort access</strong>: http://localhost:30900/dashboard/
+<div class="highlight"><pre><span></span><code>in browser, it tried but getting as below
+
+# The connection was reset
+The connection to the server was reset while the page was loading.
+</code></pre></div></li>
+<li><strong>Via Ingress</strong> (if you added the host to /etc/hosts): http://traefik.dev.local</li>
+</ol>
+<h2 id="8-deploy-a-sample-application-to-test-traefikdeploy-the-sample-app">8. Deploy a sample application to test TraefikDeploy the sample app:<a class="headerlink" href="#8-deploy-a-sample-application-to-test-traefikdeploy-the-sample-app" title="Permanent link">&para;</a></h2>
+<p>create a sample app:
+<div class="highlight"><pre><span></span><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whoami
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: whoami
+  template:
+    metadata:
+      labels:
+        app: whoami
+    spec:
+      containers:
+      - name: whoami
+        image: traefik/whoami
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoami
+  namespace: default
+spec:
+  selector:
+    app: whoami
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`whoami.dev.local`)
+      kind: Rule
+      services:
+        - name: whoami
+          port: 80
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>sample-app.yaml
+</code></pre></div>
+<h2 id="important-notes">Important Notes:<a class="headerlink" href="#important-notes" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Port mappings</strong>: I fixed the port mappings for Grafana and Traefik dashboard. They should map to the same ports (30099:30099 and 30900:30900).</p>
+</li>
+<li>
+<p><strong>Traefik installation</strong>: Since k3s comes with Traefik by default, I added the <code>--disable=traefik</code> flag to install our own version with custom configuration.</p>
+</li>
+<li>
+<p><strong>Dashboard access</strong>: The dashboard will be available at http://localhost:30900/dashboard/ (note the trailing slash).</p>
+</li>
+<li>
+<p><strong>Security</strong>: For production, always secure the dashboard with authentication and use HTTPS.</p>
+</li>
+<li>
+<p><strong>Host entries</strong>: Add these to your <code>/etc/hosts</code> file for easier access:</p>
+<div class="highlight"><pre><span></span><code>127.0.0.1 traefik.dev.local
+127.0.0.1 whoami.dev.local
+</code></pre></div>
+</li>
+</ol>
+<p>This setup gives you full control over Traefik configuration and makes it easy to add more services with their respective ingress routes.</p>
+<h1 id="post-above-setup-my-observations-on-not-working">post above setup, my observations on not working<a class="headerlink" href="#post-above-setup-my-observations-on-not-working" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><span class="err">i</span><span class="kc">n</span><span class="w"> </span><span class="err">my</span><span class="w"> </span><span class="err">k</span><span class="mi">3</span><span class="err">d</span><span class="w"> </span><span class="err">co</span><span class="kc">n</span><span class="err">i</span><span class="kc">f</span><span class="err">g</span><span class="w"> </span><span class="kc">f</span><span class="err">ile</span><span class="w"> </span><span class="err">i</span><span class="w"> </span><span class="err">rou</span><span class="kc">te</span><span class="err">d</span><span class="w"> </span><span class="err">wi</span><span class="kc">t</span><span class="err">h</span><span class="w"> </span><span class="err">below</span><span class="w"> </span><span class="err">de</span><span class="kc">ta</span><span class="err">ils</span><span class="w"> </span><span class="kc">f</span><span class="err">or</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">por</span><span class="kc">t</span><span class="p">:</span><span class="w"> </span><span class="mi">30900</span><span class="p">:</span><span class="mi">30900</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">Trae</span><span class="kc">f</span><span class="err">ik</span><span class="w"> </span><span class="err">Dashboard</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">Fixed</span><span class="w"> </span><span class="err">por</span><span class="kc">t</span><span class="w"> </span><span class="err">mappi</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="kc">n</span><span class="err">odeFil</span><span class="kc">ters</span><span class="p">:</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">loadbala</span><span class="kc">n</span><span class="err">cer</span>
+
+<span class="err">bu</span><span class="kc">t</span><span class="w"> </span><span class="err">crea</span><span class="kc">te</span><span class="err">d</span><span class="w"> </span><span class="err">service</span><span class="w"> </span><span class="err">wi</span><span class="kc">t</span><span class="err">h</span><span class="w"> </span><span class="err">di</span><span class="kc">fferent</span><span class="w"> </span><span class="err">por</span><span class="kc">t</span><span class="p">,</span><span class="w"> </span><span class="err">i</span><span class="w"> </span><span class="kc">t</span><span class="err">hi</span><span class="kc">n</span><span class="err">k</span><span class="w"> </span><span class="kc">t</span><span class="err">his</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">issue</span><span class="w"> </span><span class="err">which</span><span class="w"> </span><span class="kc">n</span><span class="err">o</span><span class="kc">t</span><span class="w"> </span><span class="err">able</span><span class="w"> </span><span class="kc">t</span><span class="err">o</span><span class="w"> </span><span class="err">access</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">curl</span><span class="w"> </span><span class="p">[</span><span class="err">h</span><span class="kc">tt</span><span class="err">p</span><span class="p">:</span><span class="c1">//localhost:30900/dashboard/](http://localhost:30900/dashboard/) curl: (52) Empty reply from server</span>
+
+<span class="err">$</span><span class="w"> </span><span class="err">kubec</span><span class="kc">tl</span><span class="w"> </span><span class="err">ge</span><span class="kc">t</span><span class="w"> </span><span class="err">svc</span><span class="w"> </span><span class="mi">-</span><span class="kc">n</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik</span><span class="mi">-</span><span class="err">sys</span><span class="kc">te</span><span class="err">m</span><span class="w"> </span><span class="err">NAME</span><span class="w"> </span><span class="err">TYPE</span><span class="w"> </span><span class="err">CLUSTER</span><span class="mi">-</span><span class="err">IP</span><span class="w"> </span><span class="err">EXTERNAL</span><span class="mi">-</span><span class="err">IP</span><span class="w"> </span><span class="err">PORT(S)</span><span class="w"> </span><span class="err">AGE</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik</span><span class="w"> </span><span class="err">NodePor</span><span class="kc">t</span><span class="w"> </span><span class="mf">10.43.48.148</span><span class="w"> </span><span class="err">&lt;</span><span class="kc">n</span><span class="err">o</span><span class="kc">ne</span><span class="err">&gt;</span><span class="w"> </span><span class="mi">80</span><span class="p">:</span><span class="mi">32560</span><span class="err">/TCP</span><span class="p">,</span><span class="mi">443</span><span class="p">:</span><span class="mi">31788</span><span class="err">/TCP</span><span class="w"> </span><span class="mi">22</span><span class="err">m</span>
+
+<span class="err">a</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">also</span><span class="w"> </span><span class="err">i</span><span class="w"> </span><span class="err">added</span><span class="w"> </span><span class="err">values</span><span class="w"> </span><span class="err">i</span><span class="kc">n</span><span class="w"> </span><span class="err">/e</span><span class="kc">t</span><span class="err">c/hos</span><span class="kc">ts</span><span class="w"> </span><span class="mf">127.0.0.1</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik.dev.local</span><span class="w"> </span><span class="mf">127.0.0.1</span><span class="w"> </span><span class="err">whoami.dev.local</span>
+
+<span class="err">a</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">i</span><span class="w"> </span><span class="kc">t</span><span class="err">hi</span><span class="kc">n</span><span class="err">k</span><span class="w"> </span><span class="err">i</span><span class="kc">t</span><span class="w"> </span><span class="err">should</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">loadbala</span><span class="kc">n</span><span class="err">cer</span><span class="w"> </span><span class="err">i</span><span class="kc">nstea</span><span class="err">d</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="kc">n</span><span class="err">odepor</span><span class="kc">t</span><span class="w"> </span><span class="kc">f</span><span class="err">or</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik</span><span class="mi">-</span><span class="err">sys</span><span class="kc">te</span><span class="err">m</span><span class="w"> </span><span class="err">svc</span><span class="w"> </span><span class="err">wha</span><span class="kc">t</span><span class="w"> </span><span class="err">could</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">issue</span><span class="p">,</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">t</span><span class="w"> </span><span class="err">i</span><span class="w"> </span><span class="err">have</span><span class="w"> </span><span class="kc">n</span><span class="err">o</span><span class="kc">t</span><span class="w"> </span><span class="err">able</span><span class="w"> </span><span class="kc">t</span><span class="err">o</span><span class="w"> </span><span class="err">access</span>
+</code></pre></div>
+<p>You're absolutely right! The issue is that the Traefik service isn't exposing port 9000 (the dashboard port) and the NodePort mappings don't match your k3d configuration. Let's fix this:</p>
+<h2 id="1-first-lets-check-the-current-traefik-service-configuration">1. First, let's check the current Traefik service configuration:<a class="headerlink" href="#1-first-lets-check-the-current-traefik-service-configuration" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>traefik<span class="w"> </span>-n<span class="w"> </span>traefik-system<span class="w"> </span>-o<span class="w"> </span>yaml
+</code></pre></div>
+<h2 id="2-update-the-traefik-values-file-to-properly-expose-the-dashboard-port-3-upgrade-traefik-with-the-corrected-configuration">2. Update the Traefik values file to properly expose the dashboard port:## 3. Upgrade Traefik with the corrected configuration:<a class="headerlink" href="#2-update-the-traefik-values-file-to-properly-expose-the-dashboard-port-3-upgrade-traefik-with-the-corrected-configuration" title="Permanent link">&para;</a></h2>
+<p>update traefik-values-fixed.yaml
+<div class="highlight"><pre><span></span><code># Traefik Helm Chart Values - Fixed Schema
+image:
+  tag: &quot;3.0&quot;
+
+deployment:
+  replicas: 1
+
+service:
+  type: NodePort
+  spec: {}
+
+ports:
+  web:
+    port: 8000
+    expose:
+      default: true
+    exposedPort: 80
+    nodePort: 30080
+    protocol: TCP
+  websecure:
+    port: 8443
+    expose:
+      default: true
+    exposedPort: 443
+    nodePort: 30443
+    protocol: TCP
+  traefik:
+    port: 9000
+    expose:
+      default: true
+    exposedPort: 9000
+    nodePort: 30900
+    protocol: TCP
+
+# Enable dashboard
+ingressRoute:
+  dashboard:
+    enabled: true
+    matchRule: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+    entryPoints: [&quot;traefik&quot;]
+
+# API and Dashboard settings
+api:
+  dashboard: true
+  debug: true
+  insecure: true  # For development only
+
+# Logs
+logs:
+  general:
+    level: INFO
+  access:
+    enabled: true
+
+# Enable providers
+providers:
+  kubernetesCRD:
+    enabled: true
+    allowCrossNamespace: true
+  kubernetesIngress:
+    enabled: true
+
+# Global arguments
+globalArguments:
+  - &quot;--api.insecure=true&quot;
+  - &quot;--api.dashboard=true&quot;
+
+# Additional arguments
+additionalArguments:
+  - &quot;--log.level=INFO&quot;
+  - &quot;--accesslog=true&quot;
+
+# Enable persistent storage for certificates (optional)
+persistence:
+  enabled: false
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>traefik<span class="w"> </span>traefik/traefik<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--namespace<span class="w"> </span>traefik-system<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--values<span class="w"> </span>traefik-values-fixed.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--wait
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="err">helm</span><span class="w"> </span><span class="err">upgrade</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik/</span><span class="kc">traef</span><span class="err">ik</span><span class="w">   </span><span class="mi">--</span><span class="kc">na</span><span class="err">mespace</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik</span><span class="mi">-</span><span class="err">sys</span><span class="kc">te</span><span class="err">m</span><span class="w">   </span><span class="mi">--</span><span class="err">values</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik</span><span class="mi">-</span><span class="err">values</span><span class="mi">-</span><span class="kc">f</span><span class="err">ixed.yaml</span><span class="w">   </span><span class="mi">--</span><span class="err">wai</span><span class="kc">t</span>
+<span class="err">Release</span><span class="w"> </span><span class="s2">&quot;traefik&quot;</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">bee</span><span class="kc">n</span><span class="w"> </span><span class="err">upgraded.</span><span class="w"> </span><span class="err">Happy</span><span class="w"> </span><span class="err">Helmi</span><span class="kc">n</span><span class="err">g!</span>
+<span class="err">NAME</span><span class="p">:</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik</span>
+<span class="err">LAST</span><span class="w"> </span><span class="err">DEPLOYED</span><span class="p">:</span><span class="w"> </span><span class="err">Sa</span><span class="kc">t</span><span class="w"> </span><span class="err">Ju</span><span class="kc">n</span><span class="w">  </span><span class="mi">7</span><span class="w"> </span><span class="mi">11</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">27</span><span class="w"> </span><span class="mi">2025</span>
+<span class="err">NAMESPACE</span><span class="p">:</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik</span><span class="mi">-</span><span class="err">sys</span><span class="kc">te</span><span class="err">m</span>
+<span class="err">STATUS</span><span class="p">:</span><span class="w"> </span><span class="err">deployed</span>
+<span class="err">REVISION</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
+<span class="err">TEST</span><span class="w"> </span><span class="err">SUITE</span><span class="p">:</span><span class="w"> </span><span class="err">No</span><span class="kc">ne</span>
+<span class="err">NOTES</span><span class="p">:</span>
+<span class="kc">traef</span><span class="err">ik</span><span class="w"> </span><span class="err">wi</span><span class="kc">t</span><span class="err">h</span><span class="w"> </span><span class="err">docker.io/</span><span class="kc">traef</span><span class="err">ik</span><span class="p">:</span><span class="mf">3.0</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">bee</span><span class="kc">n</span><span class="w"> </span><span class="err">deployed</span><span class="w"> </span><span class="err">success</span><span class="kc">full</span><span class="err">y</span><span class="w"> </span><span class="err">o</span><span class="kc">n</span><span class="w"> </span><span class="kc">traef</span><span class="err">ik</span><span class="mi">-</span><span class="err">sys</span><span class="kc">te</span><span class="err">m</span><span class="w"> </span><span class="kc">na</span><span class="err">mespace</span><span class="w"> </span><span class="err">!</span>
+</code></pre></div>
+<h2 id="4-if-the-above-doesnt-work-k3d-sometimes-has-issues-with-loadbalancer-type-lets-patch-the-service-directlyapply-the-patch">4. If the above doesn't work (k3d sometimes has issues with LoadBalancer type), let's patch the service directly:Apply the patch:<a class="headerlink" href="#4-if-the-above-doesnt-work-k3d-sometimes-has-issues-with-loadbalancer-type-lets-patch-the-service-directlyapply-the-patch" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>traefik-service-patch.yaml
+</code></pre></div>
+<h2 id="5-alternative-create-a-separate-service-for-the-dashboardbash">5. Alternative: Create a separate service for the dashboard:```bash<a class="headerlink" href="#5-alternative-create-a-separate-service-for-the-dashboardbash" title="Permanent link">&para;</a></h2>
+<p>kubectl apply -f traefik-dashboard-service.yaml</p>
+<div class="highlight"><pre><span></span><code>## 6. Verify the service has the correct ports:
+
+```bash
+# Check services
+kubectl get svc -n traefik-system
+
+# You should see something like:
+# NAME                TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)                                     AGE
+# traefik             NodePort   10.43.48.148    &lt;none&gt;        80:30080/TCP,443:30443/TCP,9000:30900/TCP  22m
+</code></pre></div>
+<h2 id="7-check-if-traefik-pod-is-exposing-port-9000">7. Check if Traefik pod is exposing port 9000:<a class="headerlink" href="#7-check-if-traefik-pod-is-exposing-port-9000" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Get pod name</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>traefik-system
+
+<span class="c1"># Check if port 9000 is exposed</span>
+kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>traefik-system<span class="w"> </span>&lt;traefik-pod-name&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s2">&quot;Ports:&quot;</span>
+</code></pre></div>
+<h2 id="8-test-access-again">8. Test access again:<a class="headerlink" href="#8-test-access-again" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Direct dashboard access</span>
+curl<span class="w"> </span>http://localhost:30900/dashboard/
+
+<span class="c1"># Or check the API endpoint</span>
+curl<span class="w"> </span>http://localhost:30900/api/rawdata
+</code></pre></div>
+<h2 id="9-if-still-having-issues-check-traefik-logs">9. If still having issues, check Traefik logs:<a class="headerlink" href="#9-if-still-having-issues-check-traefik-logs" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>traefik-system<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/name<span class="o">=</span>traefik<span class="w"> </span>-f
+</code></pre></div>
+<h2 id="quick-debug-commands">Quick Debug Commands:<a class="headerlink" href="#quick-debug-commands" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check if the port is actually listening</span>
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>traefik-system<span class="w"> </span>deployment/traefik<span class="w"> </span>--<span class="w"> </span>netstat<span class="w"> </span>-tlnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">9000</span>
+
+<span class="c1"># Port forward directly to test</span>
+kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>traefik-system<span class="w"> </span>deployment/traefik<span class="w"> </span><span class="m">9000</span>:9000
+<span class="c1"># Then try: curl http://localhost:9000/dashboard/</span>
+</code></pre></div>
+<p>The main issue was that the Traefik service wasn't configured to expose port 9000 with the correct NodePort (30900) that matches your k3d configuration. The above solutions should fix this issue.</p>
+<p>Still not working:
+<div class="highlight"><pre><span></span><code><span class="err">h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="c1">//traefik.dev.local:30900/dashboard/` also getting 404 error</span>
+</code></pre></div></p>
+<h1 id="check-traefik-deployment-arguments">Check Traefik deployment arguments:<a class="headerlink" href="#check-traefik-deployment-arguments" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code>kubectl get deployment traefik -n traefik-system -o yaml | grep -A 30 &quot;args:&quot;
+</code></pre></div>
+<h1 id="if-dashboard-is-not-enabled-lets-force-enable-it">If dashboard is not enabled, let's force enable it:<a class="headerlink" href="#if-dashboard-is-not-enabled-lets-force-enable-it" title="Permanent link">&para;</a></h1>
+<p>create a script and check
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Patch Traefik deployment to ensure dashboard is enabled</span>
+kubectl<span class="w"> </span>patch<span class="w"> </span>deployment<span class="w"> </span>traefik<span class="w"> </span>-n<span class="w"> </span>traefik-system<span class="w"> </span>--type<span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="w"> </span>-p<span class="o">=</span><span class="s1">&#39;[</span>
+<span class="s1">  {</span>
+<span class="s1">    &quot;op&quot;: &quot;add&quot;,</span>
+<span class="s1">    &quot;path&quot;: &quot;/spec/template/spec/containers/0/args/-&quot;,</span>
+<span class="s1">    &quot;value&quot;: &quot;--api.dashboard=true&quot;</span>
+<span class="s1">  },</span>
+<span class="s1">  {</span>
+<span class="s1">    &quot;op&quot;: &quot;add&quot;,</span>
+<span class="s1">    &quot;path&quot;: &quot;/spec/template/spec/containers/0/args/-&quot;,</span>
+<span class="s1">    &quot;value&quot;: &quot;--api.insecure=true&quot;</span>
+<span class="s1">  },</span>
+<span class="s1">  {</span>
+<span class="s1">    &quot;op&quot;: &quot;add&quot;,</span>
+<span class="s1">    &quot;path&quot;: &quot;/spec/template/spec/containers/0/args/-&quot;,</span>
+<span class="s1">    &quot;value&quot;: &quot;--api.debug=true&quot;</span>
+<span class="s1">  }</span>
+<span class="s1">]&#39;</span>
+
+<span class="c1"># Wait for rollout</span>
+kubectl<span class="w"> </span>rollout<span class="w"> </span>status<span class="w"> </span>deployment/traefik<span class="w"> </span>-n<span class="w"> </span>traefik-system
+
+<span class="c1"># Check the service has the traefik port</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>traefik<span class="w"> </span>-n<span class="w"> </span>traefik-system<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.spec.ports[?(@.name==&quot;traefik&quot;)].nodePort}&#39;</span>
+</code></pre></div></p>
+<h2 id="summary">Summary:<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p><strong>DO NOT USE</strong>: <code>https://traefik.dev.local:30900/dashboard/</code></p>
+<p><strong>USE ONE OF THESE</strong>:</p>
+<ul>
+<li><code>http://localhost:30900/dashboard/</code> (direct dashboard access)</li>
+<li><code>http://traefik.dev.local:30080/</code> (through ingress HTTP)</li>
+<li><code>https://traefik.dev.local:30443/</code> (through ingress HTTPS)</li>
+</ul>
+<p>The key is understanding that:</p>
+<ul>
+<li>Port 30900 = Direct dashboard port (use with localhost)</li>
+<li>Port 30080/30443 = Ingress ports (use with domain names)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.top", "navigation.sections", "content.code.copy", "content.tabs.link", "toc.integrate"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3 @@
+.md-header__button.md-logo img {
+  height: 48px !important;  /* default is ~24px */
+}
