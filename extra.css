@@ -1,3 +1,6 @@
-.md-header__button.md-logo img {
-  height: 48px !important;  /* default is ~24px */
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Fira+Code&display=swap');
+
+:root {
+  --md-text-font: 'Caveat', cursive;
+  --md-code-font: 'Fira Code', monospace;
 }
