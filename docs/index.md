@@ -1,5 +1,7 @@
 # Knowledge Base
 
+## .obsidian
+
 ## Api-resources
 - [k8s-api-resources-details](API-Resources/k8s-api-resources-details.md)
 
@@ -122,6 +124,9 @@
 ## Statefulsets
 - [Updating a MongoDB StatefulSet in Kubernetes](Statefulsets/Updating a MongoDB StatefulSet in Kubernetes.md)
 - [W3H-Understanding StatefulSets in Kubernetes](Statefulsets/W3H-Understanding StatefulSets in Kubernetes.md)
+
+## Storage
+- [Storage Types](Storage/Storage Types.md)
 
 ## Taint-tolerations
 - [Understanding Tolerations in Kubernetes](Taint-Tolerations/Understanding Tolerations in Kubernetes.md)

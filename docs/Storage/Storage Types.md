@@ -1,29 +1,33 @@
-|Feature|**Block Storage**|**File Storage**|**Object Storage**|
-|---|---|---|---|
-|**Structure**|Raw blocks (like a disk)|Hierarchical (files & folders)|Flat (objects with metadata)|
-|**Access**|Low-level (via OS, formatted as FS)|Via file systems (NFS, SMB)|Via API (HTTP/REST)|
-|**Use Cases**|Databases, VMs, OS disks|Shared drives, home dirs, web servers|Backups, media, logs, cloud apps|
-|**Performance**|High (I/O intensive)|Medium|Variable (depends on use & service)|
-|**Scalability**|Limited to volume size|Limited by FS & protocol|Highly scalable|
-|**Examples**|AWS EBS, GCP PD, Azure Disk|NFS, SMB, EFS, Azure Files|S3, Azure Blob, GCP Cloud Storage|
+# Types of Storage's
+
+| Feature         | **Block Storage**                   | **File Storage**                      | **Object Storage**                  |
+| --------------- | ----------------------------------- | ------------------------------------- | ----------------------------------- |
+| **Structure**   | Raw blocks (like a disk)            | Hierarchical (files & folders)        | Flat (objects with metadata)        |
+| **Access**      | Low-level (via OS, formatted as FS) | Via file systems (NFS, SMB)           | Via API (HTTP/REST)                 |
+| **Use Cases**   | Databases, VMs, OS disks            | Shared drives, home dirs, web servers | Backups, media, logs, cloud apps    |
+| **Performance** | High (I/O intensive)                | Medium                                | Variable (depends on use & service) |
+| **Scalability** | Limited to volume size              | Limited by FS & protocol              | Highly scalable                     |
+| **Examples**    | AWS EBS, GCP PD, Azure Disk         | NFS, SMB, EFS, Azure Files            | S3, Azure Blob, GCP Cloud Storage   |
+
 ## Storage Comparison with **When to Use** ?
-|Feature|**Block Storage**|**File Storage**|**Object Storage**|
-|---|---|---|---|
-|**Structure**|Raw blocks, mount as disk|Files & folders (hierarchical)|Objects with metadata (flat)|
-|**Access**|Low-level, via OS (mount, format)|NFS, SMB (file share protocols)|REST API, HTTP-based|
-|**Use Cases**|Databases, boot volumes, containers, VMs|Shared directories, CMS, user home folders|Backups, archives, logs, media, cloud-native apps|
-|**Performance**|High IOPS, low latency|Moderate|Optimized for throughput, not IOPS|
-|**Scalability**|Limited to disk/volume|Limited by filesystem|Highly scalable (petabytes+)|
-|**Examples**|AWS EBS, GCP Persistent Disk, Azure Disk|NFS, AWS EFS, Azure Files|AWS S3, Azure Blob, GCP Cloud Storage|
-|**When to Use**|- You need fast I/O (DBs) - Requires filesystem - Persistent volume for VMs or Pods|- Shared access between multiple VMs - Classic apps using file systems|- Store unstructured data (images, videos, logs) - Archive or backup with metadata - Internet-accessible content|
+
+| Feature         | **Block Storage**                                                                   | **File Storage**                                                       | **Object Storage**                                                                                               |
+| --------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Structure**   | Raw blocks, mount as disk                                                           | Files & folders (hierarchical)                                         | Objects with metadata (flat)                                                                                     |
+| **Access**      | Low-level, via OS (mount, format)                                                   | NFS, SMB (file share protocols)                                        | REST API, HTTP-based                                                                                             |
+| **Use Cases**   | Databases, boot volumes, containers, VMs                                            | Shared directories, CMS, user home folders                             | Backups, archives, logs, media, cloud-native apps                                                                |
+| **Performance** | High IOPS, low latency                                                              | Moderate                                                               | Optimized for throughput, not IOPS                                                                               |
+| **Scalability** | Limited to disk/volume                                                              | Limited by filesystem                                                  | Highly scalable (petabytes+)                                                                                     |
+| **Examples**    | AWS EBS, GCP Persistent Disk, Azure Disk                                            | NFS, AWS EFS, Azure Files                                              | AWS S3, Azure Blob, GCP Cloud Storage                                                                            |
+| **When to Use** | - You need fast I/O (DBs) - Requires filesystem - Persistent volume for VMs or Pods | - Shared access between multiple VMs - Classic apps using file systems | - Store unstructured data (images, videos, logs) - Archive or backup with metadata - Internet-accessible content |
 
 # Storage Types with Tools
 
-|Storage Type|Tools / Solutions|
-|---|---|
-|**Block Storage**|- AWS EBS- Azure Managed Disks- GCP Persistent Disks- OpenEBS- Longhorn- Ceph RBD- iSCSI- LVM|
-|**File Storage**|- NFS- SMB/CIFS- AWS EFS- Azure Files- GCP Filestore- GlusterFS- CephFS|
-|**Object Storage**|- AWS S3- Azure Blob Storage- GCP Cloud Storage- MinIO- Ceph Object Gateway (RGW)- OpenIO- Scality- IBM Cloud Object Storage|
+| Storage Type       | Tools / Solutions                                                                                                                                        |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Block Storage**  | - AWS EBS<br>- Azure Managed Disks<br>- GCP Persistent Disks<br>- OpenEBS<br>- Longhorn<br>- Ceph RBD<br>- iSCSI<br>- LVM                                |
+| **File Storage**   | - NFS<br>- SMB/CIFS<br>- AWS EFS<br>- Azure Files<br>- GCP Filestore<br>- GlusterFS- CephFS                                                              |
+| **Object Storage** | - AWS S3<br>- Azure Blob Storage<br>- GCP Cloud Storage<br>- MinIO<br>- Ceph Object Gateway (RGW)<br>- OpenIO<br>- Scality<br>- IBM Cloud Object Storage |
 # Kubernetes CSI Drivers (with CLI Tools)
 
 | Storage Type       | Tools / CSI Driver                                                                                        | CLI / Setup Tool                                                                               | Notes                                               |
