@@ -1,7 +1,13 @@
-# My Knowledge Base
+# Knowledge Base
 
 ## Api-resources
 - [k8s-api-resources-details](API-Resources/k8s-api-resources-details.md)
+
+## Alertmanager
+- [how to configure Alertmanager on K3d](Alertmanager/how to configure Alertmanager on K3d.md)
+
+## Ci-cd tools
+- [List of online open-source CI-CD tools](CI-CD Tools/List of online open-source CI-CD tools.md)
 
 ## Crds
 - [Custom Resource Definition](CRDs/Custom Resource Definition.md)
@@ -97,6 +103,10 @@
 - [List all pods with their init containers and sidecar containers info](Pods/List all pods with their init containers and sidecar containers info.md)
 - [Types of Containers in Kubernetes](Pods/Types of Containers in Kubernetes.md)
 
+## Prometheus + grafana
+- [Expose Prometheus and Grafana using Ingress](Prometheus + Grafana/Expose Prometheus and Grafana using Ingress.md)
+- [Set up Prometheus + Grafana for your Kubernetes K3d cluster](Prometheus + Grafana/Set up Prometheus + Grafana for your Kubernetes K3d cluster.md)
+
 ## Secrets
 - [Deep Dive into securing secrets in specific envs](Secrets/Deep Dive into securing secrets in specific envs.md)
 - [Secrets management for sensitive information](Secrets/Secrets management for sensitive information.md)
@@ -135,8 +145,11 @@
 - [Fluentd in Kubernetes](fluentd/Fluentd in Kubernetes.md)
 - [Fluentd install and config steps for a Linux VM](fluentd/Fluentd install and config steps for a Linux VM.md)
 
+## Images
+
 ## Mailhog
 - [Steps to deploy MailHog with Ingress](mailhog/Steps to deploy MailHog with Ingress.md)
+- [Usecase of mailhog](mailhog/Usecase of mailhog.md)
 
 ## Mkdocs
 - [mkdocs to github projects](mkdocs/mkdocs to github projects.md)
