@@ -68,6 +68,23 @@ mkdocs build
 git status  # Should show tracked files
 mkdocs serve
 mkdocs gh-deploy  # Should now deploy to GitHub Pages
+
+
+
+(.venv) PS D:\githubRepos\homelab> mkdocs gh-deploy
+INFO    -  Cleaning site directory
+INFO    -  Building documentation to directory: D:\githubRepos\homelab\site
+INFO    -  Documentation built in 1.33 seconds
+INFO    -  Copying 'D:\githubRepos\homelab\site' to 'gh-pages' branch and pushing to GitHub.
+Enumerating objects: 1, done.
+Counting objects: 100% (1/1), done.
+Writing objects: 100% (1/1), 216 bytes | 216.00 KiB/s, done.
+Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/gowseshaik/homelab.git
+   5ba2b58..23f810a  gh-pages -> gh-pages
+INFO    -  Your documentation should shortly be available at: https://gowseshaik.github.io/homelab/
 ```
 
-Your site should deploy successfully! 🚀  
+wait for 5 mins, it will take some time to upload and generate the site 
+
+Wala!, Your site should deploy successfully! 🚀  

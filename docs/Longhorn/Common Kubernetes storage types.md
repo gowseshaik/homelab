@@ -2,7 +2,7 @@
 - Container Storage Interface (CSI)
 - The Kubernetes persistent volume subsystem
 - Dynamic provisioning with Storage Classes
-![[docs/assets/images/Screenshot from 2025-06-13 11-31-01.png]]
+- ![Storage-to-pvs.png](../images/Storage-to-pvs.png)
 ### 📦 Kubernetes Storage Types Comparison
 
 | **Type**        | **Access Mode**     | **Description**                                                                  | **Example Use Case**                       | **Example**                                       |

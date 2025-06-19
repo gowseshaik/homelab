@@ -1,13 +1,9 @@
 A **reverse proxy** is a server that sits **in front of one or more backend servers** and forwards **client requests to those servers**. It hides the backend servers from clients and can provide:
 
 - **Load balancing**
-    
 - **SSL termination**
-    
 - **Caching**
-    
 - **Compression**
-    
 - **Security filtering**
     
 

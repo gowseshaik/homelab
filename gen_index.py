@@ -6,7 +6,7 @@ output_file = "docs/index.md"
 
 
 def generate_index():
-    content = "# My Knowledge Base\n\n"
+    content = "# Knowledge Base\n\n"
 
     for topic in sorted(os.listdir(docs_dir)):
         topic_path = os.path.join(docs_dir, topic)

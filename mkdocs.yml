@@ -1,9 +1,59 @@
-site_name: Homelabs
+site_name: Gouse Shaik
+site_url: https://github.com/gowseshaik/homelab
+repo_url: https://github.com/gowseshaik/homelab
+repo_name: Homelab
+
 theme:
   name: material
+  logo: images/logo-design-4.png
+  favicon: images/favicon.ico
   features:
-#    - navigation.tabs  # Disables top tabs
-    - navigation.instant  # For better sidebar behavior
-    - navigation.top   # Disables header links (Material 9+)
-#    - navigation.sections  # Enables nested sidebar sections
-#  custom_dir: overrides
+    - navigation.instant
+    - navigation.top
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+    - content.tabs.link
+    - toc.integrate
+    - content.action.edit
+    - content.tooltips
+  palette:
+    - scheme: default
+      primary: cyan
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: cyan
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  font:
+    text: "Patrick Hand"
+    code: "JetBrains Mono"
+  icon:
+    repo: fontawesome/brands/github
+  extra_css:
+    - extra.css
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - codehilite
+  - footnotes
+  - tables
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - About: about.md
