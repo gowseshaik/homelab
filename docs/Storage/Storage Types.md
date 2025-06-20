@@ -1,5 +1,11 @@
 # Types of Storage's
 
+| Storage Type       | Description                                                                                                                                                                                   | Example Use Cases                  |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| **Object Storage** | Stores data as _objects_ with metadata and unique IDs, accessed via APIs (like S3). Optimized for large amounts of unstructured data (files, images, backups). Not a traditional file system. | AWS S3, MinIO, Azure Blob Storage  |
+| **File Storage**   | Stores data as files in a hierarchical folder structure, accessible via file protocols (NFS, SMB).                                                                                            | Network shares, local file systems |
+| **Block Storage**  | Provides raw storage volumes at the block level for use by OS/file systems (like hard drives).                                                                                                | Longhorn, EBS, Persistent Volumes  |
+
 | Feature         | **Block Storage**                   | **File Storage**                      | **Object Storage**                  |
 | --------------- | ----------------------------------- | ------------------------------------- | ----------------------------------- |
 | **Structure**   | Raw blocks (like a disk)            | Hierarchical (files & folders)        | Flat (objects with metadata)        |

@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/mkdocs/mkdocs%20to%20github%20projects/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/mkdocs/plugins%20list%20used%20with%20MkDocs-material/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Mkdocs to github projects - Gouse Shaik</title>
+        <title>plugins list used with MkDocs material - Gouse Shaik</title>
       
     
     
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mkdocs to github projects
+              plugins list used with MkDocs material
             
           </span>
         </div>
@@ -300,7 +300,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/mkdocs/mkdocs to github projects.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/mkdocs/plugins list used with MkDocs-material.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -308,146 +308,85 @@
   
 
 
-  <h1>Mkdocs to github projects</h1>
+  <h1>plugins list used with MkDocs material</h1>
 
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>handsondevops
-$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>./handsondevops/bin/activate
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs
-
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs-material
-$<span class="w"> </span>mkdocs<span class="w"> </span>gh-deploy<span class="w"> </span>--clean
-</code></pre></div>
-<p>🧩 Popular Themes</p>
 <table>
 <thead>
 <tr>
-<th>Theme</th>
-<th>Use with</th>
+<th>Plugin Name</th>
+<th>Install Command</th>
+<th>Purpose / Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>mkdocs</code></td>
-<td>Default</td>
+<td><code>search</code> <em>(built-in)</em></td>
+<td>—</td>
+<td>Enables search functionality</td>
 </tr>
 <tr>
-<td><code>readthedocs</code></td>
-<td>Lightweight</td>
+<td><code>minify</code></td>
+<td><code>pip install mkdocs-minify-plugin</code></td>
+<td>Minifies HTML for faster loading</td>
 </tr>
 <tr>
-<td><code>material</code></td>
-<td><code>pip install mkdocs-material</code></td>
+<td><code>git-revision-date</code></td>
+<td><code>pip install mkdocs-git-revision-date-plugin</code></td>
+<td>Shows last modified date per page</td>
+</tr>
+<tr>
+<td><code>git-authors</code></td>
+<td><code>pip install mkdocs-git-authors-plugin</code></td>
+<td>Adds Git contributors to pages</td>
+</tr>
+<tr>
+<td><code>awesome-pages</code></td>
+<td><code>pip install mkdocs-awesome-pages-plugin</code></td>
+<td>Allows sorting/nav customization via <code>.pages</code> files</td>
+</tr>
+<tr>
+<td><code>macros</code></td>
+<td><code>pip install mkdocs-macros-plugin</code></td>
+<td>Use Python macros in Markdown</td>
+</tr>
+<tr>
+<td><code>include-markdown</code></td>
+<td><code>pip install mkdocs-include-markdown-plugin</code></td>
+<td>Include .md or .txt content in your pages</td>
+</tr>
+<tr>
+<td><code>redirects</code></td>
+<td><code>pip install mkdocs-redirects</code></td>
+<td>Set up redirects between pages</td>
+</tr>
+<tr>
+<td><code>i18n</code></td>
+<td><code>pip install mkdocs-static-i18n</code></td>
+<td>Adds multilingual support</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>pip install mkdocs-plugin-tags</code></td>
+<td>Adds tagging support for pages</td>
+</tr>
+<tr>
+<td><code>section-index</code></td>
+<td><code>pip install mkdocs-section-index</code></td>
+<td>Enables folder-based landing pages</td>
+</tr>
+<tr>
+<td><code>rss</code></td>
+<td><code>pip install mkdocs-rss-plugin</code></td>
+<td>Adds RSS feed generation</td>
+</tr>
+<tr>
+<td><code>pdf-export</code></td>
+<td><code>pip install mkdocs-pdf-export-plugin</code></td>
+<td>Allows exporting site as PDF</td>
 </tr>
 </tbody>
 </table>
-<p>📦 Common Commands</p>
-<table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>mkdocs new my-project</code></td>
-<td>Create new MkDocs project</td>
-</tr>
-<tr>
-<td><code>mkdocs serve</code></td>
-<td>Run dev server at <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a></td>
-</tr>
-<tr>
-<td><code>mkdocs build</code></td>
-<td>Build static site to <code>site/</code> dir</td>
-</tr>
-<tr>
-<td><code>mkdocs gh-deploy</code></td>
-<td>Deploy to GitHub Pages</td>
-</tr>
-<tr>
-<td>📁 Project Structure</td>
-<td></td>
-</tr>
-<tr>
-<td><div class="highlight"><pre><span></span><code>my-project/
-├── docs/
-│   ├── index.md
-│   ├── about.md
-├── mkdocs.yml
-</code></pre></div></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>📄 mkdocs.yml (basic)
-<div class="highlight"><pre><span></span><code>site_name: My Docs
-nav:
-  - Home: index.md
-  - About: about.md
-theme: readthedocs
-</code></pre></div></p>
-<p>example :  mkdocs.yml 
-<div class="highlight"><pre><span></span><code>site_name: Gouse Shaik  
-site_url: https://github.com/username/repo  
-repo_url: https://github.com/username/repo 
-repo_name: RepoName  
-
-theme:  
-  name: material  
-  logo: images/logo-design-4.png  
-  favicon: images/favicon.ico  
-  features:  
-    - navigation.instant  
-    - navigation.top  
-    - navigation.sections  
-    - navigation.expand  
-    - content.code.copy  
-    - content.tabs.link  
-    - toc.integrate  
-    - content.action.edit  
-    - content.tooltips  
-  palette:  
-    - scheme: default  
-      primary: cyan  
-      accent: teal  
-      toggle:  
-        icon: material/weather-night  
-        name: Switch to dark mode  
-    - scheme: slate  
-      primary: cyan  
-      accent: teal  
-      toggle:  
-        icon: material/weather-sunny  
-        name: Switch to light mode  
-  font:  
-    text: &quot;Patrick Hand&quot;  
-    code: &quot;JetBrains Mono&quot;  
-  icon:  
-    repo: fontawesome/brands/github  
-  extra_css:  
-    - extra.css  
-
-markdown_extensions:  
-  - admonition  
-  - toc:  
-      permalink: true  
-  - codehilite  
-  - footnotes  
-  - tables  
-  - pymdownx.superfences  
-  - pymdownx.tabbed  
-  - pymdownx.details  
-  - pymdownx.emoji:  
-      emoji_generator: !!python/name:pymdownx.emoji.to_svg  
-
-plugins:  
-  - search  
-
-nav:  
-  - Home: index.md  
-  - About: about.md
-</code></pre></div></p>
+<p>and you can include these plugins in <code>mkdocs.yml</code> file</p>
 
 
 

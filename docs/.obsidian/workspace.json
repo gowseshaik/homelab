@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "mkdocs/plugins list used with MkDocs-material.md",
+                "file": "DailyTasks/K8s Cmds Cheatsheet.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "plugins list used with MkDocs-material"
+              "title": "K8s Cmds Cheatsheet"
             }
           }
         ]
@@ -167,26 +167,34 @@
   },
   "active": "35a82b6773880ced",
   "lastOpenFiles": [
-    "mkdocs/mkdocs to github projects.md",
+    "K3d/k3d and kind commands.md",
+    "DailyTasks/K8s Cmds Cheatsheet.md",
+    "Choosing Kubernetes by Usecases/Kind Vs K3d.md",
+    "Choosing Kubernetes by Usecases/K8s HA clusters.md",
+    "Choosing Kubernetes by Usecases/Kubernetes cluster types on your usecases.md",
+    "ClusterAccess/Configuring Keycloak for Kubernetes authentication.md",
+    "etcdctl/set up Kind with external etcd and Longhorn.md",
+    "etcdctl/Install etcdctl tool with supported versions.md",
+    "Loadbalancers Types/Loadbalancer Types.md",
+    "Loadbalancers Types/Reverse proxy means.md",
+    "Secrets/Deep Dive into securing secrets in specific envs.md",
+    "Secrets/Secrets management for sensitive information.md",
+    "Traefik/Securing Traefik Dashboard with Keycloak (OIDC or OAuth2).md",
+    "Traefik/Traefik Dashboard only for Visibility not for Administration.md",
+    "K3d/k3d with traefik dashboard setup.md",
+    "K3d/k3d cluster with traefik dashboard.md",
+    "K3d/K3d cluster setup.md",
+    "Nexus/Nexus Repository Manager OSS and integrate it with your Kubernetes.md",
+    "Nexus/Create a Docker image registry in Nexus.md",
+    "velero - for migration/Velero with kind.md",
+    "Storage/Storage Types.md",
     "mkdocs/plugins list used with MkDocs-material.md",
+    "mkdocs/mkdocs to github projects.md",
     "Pods/Types of Containers in Kubernetes.md",
     "Pods/Types of Pods.md",
     "Pods/Debug pod (ephermal container).md",
-    "Pods/List all pods with their init containers and sidecar containers info.md",
-    "Storage/About StorageClass fields.md",
-    "Storage/Common Kubernetes storage types.md",
-    "Longhorn/Longhorn for stateful applications.md",
-    "Statefulsets/Updating a MongoDB StatefulSet in Kubernetes.md",
-    "Longhorn/Longhorn in Kubernetes.md",
-    "Longhorn/Nginx pod with a volume backed by Longhorn.md",
-    "Longhorn/Using Longhorn Storage with Kind Cluster.md",
     "velero - for migration",
-    "Longhorn/Longhorn with loopback file on Kind.md",
-    "etcdctl/set up Kind with external etcd and Longhorn.md",
     "Longhorn/Untitled",
-    "etcdctl/etcd in kind.md",
-    "etcdctl/check etcd is running.md",
-    "Storage/Storage Types.md",
     "Storage"
   ]
 }
