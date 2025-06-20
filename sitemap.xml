@@ -217,7 +217,7 @@
          <lastmod>2025-06-20</lastmod>
     </url>
     <url>
-         <loc>https://github.com/gowseshaik/homelab/Pods/Debug%20pod%20-%20create%20for%20test%20and%20delete%20on%20post%20test/</loc>
+         <loc>https://github.com/gowseshaik/homelab/Pods/Debug%20pod%20%28ephermal%20container%29/</loc>
          <lastmod>2025-06-20</lastmod>
     </url>
     <url>
@@ -226,6 +226,10 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/Pods/Types%20of%20Containers%20in%20Kubernetes/</loc>
+         <lastmod>2025-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/Pods/Types%20of%20Pods/</loc>
          <lastmod>2025-06-20</lastmod>
     </url>
     <url>
