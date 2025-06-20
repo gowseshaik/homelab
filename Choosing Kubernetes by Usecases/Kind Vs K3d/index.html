@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Storage/Storage%20Types/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Choosing%20Kubernetes%20by%20Usecases/Kind%20Vs%20K3d/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Types of Storage's - Gouse Shaik</title>
+        <title>Kind Vs K3d - Gouse Shaik</title>
       
     
     
@@ -69,11 +69,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#types-of-storages" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -105,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Types of Storage's
+              Kind Vs K3d
             
           </span>
         </div>
@@ -305,7 +300,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Storage/Storage Types.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Choosing Kubernetes by Usecases/Kind Vs K3d.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -313,215 +308,88 @@
   
 
 
-<h1 id="types-of-storages">Types of Storage's<a class="headerlink" href="#types-of-storages" title="Permanent link">&para;</a></h1>
-<table>
-<thead>
-<tr>
-<th>Storage Type</th>
-<th>Description</th>
-<th>Example Use Cases</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Object Storage</strong></td>
-<td>Stores data as <em>objects</em> with metadata and unique IDs, accessed via APIs (like S3). Optimized for large amounts of unstructured data (files, images, backups). Not a traditional file system.</td>
-<td>AWS S3, MinIO, Azure Blob Storage</td>
-</tr>
-<tr>
-<td><strong>File Storage</strong></td>
-<td>Stores data as files in a hierarchical folder structure, accessible via file protocols (NFS, SMB).</td>
-<td>Network shares, local file systems</td>
-</tr>
-<tr>
-<td><strong>Block Storage</strong></td>
-<td>Provides raw storage volumes at the block level for use by OS/file systems (like hard drives).</td>
-<td>Longhorn, EBS, Persistent Volumes</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th><strong>Block Storage</strong></th>
-<th><strong>File Storage</strong></th>
-<th><strong>Object Storage</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Structure</strong></td>
-<td>Raw blocks (like a disk)</td>
-<td>Hierarchical (files &amp; folders)</td>
-<td>Flat (objects with metadata)</td>
-</tr>
-<tr>
-<td><strong>Access</strong></td>
-<td>Low-level (via OS, formatted as FS)</td>
-<td>Via file systems (NFS, SMB)</td>
-<td>Via API (HTTP/REST)</td>
-</tr>
-<tr>
-<td><strong>Use Cases</strong></td>
-<td>Databases, VMs, OS disks</td>
-<td>Shared drives, home dirs, web servers</td>
-<td>Backups, media, logs, cloud apps</td>
-</tr>
-<tr>
-<td><strong>Performance</strong></td>
-<td>High (I/O intensive)</td>
-<td>Medium</td>
-<td>Variable (depends on use &amp; service)</td>
-</tr>
-<tr>
-<td><strong>Scalability</strong></td>
-<td>Limited to volume size</td>
-<td>Limited by FS &amp; protocol</td>
-<td>Highly scalable</td>
-</tr>
-<tr>
-<td><strong>Examples</strong></td>
-<td>AWS EBS, GCP PD, Azure Disk</td>
-<td>NFS, SMB, EFS, Azure Files</td>
-<td>S3, Azure Blob, GCP Cloud Storage</td>
-</tr>
-</tbody>
-</table>
-<h2 id="storage-comparison-with-when-to-use">Storage Comparison with <strong>When to Use</strong> ?<a class="headerlink" href="#storage-comparison-with-when-to-use" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th><strong>Block Storage</strong></th>
-<th><strong>File Storage</strong></th>
-<th><strong>Object Storage</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Structure</strong></td>
-<td>Raw blocks, mount as disk</td>
-<td>Files &amp; folders (hierarchical)</td>
-<td>Objects with metadata (flat)</td>
-</tr>
-<tr>
-<td><strong>Access</strong></td>
-<td>Low-level, via OS (mount, format)</td>
-<td>NFS, SMB (file share protocols)</td>
-<td>REST API, HTTP-based</td>
-</tr>
-<tr>
-<td><strong>Use Cases</strong></td>
-<td>Databases, boot volumes, containers, VMs</td>
-<td>Shared directories, CMS, user home folders</td>
-<td>Backups, archives, logs, media, cloud-native apps</td>
-</tr>
-<tr>
-<td><strong>Performance</strong></td>
-<td>High IOPS, low latency</td>
-<td>Moderate</td>
-<td>Optimized for throughput, not IOPS</td>
-</tr>
-<tr>
-<td><strong>Scalability</strong></td>
-<td>Limited to disk/volume</td>
-<td>Limited by filesystem</td>
-<td>Highly scalable (petabytes+)</td>
-</tr>
-<tr>
-<td><strong>Examples</strong></td>
-<td>AWS EBS, GCP Persistent Disk, Azure Disk</td>
-<td>NFS, AWS EFS, Azure Files</td>
-<td>AWS S3, Azure Blob, GCP Cloud Storage</td>
-</tr>
-<tr>
-<td><strong>When to Use</strong></td>
-<td>- You need fast I/O (DBs) - Requires filesystem - Persistent volume for VMs or Pods</td>
-<td>- Shared access between multiple VMs - Classic apps using file systems</td>
-<td>- Store unstructured data (images, videos, logs) - Archive or backup with metadata - Internet-accessible content</td>
-</tr>
-</tbody>
-</table>
-<h1 id="storage-types-with-tools">Storage Types with Tools<a class="headerlink" href="#storage-types-with-tools" title="Permanent link">&para;</a></h1>
-<table>
-<thead>
-<tr>
-<th>Storage Type</th>
-<th>Tools / Solutions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Block Storage</strong></td>
-<td>- AWS EBS<br>- Azure Managed Disks<br>- GCP Persistent Disks<br>- OpenEBS<br>- Longhorn<br>- Ceph RBD<br>- iSCSI<br>- LVM</td>
-</tr>
-<tr>
-<td><strong>File Storage</strong></td>
-<td>- NFS<br>- SMB/CIFS<br>- AWS EFS<br>- Azure Files<br>- GCP Filestore<br>- GlusterFS- CephFS</td>
-</tr>
-<tr>
-<td><strong>Object Storage</strong></td>
-<td>- AWS S3<br>- Azure Blob Storage<br>- GCP Cloud Storage<br>- MinIO<br>- Ceph Object Gateway (RGW)<br>- OpenIO<br>- Scality<br>- IBM Cloud Object Storage</td>
-</tr>
-<tr>
-<td># Kubernetes CSI Drivers (with CLI Tools)</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Storage Type</th>
-<th>Tools / CSI Driver</th>
-<th>CLI / Setup Tool</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Block Storage</strong></td>
-<td>- <code>ebs.csi.aws.com</code> - <code>pd.csi.storage.gke.io</code> - <code>disk.csi.azure.com</code> - <code>longhorn.io</code> - <code>openebs.io/local</code></td>
-<td>- <code>aws eksctl</code>, <code>helm</code> - <code>gcloud container clusters</code> - <code>az aks</code>, <code>kubectl</code> - <code>helm</code>, <code>kubectl</code></td>
-<td>Use <code>PersistentVolume</code> + <code>StorageClass</code></td>
-</tr>
-<tr>
-<td><strong>File Storage</strong></td>
-<td>- <code>efs.csi.aws.com</code> - <code>file.csi.azure.com</code> - <code>nfs.csi.k8s.io</code> - <code>cephfs.csi.ceph.com</code></td>
-<td>- <code>aws cli</code>, <code>helm</code> - <code>az cli</code>, <code>helm</code> - <code>kubectl</code>, custom NFS server - <code>rook-ceph</code>, <code>helm</code></td>
-<td>Great for shared file systems</td>
-</tr>
-<tr>
-<td><strong>Object Storage</strong></td>
-<td>- <code>s3-csi-driver</code> (community) - <code>minio</code> - <code>ceph-rgw</code></td>
-<td>- <code>mc</code> (MinIO client) - <code>rclone</code>, <code>s5cmd</code>, <code>aws cli</code> - <code>helm</code>, <code>rook</code></td>
-<td>Object storage not used as native PV, used via apps</td>
-</tr>
-<tr>
-<td># Example (EBS CSI - block storage)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<div class="highlight"><pre><span></span><code># Install AWS EBS CSI Driver (EKS example)
-kubectl apply -k &quot;github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=master&quot;
+  <h1>Kind Vs K3d</h1>
 
-# StorageClass example
-kubectl apply -f - &lt;&lt;EOF
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: ebs-sc
-provisioner: ebs.csi.aws.com
-parameters:
-  type: gp2
-reclaimPolicy: Delete
-volumeBindingMode: WaitForFirstConsumer
-EOF
-</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>Kind</strong></th>
+<th><strong>K3d</strong> (K3s + Docker)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Based On</strong></td>
+<td>kubeadm + containerized control-plane nodes</td>
+<td>K3s (lightweight Kubernetes)</td>
+</tr>
+<tr>
+<td><strong>Use Case</strong></td>
+<td>Kubernetes testing/development</td>
+<td>Lightweight local clusters / CI/CD</td>
+</tr>
+<tr>
+<td><strong>Resource Usage</strong></td>
+<td>Higher (full K8s)</td>
+<td>Lower (uses K3s, very lightweight)</td>
+</tr>
+<tr>
+<td><strong>Cluster Creation Speed</strong></td>
+<td>Slower</td>
+<td>Faster</td>
+</tr>
+<tr>
+<td><strong>Runtime</strong></td>
+<td>Docker or Podman</td>
+<td>Docker only</td>
+</tr>
+<tr>
+<td><strong>Multi-node Support</strong></td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>HA Support</strong></td>
+<td>Possible with custom config</td>
+<td>Supports HA via K3s easily</td>
+</tr>
+<tr>
+<td><strong>Production Ready</strong></td>
+<td>No (for dev/test only)</td>
+<td>Not production, but closer than Kind</td>
+</tr>
+<tr>
+<td><strong>Networking</strong></td>
+<td>Custom setup required</td>
+<td>Easier with K3s built-in Traefik/load-balancer</td>
+</tr>
+<tr>
+<td><strong>Ingress Support</strong></td>
+<td>Manual setup</td>
+<td>Built-in with Traefik</td>
+</tr>
+<tr>
+<td><strong>Etcd</strong></td>
+<td>Full etcd</td>
+<td>SQLite or embedded etcd</td>
+</tr>
+<tr>
+<td><strong>Kubernetes Version</strong></td>
+<td>Full version (any official release)</td>
+<td>K3s versions only</td>
+</tr>
+<tr>
+<td><strong>In short:</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Use <strong>Kind</strong> if you want to simulate <strong>real Kubernetes clusters</strong> (same as prod).</li>
+<li>Use <strong>K3d</strong> if you want a <strong>fast, low-resource</strong> cluster for local dev/CI/CD with built-in goodies.</li>
+</ul>
 
 
 
