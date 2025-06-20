@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Longhorn/About StorageClass fields.md",
+                "file": "Storage/About StorageClass fields.md",
                 "mode": "source",
                 "source": false
               },
@@ -165,10 +165,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "35a82b6773880ced",
+  "active": "677f75720c62470c",
   "lastOpenFiles": [
+    "Storage/Common Kubernetes storage types.md",
+    "Storage/About StorageClass fields.md",
     "Longhorn/Longhorn for stateful applications.md",
-    "Longhorn/About StorageClass fields.md",
     "Statefulsets/Updating a MongoDB StatefulSet in Kubernetes.md",
     "Longhorn/Longhorn in Kubernetes.md",
     "Longhorn/Nginx pod with a volume backed by Longhorn.md",

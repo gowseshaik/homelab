@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Longhorn/Longhorn%20in%20Kubernetes/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Longhorn/Nginx%20pod%20with%20a%20volume%20backed%20by%20Longhorn/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Longhorn in Kubernetes - Gouse Shaik</title>
+        <title>Nginx pod with a volume backed by Longhorn - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-what-is-longhorn" class="md-skip">
+        <a href="#usage" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Longhorn in Kubernetes
+              Nginx pod with a volume backed by Longhorn
             
           </span>
         </div>
@@ -305,7 +305,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Longhorn/Longhorn in Kubernetes.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Longhorn/Nginx pod with a volume backed by Longhorn.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -313,7 +313,7 @@
   
 
 
-  <h1>Longhorn in Kubernetes</h1>
+  <h1>Nginx pod with a volume backed by Longhorn</h1>
 
 <p>When you <strong>setup Longhorn in your cluster</strong>, it uses the storage available on the cluster nodes (e.g., the mounted <code>/mnt/longhorn</code> directory in Kind) as its <strong>underlying storage pool</strong>.</p>
 <ul>
@@ -343,65 +343,79 @@
 </tr>
 </tbody>
 </table>
-<h4 id="1-what-is-longhorn"><strong>1. What is Longhorn?</strong><a class="headerlink" href="#1-what-is-longhorn" title="Permanent link">&para;</a></h4>
-<p>Longhorn is a <strong>cloud-native, distributed storage system</strong> for Kubernetes that provides <strong>persistent block storage</strong> using dynamically provisioned volumes. It is lightweight, easy to deploy, and highly resilient, making it ideal for stateful applications in Kubernetes.  </p>
-<p><strong>Real-Time Scenario:</strong><br />
-A company running a <strong>MySQL database</strong> on Kubernetes needs persistent storage that survives pod restarts. Longhorn provides <strong>replicated volumes</strong>, ensuring data remains available even if a node fails.  </p>
+<div class="highlight"><pre><span></span><code><span class="c1"># longhorn-pv.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolume</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn-pv-demo</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">capacity</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5Gi</span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">  </span><span class="nt">persistentVolumeReclaimPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Retain</span>
+<span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn</span>
+<span class="w">  </span><span class="nt">csi</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver.longhorn.io</span>
+<span class="w">    </span><span class="nt">fsType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ext4</span>
+<span class="w">    </span><span class="nt">volumeHandle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn-pv-demo</span>
+
+<span class="nn">---</span>
+<span class="c1"># longhorn-pvc.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn-pvc-demo</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5Gi</span>
+<span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn</span>
+<span class="w">  </span><span class="nt">volumeName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn-pv-demo</span>
+
+<span class="nn">---</span>
+<span class="c1"># app-with-pvc.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx-longhorn-demo</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx-longhorn</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx-longhorn</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx:stable</span>
+<span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage</span>
+<span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/share/nginx/html</span>
+<span class="w">      </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage</span>
+<span class="w">        </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn-pvc-demo</span>
+</code></pre></div>
 <hr />
-<h4 id="2-why-use-longhorn-in-kubernetes"><strong>2. Why Use Longhorn in Kubernetes?</strong><a class="headerlink" href="#2-why-use-longhorn-in-kubernetes" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>Decentralized Storage:</strong> No single point of failure.  </li>
-<li><strong>Snapshot &amp; Backup:</strong> Supports point-in-time snapshots and backups to S3-compatible storage.  </li>
-<li><strong>Thin Provisioning:</strong> Efficient disk space usage.  </li>
-<li><strong>Cross-Cluster Replication:</strong> Enables disaster recovery.  </li>
-</ul>
-<p><strong>Real-Time Scenario:</strong><br />
-An e-commerce platform running <strong>MongoDB</strong> needs automated backups. Longhorn takes <strong>snapshots every hour</strong> and backs them up to AWS S3, ensuring data recovery in case of corruption.  </p>
+<h3 id="usage">Usage:<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>longhorn-pv.yaml
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>longhorn-pvc.yaml
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>app-with-pvc.yaml
+</code></pre></div>
+<p>Check pod and PVC status:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pvc
+kubectl<span class="w"> </span>get<span class="w"> </span>pv
+kubectl<span class="w"> </span>get<span class="w"> </span>pods
+</code></pre></div>
 <hr />
-<h4 id="3-how-does-longhorn-work"><strong>3. How Does Longhorn Work?</strong><a class="headerlink" href="#3-how-does-longhorn-work" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>Volume Replication:</strong> Each volume is replicated across multiple nodes (default: 3 replicas).  </li>
-<li><strong>Scheduling:</strong> Longhorn dynamically schedules replicas based on node availability.  </li>
-<li><strong>Recovery:</strong> If a node fails, Longhorn rebuilds replicas automatically.  </li>
-</ul>
-<p><strong>Real-Time Scenario:</strong><br />
-A <strong>Node failure</strong> occurs in a Kubernetes cluster running a <strong>PostgreSQL</strong> database. Longhorn detects the failure and <strong>rebuilds the lost replica</strong> on another healthy node, ensuring high availability.  </p>
-<hr />
-<h4 id="4-where-is-longhorn-used"><strong>4. Where is Longhorn Used?</strong><a class="headerlink" href="#4-where-is-longhorn-used" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>On-Premises Kubernetes Clusters</strong> (e.g., Rancher, K3s)  </li>
-<li><strong>Hybrid &amp; Multi-Cloud Deployments</strong> (AWS EKS, GCP GKE, Azure AKS)  </li>
-<li><strong>Edge Computing &amp; IoT</strong> (Lightweight storage for distributed apps)  </li>
-</ul>
-<p><strong>Real-Time Scenario:</strong><br />
-A <strong>financial services firm</strong> uses Longhorn in <strong>multi-cloud Kubernetes (EKS + on-prem)</strong> to ensure consistent storage for <strong>Fraud Detection Microservices</strong>, avoiding vendor lock-in.  </p>
-<hr />
-<h3 id="key-benefits-challenges"><strong>Key Benefits &amp; Challenges</strong><a class="headerlink" href="#key-benefits-challenges" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th><strong>Benefits</strong></th>
-<th><strong>Challenges</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>✅ Easy to deploy &amp; manage</td>
-<td>❌ Not suitable for high-throughput workloads (e.g., big data)</td>
-</tr>
-<tr>
-<td>✅ Self-healing &amp; fault-tolerant</td>
-<td>❌ Requires proper resource planning (CPU/memory for replicas)</td>
-</tr>
-<tr>
-<td>✅ Works across multiple clouds</td>
-<td>❌ Backup performance depends on network bandwidth</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h3 id="conclusion"><strong>Conclusion</strong><a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h3>
-<p>Longhorn is an <strong>ideal choice for Kubernetes users</strong> needing <strong>reliable, distributed block storage</strong> with <strong>easy backup &amp; recovery</strong>. It shines in <strong>stateful applications (databases, message queues)</strong> but may not be optimal for high-performance storage needs.  </p>
+<p>This deploys an Nginx pod with a volume backed by Longhorn storage mounted at <code>/usr/share/nginx/html</code> (serving static content with persistence).<br />
+You can exec into the pod and create files there to verify persistence.</p>
 
 
 
