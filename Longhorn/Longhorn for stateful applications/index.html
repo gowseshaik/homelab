@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Longhorn/Longhorn%20in%20Kubernetes/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Longhorn/Longhorn%20for%20stateful%20applications/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Longhorn in Kubernetes - Gouse Shaik</title>
+        <title>Longhorn for stateful applications - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-what-is-longhorn" class="md-skip">
+        <a href="#why-longhorn-is-good-for-stateful-apps" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Longhorn in Kubernetes
+              Longhorn for stateful applications
             
           </span>
         </div>
@@ -305,7 +305,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Longhorn/Longhorn in Kubernetes.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Longhorn/Longhorn for stateful applications.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -313,95 +313,201 @@
   
 
 
-  <h1>Longhorn in Kubernetes</h1>
+  <h1>Longhorn for stateful applications</h1>
 
-<p>When you <strong>setup Longhorn in your cluster</strong>, it uses the storage available on the cluster nodes (e.g., the mounted <code>/mnt/longhorn</code> directory in Kind) as its <strong>underlying storage pool</strong>.</p>
+<p>Yes, using <strong>Longhorn for stateful applications</strong> in Kubernetes is a good practice, especially for:</p>
 <ul>
-<li>Longhorn manages that storage to create <strong>persistent volumes</strong> (block devices).</li>
-<li>It dynamically allocates space from that pool when you create PVCs.</li>
-<li>So, total available storage = sum of the storage Longhorn can access on all nodes (like <code>/mnt/longhorn</code>).</li>
+<li><strong>Lightweight production or staging clusters</strong></li>
+<li><strong>On-prem or edge environments</strong> where cloud storage is unavailable</li>
+<li><strong>Learning and testing persistent storage</strong></li>
 </ul>
+<h3 id="why-longhorn-is-good-for-stateful-apps">Why Longhorn is good for stateful apps:<a class="headerlink" href="#why-longhorn-is-good-for-stateful-apps" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Action</th>
-<th>Effect</th>
+<th>Benefits</th>
+<th>Details</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Mount <code>/mnt/longhorn</code> on nodes</td>
-<td>Provides raw storage space for Longhorn</td>
+<td>Distributed storage</td>
+<td>Replicates data across nodes for fault tolerance</td>
 </tr>
 <tr>
-<td>Deploy Longhorn</td>
-<td>Manages and exposes block storage volumes</td>
+<td>Easy management</td>
+<td>Web UI + CLI for volume control</td>
 </tr>
 <tr>
-<td>Create PVC with Longhorn SC</td>
-<td>Allocates storage from Longhorn pool</td>
+<td>Dynamic provisioning</td>
+<td>Supports PVC creation on demand</td>
+</tr>
+<tr>
+<td>Snapshot and backup support</td>
+<td>Point-in-time data recovery</td>
+</tr>
+<tr>
+<td>Compatible with Kubernetes</td>
+<td>Native CSI driver integration</td>
 </tr>
 </tbody>
 </table>
-<h4 id="1-what-is-longhorn"><strong>1. What is Longhorn?</strong><a class="headerlink" href="#1-what-is-longhorn" title="Permanent link">&para;</a></h4>
-<p>Longhorn is a <strong>cloud-native, distributed storage system</strong> for Kubernetes that provides <strong>persistent block storage</strong> using dynamically provisioned volumes. It is lightweight, easy to deploy, and highly resilient, making it ideal for stateful applications in Kubernetes.  </p>
-<p><strong>Real-Time Scenario:</strong><br />
-A company running a <strong>MySQL database</strong> on Kubernetes needs persistent storage that survives pod restarts. Longhorn provides <strong>replicated volumes</strong>, ensuring data remains available even if a node fails.  </p>
-<hr />
-<h4 id="2-why-use-longhorn-in-kubernetes"><strong>2. Why Use Longhorn in Kubernetes?</strong><a class="headerlink" href="#2-why-use-longhorn-in-kubernetes" title="Permanent link">&para;</a></h4>
+<h3 id="when-not-to-use-longhorn">When NOT to use Longhorn:<a class="headerlink" href="#when-not-to-use-longhorn" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Decentralized Storage:</strong> No single point of failure.  </li>
-<li><strong>Snapshot &amp; Backup:</strong> Supports point-in-time snapshots and backups to S3-compatible storage.  </li>
-<li><strong>Thin Provisioning:</strong> Efficient disk space usage.  </li>
-<li><strong>Cross-Cluster Replication:</strong> Enables disaster recovery.  </li>
+<li>Very large-scale or highly performance-sensitive workloads (may need enterprise storage solutions)</li>
+<li>Clusters without enough disk resources or unreliable node storage</li>
 </ul>
-<p><strong>Real-Time Scenario:</strong><br />
-An e-commerce platform running <strong>MongoDB</strong> needs automated backups. Longhorn takes <strong>snapshots every hour</strong> and backs them up to AWS S3, ensuring data recovery in case of corruption.  </p>
-<hr />
-<h4 id="3-how-does-longhorn-work"><strong>3. How Does Longhorn Work?</strong><a class="headerlink" href="#3-how-does-longhorn-work" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>Volume Replication:</strong> Each volume is replicated across multiple nodes (default: 3 replicas).  </li>
-<li><strong>Scheduling:</strong> Longhorn dynamically schedules replicas based on node availability.  </li>
-<li><strong>Recovery:</strong> If a node fails, Longhorn rebuilds replicas automatically.  </li>
-</ul>
-<p><strong>Real-Time Scenario:</strong><br />
-A <strong>Node failure</strong> occurs in a Kubernetes cluster running a <strong>PostgreSQL</strong> database. Longhorn detects the failure and <strong>rebuilds the lost replica</strong> on another healthy node, ensuring high availability.  </p>
-<hr />
-<h4 id="4-where-is-longhorn-used"><strong>4. Where is Longhorn Used?</strong><a class="headerlink" href="#4-where-is-longhorn-used" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>On-Premises Kubernetes Clusters</strong> (e.g., Rancher, K3s)  </li>
-<li><strong>Hybrid &amp; Multi-Cloud Deployments</strong> (AWS EKS, GCP GKE, Azure AKS)  </li>
-<li><strong>Edge Computing &amp; IoT</strong> (Lightweight storage for distributed apps)  </li>
-</ul>
-<p><strong>Real-Time Scenario:</strong><br />
-A <strong>financial services firm</strong> uses Longhorn in <strong>multi-cloud Kubernetes (EKS + on-prem)</strong> to ensure consistent storage for <strong>Fraud Detection Microservices</strong>, avoiding vendor lock-in.  </p>
-<hr />
-<h3 id="key-benefits-challenges"><strong>Key Benefits &amp; Challenges</strong><a class="headerlink" href="#key-benefits-challenges" title="Permanent link">&para;</a></h3>
+<h3 id="summary">Summary:<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th><strong>Benefits</strong></th>
-<th><strong>Challenges</strong></th>
+<th>Use case</th>
+<th>Recommended?</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>✅ Easy to deploy &amp; manage</td>
-<td>❌ Not suitable for high-throughput workloads (e.g., big data)</td>
+<td>Stateful app on Kind/dev</td>
+<td>Yes (for learning/testing)</td>
 </tr>
 <tr>
-<td>✅ Self-healing &amp; fault-tolerant</td>
-<td>❌ Requires proper resource planning (CPU/memory for replicas)</td>
+<td>Stateful app on prod Kubernetes</td>
+<td>Yes, if nodes have good disks</td>
 </tr>
 <tr>
-<td>✅ Works across multiple clouds</td>
-<td>❌ Backup performance depends on network bandwidth</td>
+<td>Very high performance storage</td>
+<td>Consider other enterprise options</td>
+</tr>
+<tr>
+<td># You can check existing StorageClasses by running:</td>
+<td></td>
+</tr>
+<tr>
+<td><div class="highlight"><pre><span></span><code>kubectl get storageclass
+
+root@dev-cluster-control-plane:/# kubectl get storageclass
+NAME                 PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+standard (default)   rancher.io/local-path   Delete          WaitForFirstConsumer   false                  46m
+</code></pre></div></td>
+<td></td>
 </tr>
 </tbody>
 </table>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>What it Does</th>
+<th>Common Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>reclaimPolicy</strong></td>
+<td>Tells Kubernetes what to do with the actual disk when you delete a PVC</td>
+<td>• <code>Delete</code> – also deletes the PV and its data• <code>Retain</code> – keeps the PV and data for manual cleanup</td>
+</tr>
+<tr>
+<td><strong>volumeBindingMode</strong></td>
+<td>Controls when Kubernetes assigns a PV to a PVC</td>
+<td>• <code>Immediate</code> – binds as soon as PVC is created• <code>WaitForFirstConsumer</code> – waits until a pod uses the PVC, so PV lands on the right node</td>
+</tr>
+<tr>
+<td><strong>allowVolumeExpansion</strong></td>
+<td>Lets you grow the size of a volume after the PVC is already created</td>
+<td>• <code>true</code> – you can increase PVC’s storage size• <code>false</code> – size is fixed once PVC is made</td>
+</tr>
+<tr>
+<td>- <strong>Use <code>Delete</code></strong> reclaimPolicy if you want cleanup to happen automatically.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- <strong>Use <code>WaitForFirstConsumer</code></strong> bindingMode for StatefulSets or multi-zone clusters so the volume shows up on the pod’s node.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- <strong>Set allowVolumeExpansion to <code>true</code></strong> if you expect to need more space later.</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># longhorn-storageclass.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StorageClass</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn</span>
+<span class="nt">provisioner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver.longhorn.io</span>
+<span class="nt">reclaimPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Delete</span>
+<span class="nt">volumeBindingMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Immediate</span>
+<span class="nt">allowVolumeExpansion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nn">---</span>
+<span class="c1"># statefulset-with-longhorn.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StatefulSet</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx-stateful</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">serviceName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nginx&quot;</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx:stable</span>
+<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web</span>
+<span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">www</span>
+<span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/share/nginx/html</span>
+<span class="w">  </span><span class="nt">volumeClaimTemplates</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">www</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&quot;ReadWriteOnce&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5Gi</span>
+</code></pre></div>
 <hr />
-<h3 id="conclusion"><strong>Conclusion</strong><a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h3>
-<p>Longhorn is an <strong>ideal choice for Kubernetes users</strong> needing <strong>reliable, distributed block storage</strong> with <strong>easy backup &amp; recovery</strong>. It shines in <strong>stateful applications (databases, message queues)</strong> but may not be optimal for high-performance storage needs.  </p>
+<h3 id="steps-to-apply">Steps to apply:<a class="headerlink" href="#steps-to-apply" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>longhorn-storageclass.yaml
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>statefulset-with-longhorn.yaml
+</code></pre></div>
+<hr />
+<h3 id="what-it-does">What it does:<a class="headerlink" href="#what-it-does" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Creates a Longhorn StorageClass that supports dynamic provisioning and volume expansion.</p>
+</li>
+<li>
+<p>Deploys an Nginx StatefulSet with 3 replicas.</p>
+</li>
+<li>
+<p>Each pod gets its <strong>own 5Gi Longhorn volume</strong> mounted at <code>/usr/share/nginx/html</code>.</p>
+</li>
+<li>
+<p>Data persists across pod restarts and rescheduling.</p>
+</li>
+</ul>
+<hr />
+<p>Check PVCs and pods:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pvc
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>nginx
+</code></pre></div>
+<hr />
+<p>You can exec into any pod and add files inside <code>/usr/share/nginx/html</code> to test persistence.</p>
 
 
 

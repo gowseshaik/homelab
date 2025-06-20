@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Longhorn/Longhorn%20in%20Kubernetes/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Longhorn/Longhorn%20with%20loopback%20file%20on%20Kind/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Longhorn in Kubernetes - Gouse Shaik</title>
+        <title>Longhorn with loopback file on Kind - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-what-is-longhorn" class="md-skip">
+        <a href="#w3h-longhorn-on-kind" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Longhorn in Kubernetes
+              Longhorn with loopback file on Kind
             
           </span>
         </div>
@@ -305,7 +305,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Longhorn/Longhorn in Kubernetes.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Longhorn/Longhorn with loopback file on Kind.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -313,95 +313,75 @@
   
 
 
-  <h1>Longhorn in Kubernetes</h1>
+  <h1>Longhorn with loopback file on Kind</h1>
 
-<p>When you <strong>setup Longhorn in your cluster</strong>, it uses the storage available on the cluster nodes (e.g., the mounted <code>/mnt/longhorn</code> directory in Kind) as its <strong>underlying storage pool</strong>.</p>
+<h3 id="w3h-longhorn-on-kind">📦 W3H: <strong>Longhorn on Kind</strong><a class="headerlink" href="#w3h-longhorn-on-kind" title="Permanent link">&para;</a></h3>
+<h3 id="what">🔹 What:<a class="headerlink" href="#what" title="Permanent link">&para;</a></h3>
+<p>Run <a href="https://longhorn.io">Longhorn</a> (distributed block storage for Kubernetes) on a <strong>Kind cluster</strong>.</p>
+<h3 id="why">🔹 Why:<a class="headerlink" href="#why" title="Permanent link">&para;</a></h3>
+<p>To <strong>test or demo</strong> Longhorn in a local Kubernetes environment using containers (Kind) without provisioning real disks or cloud block storage.</p>
+<h3 id="when">🔹 When:<a class="headerlink" href="#when" title="Permanent link">&para;</a></h3>
+<p>Use only for:</p>
 <ul>
-<li>Longhorn manages that storage to create <strong>persistent volumes</strong> (block devices).</li>
-<li>It dynamically allocates space from that pool when you create PVCs.</li>
-<li>So, total available storage = sum of the storage Longhorn can access on all nodes (like <code>/mnt/longhorn</code>).</li>
+<li><strong>Dev/test/demo</strong></li>
+<li>Learning how Longhorn works</li>
+<li>CI/CD pipeline checks (not real performance)</li>
 </ul>
+<p>🛑 <strong>Not for production</strong> due to limitations of Kind (runs in Docker, lacks real disks).</p>
+<h3 id="how">🔹 How:<a class="headerlink" href="#how" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Action</th>
-<th>Effect</th>
+<th>Step</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Mount <code>/mnt/longhorn</code> on nodes</td>
-<td>Provides raw storage space for Longhorn</td>
+<td>1.</td>
+<td><strong>Create loopback file</strong> as fake disk on host</td>
 </tr>
 <tr>
-<td>Deploy Longhorn</td>
-<td>Manages and exposes block storage volumes</td>
+<td>2.</td>
+<td><strong>Mount it into Kind node(s)</strong> via <code>extraMounts</code></td>
 </tr>
 <tr>
-<td>Create PVC with Longhorn SC</td>
-<td>Allocates storage from Longhorn pool</td>
+<td>3.</td>
+<td><strong>Deploy Longhorn</strong> using Helm or manifest</td>
+</tr>
+<tr>
+<td>4.</td>
+<td><strong>Use StorageClass</strong> from Longhorn for PVCs</td>
 </tr>
 </tbody>
 </table>
-<h4 id="1-what-is-longhorn"><strong>1. What is Longhorn?</strong><a class="headerlink" href="#1-what-is-longhorn" title="Permanent link">&para;</a></h4>
-<p>Longhorn is a <strong>cloud-native, distributed storage system</strong> for Kubernetes that provides <strong>persistent block storage</strong> using dynamically provisioned volumes. It is lightweight, easy to deploy, and highly resilient, making it ideal for stateful applications in Kubernetes.  </p>
-<p><strong>Real-Time Scenario:</strong><br />
-A company running a <strong>MySQL database</strong> on Kubernetes needs persistent storage that survives pod restarts. Longhorn provides <strong>replicated volumes</strong>, ensuring data remains available even if a node fails.  </p>
-<hr />
-<h4 id="2-why-use-longhorn-in-kubernetes"><strong>2. Why Use Longhorn in Kubernetes?</strong><a class="headerlink" href="#2-why-use-longhorn-in-kubernetes" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>Decentralized Storage:</strong> No single point of failure.  </li>
-<li><strong>Snapshot &amp; Backup:</strong> Supports point-in-time snapshots and backups to S3-compatible storage.  </li>
-<li><strong>Thin Provisioning:</strong> Efficient disk space usage.  </li>
-<li><strong>Cross-Cluster Replication:</strong> Enables disaster recovery.  </li>
-</ul>
-<p><strong>Real-Time Scenario:</strong><br />
-An e-commerce platform running <strong>MongoDB</strong> needs automated backups. Longhorn takes <strong>snapshots every hour</strong> and backs them up to AWS S3, ensuring data recovery in case of corruption.  </p>
-<hr />
-<h4 id="3-how-does-longhorn-work"><strong>3. How Does Longhorn Work?</strong><a class="headerlink" href="#3-how-does-longhorn-work" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>Volume Replication:</strong> Each volume is replicated across multiple nodes (default: 3 replicas).  </li>
-<li><strong>Scheduling:</strong> Longhorn dynamically schedules replicas based on node availability.  </li>
-<li><strong>Recovery:</strong> If a node fails, Longhorn rebuilds replicas automatically.  </li>
-</ul>
-<p><strong>Real-Time Scenario:</strong><br />
-A <strong>Node failure</strong> occurs in a Kubernetes cluster running a <strong>PostgreSQL</strong> database. Longhorn detects the failure and <strong>rebuilds the lost replica</strong> on another healthy node, ensuring high availability.  </p>
-<hr />
-<h4 id="4-where-is-longhorn-used"><strong>4. Where is Longhorn Used?</strong><a class="headerlink" href="#4-where-is-longhorn-used" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>On-Premises Kubernetes Clusters</strong> (e.g., Rancher, K3s)  </li>
-<li><strong>Hybrid &amp; Multi-Cloud Deployments</strong> (AWS EKS, GCP GKE, Azure AKS)  </li>
-<li><strong>Edge Computing &amp; IoT</strong> (Lightweight storage for distributed apps)  </li>
-</ul>
-<p><strong>Real-Time Scenario:</strong><br />
-A <strong>financial services firm</strong> uses Longhorn in <strong>multi-cloud Kubernetes (EKS + on-prem)</strong> to ensure consistent storage for <strong>Fraud Detection Microservices</strong>, avoiding vendor lock-in.  </p>
-<hr />
-<h3 id="key-benefits-challenges"><strong>Key Benefits &amp; Challenges</strong><a class="headerlink" href="#key-benefits-challenges" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th><strong>Benefits</strong></th>
-<th><strong>Challenges</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>✅ Easy to deploy &amp; manage</td>
-<td>❌ Not suitable for high-throughput workloads (e.g., big data)</td>
-</tr>
-<tr>
-<td>✅ Self-healing &amp; fault-tolerant</td>
-<td>❌ Requires proper resource planning (CPU/memory for replicas)</td>
-</tr>
-<tr>
-<td>✅ Works across multiple clouds</td>
-<td>❌ Backup performance depends on network bandwidth</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h3 id="conclusion"><strong>Conclusion</strong><a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h3>
-<p>Longhorn is an <strong>ideal choice for Kubernetes users</strong> needing <strong>reliable, distributed block storage</strong> with <strong>easy backup &amp; recovery</strong>. It shines in <strong>stateful applications (databases, message queues)</strong> but may not be optimal for high-performance storage needs.  </p>
+<h3 id="example-loopback-setup-for-kind">Example: loopback setup for Kind<a class="headerlink" href="#example-loopback-setup-for-kind" title="Permanent link">&para;</a></h3>
+<h4 id="create-loop-disk">Create loop disk:<a class="headerlink" href="#create-loop-disk" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>/mnt/longhorn
+dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/zero<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/mnt/longhorn/longhorn-disk.img<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>1G<span class="w"> </span><span class="nv">count</span><span class="o">=</span><span class="m">10</span>
+losetup<span class="w"> </span>-fP<span class="w"> </span>/mnt/longhorn/longhorn-disk.img
+mkfs.ext4<span class="w"> </span>/dev/loopX<span class="w">  </span><span class="c1"># replace X with correct loop number</span>
+mount<span class="w"> </span>/dev/loopX<span class="w"> </span>/mnt/longhorn
+</code></pre></div>
+<h4 id="kind-config">Kind config:<a class="headerlink" href="#kind-config" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cluster</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kind.x-k8s.io/v1alpha4</span>
+<span class="nt">nodes</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane</span>
+<span class="w">  </span><span class="nt">extraMounts</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/mnt/longhorn</span>
+<span class="w">    </span><span class="nt">containerPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/mnt/longhorn</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">worker</span>
+<span class="w">  </span><span class="nt">extraMounts</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/mnt/longhorn</span>
+<span class="w">    </span><span class="nt">containerPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/mnt/longhorn</span>
+</code></pre></div>
+<h4 id="deploy-longhorn">Deploy Longhorn:<a class="headerlink" href="#deploy-longhorn" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/longhorn/longhorn/v1.6.1/deploy/longhorn.yaml
+</code></pre></div>
+<blockquote>
+<p>Set <code>defaultDataPath: /mnt/longhorn</code> in Longhorn settings.</p>
+</blockquote>
 
 
 

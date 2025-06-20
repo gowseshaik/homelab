@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Longhorn/Longhorn%20in%20Kubernetes/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/etcdctl/set%20up%20Kind%20with%20external%20etcd%20and%20Longhorn/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Longhorn in Kubernetes - Gouse Shaik</title>
+        <title>set up Kind with external etcd and Longhorn - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-what-is-longhorn" class="md-skip">
+        <a href="#whats-possible" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Longhorn in Kubernetes
+              set up Kind with external etcd and Longhorn
             
           </span>
         </div>
@@ -305,7 +305,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Longhorn/Longhorn in Kubernetes.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/etcdctl/set up Kind with external etcd and Longhorn.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -313,95 +313,85 @@
   
 
 
-  <h1>Longhorn in Kubernetes</h1>
+  <h1>set up Kind with external etcd and Longhorn</h1>
 
-<p>When you <strong>setup Longhorn in your cluster</strong>, it uses the storage available on the cluster nodes (e.g., the mounted <code>/mnt/longhorn</code> directory in Kind) as its <strong>underlying storage pool</strong>.</p>
-<ul>
-<li>Longhorn manages that storage to create <strong>persistent volumes</strong> (block devices).</li>
-<li>It dynamically allocates space from that pool when you create PVCs.</li>
-<li>So, total available storage = sum of the storage Longhorn can access on all nodes (like <code>/mnt/longhorn</code>).</li>
-</ul>
+<p>You <strong>can set up Kind with external etcd and Longhorn</strong>, but it's <strong>non-standard</strong>, requires <strong>manual steps</strong>, and is suitable <strong>only for advanced testing</strong>, not production.</p>
+<h3 id="whats-possible">✅ What's Possible:<a class="headerlink" href="#whats-possible" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Action</th>
-<th>Effect</th>
+<th>Component</th>
+<th>Status</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Mount <code>/mnt/longhorn</code> on nodes</td>
-<td>Provides raw storage space for Longhorn</td>
+<td>Kind cluster</td>
+<td>✅ Supported</td>
+<td>Single-node or multi-node in Docker containers</td>
 </tr>
 <tr>
-<td>Deploy Longhorn</td>
-<td>Manages and exposes block storage volumes</td>
+<td>External etcd</td>
+<td>✅ Possible</td>
+<td>Must run etcd outside Kind (container/VM)</td>
 </tr>
 <tr>
-<td>Create PVC with Longhorn SC</td>
-<td>Allocates storage from Longhorn pool</td>
+<td>Longhorn</td>
+<td>✅ Possible (hacky)</td>
+<td>Needs hostPath or block device emulation</td>
+</tr>
+<tr>
+<td>### 🛠️ Steps (High-level):</td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<h4 id="1-what-is-longhorn"><strong>1. What is Longhorn?</strong><a class="headerlink" href="#1-what-is-longhorn" title="Permanent link">&para;</a></h4>
-<p>Longhorn is a <strong>cloud-native, distributed storage system</strong> for Kubernetes that provides <strong>persistent block storage</strong> using dynamically provisioned volumes. It is lightweight, easy to deploy, and highly resilient, making it ideal for stateful applications in Kubernetes.  </p>
-<p><strong>Real-Time Scenario:</strong><br />
-A company running a <strong>MySQL database</strong> on Kubernetes needs persistent storage that survives pod restarts. Longhorn provides <strong>replicated volumes</strong>, ensuring data remains available even if a node fails.  </p>
-<hr />
-<h4 id="2-why-use-longhorn-in-kubernetes"><strong>2. Why Use Longhorn in Kubernetes?</strong><a class="headerlink" href="#2-why-use-longhorn-in-kubernetes" title="Permanent link">&para;</a></h4>
+<h4 id="1-run-external-etcd">1. <strong>Run external etcd</strong><a class="headerlink" href="#1-run-external-etcd" title="Permanent link">&para;</a></h4>
+<p>You can run etcd in a Docker container or VM outside Kind:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>etcd<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">2379</span>:2379<span class="w"> </span>-p<span class="w"> </span><span class="m">2380</span>:2380<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>quay.io/coreos/etcd<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>etcd<span class="w"> </span>--name<span class="w"> </span>external-etcd<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--data-dir<span class="w"> </span>/etcd-data<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--initial-advertise-peer-urls<span class="w"> </span>http://0.0.0.0:2380<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--listen-peer-urls<span class="w"> </span>http://0.0.0.0:2380<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--advertise-client-urls<span class="w"> </span>http://0.0.0.0:2379<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--listen-client-urls<span class="w"> </span>http://0.0.0.0:2379<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--initial-cluster<span class="w"> </span>external-etcd<span class="o">=</span>http://0.0.0.0:2380<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--initial-cluster-token<span class="w"> </span>etcd-cluster<span class="w"> </span><span class="se">\</span>
+<span class="w">       </span>--initial-cluster-state<span class="w"> </span>new
+</code></pre></div>
+<blockquote>
+<p>Replace <code>0.0.0.0</code> with host IP if needed.</p>
+</blockquote>
+<h4 id="2-point-control-plane-to-external-etcd">2. <strong>Point control-plane to external etcd</strong><a class="headerlink" href="#2-point-control-plane-to-external-etcd" title="Permanent link">&para;</a></h4>
+<p>Kind doesn’t natively support external etcd, so you’d need to:</p>
 <ul>
-<li><strong>Decentralized Storage:</strong> No single point of failure.  </li>
-<li><strong>Snapshot &amp; Backup:</strong> Supports point-in-time snapshots and backups to S3-compatible storage.  </li>
-<li><strong>Thin Provisioning:</strong> Efficient disk space usage.  </li>
-<li><strong>Cross-Cluster Replication:</strong> Enables disaster recovery.  </li>
+<li>Start a Kind cluster <strong>without etcd</strong> (requires custom kubeadm config).</li>
+<li>Manually modify <code>/etc/kubernetes/manifests/kube-apiserver.yaml</code> to point to external etcd.</li>
+<li>Mount certs and configure connection.</li>
 </ul>
-<p><strong>Real-Time Scenario:</strong><br />
-An e-commerce platform running <strong>MongoDB</strong> needs automated backups. Longhorn takes <strong>snapshots every hour</strong> and backs them up to AWS S3, ensuring data recovery in case of corruption.  </p>
-<hr />
-<h4 id="3-how-does-longhorn-work"><strong>3. How Does Longhorn Work?</strong><a class="headerlink" href="#3-how-does-longhorn-work" title="Permanent link">&para;</a></h4>
+<p>🟥 <strong>Very complex</strong> and fragile.</p>
+<h4 id="3-deploy-longhorn">3. <strong>Deploy Longhorn</strong><a class="headerlink" href="#3-deploy-longhorn" title="Permanent link">&para;</a></h4>
+<p>Longhorn needs:</p>
 <ul>
-<li><strong>Volume Replication:</strong> Each volume is replicated across multiple nodes (default: 3 replicas).  </li>
-<li><strong>Scheduling:</strong> Longhorn dynamically schedules replicas based on node availability.  </li>
-<li><strong>Recovery:</strong> If a node fails, Longhorn rebuilds replicas automatically.  </li>
+<li><strong>Block storage</strong> or raw hostPath volume (fake disk).</li>
+<li>Running in a <strong>Kubernetes cluster with certain kernel modules</strong>.</li>
 </ul>
-<p><strong>Real-Time Scenario:</strong><br />
-A <strong>Node failure</strong> occurs in a Kubernetes cluster running a <strong>PostgreSQL</strong> database. Longhorn detects the failure and <strong>rebuilds the lost replica</strong> on another healthy node, ensuring high availability.  </p>
-<hr />
-<h4 id="4-where-is-longhorn-used"><strong>4. Where is Longhorn Used?</strong><a class="headerlink" href="#4-where-is-longhorn-used" title="Permanent link">&para;</a></h4>
+<p>Kind nodes are Docker containers and don’t have real disks.</p>
+<p>✅ Workaround:</p>
 <ul>
-<li><strong>On-Premises Kubernetes Clusters</strong> (e.g., Rancher, K3s)  </li>
-<li><strong>Hybrid &amp; Multi-Cloud Deployments</strong> (AWS EKS, GCP GKE, Azure AKS)  </li>
-<li><strong>Edge Computing &amp; IoT</strong> (Lightweight storage for distributed apps)  </li>
+<li>Use <code>loop</code> device + mount as <code>hostPath</code></li>
+<li>OR use Longhorn in a VM-based K3s cluster instead (easier)</li>
 </ul>
-<p><strong>Real-Time Scenario:</strong><br />
-A <strong>financial services firm</strong> uses Longhorn in <strong>multi-cloud Kubernetes (EKS + on-prem)</strong> to ensure consistent storage for <strong>Fraud Detection Microservices</strong>, avoiding vendor lock-in.  </p>
-<hr />
-<h3 id="key-benefits-challenges"><strong>Key Benefits &amp; Challenges</strong><a class="headerlink" href="#key-benefits-challenges" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th><strong>Benefits</strong></th>
-<th><strong>Challenges</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>✅ Easy to deploy &amp; manage</td>
-<td>❌ Not suitable for high-throughput workloads (e.g., big data)</td>
-</tr>
-<tr>
-<td>✅ Self-healing &amp; fault-tolerant</td>
-<td>❌ Requires proper resource planning (CPU/memory for replicas)</td>
-</tr>
-<tr>
-<td>✅ Works across multiple clouds</td>
-<td>❌ Backup performance depends on network bandwidth</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h3 id="conclusion"><strong>Conclusion</strong><a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h3>
-<p>Longhorn is an <strong>ideal choice for Kubernetes users</strong> needing <strong>reliable, distributed block storage</strong> with <strong>easy backup &amp; recovery</strong>. It shines in <strong>stateful applications (databases, message queues)</strong> but may not be optimal for high-performance storage needs.  </p>
+<h3 id="conclusion">🔴 Conclusion:<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h3>
+<ul>
+<li>You <strong>can</strong> do this, but it’s <strong>unsupported, hacky, and brittle</strong>.</li>
+<li>Better: Use <strong>K3s or kubeadm with VMs</strong> + Longhorn + external etcd.</li>
+</ul>
+<p>Do you want me to give you a working setup example using <code>k3s</code> with external etcd and Longhorn?</p>
 
 
 
