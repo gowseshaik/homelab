@@ -19,6 +19,8 @@
 - [install-cert-manager](Cert-manager/install-cert-manager.md)
 
 ## Choosing kubernetes by usecases
+- [K8s HA clusters](Choosing Kubernetes by Usecases/K8s HA clusters.md)
+- [Kind Vs K3d](Choosing Kubernetes by Usecases/Kind Vs K3d.md)
 - [Kubernetes cluster types on your usecases](Choosing Kubernetes by Usecases/Kubernetes cluster types on your usecases.md)
 
 ## Clusteraccess
@@ -38,6 +40,8 @@
 - [DaemonSets in Kubernetes](DaemonSets/DaemonSets in Kubernetes.md)
 
 ## Dailytasks
+- [K8s Cmds Cheatsheet](DailyTasks/K8s Cmds Cheatsheet.md)
+- [k8s error codes](DailyTasks/k8s error codes.md)
 - [pod exec and extract info from pods](DailyTasks/pod exec and extract info from pods.md)
 
 ## Deployments
@@ -69,6 +73,7 @@
 ## K3d
 - [Complete Traefik Setup Guide for k3d](K3d/Complete Traefik Setup Guide for k3d.md)
 - [K3d cluster setup](K3d/K3d cluster setup.md)
+- [k3d and kind commands](K3d/k3d and kind commands.md)
 - [k3d cluster with traefik dashboard](K3d/k3d cluster with traefik dashboard.md)
 - [k3d with traefik dashboard setup](K3d/k3d with traefik dashboard setup.md)
 
@@ -96,6 +101,7 @@
 
 ## Nexus
 - [Create a Docker image registry in Nexus](Nexus/Create a Docker image registry in Nexus.md)
+- [Nexus Repository Manager OSS and integrate it with your Kubernetes](Nexus/Nexus Repository Manager OSS and integrate it with your Kubernetes.md)
 
 ## Opentofu
 - [About OpenTofu](OpenTofu/About OpenTofu.md)
@@ -104,9 +110,10 @@
 - [PV's and PVC's in Kubernetes](PV n PVCs/PV's and PVC's in Kubernetes.md)
 
 ## Pods
-- [Debug pod - create for test and delete on post test](Pods/Debug pod - create for test and delete on post test.md)
+- [Debug pod (ephermal container)](Pods/Debug pod (ephermal container).md)
 - [List all pods with their init containers and sidecar containers info](Pods/List all pods with their init containers and sidecar containers info.md)
 - [Types of Containers in Kubernetes](Pods/Types of Containers in Kubernetes.md)
+- [Types of Pods](Pods/Types of Pods.md)
 
 ## Prometheus + grafana
 - [Expose Prometheus and Grafana using Ingress](Prometheus + Grafana/Expose Prometheus and Grafana using Ingress.md)
@@ -165,6 +172,7 @@
 
 ## Mkdocs
 - [mkdocs to github projects](mkdocs/mkdocs to github projects.md)
+- [plugins list used with MkDocs-material](mkdocs/plugins list used with MkDocs-material.md)
 
 ## Overrides
 
@@ -173,4 +181,5 @@
 - [python pyautogui](python/python pyautogui.md)
 
 ## Velero - for migration
+- [Velero with kind](velero - for migration/Velero with kind.md)
 

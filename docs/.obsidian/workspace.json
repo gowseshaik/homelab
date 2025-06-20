@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DailyTasks/k8s error codes.md",
+                "file": "mkdocs/mkdocs to github projects.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "k8s error codes"
+              "title": "mkdocs to github projects"
             }
           }
         ]
@@ -167,8 +167,8 @@
   },
   "active": "35a82b6773880ced",
   "lastOpenFiles": [
-    "DailyTasks/K8s Cmds Cheatsheet.md",
     "DailyTasks/k8s error codes.md",
+    "DailyTasks/K8s Cmds Cheatsheet.md",
     "K3d/k3d and kind commands.md",
     "Choosing Kubernetes by Usecases/Kind Vs K3d.md",
     "Choosing Kubernetes by Usecases/K8s HA clusters.md",
