@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Storage/Storage Types.md",
+                "file": "Longhorn/About StorageClass fields.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Storage Types"
+              "title": "About StorageClass fields"
             }
           }
         ]
@@ -167,6 +167,18 @@
   },
   "active": "35a82b6773880ced",
   "lastOpenFiles": [
+    "Longhorn/Longhorn for stateful applications.md",
+    "Longhorn/About StorageClass fields.md",
+    "Statefulsets/Updating a MongoDB StatefulSet in Kubernetes.md",
+    "Longhorn/Longhorn in Kubernetes.md",
+    "Longhorn/Nginx pod with a volume backed by Longhorn.md",
+    "Longhorn/Using Longhorn Storage with Kind Cluster.md",
+    "velero - for migration",
+    "Longhorn/Longhorn with loopback file on Kind.md",
+    "etcdctl/set up Kind with external etcd and Longhorn.md",
+    "Longhorn/Untitled",
+    "etcdctl/etcd in kind.md",
+    "etcdctl/check etcd is running.md",
     "Storage/Storage Types.md",
     "Storage"
   ]

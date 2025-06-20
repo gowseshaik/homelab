@@ -1,5 +1,18 @@
+When you **setup Longhorn in your cluster**, it uses the storage available on the cluster nodes (e.g., the mounted `/mnt/longhorn` directory in Kind) as its **underlying storage pool**.
+
+- Longhorn manages that storage to create **persistent volumes** (block devices).
+- It dynamically allocates space from that pool when you create PVCs.
+- So, total available storage = sum of the storage Longhorn can access on all nodes (like `/mnt/longhorn`).
+
+|Action|Effect|
+|---|---|
+|Mount `/mnt/longhorn` on nodes|Provides raw storage space for Longhorn|
+|Deploy Longhorn|Manages and exposes block storage volumes|
+|Create PVC with Longhorn SC|Allocates storage from Longhorn pool|
+
 #### **1. What is Longhorn?**  
 Longhorn is a **cloud-native, distributed storage system** for Kubernetes that provides **persistent block storage** using dynamically provisioned volumes. It is lightweight, easy to deploy, and highly resilient, making it ideal for stateful applications in Kubernetes.  
+
 
 **Real-Time Scenario:**  
 A company running a **MySQL database** on Kubernetes needs persistent storage that survives pod restarts. Longhorn provides **replicated volumes**, ensuring data remains available even if a node fails.  
@@ -49,4 +62,3 @@ A **financial services firm** uses Longhorn in **multi-cloud Kubernetes (EKS + o
 ### **Conclusion**  
 Longhorn is an **ideal choice for Kubernetes users** needing **reliable, distributed block storage** with **easy backup & recovery**. It shines in **stateful applications (databases, message queues)** but may not be optimal for high-performance storage needs.  
 
-Would you like a **hands-on demo** of setting up Longhorn in a real Kubernetes cluster? 🚀
