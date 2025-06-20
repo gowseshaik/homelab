@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#types-of-containers-in-kubernetes-pods" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -310,6 +315,115 @@
 
   <h1>Types of Containers in Kubernetes</h1>
 
+<h3 id="types-of-containers-in-kubernetes-pods">📦 <strong>Types of Containers in Kubernetes Pods</strong><a class="headerlink" href="#types-of-containers-in-kubernetes-pods" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>Type</strong></th>
+<th><strong>Purpose</strong></th>
+<th><strong>Example Use Case</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Main (App) Container</strong></td>
+<td>The primary container that runs your application.</td>
+<td>nginx, flask app, database service</td>
+</tr>
+<tr>
+<td><strong>Sidecar Container</strong></td>
+<td>Provides helper services to the main container. Shared network/storage.</td>
+<td>log forwarder, proxy, config updater</td>
+</tr>
+<tr>
+<td><strong>Init Container</strong></td>
+<td>Runs <strong>before</strong> app containers, <strong>one-time tasks only</strong>.</td>
+<td>db migration, wait-for-service</td>
+</tr>
+<tr>
+<td><strong>Ephemeral Container</strong></td>
+<td><strong>Temporary debugging</strong> container attached to a running pod.</td>
+<td><code>kubectl debug</code> to troubleshoot issues</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sidecar-pattern-explained">🔄 Sidecar Pattern Explained<a class="headerlink" href="#sidecar-pattern-explained" title="Permanent link">&para;</a></h3>
+<h4 id="characteristics">Characteristics:<a class="headerlink" href="#characteristics" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>Runs <strong>alongside</strong> main app container in the same pod</p>
+</li>
+<li>
+<p><strong>Shares</strong>:</p>
+<ul>
+<li>Network namespace (localhost communication)</li>
+<li>Volumes (for logs/configs etc.)</li>
+</ul>
+</li>
+</ul>
+<h4 id="typical-use-cases">Typical Use Cases:<a class="headerlink" href="#typical-use-cases" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Log shippers (e.g., Fluentd)</li>
+<li>Service mesh proxies (e.g., Envoy in Istio)</li>
+<li>Auto-refreshing configuration agents</li>
+</ul>
+<h3 id="example-app-sidecar">🧱 Example: App + Sidecar<a class="headerlink" href="#example-app-sidecar" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app-with-sidecar</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp:latest</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">log-shipper</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fluentd</span>
+<span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shared-logs</span>
+<span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/logs</span>
+<span class="w">  </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shared-logs</span>
+<span class="w">    </span><span class="nt">emptyDir</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+</code></pre></div>
+<h3 id="summary-table">🧠 Summary Table<a class="headerlink" href="#summary-table" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>Container Type</strong></th>
+<th><strong>Runs When?</strong></th>
+<th><strong>Restarts with Pod?</strong></th>
+<th><strong>Use Case</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main Container</td>
+<td>Always (normal flow)</td>
+<td>Yes</td>
+<td>Business logic</td>
+</tr>
+<tr>
+<td>Init Container</td>
+<td>Before main starts</td>
+<td>No</td>
+<td>Setup tasks</td>
+</tr>
+<tr>
+<td>Sidecar Container</td>
+<td>With main container</td>
+<td>Yes</td>
+<td>Logs, proxy, monitoring</td>
+</tr>
+<tr>
+<td>Ephemeral Container</td>
+<td>Injected at runtime</td>
+<td>No</td>
+<td>Debugging</td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>

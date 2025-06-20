@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Pods/Debug%20pod%20-%20create%20for%20test%20and%20delete%20on%20post%20test/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Pods/Debug%20pod%20%28ephermal%20container%29/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Debug pod create for test and delete on post test - Gouse Shaik</title>
+        <title>Debug pod (ephermal container) - Gouse Shaik</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Debug pod   create for test and delete on post test
+              Debug pod (ephermal container)
             
           </span>
         </div>
@@ -305,7 +305,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Pods/Debug pod - create for test and delete on post test.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Pods/Debug pod (ephermal container).md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -313,7 +313,7 @@
   
 
 
-  <h1>Debug pod   create for test and delete on post test</h1>
+  <h1>Debug pod (ephermal container)</h1>
 
 <p>Yes, you <strong>can access the pods</strong>, but <strong>not via external IP</strong> because it's a <strong>headless service (<code>ClusterIP: None</code>)</strong> — it only helps with <strong>pod discovery</strong>, not load balancing or external access.</p>
 <div class="highlight"><pre><span></span><code>gouse@gouse:~/DevOps/k3d$<span class="w"> </span>kubectl<span class="w"> </span>run<span class="w"> </span>curlpod<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>curlimages/curl<span class="w"> </span>--<span class="w"> </span>/bin/sh
