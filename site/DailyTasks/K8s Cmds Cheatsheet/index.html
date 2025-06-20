@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Storage/Storage%20Types/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/DailyTasks/K8s%20Cmds%20Cheatsheet/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Types of Storage's - Gouse Shaik</title>
+        <title>K8s Cmds Cheatsheet - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#types-of-storages" class="md-skip">
+        <a href="#cluster-management" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Types of Storage's
+              K8s Cmds Cheatsheet
             
           </span>
         </div>
@@ -305,7 +305,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Storage/Storage Types.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/DailyTasks/K8s Cmds Cheatsheet.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -313,215 +313,117 @@
   
 
 
-<h1 id="types-of-storages">Types of Storage's<a class="headerlink" href="#types-of-storages" title="Permanent link">&para;</a></h1>
-<table>
-<thead>
-<tr>
-<th>Storage Type</th>
-<th>Description</th>
-<th>Example Use Cases</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Object Storage</strong></td>
-<td>Stores data as <em>objects</em> with metadata and unique IDs, accessed via APIs (like S3). Optimized for large amounts of unstructured data (files, images, backups). Not a traditional file system.</td>
-<td>AWS S3, MinIO, Azure Blob Storage</td>
-</tr>
-<tr>
-<td><strong>File Storage</strong></td>
-<td>Stores data as files in a hierarchical folder structure, accessible via file protocols (NFS, SMB).</td>
-<td>Network shares, local file systems</td>
-</tr>
-<tr>
-<td><strong>Block Storage</strong></td>
-<td>Provides raw storage volumes at the block level for use by OS/file systems (like hard drives).</td>
-<td>Longhorn, EBS, Persistent Volumes</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th><strong>Block Storage</strong></th>
-<th><strong>File Storage</strong></th>
-<th><strong>Object Storage</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Structure</strong></td>
-<td>Raw blocks (like a disk)</td>
-<td>Hierarchical (files &amp; folders)</td>
-<td>Flat (objects with metadata)</td>
-</tr>
-<tr>
-<td><strong>Access</strong></td>
-<td>Low-level (via OS, formatted as FS)</td>
-<td>Via file systems (NFS, SMB)</td>
-<td>Via API (HTTP/REST)</td>
-</tr>
-<tr>
-<td><strong>Use Cases</strong></td>
-<td>Databases, VMs, OS disks</td>
-<td>Shared drives, home dirs, web servers</td>
-<td>Backups, media, logs, cloud apps</td>
-</tr>
-<tr>
-<td><strong>Performance</strong></td>
-<td>High (I/O intensive)</td>
-<td>Medium</td>
-<td>Variable (depends on use &amp; service)</td>
-</tr>
-<tr>
-<td><strong>Scalability</strong></td>
-<td>Limited to volume size</td>
-<td>Limited by FS &amp; protocol</td>
-<td>Highly scalable</td>
-</tr>
-<tr>
-<td><strong>Examples</strong></td>
-<td>AWS EBS, GCP PD, Azure Disk</td>
-<td>NFS, SMB, EFS, Azure Files</td>
-<td>S3, Azure Blob, GCP Cloud Storage</td>
-</tr>
-</tbody>
-</table>
-<h2 id="storage-comparison-with-when-to-use">Storage Comparison with <strong>When to Use</strong> ?<a class="headerlink" href="#storage-comparison-with-when-to-use" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th><strong>Block Storage</strong></th>
-<th><strong>File Storage</strong></th>
-<th><strong>Object Storage</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Structure</strong></td>
-<td>Raw blocks, mount as disk</td>
-<td>Files &amp; folders (hierarchical)</td>
-<td>Objects with metadata (flat)</td>
-</tr>
-<tr>
-<td><strong>Access</strong></td>
-<td>Low-level, via OS (mount, format)</td>
-<td>NFS, SMB (file share protocols)</td>
-<td>REST API, HTTP-based</td>
-</tr>
-<tr>
-<td><strong>Use Cases</strong></td>
-<td>Databases, boot volumes, containers, VMs</td>
-<td>Shared directories, CMS, user home folders</td>
-<td>Backups, archives, logs, media, cloud-native apps</td>
-</tr>
-<tr>
-<td><strong>Performance</strong></td>
-<td>High IOPS, low latency</td>
-<td>Moderate</td>
-<td>Optimized for throughput, not IOPS</td>
-</tr>
-<tr>
-<td><strong>Scalability</strong></td>
-<td>Limited to disk/volume</td>
-<td>Limited by filesystem</td>
-<td>Highly scalable (petabytes+)</td>
-</tr>
-<tr>
-<td><strong>Examples</strong></td>
-<td>AWS EBS, GCP Persistent Disk, Azure Disk</td>
-<td>NFS, AWS EFS, Azure Files</td>
-<td>AWS S3, Azure Blob, GCP Cloud Storage</td>
-</tr>
-<tr>
-<td><strong>When to Use</strong></td>
-<td>- You need fast I/O (DBs) - Requires filesystem - Persistent volume for VMs or Pods</td>
-<td>- Shared access between multiple VMs - Classic apps using file systems</td>
-<td>- Store unstructured data (images, videos, logs) - Archive or backup with metadata - Internet-accessible content</td>
-</tr>
-</tbody>
-</table>
-<h1 id="storage-types-with-tools">Storage Types with Tools<a class="headerlink" href="#storage-types-with-tools" title="Permanent link">&para;</a></h1>
-<table>
-<thead>
-<tr>
-<th>Storage Type</th>
-<th>Tools / Solutions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Block Storage</strong></td>
-<td>- AWS EBS<br>- Azure Managed Disks<br>- GCP Persistent Disks<br>- OpenEBS<br>- Longhorn<br>- Ceph RBD<br>- iSCSI<br>- LVM</td>
-</tr>
-<tr>
-<td><strong>File Storage</strong></td>
-<td>- NFS<br>- SMB/CIFS<br>- AWS EFS<br>- Azure Files<br>- GCP Filestore<br>- GlusterFS- CephFS</td>
-</tr>
-<tr>
-<td><strong>Object Storage</strong></td>
-<td>- AWS S3<br>- Azure Blob Storage<br>- GCP Cloud Storage<br>- MinIO<br>- Ceph Object Gateway (RGW)<br>- OpenIO<br>- Scality<br>- IBM Cloud Object Storage</td>
-</tr>
-<tr>
-<td># Kubernetes CSI Drivers (with CLI Tools)</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Storage Type</th>
-<th>Tools / CSI Driver</th>
-<th>CLI / Setup Tool</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Block Storage</strong></td>
-<td>- <code>ebs.csi.aws.com</code> - <code>pd.csi.storage.gke.io</code> - <code>disk.csi.azure.com</code> - <code>longhorn.io</code> - <code>openebs.io/local</code></td>
-<td>- <code>aws eksctl</code>, <code>helm</code> - <code>gcloud container clusters</code> - <code>az aks</code>, <code>kubectl</code> - <code>helm</code>, <code>kubectl</code></td>
-<td>Use <code>PersistentVolume</code> + <code>StorageClass</code></td>
-</tr>
-<tr>
-<td><strong>File Storage</strong></td>
-<td>- <code>efs.csi.aws.com</code> - <code>file.csi.azure.com</code> - <code>nfs.csi.k8s.io</code> - <code>cephfs.csi.ceph.com</code></td>
-<td>- <code>aws cli</code>, <code>helm</code> - <code>az cli</code>, <code>helm</code> - <code>kubectl</code>, custom NFS server - <code>rook-ceph</code>, <code>helm</code></td>
-<td>Great for shared file systems</td>
-</tr>
-<tr>
-<td><strong>Object Storage</strong></td>
-<td>- <code>s3-csi-driver</code> (community) - <code>minio</code> - <code>ceph-rgw</code></td>
-<td>- <code>mc</code> (MinIO client) - <code>rclone</code>, <code>s5cmd</code>, <code>aws cli</code> - <code>helm</code>, <code>rook</code></td>
-<td>Object storage not used as native PV, used via apps</td>
-</tr>
-<tr>
-<td># Example (EBS CSI - block storage)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<div class="highlight"><pre><span></span><code># Install AWS EBS CSI Driver (EKS example)
-kubectl apply -k &quot;github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=master&quot;
+  <h1>K8s Cmds Cheatsheet</h1>
 
-# StorageClass example
-kubectl apply -f - &lt;&lt;EOF
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: ebs-sc
-provisioner: ebs.csi.aws.com
-parameters:
-  type: gp2
-reclaimPolicy: Delete
-volumeBindingMode: WaitForFirstConsumer
-EOF
-</code></pre></div>
+<h2 id="cluster-management">Cluster Management<a class="headerlink" href="#cluster-management" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl cluster-info</code> - Display cluster information</li>
+<li><code>kubectl get nodes</code> - List all nodes in the cluster</li>
+<li><code>kubectl describe node &lt;node-name&gt;</code> - Show detailed information about a specific node</li>
+<li><code>kubectl top node</code> - Show resource usage (CPU/Memory) for nodes</li>
+<li><code>kubectl top pod</code> - Show resource usage for pods</li>
+<li><code>kubectl cordon &lt;node-name&gt;</code> - Mark node as unschedulable</li>
+<li><code>kubectl uncordon &lt;node-name&gt;</code> - Mark node as schedulable</li>
+<li><code>kubectl drain &lt;node-name&gt;</code> - Drain node in preparation for maintenance</li>
+</ul>
+<h2 id="namespace-operations">Namespace Operations<a class="headerlink" href="#namespace-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl get namespaces</code> - List all namespaces</li>
+<li><code>kubectl create namespace &lt;namespace-name&gt;</code> - Create a new namespace</li>
+<li><code>kubectl config set-context --current --namespace=&lt;namespace-name&gt;</code> - Set default namespace for current context</li>
+<li><code>kubectl delete namespace &lt;namespace-name&gt;</code> - Delete a namespace</li>
+</ul>
+<h2 id="pod-operations">Pod Operations<a class="headerlink" href="#pod-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl get pods</code> - List all pods in current namespace</li>
+<li><code>kubectl get pods -A</code> - List all pods in all namespaces</li>
+<li><code>kubectl get pods -o wide</code> - List pods with additional details (IP, node)</li>
+<li><code>kubectl describe pod &lt;pod-name&gt;</code> - Show detailed information about a pod</li>
+<li><code>kubectl logs &lt;pod-name&gt;</code> - Print pod logs</li>
+<li><code>kubectl logs -f &lt;pod-name&gt;</code> - Stream pod logs (follow)</li>
+<li><code>kubectl logs &lt;pod-name&gt; -c &lt;container-name&gt;</code> - Print logs from a specific container in a pod</li>
+<li><code>kubectl exec -it &lt;pod-name&gt; -- /bin/bash</code> - Execute a command in a pod (interactive)</li>
+<li><code>kubectl delete pod &lt;pod-name&gt;</code> - Delete a pod</li>
+<li><code>kubectl port-forward &lt;pod-name&gt; &lt;local-port&gt;:&lt;pod-port&gt;</code> - Forward a local port to a pod</li>
+</ul>
+<h2 id="deployment-operations">Deployment Operations<a class="headerlink" href="#deployment-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl get deployments</code> - List all deployments</li>
+<li><code>kubectl describe deployment &lt;deployment-name&gt;</code> - Show deployment details</li>
+<li><code>kubectl create deployment &lt;name&gt; --image=&lt;image&gt;</code> - Create a deployment</li>
+<li><code>kubectl scale deployment &lt;deployment-name&gt; --replicas=&lt;number&gt;</code> - Scale a deployment</li>
+<li><code>kubectl rollout status deployment/&lt;deployment-name&gt;</code> - Check rollout status</li>
+<li><code>kubectl rollout history deployment/&lt;deployment-name&gt;</code> - View rollout history</li>
+<li><code>kubectl rollout undo deployment/&lt;deployment-name&gt;</code> - Rollback to previous version</li>
+<li><code>kubectl rollout undo deployment/&lt;deployment-name&gt; --to-revision=&lt;number&gt;</code> - Rollback to specific revision</li>
+<li><code>kubectl set image deployment/&lt;deployment-name&gt; &lt;container-name&gt;=&lt;new-image&gt;</code> - Update deployment image</li>
+</ul>
+<h2 id="service-operations">Service Operations<a class="headerlink" href="#service-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl get services</code> - List all services</li>
+<li><code>kubectl describe service &lt;service-name&gt;</code> - Show service details</li>
+<li><code>kubectl expose deployment &lt;deployment-name&gt; --port=&lt;port&gt; --target-port=&lt;target-port&gt; --type=&lt;type&gt;</code> - Expose a deployment as a service</li>
+<li><code>kubectl delete service &lt;service-name&gt;</code> - Delete a service</li>
+</ul>
+<h2 id="configmap-secrets">ConfigMap &amp; Secrets<a class="headerlink" href="#configmap-secrets" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl get configmaps</code> - List all configmaps</li>
+<li><code>kubectl create configmap &lt;name&gt; --from-file=&lt;path-to-file&gt;</code> - Create configmap from file</li>
+<li><code>kubectl create configmap &lt;name&gt; --from-literal=&lt;key&gt;=&lt;value&gt;</code> - Create configmap from literal</li>
+<li><code>kubectl get secrets</code> - List all secrets</li>
+<li><code>kubectl create secret generic &lt;name&gt; --from-literal=&lt;key&gt;=&lt;value&gt;</code> - Create secret from literal</li>
+<li><code>kubectl create secret generic &lt;name&gt; --from-file=&lt;path-to-file&gt;</code> - Create secret from file</li>
+</ul>
+<h2 id="statefulsets-daemonsets">StatefulSets &amp; DaemonSets<a class="headerlink" href="#statefulsets-daemonsets" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl get statefulsets</code> - List all statefulsets</li>
+<li><code>kubectl get daemonsets</code> - List all daemonsets</li>
+</ul>
+<h2 id="jobs-cronjobs">Jobs &amp; CronJobs<a class="headerlink" href="#jobs-cronjobs" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl get jobs</code> - List all jobs</li>
+<li><code>kubectl get cronjobs</code> - List all cronjobs</li>
+</ul>
+<h2 id="persistent-volumes-claims">Persistent Volumes &amp; Claims<a class="headerlink" href="#persistent-volumes-claims" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl get pv</code> - List persistent volumes</li>
+<li><code>kubectl get pvc</code> - List persistent volume claims</li>
+</ul>
+<h2 id="rbac-security">RBAC &amp; Security<a class="headerlink" href="#rbac-security" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl get roles</code> - List roles</li>
+<li><code>kubectl get rolebindings</code> - List role bindings</li>
+<li><code>kubectl get clusterroles</code> - List cluster roles</li>
+<li><code>kubectl get clusterrolebindings</code> - List cluster role bindings</li>
+<li><code>kubectl auth can-i &lt;verb&gt; &lt;resource&gt;</code> - Check if an action is allowed</li>
+</ul>
+<h2 id="troubleshooting-debugging">Troubleshooting &amp; Debugging<a class="headerlink" href="#troubleshooting-debugging" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl get events --sort-by=.metadata.creationTimestamp</code> - Show events sorted by timestamp</li>
+<li><code>kubectl get events -w</code> - Watch events in real-time</li>
+<li><code>kubectl api-resources</code> - List all API resources</li>
+<li><code>kubectl explain &lt;resource&gt;</code> - Get documentation for a resource</li>
+</ul>
+<h2 id="configuration-context">Configuration &amp; Context<a class="headerlink" href="#configuration-context" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl config view</code> - Show merged kubeconfig settings</li>
+<li><code>kubectl config get-contexts</code> - List all contexts</li>
+<li><code>kubectl config use-context &lt;context-name&gt;</code> - Switch to another context</li>
+<li><code>kubectl config current-context</code> - Show current context</li>
+</ul>
+<h2 id="yaml-operations">YAML Operations<a class="headerlink" href="#yaml-operations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl apply -f &lt;file.yaml&gt;</code> - Apply configuration from a YAML file</li>
+<li><code>kubectl delete -f &lt;file.yaml&gt;</code> - Delete resources defined in a YAML file</li>
+<li><code>kubectl get &lt;resource&gt; &lt;name&gt; -o yaml</code> - Get resource configuration in YAML format</li>
+<li><code>kubectl get &lt;resource&gt; &lt;name&gt; -o json</code> - Get resource configuration in JSON format</li>
+</ul>
+<h2 id="custom-columns-output-formatting">Custom Columns &amp; Output Formatting<a class="headerlink" href="#custom-columns-output-formatting" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>kubectl get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName</code> - Custom columns output</li>
+<li><code>kubectl get pods --sort-by=.metadata.creationTimestamp</code> - Sort by creation time</li>
+<li><code>kubectl get pods --field-selector=status.phase=Running</code> - Filter by field selector</li>
+</ul>
 
 
 

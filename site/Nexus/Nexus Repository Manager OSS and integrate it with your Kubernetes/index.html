@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Storage/Storage%20Types/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Nexus/Nexus%20Repository%20Manager%20OSS%20and%20integrate%20it%20with%20your%20Kubernetes/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Types of Storage's - Gouse Shaik</title>
+        <title>Nexus Repository Manager OSS and integrate it with your Kubernetes - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#types-of-storages" class="md-skip">
+        <a href="#steps-overview" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Types of Storage's
+              Nexus Repository Manager OSS and integrate it with your Kubernetes
             
           </span>
         </div>
@@ -305,7 +305,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Storage/Storage Types.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Nexus/Nexus Repository Manager OSS and integrate it with your Kubernetes.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -313,215 +313,105 @@
   
 
 
-<h1 id="types-of-storages">Types of Storage's<a class="headerlink" href="#types-of-storages" title="Permanent link">&para;</a></h1>
-<table>
-<thead>
-<tr>
-<th>Storage Type</th>
-<th>Description</th>
-<th>Example Use Cases</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Object Storage</strong></td>
-<td>Stores data as <em>objects</em> with metadata and unique IDs, accessed via APIs (like S3). Optimized for large amounts of unstructured data (files, images, backups). Not a traditional file system.</td>
-<td>AWS S3, MinIO, Azure Blob Storage</td>
-</tr>
-<tr>
-<td><strong>File Storage</strong></td>
-<td>Stores data as files in a hierarchical folder structure, accessible via file protocols (NFS, SMB).</td>
-<td>Network shares, local file systems</td>
-</tr>
-<tr>
-<td><strong>Block Storage</strong></td>
-<td>Provides raw storage volumes at the block level for use by OS/file systems (like hard drives).</td>
-<td>Longhorn, EBS, Persistent Volumes</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th><strong>Block Storage</strong></th>
-<th><strong>File Storage</strong></th>
-<th><strong>Object Storage</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Structure</strong></td>
-<td>Raw blocks (like a disk)</td>
-<td>Hierarchical (files &amp; folders)</td>
-<td>Flat (objects with metadata)</td>
-</tr>
-<tr>
-<td><strong>Access</strong></td>
-<td>Low-level (via OS, formatted as FS)</td>
-<td>Via file systems (NFS, SMB)</td>
-<td>Via API (HTTP/REST)</td>
-</tr>
-<tr>
-<td><strong>Use Cases</strong></td>
-<td>Databases, VMs, OS disks</td>
-<td>Shared drives, home dirs, web servers</td>
-<td>Backups, media, logs, cloud apps</td>
-</tr>
-<tr>
-<td><strong>Performance</strong></td>
-<td>High (I/O intensive)</td>
-<td>Medium</td>
-<td>Variable (depends on use &amp; service)</td>
-</tr>
-<tr>
-<td><strong>Scalability</strong></td>
-<td>Limited to volume size</td>
-<td>Limited by FS &amp; protocol</td>
-<td>Highly scalable</td>
-</tr>
-<tr>
-<td><strong>Examples</strong></td>
-<td>AWS EBS, GCP PD, Azure Disk</td>
-<td>NFS, SMB, EFS, Azure Files</td>
-<td>S3, Azure Blob, GCP Cloud Storage</td>
-</tr>
-</tbody>
-</table>
-<h2 id="storage-comparison-with-when-to-use">Storage Comparison with <strong>When to Use</strong> ?<a class="headerlink" href="#storage-comparison-with-when-to-use" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th><strong>Block Storage</strong></th>
-<th><strong>File Storage</strong></th>
-<th><strong>Object Storage</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Structure</strong></td>
-<td>Raw blocks, mount as disk</td>
-<td>Files &amp; folders (hierarchical)</td>
-<td>Objects with metadata (flat)</td>
-</tr>
-<tr>
-<td><strong>Access</strong></td>
-<td>Low-level, via OS (mount, format)</td>
-<td>NFS, SMB (file share protocols)</td>
-<td>REST API, HTTP-based</td>
-</tr>
-<tr>
-<td><strong>Use Cases</strong></td>
-<td>Databases, boot volumes, containers, VMs</td>
-<td>Shared directories, CMS, user home folders</td>
-<td>Backups, archives, logs, media, cloud-native apps</td>
-</tr>
-<tr>
-<td><strong>Performance</strong></td>
-<td>High IOPS, low latency</td>
-<td>Moderate</td>
-<td>Optimized for throughput, not IOPS</td>
-</tr>
-<tr>
-<td><strong>Scalability</strong></td>
-<td>Limited to disk/volume</td>
-<td>Limited by filesystem</td>
-<td>Highly scalable (petabytes+)</td>
-</tr>
-<tr>
-<td><strong>Examples</strong></td>
-<td>AWS EBS, GCP Persistent Disk, Azure Disk</td>
-<td>NFS, AWS EFS, Azure Files</td>
-<td>AWS S3, Azure Blob, GCP Cloud Storage</td>
-</tr>
-<tr>
-<td><strong>When to Use</strong></td>
-<td>- You need fast I/O (DBs) - Requires filesystem - Persistent volume for VMs or Pods</td>
-<td>- Shared access between multiple VMs - Classic apps using file systems</td>
-<td>- Store unstructured data (images, videos, logs) - Archive or backup with metadata - Internet-accessible content</td>
-</tr>
-</tbody>
-</table>
-<h1 id="storage-types-with-tools">Storage Types with Tools<a class="headerlink" href="#storage-types-with-tools" title="Permanent link">&para;</a></h1>
-<table>
-<thead>
-<tr>
-<th>Storage Type</th>
-<th>Tools / Solutions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Block Storage</strong></td>
-<td>- AWS EBS<br>- Azure Managed Disks<br>- GCP Persistent Disks<br>- OpenEBS<br>- Longhorn<br>- Ceph RBD<br>- iSCSI<br>- LVM</td>
-</tr>
-<tr>
-<td><strong>File Storage</strong></td>
-<td>- NFS<br>- SMB/CIFS<br>- AWS EFS<br>- Azure Files<br>- GCP Filestore<br>- GlusterFS- CephFS</td>
-</tr>
-<tr>
-<td><strong>Object Storage</strong></td>
-<td>- AWS S3<br>- Azure Blob Storage<br>- GCP Cloud Storage<br>- MinIO<br>- Ceph Object Gateway (RGW)<br>- OpenIO<br>- Scality<br>- IBM Cloud Object Storage</td>
-</tr>
-<tr>
-<td># Kubernetes CSI Drivers (with CLI Tools)</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Storage Type</th>
-<th>Tools / CSI Driver</th>
-<th>CLI / Setup Tool</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Block Storage</strong></td>
-<td>- <code>ebs.csi.aws.com</code> - <code>pd.csi.storage.gke.io</code> - <code>disk.csi.azure.com</code> - <code>longhorn.io</code> - <code>openebs.io/local</code></td>
-<td>- <code>aws eksctl</code>, <code>helm</code> - <code>gcloud container clusters</code> - <code>az aks</code>, <code>kubectl</code> - <code>helm</code>, <code>kubectl</code></td>
-<td>Use <code>PersistentVolume</code> + <code>StorageClass</code></td>
-</tr>
-<tr>
-<td><strong>File Storage</strong></td>
-<td>- <code>efs.csi.aws.com</code> - <code>file.csi.azure.com</code> - <code>nfs.csi.k8s.io</code> - <code>cephfs.csi.ceph.com</code></td>
-<td>- <code>aws cli</code>, <code>helm</code> - <code>az cli</code>, <code>helm</code> - <code>kubectl</code>, custom NFS server - <code>rook-ceph</code>, <code>helm</code></td>
-<td>Great for shared file systems</td>
-</tr>
-<tr>
-<td><strong>Object Storage</strong></td>
-<td>- <code>s3-csi-driver</code> (community) - <code>minio</code> - <code>ceph-rgw</code></td>
-<td>- <code>mc</code> (MinIO client) - <code>rclone</code>, <code>s5cmd</code>, <code>aws cli</code> - <code>helm</code>, <code>rook</code></td>
-<td>Object storage not used as native PV, used via apps</td>
-</tr>
-<tr>
-<td># Example (EBS CSI - block storage)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<div class="highlight"><pre><span></span><code># Install AWS EBS CSI Driver (EKS example)
-kubectl apply -k &quot;github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=master&quot;
+  <h1>Nexus Repository Manager OSS and integrate it with your Kubernetes</h1>
 
-# StorageClass example
-kubectl apply -f - &lt;&lt;EOF
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: ebs-sc
-provisioner: ebs.csi.aws.com
-parameters:
-  type: gp2
-reclaimPolicy: Delete
-volumeBindingMode: WaitForFirstConsumer
-EOF
+<h3 id="steps-overview">✅ Steps Overview<a class="headerlink" href="#steps-overview" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Deploy Nexus on your cluster</strong></li>
+<li><strong>Expose Nexus (via NodePort or Ingress)</strong></li>
+<li><strong>Persistent storage (PVC)</strong></li>
+<li><strong>Access Nexus UI &amp; configure repos</strong></li>
+<li><strong>Use Nexus repo in CI/CD or package managers</strong></li>
+</ol>
+<h3 id="nexus-deployment-yaml-basic">🐳 Nexus Deployment YAML (Basic)<a class="headerlink" href="#nexus-deployment-yaml-basic" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nexus</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nexus</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nexus</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nexus</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sonatype/nexus3:latest</span>
+<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8081</span>
+<span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nexus-data</span>
+<span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/nexus-data</span>
+<span class="w">        </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2Gi&quot;</span>
+<span class="w">            </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+<span class="w">      </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nexus-data</span>
+<span class="w">        </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nexus-pvc</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nexus</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NodePort</span>
+<span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8081</span>
+<span class="w">      </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8081</span>
+<span class="w">      </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30081</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nexus</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nexus-pvc</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10Gi</span>
 </code></pre></div>
+<h3 id="access-nexus">💡 Access Nexus<a class="headerlink" href="#access-nexus" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Run: <code>kubectl port-forward svc/nexus 8081:8081</code></li>
+<li>Or: open <code>http://&lt;NODE_IP&gt;:30081</code></li>
+<li>Default credentials: <code>admin / &lt;get from admin.password file inside container&gt;</code></li>
+</ul>
+<h3 id="integration-examples">🔗 Integration Examples<a class="headerlink" href="#integration-examples" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Integration Point</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Docker</td>
+<td>Push/pull from Nexus Docker registry</td>
+</tr>
+<tr>
+<td>Maven/Gradle</td>
+<td>Set Nexus as artifact repo</td>
+</tr>
+<tr>
+<td>Helm</td>
+<td>Host your own Helm chart repo</td>
+</tr>
+<tr>
+<td>CI/CD (Jenkins/GitLab)</td>
+<td>Use Nexus as artifact/image/cache store</td>
+</tr>
+</tbody>
+</table>
 
 
 

@@ -29,6 +29,14 @@
          <lastmod>2025-06-20</lastmod>
     </url>
     <url>
+         <loc>https://github.com/gowseshaik/homelab/Choosing%20Kubernetes%20by%20Usecases/K8s%20HA%20clusters/</loc>
+         <lastmod>2025-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/Choosing%20Kubernetes%20by%20Usecases/Kind%20Vs%20K3d/</loc>
+         <lastmod>2025-06-20</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/gowseshaik/homelab/Choosing%20Kubernetes%20by%20Usecases/Kubernetes%20cluster%20types%20on%20your%20usecases/</loc>
          <lastmod>2025-06-20</lastmod>
     </url>
@@ -62,6 +70,10 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/DaemonSets/DaemonSets%20in%20Kubernetes/</loc>
+         <lastmod>2025-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/DailyTasks/K8s%20Cmds%20Cheatsheet/</loc>
          <lastmod>2025-06-20</lastmod>
     </url>
     <url>
@@ -149,6 +161,10 @@
          <lastmod>2025-06-20</lastmod>
     </url>
     <url>
+         <loc>https://github.com/gowseshaik/homelab/K3d/k3d%20and%20kind%20commands/</loc>
+         <lastmod>2025-06-20</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/gowseshaik/homelab/K3d/k3d%20cluster%20with%20traefik%20dashboard/</loc>
          <lastmod>2025-06-20</lastmod>
     </url>
@@ -206,6 +222,10 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/Nexus/Create%20a%20Docker%20image%20registry%20in%20Nexus/</loc>
+         <lastmod>2025-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/Nexus/Nexus%20Repository%20Manager%20OSS%20and%20integrate%20it%20with%20your%20Kubernetes/</loc>
          <lastmod>2025-06-20</lastmod>
     </url>
     <url>
@@ -362,6 +382,10 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/python/python%20pyautogui/</loc>
+         <lastmod>2025-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/velero%20-%20for%20migration/Velero%20with%20kind/</loc>
          <lastmod>2025-06-20</lastmod>
     </url>
 </urlset>

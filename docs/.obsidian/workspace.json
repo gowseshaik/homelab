@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DailyTasks/K8s Cmds Cheatsheet.md",
+                "file": "DailyTasks/k8s error codes.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "K8s Cmds Cheatsheet"
+              "title": "k8s error codes"
             }
           }
         ]
@@ -167,8 +167,9 @@
   },
   "active": "35a82b6773880ced",
   "lastOpenFiles": [
-    "K3d/k3d and kind commands.md",
     "DailyTasks/K8s Cmds Cheatsheet.md",
+    "DailyTasks/k8s error codes.md",
+    "K3d/k3d and kind commands.md",
     "Choosing Kubernetes by Usecases/Kind Vs K3d.md",
     "Choosing Kubernetes by Usecases/K8s HA clusters.md",
     "Choosing Kubernetes by Usecases/Kubernetes cluster types on your usecases.md",
@@ -192,7 +193,6 @@
     "mkdocs/mkdocs to github projects.md",
     "Pods/Types of Containers in Kubernetes.md",
     "Pods/Types of Pods.md",
-    "Pods/Debug pod (ephermal container).md",
     "velero - for migration",
     "Longhorn/Untitled",
     "Storage"
