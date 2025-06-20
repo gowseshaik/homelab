@@ -1,3 +1,61 @@
+### 📦 **Types of Containers in Kubernetes Pods**
+
+| **Type**                 | **Purpose**                                                             | **Example Use Case**                   |
+| ------------------------ | ----------------------------------------------------------------------- | -------------------------------------- |
+| **Main (App) Container** | The primary container that runs your application.                       | nginx, flask app, database service     |
+| **Sidecar Container**    | Provides helper services to the main container. Shared network/storage. | log forwarder, proxy, config updater   |
+| **Init Container**       | Runs **before** app containers, **one-time tasks only**.                | db migration, wait-for-service         |
+| **Ephemeral Container**  | **Temporary debugging** container attached to a running pod.            | `kubectl debug` to troubleshoot issues |
+
+### 🔄 Sidecar Pattern Explained
+
+#### Characteristics:
+
+- Runs **alongside** main app container in the same pod
+    
+- **Shares**:
+    - Network namespace (localhost communication)
+    - Volumes (for logs/configs etc.)
+
+#### Typical Use Cases:
+
+- Log shippers (e.g., Fluentd)
+- Service mesh proxies (e.g., Envoy in Istio)
+- Auto-refreshing configuration agents
+
+### 🧱 Example: App + Sidecar
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-with-sidecar
+spec:
+  containers:
+  - name: app
+    image: myapp:latest
+    ports:
+    - containerPort: 8080
+  - name: log-shipper
+    image: fluentd
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /logs
+  volumes:
+  - name: shared-logs
+    emptyDir: {}
+```
+
+### 🧠 Summary Table
+
+|**Container Type**|**Runs When?**|**Restarts with Pod?**|**Use Case**|
+|---|---|---|---|
+|Main Container|Always (normal flow)|Yes|Business logic|
+|Init Container|Before main starts|No|Setup tasks|
+|Sidecar Container|With main container|Yes|Logs, proxy, monitoring|
+|Ephemeral Container|Injected at runtime|No|Debugging|
+
+
 
 | **Type**                 | **Description**                                                      | **Use Cases**                                         | **Example Tools/Workloads**                 |
 | ------------------------ | -------------------------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------- |
@@ -19,3 +77,4 @@
 2. **Windows Support**: Requires Windows nodes and compatible images.  
 3. **Security**: Use `gVisor`/`Kata` for sandboxing, `PodSecurityPolicy` (or Kyverno/OPA) for restrictions.  
 4. **Debugging**: Ephemeral containers allow live troubleshooting without pod restarts.  
+

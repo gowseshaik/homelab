@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Storage/About StorageClass fields.md",
+                "file": "Pods/Types of Containers in Kubernetes.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "About StorageClass fields"
+              "title": "Types of Containers in Kubernetes"
             }
           }
         ]
@@ -165,10 +165,14 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "677f75720c62470c",
+  "active": "35a82b6773880ced",
   "lastOpenFiles": [
-    "Storage/Common Kubernetes storage types.md",
+    "Pods/Types of Pods.md",
+    "Pods/Debug pod (ephermal container).md",
+    "Pods/List all pods with their init containers and sidecar containers info.md",
+    "Pods/Types of Containers in Kubernetes.md",
     "Storage/About StorageClass fields.md",
+    "Storage/Common Kubernetes storage types.md",
     "Longhorn/Longhorn for stateful applications.md",
     "Statefulsets/Updating a MongoDB StatefulSet in Kubernetes.md",
     "Longhorn/Longhorn in Kubernetes.md",

@@ -83,10 +83,13 @@
 - [Reverse proxy means](Loadbalancers Types/Reverse proxy means.md)
 
 ## Longhorn
-- [Common Kubernetes storage types](Longhorn/Common Kubernetes storage types.md)
 - [Hands-On - Deploying Longhorn on Kubernetes](Longhorn/Hands-On - Deploying Longhorn on Kubernetes.md)
 - [Longhorn Access Modes & Volume Resizing Guide](Longhorn/Longhorn Access Modes & Volume Resizing Guide.md)
+- [Longhorn for stateful applications](Longhorn/Longhorn for stateful applications.md)
 - [Longhorn in Kubernetes](Longhorn/Longhorn in Kubernetes.md)
+- [Longhorn with loopback file on Kind](Longhorn/Longhorn with loopback file on Kind.md)
+- [Nginx pod with a volume backed by Longhorn](Longhorn/Nginx pod with a volume backed by Longhorn.md)
+- [Using Longhorn Storage with Kind Cluster](Longhorn/Using Longhorn Storage with Kind Cluster.md)
 
 ## Namespace
 - [Delete all resources from namespace](Namespace/Delete all resources from namespace.md)
@@ -126,6 +129,8 @@
 - [W3H-Understanding StatefulSets in Kubernetes](Statefulsets/W3H-Understanding StatefulSets in Kubernetes.md)
 
 ## Storage
+- [About StorageClass fields](Storage/About StorageClass fields.md)
+- [Common Kubernetes storage types](Storage/Common Kubernetes storage types.md)
 - [Storage Types](Storage/Storage Types.md)
 
 ## Taint-tolerations
@@ -142,7 +147,9 @@
 ## Etcdctl
 - [Install etcdctl tool with supported versions](etcdctl/Install etcdctl tool with supported versions.md)
 - [check etcd is running](etcdctl/check etcd is running.md)
+- [etcd in kind](etcdctl/etcd in kind.md)
 - [etcdctl commands for get, put, snapshot save and restore](etcdctl/etcdctl commands for get, put, snapshot save and restore.md)
+- [set up Kind with external etcd and Longhorn](etcdctl/set up Kind with external etcd and Longhorn.md)
 
 ## Fluentd
 - [Fluentd DaemonSet deployment YAML for Kubernetes](fluentd/Fluentd DaemonSet deployment YAML for Kubernetes.md)
@@ -164,4 +171,6 @@
 ## Python
 - [mkdocs to github pages](python/mkdocs to github pages.md)
 - [python pyautogui](python/python pyautogui.md)
+
+## Velero - for migration
 

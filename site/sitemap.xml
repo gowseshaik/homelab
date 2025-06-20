@@ -173,14 +173,6 @@
          <lastmod>2025-06-20</lastmod>
     </url>
     <url>
-         <loc>https://github.com/gowseshaik/homelab/Longhorn/About%20StorageClass%20fields/</loc>
-         <lastmod>2025-06-20</lastmod>
-    </url>
-    <url>
-         <loc>https://github.com/gowseshaik/homelab/Longhorn/Common%20Kubernetes%20storage%20types/</loc>
-         <lastmod>2025-06-20</lastmod>
-    </url>
-    <url>
          <loc>https://github.com/gowseshaik/homelab/Longhorn/Hands-On%20-%20Deploying%20Longhorn%20on%20Kubernetes/</loc>
          <lastmod>2025-06-20</lastmod>
     </url>
@@ -274,6 +266,14 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/Statefulsets/W3H-Understanding%20StatefulSets%20in%20Kubernetes/</loc>
+         <lastmod>2025-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/Storage/About%20StorageClass%20fields/</loc>
+         <lastmod>2025-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/Storage/Common%20Kubernetes%20storage%20types/</loc>
          <lastmod>2025-06-20</lastmod>
     </url>
     <url>
