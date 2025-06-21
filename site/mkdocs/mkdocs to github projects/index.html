@@ -321,6 +321,14 @@ $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </sp
 ✅<span class="w"> </span>Other<span class="w"> </span>files/folders<span class="w"> </span>will<span class="w"> </span>remain<span class="w"> </span>unaffected.<span class="w"> </span>Only<span class="w"> </span><span class="sb">`</span>.obsidian<span class="sb">`</span><span class="w"> </span>is<span class="w"> </span>ignored<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>build.
 
 
+<span class="c1"># Stop tracking the folder</span>
+git<span class="w"> </span>rm<span class="w"> </span>-r<span class="w"> </span>--cached<span class="w"> </span>.obsidian
+
+<span class="c1"># Commit the change</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Remove .obsidian directory from repo&quot;</span>
+
+<span class="c1"># Push to GitHub</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
 
 $<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;.obsidian/&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>.gitignore
 $<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>.
