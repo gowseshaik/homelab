@@ -152,7 +152,8 @@ def generate_index():
 if __name__ == "__main__":  
     generate_index()
 
-----------
+-----------
+# Updated for .obsidian
 
 import os  
 from pathlib import Path  
