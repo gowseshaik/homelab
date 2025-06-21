@@ -102,6 +102,9 @@ plugins:
 nav:  
   - Home: index.md  
   - About: about.md
+
+exclude:
+  - .obsidian/*
 ```
 
 # python script to generate before pushing to Github

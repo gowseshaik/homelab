@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#python-script-to-generate-before-pushing-to-github" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -308,8 +313,6 @@
   
 
 
-  <h1>Mkdocs to github projects</h1>
-
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>handsondevops
 $<span class="w"> </span><span class="nb">source</span><span class="w"> </span>./handsondevops/bin/activate
 $<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs
@@ -448,6 +451,34 @@ nav:
   - Home: index.md  
   - About: about.md
 </code></pre></div></p>
+<h1 id="python-script-to-generate-before-pushing-to-github">python script to generate before pushing to Github<a class="headerlink" href="#python-script-to-generate-before-pushing-to-github" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code>import os  
+from pathlib import Path  
+
+docs_dir = &quot;docs&quot;  
+output_file = &quot;docs/index.md&quot;  
+
+
+def generate_index():  
+    content = &quot;# Knowledge Base\n\n&quot;  
+
+    for topic in sorted(os.listdir(docs_dir)):  
+        topic_path = os.path.join(docs_dir, topic)  
+        if os.path.isdir(topic_path) and topic != &quot;assets&quot;:  
+            content += f&quot;## {topic.capitalize()}\n&quot;  
+            for file in sorted(os.listdir(topic_path)):  
+                if file.endswith(&quot;.md&quot;):  
+                    file_name = file[:-3]  # Remove &#39;.md&#39;  
+                    content += f&quot;- [{file_name}]({topic}/{file})\n&quot;  
+            content += &quot;\n&quot;  
+
+    with open(output_file, &quot;w&quot;) as f:  
+        f.write(content)  
+
+
+if __name__ == &quot;__main__&quot;:  
+    generate_index()
+</code></pre></div>
 
 
 
