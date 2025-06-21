@@ -17,6 +17,10 @@ theme:
     - toc.integrate
     - content.action.edit
     - content.tooltips
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+  custom_dir: overrides
   palette:
     - scheme: default
       primary: cyan
