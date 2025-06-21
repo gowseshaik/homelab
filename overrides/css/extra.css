@@ -1,21 +1,100 @@
-/* Force left-aligned navigation */
+/* overrides/css/extra.css */
+:root {
+    --sidebar-width: 18rem;
+    --header-height: 4.8rem;
+}
+
+/* Main layout structure */
+.md-container {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Primary sidebar (left) */
 .md-sidebar--primary {
-    order: -1;
-    margin-right: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    z-index: 10;
+    transform: none;
+    transition: transform 0.25s,width 0.25s;
+    box-shadow: none;
+    border-right: 1px solid var(--md-default-fg-color--lightest);
+    background: var(--md-default-bg-color);
 }
 
-/* Adjust main content area */
-.md-content {
-    margin-left: 2rem;
+/* Secondary sidebar (right TOC) */
+.md-sidebar--secondary {
+    margin-left: var(--sidebar-width);
 }
 
-/* Optional: Make sidebar wider */
-.md-sidebar {
-    width: 20rem;
+/* Main content area */
+.md-main {
+    flex-grow: 1;
+    margin-left: var(--sidebar-width);
 }
 
-/* Optional: Fix header spacing */
+.md-main__inner {
+    display: flex;
+    height: 100%;
+    margin-top: var(--header-height);
+}
+
+/* Header adjustments */
 .md-header {
-    left: 20rem;
-    width: calc(100% - 20rem);
+    position: fixed;
+    left: var(--sidebar-width);
+    right: 0;
+    width: auto;
+    z-index: 9;
+}
+
+/* Content area padding */
+.md-content {
+    padding: 2rem 2.4rem;
+}
+
+/* Navigation menu styling */
+.md-nav {
+    padding: 1rem;
+    height: calc(100vh - var(--header-height));
+    overflow-y: auto;
+}
+
+/* Search bar positioning */
+.md-search {
+    padding-right: 1rem;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 76.1875em) {
+    .md-sidebar--primary {
+        transform: translateX(-100%);
+    }
+
+    .md-header {
+        left: 0;
+    }
+
+    .md-main {
+        margin-left: 0;
+    }
+
+    [data-md-toggle="drawer"]:checked ~ .md-container .md-sidebar--primary {
+        transform: translateX(0);
+    }
+}
+
+/* Print mode */
+@media print {
+    .md-sidebar--primary {
+        display: none;
+    }
+
+    .md-main {
+        margin-left: 0;
+    }
 }
