@@ -1,7 +1,5 @@
 # Knowledge Base
 
-## .obsidian
-
 ## Api-resources
 - [k8s-api-resources-details](API-Resources/k8s-api-resources-details.md)
 

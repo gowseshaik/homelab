@@ -5,7 +5,6 @@ D:.
 |   gen_index.py
 |   
 +---.idea
-|   |   .gitignore
 |   |   homelab.iml
 |   |   misc.xml
 |   |   modules.xml
