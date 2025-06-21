@@ -4,6 +4,11 @@ $ source ./handsondevops/bin/activate
 $ pip install mkdocs
 
 $ pip install mkdocs-material
+
+$ echo ".obsidian/" >> .gitignore
+$ git add .
+$ git commit -am "add comment"
+$ git push -u origin main
 $ mkdocs gh-deploy --clean
 ```
 
