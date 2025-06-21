@@ -225,6 +225,10 @@
          <lastmod>2025-06-21</lastmod>
     </url>
     <url>
+         <loc>https://github.com/gowseshaik/homelab/Longhorn/Use%20Longhorn%20for%20PV%20and%20mount%20to%20MinIO/</loc>
+         <lastmod>2025-06-21</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/gowseshaik/homelab/Longhorn/Using%20Longhorn%20Storage%20with%20Kind%20Cluster/</loc>
          <lastmod>2025-06-21</lastmod>
     </url>
@@ -338,6 +342,10 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/etcdctl/Install%20etcdctl%20tool%20with%20supported%20versions/</loc>
+         <lastmod>2025-06-21</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/etcdctl/To%20take%20backup%20of%20etcd%20with%20minIO/</loc>
          <lastmod>2025-06-21</lastmod>
     </url>
     <url>
