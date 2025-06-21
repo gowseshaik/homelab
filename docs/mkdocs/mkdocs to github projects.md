@@ -7,6 +7,14 @@ $ pip install mkdocs-exclude # to exclude .obsidian directory
 ✅ Other files/folders will remain unaffected. Only `.obsidian` is ignored in the build.
 
 
+# Stop tracking the folder
+git rm -r --cached .obsidian
+
+# Commit the change
+git commit -m "Remove .obsidian directory from repo"
+
+# Push to GitHub
+git push origin main
 
 $ echo ".obsidian/" >> .gitignore
 $ git add .
