@@ -2,8 +2,11 @@
 $ python3 -m venv handsondevops
 $ source ./handsondevops/bin/activate
 $ pip install mkdocs
-
 $ pip install mkdocs-material
+$ pip install mkdocs-exclude # to exclude .obsidian directory
+✅ Other files/folders will remain unaffected. Only `.obsidian` is ignored in the build.
+
+
 
 $ echo ".obsidian/" >> .gitignore
 $ git add .

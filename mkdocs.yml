@@ -53,10 +53,11 @@ markdown_extensions:
 
 plugins:
   - search
+  - exclude:
+      glob:
+        - ".obsidian/*"
 
 nav:
   - Home: index.md
   - About: about.md
 
-exclude:
-  - .obsidian/*
