@@ -70,6 +70,7 @@
 
 ## K3d
 - [Complete Traefik Setup Guide for k3d](K3d/Complete Traefik Setup Guide for k3d.md)
+- [K3d cluster setup with HA](K3d/K3d cluster setup with HA.md)
 - [K3d cluster setup](K3d/K3d cluster setup.md)
 - [k3d and kind commands](K3d/k3d and kind commands.md)
 - [k3d cluster with traefik dashboard](K3d/k3d cluster with traefik dashboard.md)
