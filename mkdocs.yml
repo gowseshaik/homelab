@@ -55,7 +55,7 @@ plugins:
   - search
   - exclude:
       glob:
-        - ".obsidian/*"
+        - ".obsidian/**"
 
 nav:
   - Home: index.md
