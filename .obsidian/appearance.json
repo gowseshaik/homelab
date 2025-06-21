@@ -1,9 +1,0 @@
-{
-  "cssTheme": "Primary",
-  "theme": "moonstone",
-  "accentColor": "#463625",
-  "nativeMenus": true,
-  "enabledCssSnippets": [
-    "file"
-  ]
-}
