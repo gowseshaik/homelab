@@ -1,0 +1,21 @@
+/* Force left-aligned navigation */
+.md-sidebar--primary {
+    order: -1;
+    margin-right: 0;
+}
+
+/* Adjust main content area */
+.md-content {
+    margin-left: 2rem;
+}
+
+/* Optional: Make sidebar wider */
+.md-sidebar {
+    width: 20rem;
+}
+
+/* Optional: Fix header spacing */
+.md-header {
+    left: 20rem;
+    width: calc(100% - 20rem);
+}
