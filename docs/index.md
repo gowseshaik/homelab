@@ -93,6 +93,7 @@
 - [Longhorn in Kubernetes](Longhorn/Longhorn in Kubernetes.md)
 - [Longhorn with loopback file on Kind](Longhorn/Longhorn with loopback file on Kind.md)
 - [Nginx pod with a volume backed by Longhorn](Longhorn/Nginx pod with a volume backed by Longhorn.md)
+- [Use Longhorn for PV and mount to MinIO](Longhorn/Use Longhorn for PV and mount to MinIO.md)
 - [Using Longhorn Storage with Kind Cluster](Longhorn/Using Longhorn Storage with Kind Cluster.md)
 
 ## Namespace
@@ -152,6 +153,7 @@
 
 ## Etcdctl
 - [Install etcdctl tool with supported versions](etcdctl/Install etcdctl tool with supported versions.md)
+- [To take backup of etcd with minIO](etcdctl/To take backup of etcd with minIO.md)
 - [check etcd is running](etcdctl/check etcd is running.md)
 - [etcd in kind](etcdctl/etcd in kind.md)
 - [etcdctl commands for get, put, snapshot save and restore](etcdctl/etcdctl commands for get, put, snapshot save and restore.md)
@@ -172,8 +174,6 @@
 ## Mkdocs
 - [mkdocs to github projects](mkdocs/mkdocs to github projects.md)
 - [plugins list used with MkDocs-material](mkdocs/plugins list used with MkDocs-material.md)
-
-## Overrides
 
 ## Python
 - [mkdocs to github pages](python/mkdocs to github pages.md)
