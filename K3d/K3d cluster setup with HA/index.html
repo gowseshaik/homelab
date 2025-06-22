@@ -387,7 +387,7 @@ $ k3d cluster create ha-cluster \
   --k3s-arg &quot;--tls-san=127.0.0.1@server:0&quot; \
   --wait
 </code></pre></div>
-<p>$ k3d cluster create --config k3d-etcd-ha.yaml (it wont restart nodes, if host machine restarted)
+<p>$ k3d cluster create --config k3d-etcd-ha.yaml
 <div class="highlight"><pre><span></span><code>apiVersion: k3d.io/v1alpha5
 kind: Simple
 metadata:
@@ -421,43 +421,6 @@ ports:
     nodeFilters:
       - loadbalancer
 </code></pre></div></p>
-<p>we fixed the cluster to connect without issues by adding 6443 port.</p>
-<div class="highlight"><pre><span></span><code>apiVersion: k3d.io/v1alpha5
-kind: Simple
-metadata:
-  name: ha-cluster
-servers: 3
-agents: 2
-options:
-  k3s:
-    extraArgs:
-      - arg: &quot;--cluster-init&quot;
-        nodeFilters:
-          - server:0
-      - arg: &quot;--server=https://k3d-ha-cluster-server-0:6443&quot;
-        nodeFilters:
-          - server:1
-          - server:2
-      - arg: &quot;--tls-san=127.0.0.1&quot;
-        nodeFilters:
-          - server:0
-      - arg: &quot;--disable=servicelb&quot;
-        nodeFilters:
-          - server:*
-      - arg: &quot;--disable=metrics-server&quot;
-        nodeFilters:
-          - server:*
-ports:
-  - port: 80:80
-    nodeFilters:
-      - loadbalancer
-  - port: 443:443
-    nodeFilters:
-      - loadbalancer
-  - port: 6443:6443
-    nodeFilters:
-      - loadbalancer
-</code></pre></div>
 
 
 
