@@ -38,8 +38,13 @@
 |`kubectl get svc -l app=myapp`|Get services with specific label|
 |`kubectl delete pod -l env=test`|Delete pods by label|
 |`kubectl apply -f file.yaml`|Apply resource with labels defined in YAML|
+## Annotations
+- `k annotate pod mypod key=value`
+- `k annotate pod mypod owner="gowse" purpose="debugging"` - apply annotation
+- `k annotate pod mypod purpose-` - Remove annotation
+- `kubectl get pods -A -o json | jq -r '.items[] | select(.metadata.annotations["w3h.why"] == "debugging") | [.metadata.namespace, .metadata.name] | @tsv'`
 
-Let me know if you want YAML examples or `taints`, `annotations` cheat sheet too.
+
 ## Pod Operations
 - `kubectl get pods` - List all pods in current namespace
 - `kubectl get pods -A` - List all pods in all namespaces

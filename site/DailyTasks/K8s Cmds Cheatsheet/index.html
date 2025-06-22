@@ -382,6 +382,83 @@
 <li><code>kubectl config set-context --current --namespace=&lt;namespace-name&gt;</code> - Set default namespace for current context</li>
 <li><code>kubectl delete namespace &lt;namespace-name&gt;</code> - Delete a namespace</li>
 </ul>
+<h2 id="node-role-labels">Node-role labels<a class="headerlink" href="#node-role-labels" title="Permanent link">&para;</a></h2>
+<h4 id="apply-node-role-label">Apply node-role label<a class="headerlink" href="#apply-node-role-label" title="Permanent link">&para;</a></h4>
+<ul>
+<li>`k label node k3d-dev-cluster-agent-1 node-role.kubernetes.io/worker1=</li>
+</ul>
+<h4 id="rmove-node-role-label">Rmove node-role label<a class="headerlink" href="#rmove-node-role-label" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>k label node k3d-dev-cluster-agent-1 node-role.kubernetes.io/worker1-</code></li>
+</ul>
+<h2 id="labels">Labels<a class="headerlink" href="#labels" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th><strong>Command / Usage</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kubectl get pods --show-labels</code></td>
+<td>Show all labels for each pod</td>
+</tr>
+<tr>
+<td><code>kubectl get pods -l key=value</code></td>
+<td>Filter pods by label</td>
+</tr>
+<tr>
+<td><code>kubectl get pods -l 'key in (v1,v2)'</code></td>
+<td>Filter by label values (set-based)</td>
+</tr>
+<tr>
+<td><code>kubectl label pod &lt;pod-name&gt; key=value</code></td>
+<td>Add a label to a pod</td>
+</tr>
+<tr>
+<td><code>kubectl label pod &lt;pod-name&gt; key-</code></td>
+<td>Remove a label from a pod</td>
+</tr>
+<tr>
+<td><code>kubectl label --overwrite pod key=value</code></td>
+<td>Overwrite an existing label</td>
+</tr>
+<tr>
+<td><code>kubectl get pods --selector='env=prod'</code></td>
+<td>Another way to filter using a label selector</td>
+</tr>
+<tr>
+<td><code>kubectl describe pod &lt;pod-name&gt;</code></td>
+<td>View labels (under Metadata)</td>
+</tr>
+<tr>
+<td><code>kubectl get nodes --show-labels</code></td>
+<td>Show labels on nodes</td>
+</tr>
+<tr>
+<td><code>kubectl label nodes &lt;node-name&gt; key=value</code></td>
+<td>Add a label to a node</td>
+</tr>
+<tr>
+<td><code>kubectl label deployment &lt;dep&gt; key=value</code></td>
+<td>Add label to deployment</td>
+</tr>
+<tr>
+<td><code>kubectl get svc -l app=myapp</code></td>
+<td>Get services with specific label</td>
+</tr>
+<tr>
+<td><code>kubectl delete pod -l env=test</code></td>
+<td>Delete pods by label</td>
+</tr>
+<tr>
+<td><code>kubectl apply -f file.yaml</code></td>
+<td>Apply resource with labels defined in YAML</td>
+</tr>
+</tbody>
+</table>
+<p>Let me know if you want YAML examples or <code>taints</code>, <code>annotations</code> cheat sheet too.</p>
 <h2 id="pod-operations">Pod Operations<a class="headerlink" href="#pod-operations" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>kubectl get pods</code> - List all pods in current namespace</li>
