@@ -362,8 +362,6 @@
   
 
 
-  <h1>K8s Cmds Cheatsheet</h1>
-
 <h2 id="cluster-management">Cluster Management<a class="headerlink" href="#cluster-management" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>kubectl cluster-info</code> - Display cluster information</li>
@@ -375,6 +373,11 @@
 <li><code>kubectl uncordon &lt;node-name&gt;</code> - Mark node as schedulable</li>
 <li><code>kubectl drain &lt;node-name&gt;</code> - Drain node in preparation for maintenance</li>
 </ul>
+<h1 id="apply-and-remove-labels">Apply and Remove Labels<a class="headerlink" href="#apply-and-remove-labels" title="Permanent link">&para;</a></h1>
+<p><code>kubectl label &lt;resource-type&gt; &lt;resource-name&gt; &lt;key&gt;=&lt;value&gt; --overwrite</code>
+<code>kubectl label pod mypod app=nginx --overwrite</code> - apply label</p>
+<p><code>kubectl label &lt;resource-type&gt; &lt;resource-name&gt; &lt;key&gt;-</code>
+<code>kubectl label pod mypod app-</code> - Remove label</p>
 <h2 id="namespace-operations">Namespace Operations<a class="headerlink" href="#namespace-operations" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>kubectl get namespaces</code> - List all namespaces</li>
