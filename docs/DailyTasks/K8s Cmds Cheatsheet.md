@@ -14,6 +14,32 @@
 - `kubectl config set-context --current --namespace=<namespace-name>` - Set default namespace for current context
 - `kubectl delete namespace <namespace-name>` - Delete a namespace
 
+## Node-role labels
+#### Apply node-role label
+- `k label node k3d-dev-cluster-agent-1 node-role.kubernetes.io/worker1=
+#### Rmove node-role label
+- `k label node k3d-dev-cluster-agent-1 node-role.kubernetes.io/worker1-`
+
+## Labels
+
+|**Command / Usage**|**Description**|
+|---|---|
+|`kubectl get pods --show-labels`|Show all labels for each pod|
+|`kubectl get pods -l key=value`|Filter pods by label|
+|`kubectl get pods -l 'key in (v1,v2)'`|Filter by label values (set-based)|
+|`kubectl label pod <pod-name> key=value`|Add a label to a pod|
+|`kubectl label pod <pod-name> key-`|Remove a label from a pod|
+|`kubectl label --overwrite pod key=value`|Overwrite an existing label|
+|`kubectl get pods --selector='env=prod'`|Another way to filter using a label selector|
+|`kubectl describe pod <pod-name>`|View labels (under Metadata)|
+|`kubectl get nodes --show-labels`|Show labels on nodes|
+|`kubectl label nodes <node-name> key=value`|Add a label to a node|
+|`kubectl label deployment <dep> key=value`|Add label to deployment|
+|`kubectl get svc -l app=myapp`|Get services with specific label|
+|`kubectl delete pod -l env=test`|Delete pods by label|
+|`kubectl apply -f file.yaml`|Apply resource with labels defined in YAML|
+
+Let me know if you want YAML examples or `taints`, `annotations` cheat sheet too.
 ## Pod Operations
 - `kubectl get pods` - List all pods in current namespace
 - `kubectl get pods -A` - List all pods in all namespaces

@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/etcdctl/etcdctl%20commands%20for%20get%2C%20put%2C%20snapshot%20save%20and%20restore/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/etcdctl/To%20take%20backup%20of%20etcd%20with%20minIO/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Etcdctl commands for get, put, snapshot save and restore - Gouse Shaik</title>
+        <title>To take backup of etcd with minIO - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#basic-setup" class="md-skip">
+        <a href="#when-you-need-minio" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Etcdctl commands for get, put, snapshot save and restore
+              To take backup of etcd with minIO
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/etcdctl/etcdctl commands for get, put, snapshot save and restore.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/etcdctl/To take backup of etcd with minIO.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,100 +362,118 @@
   
 
 
-  <h1>Etcdctl commands for get, put, snapshot save and restore</h1>
+  <h1>To take backup of etcd with minIO</h1>
 
-<div class="highlight"><pre><span></span><code><span class="c1"># Set a key</span>
-etcdctl<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </span><span class="s2">&quot;bar&quot;</span>
-
-<span class="c1"># Get a key</span>
-etcdctl<span class="w"> </span>get<span class="w"> </span>foo
-
-<span class="c1"># Save a snapshot</span>
-etcdctl<span class="w"> </span>snapshot<span class="w"> </span>save<span class="w"> </span>/backup/etcd-snapshot.db
-
-<span class="c1"># Restore a snapshot</span>
-etcdctl<span class="w"> </span>snapshot<span class="w"> </span>restore<span class="w"> </span>/backup/etcd-snapshot.db<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--data-dir<span class="o">=</span>/var/lib/etcd-restored
+<p>No, <strong>MinIO is <em>not mandatory</em></strong> — it's just a <strong>self-hosted S3-compatible storage</strong>. But it's an <strong>excellent choice</strong> for storing etcd backups <strong>on-prem</strong> or in air-gapped clusters.</p>
+<hr />
+<h3 id="when-you-need-minio">✅ When You Need MinIO<a class="headerlink" href="#when-you-need-minio" title="Permanent link">&para;</a></h3>
+<p>You need MinIO <strong>only if</strong>:</p>
+<ul>
+<li>You don’t have AWS/GCS/S3 already.</li>
+<li>You want <strong>local S3-compatible storage</strong> inside Kubernetes.</li>
+<li>You use tools like Stash, Velero, kube-etcd-backup expecting S3.</li>
+</ul>
+<h3 id="how-to-setup-minio-on-kubernetes-simple-persistent">🛠️ How to Setup MinIO on Kubernetes (Simple &amp; Persistent)<a class="headerlink" href="#how-to-setup-minio-on-kubernetes-simple-persistent" title="Permanent link">&para;</a></h3>
+<h4 id="1-create-namespace">1. <strong>Create Namespace</strong><a class="headerlink" href="#1-create-namespace" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>minio
 </code></pre></div>
-<h3 id="basic-setup">✅ <strong>Basic Setup</strong><a class="headerlink" href="#basic-setup" title="Permanent link">&para;</a></h3>
-<ol>
-<li>
-<p><strong>Install etcdctl</strong> (if not already available):
-    <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>etcd-client
+<h4 id="2-apply-minio-deployment-pvc">2. <strong>Apply MinIO Deployment &amp; PVC</strong><a class="headerlink" href="#2-apply-minio-deployment-pvc" title="Permanent link">&para;</a></h4>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># minio-deploy.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/minio/minio</span>
+<span class="w">        </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">server</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data</span>
+<span class="w">        </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MINIO_ACCESS_KEY</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minioadmin</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MINIO_SECRET_KEY</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minioadmin</span>
+<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
+<span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage</span>
+<span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data</span>
+<span class="w">      </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage</span>
+<span class="w">        </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio-pvc</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio-pvc</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10Gi</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>minio-deploy.yaml
 </code></pre></div></p>
-</li>
-<li>
-<p><strong>Access etcd running in Kubernetes</strong> (inside control-plane/master node):
-    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>etcd-&lt;node-name&gt;<span class="w"> </span>-c<span class="w"> </span>etcd<span class="w"> </span>-it<span class="w"> </span>--<span class="w"> </span>sh
+<h4 id="3-expose-with-nodeport-or-ingress">3. <strong>Expose with NodePort (or Ingress)</strong><a class="headerlink" href="#3-expose-with-nodeport-or-ingress" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NodePort</span>
+<span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
+<span class="w">      </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
+<span class="w">      </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30900</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>minio-service.yaml
+</code></pre></div>
+<p>Access via:
+<div class="highlight"><pre><span></span><code>http://&lt;NodeIP&gt;:30900  
+User: minioadmin  
+Pass: minioadmin
 </code></pre></div></p>
-</li>
-<li>
-<p><strong>Set environment for etcdctl</strong> (inside the etcd pod or use with <code>ETCDCTL_API=3</code>):
-    <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span>
-</code></pre></div></p>
-</li>
-</ol>
-<h3 id="common-etcdctl-commands">📘 <strong>Common etcdctl Commands</strong><a class="headerlink" href="#common-etcdctl-commands" title="Permanent link">&para;</a></h3>
+<h3 id="how-to-integrate-with-backup-tools">✅ How to Integrate with Backup Tools<a class="headerlink" href="#how-to-integrate-with-backup-tools" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Task</th>
-<th>Command</th>
+<th>Tool</th>
+<th>Integration with MinIO</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>View cluster health</td>
-<td><code>etcdctl --endpoints=&lt;ep&gt; endpoint health</code></td>
+<td><strong>Stash</strong></td>
+<td>Add <code>Repository</code> CRD with endpoint <code>http://minio.minio.svc:9000</code>, and access keys</td>
 </tr>
 <tr>
-<td>View cluster members</td>
-<td><code>etcdctl --endpoints=&lt;ep&gt; member list</code></td>
+<td><strong>Velero</strong></td>
+<td>Use <code>velero install</code> with <code>--provider aws --bucket &lt;bucket&gt; --secret-file</code></td>
 </tr>
 <tr>
-<td>Get a key</td>
-<td><code>etcdctl --endpoints=&lt;ep&gt; get &lt;key&gt;</code></td>
-</tr>
-<tr>
-<td>Put a key</td>
-<td><code>etcdctl --endpoints=&lt;ep&gt; put &lt;key&gt; &lt;value&gt;</code></td>
-</tr>
-<tr>
-<td>Delete a key</td>
-<td><code>etcdctl --endpoints=&lt;ep&gt; del &lt;key&gt;</code></td>
-</tr>
-<tr>
-<td>List all keys</td>
-<td><code>etcdctl --endpoints=&lt;ep&gt; get "" --prefix --keys-only</code></td>
-</tr>
-<tr>
-<td>Snapshot save</td>
-<td><code>etcdctl --endpoints=&lt;ep&gt; snapshot save snapshot.db</code></td>
-</tr>
-<tr>
-<td>Snapshot status</td>
-<td><code>etcdctl snapshot status snapshot.db</code></td>
-</tr>
-<tr>
-<td>Restore from snapshot</td>
-<td><code>etcdctl snapshot restore snapshot.db --data-dir /var/lib/etcd-restored</code></td>
+<td><strong>kube-etcd-backup</strong></td>
+<td>Set S3 config with MinIO endpoint &amp; creds</td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p>Replace <code>&lt;ep&gt;</code> with <code>https://127.0.0.1:2379</code> or proper internal IP.</p>
-</blockquote>
-<hr />
-<h3 id="if-tls-is-enabled-as-in-kubeadm-setup">🔐 <strong>If TLS is Enabled</strong> (as in kubeadm setup):<a class="headerlink" href="#if-tls-is-enabled-as-in-kubeadm-setup" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>etcdctl<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cert<span class="o">=</span>/etc/kubernetes/pki/etcd/peer.crt<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--key<span class="o">=</span>/etc/kubernetes/pki/etcd/peer.key<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cacert<span class="o">=</span>/etc/kubernetes/pki/etcd/ca.crt<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--endpoints<span class="o">=</span>https://127.0.0.1:2379<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>endpoint<span class="w"> </span>health
-</code></pre></div>
-<hr />
-<p>Let me know if you want example output, script for backup/restore, or a real-time cluster key scan.</p>
 
 
 
