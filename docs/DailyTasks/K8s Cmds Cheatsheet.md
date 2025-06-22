@@ -38,6 +38,7 @@
 |`kubectl get svc -l app=myapp`|Get services with specific label|
 |`kubectl delete pod -l env=test`|Delete pods by label|
 |`kubectl apply -f file.yaml`|Apply resource with labels defined in YAML|
+
 ## Annotations
 - `k annotate pod mypod key=value`
 - `k annotate pod mypod owner="gowse" purpose="debugging"` - apply annotation
