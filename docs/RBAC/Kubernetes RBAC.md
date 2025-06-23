@@ -86,3 +86,145 @@ Let me know if you want examples for:
 - admin role
 - service account RBAC
 
+Perfect — here’s a simple **set of examples** with **RBAC permissions** that cover:
+
+1. ✅ Read-only access (basic user)
+2. ✍️ Read + Write access (developer)
+3. 🛠️ Full access (admin)
+4. 🤖 Service Account-based access (for CI/CD pods)
+
+### ✅ 1. **Read-Only Access (User)**
+
+#### Role (read-only for pods)
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-reader
+  namespace: demo
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+```
+
+#### RoleBinding
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-reader-binding
+  namespace: demo
+subjects:
+- kind: User
+  name: dev-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+### ✍️ 2. **Read + Write Access (Developer)**
+
+#### Role (manage pods, deployments)
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: dev-role
+  namespace: demo
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "create", "delete"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "create", "delete"]
+```
+
+#### RoleBinding
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dev-role-binding
+  namespace: demo
+subjects:
+- kind: User
+  name: dev-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: dev-role
+  apiGroup: rbac.authorization.k8s.io
+```
+
+### 🛠️ 3. **Admin Access (Full rights in all namespaces)**
+
+#### ClusterRoleBinding (use built-in `cluster-admin` role)
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: give-admin-to-user
+subjects:
+- kind: User
+  name: admin-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+```
+
+### 🤖 4. **Service Account-Based Access (for pods, CI/CD)**
+
+#### Role (read secrets)
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: demo
+  name: secret-reader
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list"]
+```
+
+#### RoleBinding to ServiceAccount
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bind-secret-reader
+  namespace: demo
+subjects:
+- kind: ServiceAccount
+  name: ci-job
+  namespace: demo
+roleRef:
+  kind: Role
+  name: secret-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+### ✅ Apply All:
+
+```bash
+kubectl apply -f role.yaml
+kubectl apply -f rolebinding.yaml
+```
+
+Let me know:
+
+- If you want all of them zipped into one YAML
+- If your users are authenticated via OIDC/LDAP or using service accounts only
