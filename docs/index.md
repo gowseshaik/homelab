@@ -119,6 +119,9 @@
 - [Expose Prometheus and Grafana using Ingress](Prometheus + Grafana/Expose Prometheus and Grafana using Ingress.md)
 - [Set up Prometheus + Grafana for your Kubernetes K3d cluster](Prometheus + Grafana/Set up Prometheus + Grafana for your Kubernetes K3d cluster.md)
 
+## Rbac
+- [Kubernetes RBAC](RBAC/Kubernetes RBAC.md)
+
 ## Secrets
 - [Deep Dive into securing secrets in specific envs](Secrets/Deep Dive into securing secrets in specific envs.md)
 - [Secrets management for sensitive information](Secrets/Secrets management for sensitive information.md)
@@ -150,6 +153,9 @@
 
 ## Ubuntu
 - [list of good tools to extract rar part files](Ubuntu/list of good tools to extract rar part files.md)
+
+## Annotations
+- [About annotations in k8s](annotations/About annotations in k8s.md)
 
 ## Etcdctl
 - [Install etcdctl tool with supported versions](etcdctl/Install etcdctl tool with supported versions.md)
