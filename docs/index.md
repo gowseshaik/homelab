@@ -38,6 +38,7 @@
 - [DaemonSets in Kubernetes](DaemonSets/DaemonSets in Kubernetes.md)
 
 ## Dailytasks
+- [Important resources to learn k8s](DailyTasks/Important resources to learn k8s.md)
 - [K8s Cmds Cheatsheet](DailyTasks/K8s Cmds Cheatsheet.md)
 - [k8s error codes](DailyTasks/k8s error codes.md)
 - [pod exec and extract info from pods](DailyTasks/pod exec and extract info from pods.md)
@@ -121,6 +122,7 @@
 
 ## Rbac
 - [Kubernetes RBAC](RBAC/Kubernetes RBAC.md)
+- [htpasswd based authentication](RBAC/htpasswd based authentication.md)
 
 ## Secrets
 - [Deep Dive into securing secrets in specific envs](Secrets/Deep Dive into securing secrets in specific envs.md)
