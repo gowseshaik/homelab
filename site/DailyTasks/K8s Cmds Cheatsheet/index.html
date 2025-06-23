@@ -456,28 +456,15 @@
 <td><code>kubectl apply -f file.yaml</code></td>
 <td>Apply resource with labels defined in YAML</td>
 </tr>
-<tr>
-<td>## Annotations</td>
-<td></td>
-</tr>
-<tr>
-<td>- <code>k annotate pod mypod key=value</code></td>
-<td></td>
-</tr>
-<tr>
-<td>- <code>k annotate pod mypod owner="gowse" purpose="debugging"</code> - apply annotation</td>
-<td></td>
-</tr>
-<tr>
-<td>- <code>k annotate pod mypod purpose-</code> - Remove annotation</td>
-<td></td>
-</tr>
-<tr>
-<td>- <code>kubectl get pods -A -o json | jq -r '.items[] | select(.metadata.annotations["w3h.why"] == "debugging") | [.metadata.namespace, .metadata.name] | @tsv'</code></td>
-<td></td>
-</tr>
 </tbody>
 </table>
+<h2 id="annotations">Annotations<a class="headerlink" href="#annotations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>k annotate pod mypod key=value</code></li>
+<li><code>k annotate pod mypod owner="gowse" purpose="debugging"</code> - apply annotation</li>
+<li><code>k annotate pod mypod purpose-</code> - Remove annotation</li>
+<li><code>kubectl get pods -A -o json | jq -r '.items[] | select(.metadata.annotations["w3h.why"] == "debugging") | [.metadata.namespace, .metadata.name] | @tsv'</code></li>
+</ul>
 <h2 id="pod-operations">Pod Operations<a class="headerlink" href="#pod-operations" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>kubectl get pods</code> - List all pods in current namespace</li>
