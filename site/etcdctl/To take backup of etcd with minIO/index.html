@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/DailyTasks/K8s%20Cmds%20Cheatsheet/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/etcdctl/To%20take%20backup%20of%20etcd%20with%20minIO/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>K8s Cmds Cheatsheet - Gouse Shaik</title>
+        <title>To take backup of etcd with minIO - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cluster-management" class="md-skip">
+        <a href="#when-you-need-minio" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              K8s Cmds Cheatsheet
+              To take backup of etcd with minIO
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/DailyTasks/K8s Cmds Cheatsheet.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/etcdctl/To take backup of etcd with minIO.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,120 +362,118 @@
   
 
 
-<h2 id="cluster-management">Cluster Management<a class="headerlink" href="#cluster-management" title="Permanent link">&para;</a></h2>
+  <h1>To take backup of etcd with minIO</h1>
+
+<p>No, <strong>MinIO is <em>not mandatory</em></strong> — it's just a <strong>self-hosted S3-compatible storage</strong>. But it's an <strong>excellent choice</strong> for storing etcd backups <strong>on-prem</strong> or in air-gapped clusters.</p>
+<hr />
+<h3 id="when-you-need-minio">✅ When You Need MinIO<a class="headerlink" href="#when-you-need-minio" title="Permanent link">&para;</a></h3>
+<p>You need MinIO <strong>only if</strong>:</p>
 <ul>
-<li><code>kubectl cluster-info</code> - Display cluster information</li>
-<li><code>kubectl get nodes</code> - List all nodes in the cluster</li>
-<li><code>kubectl describe node &lt;node-name&gt;</code> - Show detailed information about a specific node</li>
-<li><code>kubectl top node</code> - Show resource usage (CPU/Memory) for nodes</li>
-<li><code>kubectl top pod</code> - Show resource usage for pods</li>
-<li><code>kubectl cordon &lt;node-name&gt;</code> - Mark node as unschedulable</li>
-<li><code>kubectl uncordon &lt;node-name&gt;</code> - Mark node as schedulable</li>
-<li><code>kubectl drain &lt;node-name&gt;</code> - Drain node in preparation for maintenance</li>
+<li>You don’t have AWS/GCS/S3 already.</li>
+<li>You want <strong>local S3-compatible storage</strong> inside Kubernetes.</li>
+<li>You use tools like Stash, Velero, kube-etcd-backup expecting S3.</li>
 </ul>
-<h1 id="apply-and-remove-labels">Apply and Remove Labels<a class="headerlink" href="#apply-and-remove-labels" title="Permanent link">&para;</a></h1>
-<p><code>kubectl label &lt;resource-type&gt; &lt;resource-name&gt; &lt;key&gt;=&lt;value&gt; --overwrite</code>
-<code>kubectl label pod mypod app=nginx --overwrite</code> - apply label</p>
-<p><code>kubectl label &lt;resource-type&gt; &lt;resource-name&gt; &lt;key&gt;-</code>
-<code>kubectl label pod mypod app-</code> - Remove label</p>
-<h2 id="namespace-operations">Namespace Operations<a class="headerlink" href="#namespace-operations" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl get namespaces</code> - List all namespaces</li>
-<li><code>kubectl create namespace &lt;namespace-name&gt;</code> - Create a new namespace</li>
-<li><code>kubectl config set-context --current --namespace=&lt;namespace-name&gt;</code> - Set default namespace for current context</li>
-<li><code>kubectl delete namespace &lt;namespace-name&gt;</code> - Delete a namespace</li>
-</ul>
-<h2 id="pod-operations">Pod Operations<a class="headerlink" href="#pod-operations" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl get pods</code> - List all pods in current namespace</li>
-<li><code>kubectl get pods -A</code> - List all pods in all namespaces</li>
-<li><code>kubectl get pods -o wide</code> - List pods with additional details (IP, node)</li>
-<li><code>kubectl describe pod &lt;pod-name&gt;</code> - Show detailed information about a pod</li>
-<li><code>kubectl logs &lt;pod-name&gt;</code> - Print pod logs</li>
-<li><code>kubectl logs -f &lt;pod-name&gt;</code> - Stream pod logs (follow)</li>
-<li><code>kubectl logs &lt;pod-name&gt; -c &lt;container-name&gt;</code> - Print logs from a specific container in a pod</li>
-<li><code>kubectl exec -it &lt;pod-name&gt; -- /bin/bash</code> - Execute a command in a pod (interactive)</li>
-<li><code>kubectl delete pod &lt;pod-name&gt;</code> - Delete a pod</li>
-<li><code>kubectl port-forward &lt;pod-name&gt; &lt;local-port&gt;:&lt;pod-port&gt;</code> - Forward a local port to a pod</li>
-</ul>
-<h2 id="deployment-operations">Deployment Operations<a class="headerlink" href="#deployment-operations" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl get deployments</code> - List all deployments</li>
-<li><code>kubectl describe deployment &lt;deployment-name&gt;</code> - Show deployment details</li>
-<li><code>kubectl create deployment &lt;name&gt; --image=&lt;image&gt;</code> - Create a deployment</li>
-<li><code>kubectl scale deployment &lt;deployment-name&gt; --replicas=&lt;number&gt;</code> - Scale a deployment</li>
-<li><code>kubectl rollout status deployment/&lt;deployment-name&gt;</code> - Check rollout status</li>
-<li><code>kubectl rollout history deployment/&lt;deployment-name&gt;</code> - View rollout history</li>
-<li><code>kubectl rollout undo deployment/&lt;deployment-name&gt;</code> - Rollback to previous version</li>
-<li><code>kubectl rollout undo deployment/&lt;deployment-name&gt; --to-revision=&lt;number&gt;</code> - Rollback to specific revision</li>
-<li><code>kubectl set image deployment/&lt;deployment-name&gt; &lt;container-name&gt;=&lt;new-image&gt;</code> - Update deployment image</li>
-</ul>
-<h2 id="service-operations">Service Operations<a class="headerlink" href="#service-operations" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl get services</code> - List all services</li>
-<li><code>kubectl describe service &lt;service-name&gt;</code> - Show service details</li>
-<li><code>kubectl expose deployment &lt;deployment-name&gt; --port=&lt;port&gt; --target-port=&lt;target-port&gt; --type=&lt;type&gt;</code> - Expose a deployment as a service</li>
-<li><code>kubectl delete service &lt;service-name&gt;</code> - Delete a service</li>
-</ul>
-<h2 id="configmap-secrets">ConfigMap &amp; Secrets<a class="headerlink" href="#configmap-secrets" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl get configmaps</code> - List all configmaps</li>
-<li><code>kubectl create configmap &lt;name&gt; --from-file=&lt;path-to-file&gt;</code> - Create configmap from file</li>
-<li><code>kubectl create configmap &lt;name&gt; --from-literal=&lt;key&gt;=&lt;value&gt;</code> - Create configmap from literal</li>
-<li><code>kubectl get secrets</code> - List all secrets</li>
-<li><code>kubectl create secret generic &lt;name&gt; --from-literal=&lt;key&gt;=&lt;value&gt;</code> - Create secret from literal</li>
-<li><code>kubectl create secret generic &lt;name&gt; --from-file=&lt;path-to-file&gt;</code> - Create secret from file</li>
-</ul>
-<h2 id="statefulsets-daemonsets">StatefulSets &amp; DaemonSets<a class="headerlink" href="#statefulsets-daemonsets" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl get statefulsets</code> - List all statefulsets</li>
-<li><code>kubectl get daemonsets</code> - List all daemonsets</li>
-</ul>
-<h2 id="jobs-cronjobs">Jobs &amp; CronJobs<a class="headerlink" href="#jobs-cronjobs" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl get jobs</code> - List all jobs</li>
-<li><code>kubectl get cronjobs</code> - List all cronjobs</li>
-</ul>
-<h2 id="persistent-volumes-claims">Persistent Volumes &amp; Claims<a class="headerlink" href="#persistent-volumes-claims" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl get pv</code> - List persistent volumes</li>
-<li><code>kubectl get pvc</code> - List persistent volume claims</li>
-</ul>
-<h2 id="rbac-security">RBAC &amp; Security<a class="headerlink" href="#rbac-security" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl get roles</code> - List roles</li>
-<li><code>kubectl get rolebindings</code> - List role bindings</li>
-<li><code>kubectl get clusterroles</code> - List cluster roles</li>
-<li><code>kubectl get clusterrolebindings</code> - List cluster role bindings</li>
-<li><code>kubectl auth can-i &lt;verb&gt; &lt;resource&gt;</code> - Check if an action is allowed</li>
-</ul>
-<h2 id="troubleshooting-debugging">Troubleshooting &amp; Debugging<a class="headerlink" href="#troubleshooting-debugging" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl get events --sort-by=.metadata.creationTimestamp</code> - Show events sorted by timestamp</li>
-<li><code>kubectl get events -w</code> - Watch events in real-time</li>
-<li><code>kubectl api-resources</code> - List all API resources</li>
-<li><code>kubectl explain &lt;resource&gt;</code> - Get documentation for a resource</li>
-</ul>
-<h2 id="configuration-context">Configuration &amp; Context<a class="headerlink" href="#configuration-context" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl config view</code> - Show merged kubeconfig settings</li>
-<li><code>kubectl config get-contexts</code> - List all contexts</li>
-<li><code>kubectl config use-context &lt;context-name&gt;</code> - Switch to another context</li>
-<li><code>kubectl config current-context</code> - Show current context</li>
-</ul>
-<h2 id="yaml-operations">YAML Operations<a class="headerlink" href="#yaml-operations" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl apply -f &lt;file.yaml&gt;</code> - Apply configuration from a YAML file</li>
-<li><code>kubectl delete -f &lt;file.yaml&gt;</code> - Delete resources defined in a YAML file</li>
-<li><code>kubectl get &lt;resource&gt; &lt;name&gt; -o yaml</code> - Get resource configuration in YAML format</li>
-<li><code>kubectl get &lt;resource&gt; &lt;name&gt; -o json</code> - Get resource configuration in JSON format</li>
-</ul>
-<h2 id="custom-columns-output-formatting">Custom Columns &amp; Output Formatting<a class="headerlink" href="#custom-columns-output-formatting" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>kubectl get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName</code> - Custom columns output</li>
-<li><code>kubectl get pods --sort-by=.metadata.creationTimestamp</code> - Sort by creation time</li>
-<li><code>kubectl get pods --field-selector=status.phase=Running</code> - Filter by field selector</li>
-</ul>
+<h3 id="how-to-setup-minio-on-kubernetes-simple-persistent">🛠️ How to Setup MinIO on Kubernetes (Simple &amp; Persistent)<a class="headerlink" href="#how-to-setup-minio-on-kubernetes-simple-persistent" title="Permanent link">&para;</a></h3>
+<h4 id="1-create-namespace">1. <strong>Create Namespace</strong><a class="headerlink" href="#1-create-namespace" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>minio
+</code></pre></div>
+<h4 id="2-apply-minio-deployment-pvc">2. <strong>Apply MinIO Deployment &amp; PVC</strong><a class="headerlink" href="#2-apply-minio-deployment-pvc" title="Permanent link">&para;</a></h4>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># minio-deploy.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/minio/minio</span>
+<span class="w">        </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">server</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data</span>
+<span class="w">        </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MINIO_ACCESS_KEY</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minioadmin</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MINIO_SECRET_KEY</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minioadmin</span>
+<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
+<span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage</span>
+<span class="w">          </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data</span>
+<span class="w">      </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage</span>
+<span class="w">        </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio-pvc</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio-pvc</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10Gi</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>minio-deploy.yaml
+</code></pre></div></p>
+<h4 id="3-expose-with-nodeport-or-ingress">3. <strong>Expose with NodePort (or Ingress)</strong><a class="headerlink" href="#3-expose-with-nodeport-or-ingress" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NodePort</span>
+<span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
+<span class="w">      </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
+<span class="w">      </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30900</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>minio-service.yaml
+</code></pre></div>
+<p>Access via:
+<div class="highlight"><pre><span></span><code>http://&lt;NodeIP&gt;:30900  
+User: minioadmin  
+Pass: minioadmin
+</code></pre></div></p>
+<h3 id="how-to-integrate-with-backup-tools">✅ How to Integrate with Backup Tools<a class="headerlink" href="#how-to-integrate-with-backup-tools" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Integration with MinIO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Stash</strong></td>
+<td>Add <code>Repository</code> CRD with endpoint <code>http://minio.minio.svc:9000</code>, and access keys</td>
+</tr>
+<tr>
+<td><strong>Velero</strong></td>
+<td>Use <code>velero install</code> with <code>--provider aws --bucket &lt;bucket&gt; --secret-file</code></td>
+</tr>
+<tr>
+<td><strong>kube-etcd-backup</strong></td>
+<td>Set S3 config with MinIO endpoint &amp; creds</td>
+</tr>
+</tbody>
+</table>
 
 
 

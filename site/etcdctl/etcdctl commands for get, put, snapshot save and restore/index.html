@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#basic-setup" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -372,6 +377,85 @@ etcdctl<span class="w"> </span>snapshot<span class="w"> </span>save<span class="
 etcdctl<span class="w"> </span>snapshot<span class="w"> </span>restore<span class="w"> </span>/backup/etcd-snapshot.db<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--data-dir<span class="o">=</span>/var/lib/etcd-restored
 </code></pre></div>
+<h3 id="basic-setup">✅ <strong>Basic Setup</strong><a class="headerlink" href="#basic-setup" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Install etcdctl</strong> (if not already available):
+    <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>etcd-client
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Access etcd running in Kubernetes</strong> (inside control-plane/master node):
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>etcd-&lt;node-name&gt;<span class="w"> </span>-c<span class="w"> </span>etcd<span class="w"> </span>-it<span class="w"> </span>--<span class="w"> </span>sh
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Set environment for etcdctl</strong> (inside the etcd pod or use with <code>ETCDCTL_API=3</code>):
+    <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span>
+</code></pre></div></p>
+</li>
+</ol>
+<h3 id="common-etcdctl-commands">📘 <strong>Common etcdctl Commands</strong><a class="headerlink" href="#common-etcdctl-commands" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>View cluster health</td>
+<td><code>etcdctl --endpoints=&lt;ep&gt; endpoint health</code></td>
+</tr>
+<tr>
+<td>View cluster members</td>
+<td><code>etcdctl --endpoints=&lt;ep&gt; member list</code></td>
+</tr>
+<tr>
+<td>Get a key</td>
+<td><code>etcdctl --endpoints=&lt;ep&gt; get &lt;key&gt;</code></td>
+</tr>
+<tr>
+<td>Put a key</td>
+<td><code>etcdctl --endpoints=&lt;ep&gt; put &lt;key&gt; &lt;value&gt;</code></td>
+</tr>
+<tr>
+<td>Delete a key</td>
+<td><code>etcdctl --endpoints=&lt;ep&gt; del &lt;key&gt;</code></td>
+</tr>
+<tr>
+<td>List all keys</td>
+<td><code>etcdctl --endpoints=&lt;ep&gt; get "" --prefix --keys-only</code></td>
+</tr>
+<tr>
+<td>Snapshot save</td>
+<td><code>etcdctl --endpoints=&lt;ep&gt; snapshot save snapshot.db</code></td>
+</tr>
+<tr>
+<td>Snapshot status</td>
+<td><code>etcdctl snapshot status snapshot.db</code></td>
+</tr>
+<tr>
+<td>Restore from snapshot</td>
+<td><code>etcdctl snapshot restore snapshot.db --data-dir /var/lib/etcd-restored</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Replace <code>&lt;ep&gt;</code> with <code>https://127.0.0.1:2379</code> or proper internal IP.</p>
+</blockquote>
+<hr />
+<h3 id="if-tls-is-enabled-as-in-kubeadm-setup">🔐 <strong>If TLS is Enabled</strong> (as in kubeadm setup):<a class="headerlink" href="#if-tls-is-enabled-as-in-kubeadm-setup" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>etcdctl<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cert<span class="o">=</span>/etc/kubernetes/pki/etcd/peer.crt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--key<span class="o">=</span>/etc/kubernetes/pki/etcd/peer.key<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cacert<span class="o">=</span>/etc/kubernetes/pki/etcd/ca.crt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--endpoints<span class="o">=</span>https://127.0.0.1:2379<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>endpoint<span class="w"> </span>health
+</code></pre></div>
+<hr />
+<p>Let me know if you want example output, script for backup/restore, or a real-time cluster key scan.</p>
 
 
 
