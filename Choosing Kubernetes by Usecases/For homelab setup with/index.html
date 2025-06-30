@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/RBAC/htpasswd%20based%20authentication/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Choosing%20Kubernetes%20by%20Usecases/For%20homelab%20setup%20with/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Htpasswd based authentication - Gouse Shaik</title>
+        <title>For homelab setup with - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#how-htpasswd-fits-with-rbac" class="md-skip">
+        <a href="#recommended-setup" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Htpasswd based authentication
+              For homelab setup with
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/RBAC/htpasswd based authentication.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Choosing Kubernetes by Usecases/For homelab setup with.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,153 +362,171 @@
   
 
 
-  <h1>Htpasswd based authentication</h1>
+  <h1>For homelab setup with</h1>
 
-<p>Yes ✅, you can also use <strong><code>htpasswd</code>-based basic authentication</strong> with Kubernetes — but it is <strong>not recommended for production</strong> and is <strong>deprecated in many setups</strong>.</p>
-<h2 id="how-htpasswd-fits-with-rbac">🔗 How htpasswd fits with RBAC<a class="headerlink" href="#how-htpasswd-fits-with-rbac" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>htpasswd</strong> file is used to authenticate users (who they are)</li>
-<li><strong>RBAC</strong> is used to <strong>authorize</strong> what those users can do</li>
-<li>Both are needed:<ul>
-<li>AuthN (login): via <code>htpasswd</code></li>
-<li>AuthZ (access): via <code>ClusterRoleBinding</code>, etc.</li>
-</ul>
-</li>
-</ol>
-<h2 id="important-k3s-does-not-support-basic-auth-file">❗ Important: K3s does <strong>not</strong> support <code>--basic-auth-file</code><a class="headerlink" href="#important-k3s-does-not-support-basic-auth-file" title="Permanent link">&para;</a></h2>
-<p>So you <strong>can’t plug in an <code>htpasswd</code> file directly</strong> like in upstream <code>kube-apiserver</code>.</p>
-<h3 id="difference-at-a-glance">🔍 Difference at a Glance<a class="headerlink" href="#difference-at-a-glance" title="Permanent link">&para;</a></h3>
+<p>You can <strong>practice Kubernetes with HA (2 control planes + 2 workers)</strong> under <strong>~15 GiB memory</strong> using the tools you listed:</p>
 <table>
 <thead>
 <tr>
-<th>Auth Method</th>
-<th>Description</th>
-<th>Recommended For</th>
-<th></th>
+<th>Tool</th>
+<th>Supports HA</th>
+<th>Min RAM Use</th>
+<th>ETCD Option</th>
+<th>Lightweight</th>
+<th>Recommended</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>OIDC (Keycloak)</strong></td>
-<td>Secure, token-based, modern</td>
-<td>✅ Production-ready</td>
-<td></td>
+<td><strong>Multipass (raw K8s)</strong></td>
+<td>✔️ (manual)</td>
+<td>❌ (&gt;15GiB)</td>
+<td>✔️ (manual)</td>
+<td>❌</td>
+<td>❌</td>
 </tr>
 <tr>
-<td><strong>htpasswd</strong></td>
-<td>Simple, file-based basic auth</td>
-<td>🚫 Dev/Test only</td>
-<td></td>
+<td><strong>K3s with Multipass</strong></td>
+<td>✔️ (with tweaks)</td>
+<td>✅ (~10–12GiB)</td>
+<td>✔️ (external or embedded)</td>
+<td>✔️</td>
+<td>✅ Best</td>
 </tr>
 <tr>
-<td><strong>ServiceAccounts</strong></td>
-<td>For pods and automation</td>
-<td>✅ Automation only</td>
-<td></td>
+<td><strong>Kind</strong></td>
+<td>❌ (no multi-master easily)</td>
+<td>✅ (~6–8GiB)</td>
+<td>❌ (uses Docker-in-Docker)</td>
+<td>✔️</td>
+<td>⚠️ Limited (no HA)</td>
 </tr>
 <tr>
-<td>### ✅ Using <code>htpasswd</code> Authentication (Step-by-Step)</td>
-<td></td>
-<td></td>
-<td></td>
+<td><strong>K3s with Docker</strong></td>
+<td>✔️ (complex, not ideal)</td>
+<td>❌ (~&gt;14GiB)</td>
+<td>✔️</td>
+<td>⚠️ (Docker bloat)</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>k0s</strong></td>
+<td>✔️ (native HA)</td>
+<td>✅ (~12GiB)</td>
+<td>✔️ (etcd native)</td>
+<td>✔️</td>
+<td>✅ Good</td>
 </tr>
 </tbody>
 </table>
-<h3 id="1-generate-credentials-with-htpasswd">1️⃣ Generate Credentials with <code>htpasswd</code><a class="headerlink" href="#1-generate-credentials-with-htpasswd" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>apache2-utils<span class="w">  </span><span class="c1"># if not installed</span>
-htpasswd<span class="w"> </span>-c<span class="w"> </span>/etc/kubernetes/htpasswd<span class="w"> </span>gowse
-
-htpasswd<span class="w"> </span>-c<span class="w"> </span>./users.htpasswd<span class="w"> </span>admin1
-<span class="c1"># Enter password when prompted</span>
-
-htpasswd<span class="w"> </span>./users.htpasswd<span class="w"> </span>admin2
-
-This<span class="w"> </span>creates<span class="w"> </span><span class="sb">`</span>users.htpasswd<span class="sb">`</span><span class="w"> </span>like:
-admin1:<span class="nv">$apr1$M9b1Z</span>...<span class="w">     </span><span class="c1"># hashed password</span>
-admin2:<span class="nv">$apr1$Yx9ZL</span>...
-</code></pre></div>
-<p>You’ll be prompted to enter a password. It stores a hashed version in the file.</p>
-<h3 id="2-create-kubernetes-secret">2️⃣ Create Kubernetes Secret<a class="headerlink" href="#2-create-kubernetes-secret" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl create secret generic basic-auth \
-  --from-file=auth=users.htpasswd \
-  -n kube-system
-</code></pre></div>
-<h3 id="3-update-kube-apiserver-flags">3 Update kube-apiserver Flags<a class="headerlink" href="#3-update-kube-apiserver-flags" title="Permanent link">&para;</a></h3>
-<p>Edit <code>/etc/kubernetes/manifests/kube-apiserver.yaml</code> and add:</p>
-<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--basic-auth-file=/etc/kubernetes/htpasswd</span>
-</code></pre></div>
-<p>Also ensure the file is mounted inside the static pod:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">volumeMounts</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes/htpasswd</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">htpasswd</span>
-<span class="w">  </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="nt">volumes</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">htpasswd</span>
-<span class="w">  </span><span class="nt">hostPath</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes/htpasswd</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">File</span>
-</code></pre></div>
-<blockquote>
-<p>✅ This enables basic HTTP authentication using that file.</p>
-</blockquote>
-<h3 id="3-set-up-kubectl-access-for-user">3️⃣ Set Up <code>kubectl</code> Access for User<a class="headerlink" href="#3-set-up-kubectl-access-for-user" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>set-credentials<span class="w"> </span>gowse<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--username<span class="o">=</span>gowse<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--password<span class="o">=</span>&lt;your-password&gt;
-
-kubectl<span class="w"> </span>config<span class="w"> </span>set-context<span class="w"> </span>test-user<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cluster<span class="o">=</span>&lt;your-cluster&gt;<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--user<span class="o">=</span>gowse
-
-kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>test-user
-</code></pre></div>
-<h3 id="4-bind-rbac-role">4️⃣ Bind RBAC Role<a class="headerlink" href="#4-bind-rbac-role" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterRoleBinding</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gowse-binding</span>
-<span class="nt">subjects</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">User</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gowse</span>
-<span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
-<span class="nt">roleRef</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterRole</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-admin</span>
-<span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
-</code></pre></div>
-<h3 id="why-htpasswd-is-not-recommended">🚫 Why <code>htpasswd</code> is Not Recommended<a class="headerlink" href="#why-htpasswd-is-not-recommended" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Issue</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>❌ Password sent in base64</td>
-<td>Not secure unless over HTTPS</td>
-</tr>
-<tr>
-<td>❌ No session/token</td>
-<td>Every request uses raw user:pass</td>
-</tr>
-<tr>
-<td>❌ No expiry, MFA, group claims</td>
-<td>Limited features</td>
-</tr>
-<tr>
-<td>❌ Deprecated in kubeadm</td>
-<td>Not used in managed clusters (e.g., EKS, GKE)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="use-it-only-when">✅ Use It Only When:<a class="headerlink" href="#use-it-only-when" title="Permanent link">&para;</a></h3>
+<h3 id="recommended-setup">✅ Recommended Setup:<a class="headerlink" href="#recommended-setup" title="Permanent link">&para;</a></h3>
+<p><strong>Option 1: K3s on Multipass</strong></p>
 <ul>
-<li>Doing <strong>quick local testing</strong> (minikube, dev VMs)</li>
-<li>You <strong>can’t set up Keycloak/OIDC</strong> yet</li>
-<li>You’re experimenting with RBAC concepts</li>
+<li>Lightweight</li>
+<li>Native etcd HA support via embedded etcd in K3s</li>
+<li>Low memory footprint</li>
+<li>Easy to automate with cloud-init</li>
+</ul>
+<p><strong>Option 2: k0s</strong></p>
+<ul>
+<li>Built-in support for HA and etcd</li>
+<li>Lightweight binaries</li>
+<li>Works well on multipass or even docker</li>
+</ul>
+<h3 id="suggested-resource-plan-ram-split">🛠️ Suggested Resource Plan (RAM Split):<a class="headerlink" href="#suggested-resource-plan-ram-split" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Node Type</th>
+<th>Count</th>
+<th>RAM Each</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control Plane</td>
+<td>2</td>
+<td>2.5 GiB</td>
+<td>5 GiB</td>
+</tr>
+<tr>
+<td>Worker Node</td>
+<td>2</td>
+<td>2.0 GiB</td>
+<td>4 GiB</td>
+</tr>
+<tr>
+<td>Buffer + Host</td>
+<td>-</td>
+<td>~5–6 GiB</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>You’ll stay under 14–15 GiB with either <strong>k3s with multipass</strong> or <strong>k0s</strong>.</p>
+<p>Yes, here are <strong>other lightweight options</strong> to set up <strong>Kubernetes with HA (2 control + 2 worker) within 15 GiB</strong> RAM usage:</p>
+<table>
+<thead>
+<tr>
+<th>Tool/Platform</th>
+<th>Supports HA</th>
+<th>Memory Use</th>
+<th>ETCD Support</th>
+<th>Runs On</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MicroK8s</strong></td>
+<td>✔️ (manual)</td>
+<td>✅ Low (~3–4GiB per node)</td>
+<td>✔️ (with <code>--ha</code>)</td>
+<td>Native or VM</td>
+<td>Lightweight and simple</td>
+</tr>
+<tr>
+<td><strong>Talos + kubeadm</strong></td>
+<td>✔️ Native</td>
+<td>✅ (~2GiB/node)</td>
+<td>✔️ Full etcd control</td>
+<td>Multipass/VM</td>
+<td>Very clean, secure OS</td>
+</tr>
+<tr>
+<td><strong>Minikube (w/ KVM)</strong></td>
+<td>❌ (no HA)</td>
+<td>❌ (heavy)</td>
+<td>❌</td>
+<td>Local VM</td>
+<td>Not ideal for HA</td>
+</tr>
+<tr>
+<td><strong>Flatcar + kubeadm</strong></td>
+<td>✔️ (manual)</td>
+<td>✅ (~2–3GiB)</td>
+<td>✔️</td>
+<td>Multipass/VM</td>
+<td>Minimal OS</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="recommended-if-you-want-alternatives">✅ Recommended (if you want alternatives):<a class="headerlink" href="#recommended-if-you-want-alternatives" title="Permanent link">&para;</a></h3>
+<h4 id="1-microk8s-with-ha-mode">1. <strong>MicroK8s with HA mode</strong><a class="headerlink" href="#1-microk8s-with-ha-mode" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Use snap: <code>sudo snap install microk8s --classic</code></li>
+<li>Enable HA: <code>microk8s enable ha-cluster</code></li>
+<li>Lightweight and full Kubernetes</li>
+<li>Simple to add/remove nodes</li>
+</ul>
+<h4 id="2-talos-os-with-kubeadm">2. <strong>Talos OS with kubeadm</strong><a class="headerlink" href="#2-talos-os-with-kubeadm" title="Permanent link">&para;</a></h4>
+<ul>
+<li>OS is minimal and API-only, no SSH</li>
+<li>High security</li>
+<li>Cleanest etcd/k8s setup</li>
+<li>Works well even with multipass or QEMU</li>
 </ul>
 
 

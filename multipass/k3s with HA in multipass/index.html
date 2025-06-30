@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/RBAC/htpasswd%20based%20authentication/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/multipass/k3s%20with%20HA%20in%20multipass/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Htpasswd based authentication - Gouse Shaik</title>
+        <title>k3s with HA in multipass - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#how-htpasswd-fits-with-rbac" class="md-skip">
+        <a href="#script-k3s_ha_multipasssh" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Htpasswd based authentication
+              k3s with HA in multipass
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/RBAC/htpasswd based authentication.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/multipass/k3s with HA in multipass.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,153 +362,76 @@
   
 
 
-  <h1>Htpasswd based authentication</h1>
+  <h1>k3s with HA in multipass</h1>
 
-<p>Yes ✅, you can also use <strong><code>htpasswd</code>-based basic authentication</strong> with Kubernetes — but it is <strong>not recommended for production</strong> and is <strong>deprecated in many setups</strong>.</p>
-<h2 id="how-htpasswd-fits-with-rbac">🔗 How htpasswd fits with RBAC<a class="headerlink" href="#how-htpasswd-fits-with-rbac" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>htpasswd</strong> file is used to authenticate users (who they are)</li>
-<li><strong>RBAC</strong> is used to <strong>authorize</strong> what those users can do</li>
-<li>Both are needed:<ul>
-<li>AuthN (login): via <code>htpasswd</code></li>
-<li>AuthZ (access): via <code>ClusterRoleBinding</code>, etc.</li>
-</ul>
-</li>
-</ol>
-<h2 id="important-k3s-does-not-support-basic-auth-file">❗ Important: K3s does <strong>not</strong> support <code>--basic-auth-file</code><a class="headerlink" href="#important-k3s-does-not-support-basic-auth-file" title="Permanent link">&para;</a></h2>
-<p>So you <strong>can’t plug in an <code>htpasswd</code> file directly</strong> like in upstream <code>kube-apiserver</code>.</p>
-<h3 id="difference-at-a-glance">🔍 Difference at a Glance<a class="headerlink" href="#difference-at-a-glance" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Auth Method</th>
-<th>Description</th>
-<th>Recommended For</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>OIDC (Keycloak)</strong></td>
-<td>Secure, token-based, modern</td>
-<td>✅ Production-ready</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>htpasswd</strong></td>
-<td>Simple, file-based basic auth</td>
-<td>🚫 Dev/Test only</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>ServiceAccounts</strong></td>
-<td>For pods and automation</td>
-<td>✅ Automation only</td>
-<td></td>
-</tr>
-<tr>
-<td>### ✅ Using <code>htpasswd</code> Authentication (Step-by-Step)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="1-generate-credentials-with-htpasswd">1️⃣ Generate Credentials with <code>htpasswd</code><a class="headerlink" href="#1-generate-credentials-with-htpasswd" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>apache2-utils<span class="w">  </span><span class="c1"># if not installed</span>
-htpasswd<span class="w"> </span>-c<span class="w"> </span>/etc/kubernetes/htpasswd<span class="w"> </span>gowse
-
-htpasswd<span class="w"> </span>-c<span class="w"> </span>./users.htpasswd<span class="w"> </span>admin1
-<span class="c1"># Enter password when prompted</span>
-
-htpasswd<span class="w"> </span>./users.htpasswd<span class="w"> </span>admin2
-
-This<span class="w"> </span>creates<span class="w"> </span><span class="sb">`</span>users.htpasswd<span class="sb">`</span><span class="w"> </span>like:
-admin1:<span class="nv">$apr1$M9b1Z</span>...<span class="w">     </span><span class="c1"># hashed password</span>
-admin2:<span class="nv">$apr1$Yx9ZL</span>...
-</code></pre></div>
-<p>You’ll be prompted to enter a password. It stores a hashed version in the file.</p>
-<h3 id="2-create-kubernetes-secret">2️⃣ Create Kubernetes Secret<a class="headerlink" href="#2-create-kubernetes-secret" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl create secret generic basic-auth \
-  --from-file=auth=users.htpasswd \
-  -n kube-system
-</code></pre></div>
-<h3 id="3-update-kube-apiserver-flags">3 Update kube-apiserver Flags<a class="headerlink" href="#3-update-kube-apiserver-flags" title="Permanent link">&para;</a></h3>
-<p>Edit <code>/etc/kubernetes/manifests/kube-apiserver.yaml</code> and add:</p>
-<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--basic-auth-file=/etc/kubernetes/htpasswd</span>
-</code></pre></div>
-<p>Also ensure the file is mounted inside the static pod:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">volumeMounts</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes/htpasswd</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">htpasswd</span>
-<span class="w">  </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="nt">volumes</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">htpasswd</span>
-<span class="w">  </span><span class="nt">hostPath</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes/htpasswd</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">File</span>
-</code></pre></div>
-<blockquote>
-<p>✅ This enables basic HTTP authentication using that file.</p>
-</blockquote>
-<h3 id="3-set-up-kubectl-access-for-user">3️⃣ Set Up <code>kubectl</code> Access for User<a class="headerlink" href="#3-set-up-kubectl-access-for-user" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>set-credentials<span class="w"> </span>gowse<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--username<span class="o">=</span>gowse<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--password<span class="o">=</span>&lt;your-password&gt;
-
-kubectl<span class="w"> </span>config<span class="w"> </span>set-context<span class="w"> </span>test-user<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cluster<span class="o">=</span>&lt;your-cluster&gt;<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--user<span class="o">=</span>gowse
-
-kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>test-user
-</code></pre></div>
-<h3 id="4-bind-rbac-role">4️⃣ Bind RBAC Role<a class="headerlink" href="#4-bind-rbac-role" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterRoleBinding</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gowse-binding</span>
-<span class="nt">subjects</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">User</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gowse</span>
-<span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
-<span class="nt">roleRef</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterRole</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-admin</span>
-<span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
-</code></pre></div>
-<h3 id="why-htpasswd-is-not-recommended">🚫 Why <code>htpasswd</code> is Not Recommended<a class="headerlink" href="#why-htpasswd-is-not-recommended" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Issue</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>❌ Password sent in base64</td>
-<td>Not secure unless over HTTPS</td>
-</tr>
-<tr>
-<td>❌ No session/token</td>
-<td>Every request uses raw user:pass</td>
-</tr>
-<tr>
-<td>❌ No expiry, MFA, group claims</td>
-<td>Limited features</td>
-</tr>
-<tr>
-<td>❌ Deprecated in kubeadm</td>
-<td>Not used in managed clusters (e.g., EKS, GKE)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="use-it-only-when">✅ Use It Only When:<a class="headerlink" href="#use-it-only-when" title="Permanent link">&para;</a></h3>
+<p>Here’s a complete <strong>Multipass script</strong> to set up a <strong>Kubernetes HA cluster</strong> using <code>k3s</code>, with:</p>
 <ul>
-<li>Doing <strong>quick local testing</strong> (minikube, dev VMs)</li>
-<li>You <strong>can’t set up Keycloak/OIDC</strong> yet</li>
-<li>You’re experimenting with RBAC concepts</li>
+<li><strong>2 control plane nodes</strong></li>
+<li><strong>2 worker nodes</strong> </li>
+<li><strong>Embedded etcd (HA enabled)</strong></li>
+</ul>
+<p>All inside <strong>Multipass VMs</strong>, suitable for your system (15 GiB RAM).</p>
+<h3 id="script-k3s_ha_multipasssh">✅ Script: <code>k3s_ha_multipass.sh</code><a class="headerlink" href="#script-k3s_ha_multipasssh" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Node specs</span>
+<span class="nv">CPUS</span><span class="o">=</span><span class="m">2</span>
+<span class="nv">DISK</span><span class="o">=</span>10G
+<span class="nv">MEM_CP</span><span class="o">=</span>2G
+<span class="nv">MEM_WORKER</span><span class="o">=</span>2G
+
+<span class="c1"># Node names</span>
+<span class="nv">CONTROL_NODES</span><span class="o">=(</span>cp1<span class="w"> </span>cp2<span class="o">)</span>
+<span class="nv">WORKER_NODES</span><span class="o">=(</span>worker1<span class="w"> </span>worker2<span class="o">)</span>
+<span class="nv">ALL_NODES</span><span class="o">=(</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CONTROL_NODES</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">WORKER_NODES</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">)</span>
+
+<span class="c1"># 1. Launch VMs</span>
+<span class="k">for</span><span class="w"> </span>NODE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ALL_NODES</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>multipass<span class="w"> </span>launch<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NODE</span><span class="s2">&quot;</span><span class="w"> </span>--cpus<span class="w"> </span><span class="nv">$CPUS</span><span class="w"> </span>--mem<span class="w"> </span><span class="si">${</span><span class="nv">MEM_CP</span><span class="si">}</span><span class="w"> </span>--disk<span class="w"> </span><span class="nv">$DISK</span>
+<span class="k">done</span>
+
+<span class="c1"># 2. Get IPs</span>
+<span class="k">for</span><span class="w"> </span>NODE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ALL_NODES</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="nv">IP</span><span class="o">=</span><span class="k">$(</span>multipass<span class="w"> </span>info<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NODE</span><span class="s2">&quot;</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;.info[\&quot;</span><span class="nv">$NODE</span><span class="s2">\&quot;].ipv4[0]&quot;</span><span class="k">)</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NODE</span><span class="s2"> IP: </span><span class="nv">$IP</span><span class="s2">&quot;</span>
+<span class="k">done</span>
+
+<span class="c1"># 3. Install k3s on first control-plane (cp1)</span>
+<span class="nv">CP1_IP</span><span class="o">=</span><span class="k">$(</span>multipass<span class="w"> </span>info<span class="w"> </span>cp1<span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.info[&quot;cp1&quot;].ipv4[0]&#39;</span><span class="k">)</span>
+multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp1<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC=&#39;server --cluster-init&#39; sh -&quot;</span>
+
+<span class="c1"># 4. Extract token from cp1</span>
+<span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp1<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/var/lib/rancher/k3s/server/node-token<span class="k">)</span>
+
+<span class="c1"># 5. Join cp2 to HA cluster</span>
+multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp2<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;curl -sfL https://get.k3s.io | K3S_URL=https://</span><span class="si">${</span><span class="nv">CP1_IP</span><span class="si">}</span><span class="s2">:6443 K3S_TOKEN=</span><span class="si">${</span><span class="nv">TOKEN</span><span class="si">}</span><span class="s2"> INSTALL_K3S_EXEC=&#39;server&#39; sh -&quot;</span>
+
+<span class="c1"># 6. Join worker1 and worker2</span>
+<span class="k">for</span><span class="w"> </span>WORKER<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">WORKER_NODES</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="nv">$WORKER</span><span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;curl -sfL https://get.k3s.io | K3S_URL=https://</span><span class="si">${</span><span class="nv">CP1_IP</span><span class="si">}</span><span class="s2">:6443 K3S_TOKEN=</span><span class="si">${</span><span class="nv">TOKEN</span><span class="si">}</span><span class="s2"> sh -&quot;</span>
+<span class="k">done</span>
+
+<span class="c1"># 7. Fetch kubeconfig to local machine</span>
+multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp1<span class="w"> </span>--<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/rancher/k3s/k3s.yaml<span class="w"> </span>&gt;<span class="w"> </span>kubeconfig
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/127.0.0.1/</span><span class="si">${</span><span class="nv">CP1_IP</span><span class="si">}</span><span class="s2">/g&quot;</span><span class="w"> </span>kubeconfig
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Kubeconfig saved to ./kubeconfig&quot;</span>
+
+<span class="c1"># 8. Done</span>
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\n✅ K3s HA cluster setup complete!&quot;</span>
+</code></pre></div>
+<h3 id="notes">📝 Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Assumes you have <code>multipass</code>, <code>jq</code>, and <code>curl</code> installed.</li>
+<li>Exposes kubeconfig to access the cluster from your local host.</li>
+<li>Uses <strong>embedded etcd</strong> (HA mode).</li>
+<li>
+<p>Avoids external load balancer for simplicity (multi-master access via IP).</p>
+</li>
+<li>
+<p>MetalLB for load balancing</p>
+</li>
+<li>ArgoCD / Prometheus on top</li>
+<li>NGINX ingress setup</li>
 </ul>
 
 

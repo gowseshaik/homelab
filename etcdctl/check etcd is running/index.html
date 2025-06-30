@@ -418,6 +418,43 @@ etcdctl<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </
 <p>Or use the k3s builtin ==<code>3s etcd-snapshot</code>== commands if your version supports it.</p>
 </li>
 </ul>
+<h1 id="to-ensure-etcd-is-configured-for-ha-in-k3s-cluster">To ensure <strong>etcd is configured for HA</strong> in <strong>K3s cluster</strong><a class="headerlink" href="#to-ensure-etcd-is-configured-for-ha-in-k3s-cluster" title="Permanent link">&para;</a></h1>
+<p>verify the following directly on the master nodes:</p>
+<h2 id="checklist-confirm-etcd-is-ha-in-k3s">✅ Checklist: Confirm etcd is HA in K3s<a class="headerlink" href="#checklist-confirm-etcd-is-ha-in-k3s" title="Permanent link">&para;</a></h2>
+<h3 id="1-check-etcd-members">🔹 1. <strong>Check etcd members</strong><a class="headerlink" href="#1-check-etcd-members" title="Permanent link">&para;</a></h3>
+<p>Run on <strong>any master node</strong>:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>k3s<span class="w"> </span>etcd-member-list
+</code></pre></div>
+<blockquote>
+<p>✅ If you see <strong>3 healthy members</strong> (one per master), it's HA</p>
+</blockquote>
+<h3 id="2-check-etcd-data-directory">🔹 2. <strong>Check etcd data directory</strong><a class="headerlink" href="#2-check-etcd-data-directory" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-l<span class="w"> </span>/var/lib/rancher/k3s/server/db/etcd
+</code></pre></div>
+<blockquote>
+<p>✅ If the directory exists, K3s is using <strong>embedded etcd</strong></p>
+</blockquote>
+<h3 id="3-check-logs-for-etcd-cluster-formation">🔹 3. <strong>Check logs for etcd cluster formation</strong><a class="headerlink" href="#3-check-logs-for-etcd-cluster-formation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cat<span class="w"> </span>/var/log/syslog<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>etcd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>member
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cat<span class="w"> </span>/tmp/k3s.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>etcd
+</code></pre></div>
+<blockquote>
+<p>✅ Look for lines showing member joining, leader election, etc.</p>
+</blockquote>
+<h3 id="4-check-k3s-process-flags">🔹 4. <strong>Check K3s process flags</strong><a class="headerlink" href="#4-check-k3s-process-flags" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>k3s
+</code></pre></div>
+<blockquote>
+<p>✅ You should see <code>--cluster-init</code> on the first node, and <code>--server https://...</code> on others.</p>
+</blockquote>
+<h3 id="5-check-kubernetes-node-roles">🔹 5. <strong>Check Kubernetes node roles</strong><a class="headerlink" href="#5-check-kubernetes-node-roles" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>wide
+</code></pre></div>
+<blockquote>
+<p>✅ You should see <strong>3 control-plane nodes</strong>, not just one.</p>
+</blockquote>
 
 
 

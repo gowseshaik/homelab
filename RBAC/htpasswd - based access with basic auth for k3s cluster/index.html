@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/RBAC/htpasswd%20based%20authentication/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/RBAC/htpasswd%20-%20based%20access%20with%20basic%20auth%20for%20k3s%20cluster/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Htpasswd based authentication - Gouse Shaik</title>
+        <title>Htpasswd based access with basic auth for k3s cluster - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#how-htpasswd-fits-with-rbac" class="md-skip">
+        <a href="#important-k3s-does-not-support-basic-auth-file" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Htpasswd based authentication
+              Htpasswd   based access with basic auth for k3s cluster
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/RBAC/htpasswd based authentication.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/RBAC/htpasswd - based access with basic auth for k3s cluster.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,154 +362,111 @@
   
 
 
-  <h1>Htpasswd based authentication</h1>
+  <h1>Htpasswd   based access with basic auth for k3s cluster</h1>
 
-<p>Yes ✅, you can also use <strong><code>htpasswd</code>-based basic authentication</strong> with Kubernetes — but it is <strong>not recommended for production</strong> and is <strong>deprecated in many setups</strong>.</p>
-<h2 id="how-htpasswd-fits-with-rbac">🔗 How htpasswd fits with RBAC<a class="headerlink" href="#how-htpasswd-fits-with-rbac" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>htpasswd</strong> file is used to authenticate users (who they are)</li>
-<li><strong>RBAC</strong> is used to <strong>authorize</strong> what those users can do</li>
-<li>Both are needed:<ul>
-<li>AuthN (login): via <code>htpasswd</code></li>
-<li>AuthZ (access): via <code>ClusterRoleBinding</code>, etc.</li>
-</ul>
-</li>
-</ol>
+<p>To set up <strong>user-based access with basic auth (htpasswd)</strong> for your <strong>K3s cluster</strong>, follow this secure and simple approach using the Kubernetes <strong>basic-auth plugin via Ingress (e.g., Traefik)</strong> or directly via <strong>Kubernetes API with RBAC</strong>.</p>
 <h2 id="important-k3s-does-not-support-basic-auth-file">❗ Important: K3s does <strong>not</strong> support <code>--basic-auth-file</code><a class="headerlink" href="#important-k3s-does-not-support-basic-auth-file" title="Permanent link">&para;</a></h2>
 <p>So you <strong>can’t plug in an <code>htpasswd</code> file directly</strong> like in upstream <code>kube-apiserver</code>.</p>
-<h3 id="difference-at-a-glance">🔍 Difference at a Glance<a class="headerlink" href="#difference-at-a-glance" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Auth Method</th>
-<th>Description</th>
-<th>Recommended For</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>OIDC (Keycloak)</strong></td>
-<td>Secure, token-based, modern</td>
-<td>✅ Production-ready</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>htpasswd</strong></td>
-<td>Simple, file-based basic auth</td>
-<td>🚫 Dev/Test only</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>ServiceAccounts</strong></td>
-<td>For pods and automation</td>
-<td>✅ Automation only</td>
-<td></td>
-</tr>
-<tr>
-<td>### ✅ Using <code>htpasswd</code> Authentication (Step-by-Step)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="1-generate-credentials-with-htpasswd">1️⃣ Generate Credentials with <code>htpasswd</code><a class="headerlink" href="#1-generate-credentials-with-htpasswd" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>apache2-utils<span class="w">  </span><span class="c1"># if not installed</span>
-htpasswd<span class="w"> </span>-c<span class="w"> </span>/etc/kubernetes/htpasswd<span class="w"> </span>gowse
+<h3 id="goal">✅ Goal:<a class="headerlink" href="#goal" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Create admin users with <strong>username/password</strong></li>
+<li>Use <code>htpasswd</code> for basic auth</li>
+<li>Configure <strong>RBAC roles</strong> in Kubernetes</li>
+<li>Allow external <code>kubectl</code> access using their credentials</li>
+</ul>
+<h2 id="step-by-step-setup">🛠️ Step-by-Step Setup<a class="headerlink" href="#step-by-step-setup" title="Permanent link">&para;</a></h2>
+<h3 id="1-install-htpasswd-tool">🔐 1. <strong>Install <code>htpasswd</code> Tool</strong><a class="headerlink" href="#1-install-htpasswd-tool" title="Permanent link">&para;</a></h3>
+<p>On your local machine:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>apache2-utils
+</code></pre></div>
+<h3 id="2-generate-user-credentials">🧑‍💻 2. <strong>Generate User Credentials</strong><a class="headerlink" href="#2-generate-user-credentials" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>su<span class="w"> </span><span class="c1"># switch to root user and execute</span>
 
 htpasswd<span class="w"> </span>-c<span class="w"> </span>./users.htpasswd<span class="w"> </span>admin1
 <span class="c1"># Enter password when prompted</span>
 
 htpasswd<span class="w"> </span>./users.htpasswd<span class="w"> </span>admin2
-
-This<span class="w"> </span>creates<span class="w"> </span><span class="sb">`</span>users.htpasswd<span class="sb">`</span><span class="w"> </span>like:
-admin1:<span class="nv">$apr1$M9b1Z</span>...<span class="w">     </span><span class="c1"># hashed password</span>
-admin2:<span class="nv">$apr1$Yx9ZL</span>...
 </code></pre></div>
-<p>You’ll be prompted to enter a password. It stores a hashed version in the file.</p>
-<h3 id="2-create-kubernetes-secret">2️⃣ Create Kubernetes Secret<a class="headerlink" href="#2-create-kubernetes-secret" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl create secret generic basic-auth \
-  --from-file=auth=users.htpasswd \
-  -n kube-system
+<p>This creates <code>users.htpasswd</code> like:</p>
+<div class="highlight"><pre><span></span><code>admin1:$apr1$M9b1Z...     # hashed password
+admin2:$apr1$Yx9ZL...
 </code></pre></div>
-<h3 id="3-update-kube-apiserver-flags">3 Update kube-apiserver Flags<a class="headerlink" href="#3-update-kube-apiserver-flags" title="Permanent link">&para;</a></h3>
-<p>Edit <code>/etc/kubernetes/manifests/kube-apiserver.yaml</code> and add:</p>
-<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--basic-auth-file=/etc/kubernetes/htpasswd</span>
+<h3 id="3-create-kubernetes-secret">🚀 3. <strong>Create Kubernetes Secret</strong><a class="headerlink" href="#3-create-kubernetes-secret" title="Permanent link">&para;</a></h3>
+<p>Copy this to <code>cp1</code> if needed:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>basic-auth<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--from-file<span class="o">=</span><span class="nv">auth</span><span class="o">=</span>users.htpasswd<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kube-system
 </code></pre></div>
-<p>Also ensure the file is mounted inside the static pod:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">volumeMounts</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes/htpasswd</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">htpasswd</span>
-<span class="w">  </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="nt">volumes</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">htpasswd</span>
-<span class="w">  </span><span class="nt">hostPath</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes/htpasswd</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">File</span>
+<h3 id="4-enable-api-server-basic-auth-k3s-only">🔏 4. <strong>Enable API Server Basic Auth (K3s Only)</strong><a class="headerlink" href="#4-enable-api-server-basic-auth-k3s-only" title="Permanent link">&para;</a></h3>
+<p>Edit <code>/etc/systemd/system/k3s.service</code> on <strong>all control-plane nodes</strong>:</p>
+<p>Find the <code>ExecStart</code> line, and <strong>append</strong>:</p>
+<div class="highlight"><pre><span></span><code>--basic-auth-file<span class="w"> </span>/var/lib/rancher/k3s/server/basic-auth.csv
+</code></pre></div>
+<p>Now create that CSV:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/var/lib/rancher/k3s/server/basic-auth.csv<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">admin1,$apr1$M9b1Z...,admin1,system:masters</span>
+<span class="s">admin2,$apr1$Yx9ZL...,admin2,system:masters</span>
+<span class="s">EOF</span>
 </code></pre></div>
 <blockquote>
-<p>✅ This enables basic HTTP authentication using that file.</p>
+<p>Format: <code>username,password,user,group</code></p>
 </blockquote>
-<h3 id="3-set-up-kubectl-access-for-user">3️⃣ Set Up <code>kubectl</code> Access for User<a class="headerlink" href="#3-set-up-kubectl-access-for-user" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>set-credentials<span class="w"> </span>gowse<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--username<span class="o">=</span>gowse<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--password<span class="o">=</span>&lt;your-password&gt;
-
-kubectl<span class="w"> </span>config<span class="w"> </span>set-context<span class="w"> </span>test-user<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cluster<span class="o">=</span>&lt;your-cluster&gt;<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--user<span class="o">=</span>gowse
-
-kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>test-user
+<p>Restart K3s:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reexec
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>k3s
 </code></pre></div>
-<h3 id="4-bind-rbac-role">4️⃣ Bind RBAC Role<a class="headerlink" href="#4-bind-rbac-role" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
+<p>Repeat for cp2 as well.</p>
+<h3 id="5-create-rbac-rolebinding-if-needed">🛡️ 5. <strong>Create RBAC RoleBinding (if needed)</strong><a class="headerlink" href="#5-create-rbac-rolebinding-if-needed" title="Permanent link">&para;</a></h3>
+<p>If not using <code>system:masters</code> (cluster admin), you can assign limited roles:</p>
+<p>🛠️ Working Alternative – Static kubeconfig per user
+<div class="highlight"><pre><span></span><code>sudo cat /etc/rancher/k3s/k3s.yaml &gt; kubeconfig
+cp ~/.kube/config admin1-config
+</code></pre></div></p>
+<p>Edit <code>admin1-config</code> like this:
+<div class="highlight"><pre><span></span><code>users:
+- name: admin1
+  user:
+    username: admin1
+    password: mysecurepassword
+</code></pre></div></p>
+<ol>
+<li><strong>Create a new user kubeconfig</strong> </li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># admin-role.yaml</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterRoleBinding</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gowse-binding</span>
-<span class="nt">subjects</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">User</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gowse</span>
-<span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin1-binding</span>
 <span class="nt">roleRef</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
 <span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterRole</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-admin</span>
+<span class="nt">subjects</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">User</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin1</span>
 <span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
 </code></pre></div>
-<h3 id="why-htpasswd-is-not-recommended">🚫 Why <code>htpasswd</code> is Not Recommended<a class="headerlink" href="#why-htpasswd-is-not-recommended" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Issue</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>❌ Password sent in base64</td>
-<td>Not secure unless over HTTPS</td>
-</tr>
-<tr>
-<td>❌ No session/token</td>
-<td>Every request uses raw user:pass</td>
-</tr>
-<tr>
-<td>❌ No expiry, MFA, group claims</td>
-<td>Limited features</td>
-</tr>
-<tr>
-<td>❌ Deprecated in kubeadm</td>
-<td>Not used in managed clusters (e.g., EKS, GKE)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="use-it-only-when">✅ Use It Only When:<a class="headerlink" href="#use-it-only-when" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Doing <strong>quick local testing</strong> (minikube, dev VMs)</li>
-<li>You <strong>can’t set up Keycloak/OIDC</strong> yet</li>
-<li>You’re experimenting with RBAC concepts</li>
-</ul>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>admin-role.yaml
+</code></pre></div>
+<h3 id="6-access-cluster-from-host-using-new-user">🧪 6. <strong>Access Cluster from Host (using new user)</strong><a class="headerlink" href="#6-access-cluster-from-host-using-new-user" title="Permanent link">&para;</a></h3>
+<p>On the <strong>admin's host</strong> machine, create their kubeconfig:</p>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>kubeconfig<span class="w"> </span>admin1-config
+</code></pre></div>
+<p>Edit <code>admin1-config</code>, replace:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">users</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">  </span><span class="nt">user</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin1</span>
+<span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;the password you set&gt;</span>
+</code></pre></div>
+<p>Or dynamically using:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>set-credentials<span class="w"> </span>admin1<span class="w"> </span>--username<span class="o">=</span>admin1<span class="w"> </span>--password<span class="o">=</span><span class="s1">&#39;yourpass&#39;</span>
+kubectl<span class="w"> </span>config<span class="w"> </span>set-context<span class="w"> </span>admin1-context<span class="w"> </span>--user<span class="o">=</span>admin1<span class="w"> </span>--cluster<span class="o">=</span>default
+kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>admin1-context
+</code></pre></div>
+<p>Then test:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>admin1-config<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>--all-namespaces
+</code></pre></div>
 
 
 
