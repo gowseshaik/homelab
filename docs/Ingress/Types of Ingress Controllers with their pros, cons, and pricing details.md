@@ -1,4 +1,23 @@
-Here's a table listing popular types of Ingress Controllers with their pros, cons, and pricing details:
+| Principle               | **NGINX**  | **HAProxy** | **Traefik**   | **Kong**           | **Istio Gateway**  |
+| ----------------------- | ---------- | ----------- | ------------- | ------------------ | ------------------ |
+| Traffic Entry           | ✅ Yes      | ✅ Yes       | ✅ Yes         | ✅ Yes              | ✅ Yes              |
+| Path/Host Routing       | ✅ Basic    | ✅ Basic     | ✅ Advanced    | ✅ Advanced         | ✅ Advanced (Envoy) |
+| TLS Termination         | ✅ Yes      | ✅ Yes       | ✅ Yes         | ✅ Yes              | ✅ Yes              |
+| Request Auth            | ❌ (plugin) | ❌           | ✅ Middleware  | ✅ JWT/OIDC Plugins | ✅ Native JWT       |
+| Rate Limiting           | ❌ (plugin) | ❌           | ✅ Middleware  | ✅ Native           | ✅ Policy-based     |
+| Metrics/Logging         | 🟡 Basic   | 🟡 Basic    | ✅ Prometheus  | ✅ Plugins          | ✅ Envoy Metrics    |
+| Dynamic Config Reload   | ❌ (reload) | ❌ (reload)  | ✅ Hot reload  | ✅ CRDs             | ✅ Envoy xDS        |
+| Plugin Ecosystem        | ❌          | ❌           | ✅ Middlewares | ✅ Strong Plugins   | ❌ No plugins       |
+| Mesh/Zero Trust Support | ❌          | ❌           | ❌             | ❌                  | ✅ Full support     |
+## ✅ What to pick
+
+| Need                                        | Best Option |
+| ------------------------------------------- | ----------- |
+| Simple, stable ingress                      | **NGINX**   |
+| High performance, low memory                | **HAProxy** |
+| Dynamic routing + modern DevOps             | **Traefik** |
+| API gateway + plugin-based auth             | **Kong**    |
+| Zero trust + mesh + advanced routing/policy | **Istio**   |
 
 |Ingress Controller|Pros|Cons|Pricing|
 |---|---|---|---|
