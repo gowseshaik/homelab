@@ -359,7 +359,130 @@
 
   <h1>Types of Ingress Controllers with their pros, cons, and pricing details</h1>
 
-<p>Here's a table listing popular types of Ingress Controllers with their pros, cons, and pricing details:</p>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th><strong>NGINX</strong></th>
+<th><strong>HAProxy</strong></th>
+<th><strong>Traefik</strong></th>
+<th><strong>Kong</strong></th>
+<th><strong>Istio Gateway</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Traffic Entry</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Path/Host Routing</td>
+<td>✅ Basic</td>
+<td>✅ Basic</td>
+<td>✅ Advanced</td>
+<td>✅ Advanced</td>
+<td>✅ Advanced (Envoy)</td>
+</tr>
+<tr>
+<td>TLS Termination</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Request Auth</td>
+<td>❌ (plugin)</td>
+<td>❌</td>
+<td>✅ Middleware</td>
+<td>✅ JWT/OIDC Plugins</td>
+<td>✅ Native JWT</td>
+</tr>
+<tr>
+<td>Rate Limiting</td>
+<td>❌ (plugin)</td>
+<td>❌</td>
+<td>✅ Middleware</td>
+<td>✅ Native</td>
+<td>✅ Policy-based</td>
+</tr>
+<tr>
+<td>Metrics/Logging</td>
+<td>🟡 Basic</td>
+<td>🟡 Basic</td>
+<td>✅ Prometheus</td>
+<td>✅ Plugins</td>
+<td>✅ Envoy Metrics</td>
+</tr>
+<tr>
+<td>Dynamic Config Reload</td>
+<td>❌ (reload)</td>
+<td>❌ (reload)</td>
+<td>✅ Hot reload</td>
+<td>✅ CRDs</td>
+<td>✅ Envoy xDS</td>
+</tr>
+<tr>
+<td>Plugin Ecosystem</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅ Middlewares</td>
+<td>✅ Strong Plugins</td>
+<td>❌ No plugins</td>
+</tr>
+<tr>
+<td>Mesh/Zero Trust Support</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅ Full support</td>
+</tr>
+<tr>
+<td>## ✅ What to pick</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Best Option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Simple, stable ingress</td>
+<td><strong>NGINX</strong></td>
+</tr>
+<tr>
+<td>High performance, low memory</td>
+<td><strong>HAProxy</strong></td>
+</tr>
+<tr>
+<td>Dynamic routing + modern DevOps</td>
+<td><strong>Traefik</strong></td>
+</tr>
+<tr>
+<td>API gateway + plugin-based auth</td>
+<td><strong>Kong</strong></td>
+</tr>
+<tr>
+<td>Zero trust + mesh + advanced routing/policy</td>
+<td><strong>Istio</strong></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
