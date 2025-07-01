@@ -64,3 +64,57 @@ If you **really need etcdctl**, consider:
 - Running an etcdctl container inside k3d with mounted certs.
     
 - Or use the k3s builtin ==`3s etcd-snapshot`== commands if your version supports it.
+
+# To ensure **etcd is configured for HA** in **K3s cluster**
+verify the following directly on the master nodes:
+
+## ✅ Checklist: Confirm etcd is HA in K3s
+
+### 🔹 1. **Check etcd members**
+
+Run on **any master node**:
+
+```bash
+sudo k3s etcd-member-list
+```
+
+> ✅ If you see **3 healthy members** (one per master), it's HA
+
+### 🔹 2. **Check etcd data directory**
+
+```bash
+ls -l /var/lib/rancher/k3s/server/db/etcd
+```
+
+> ✅ If the directory exists, K3s is using **embedded etcd**
+
+### 🔹 3. **Check logs for etcd cluster formation**
+
+```bash
+sudo cat /var/log/syslog | grep -i etcd | grep member
+```
+
+or
+
+```bash
+sudo cat /tmp/k3s.log | grep etcd
+```
+
+> ✅ Look for lines showing member joining, leader election, etc.
+
+### 🔹 4. **Check K3s process flags**
+
+```bash
+ps aux | grep k3s
+```
+
+> ✅ You should see `--cluster-init` on the first node, and `--server https://...` on others.
+
+### 🔹 5. **Check Kubernetes node roles**
+
+```bash
+kubectl get nodes -o wide
+```
+
+> ✅ You should see **3 control-plane nodes**, not just one.
+

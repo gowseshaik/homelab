@@ -3,9 +3,7 @@ Yes, Fluentd **can run on standalone VMs** (including those running Siebel or an
 ### How it works on standalone VMs:
 
 - Install Fluentd agent on the VM.
-    
 - Configure Fluentd to **tail application log files** (e.g., Siebel logs).
-    
 - Fluentd forwards logs to your desired backend (Elasticsearch, Loki, remote syslog, etc.).
 
 | Setup              | Fluentd Role                 | Use Case                    |

@@ -1,5 +1,22 @@
+<<<<<<< HEAD
 - **1 server node** → uses **SQLite** (default for k3s)  
 - **3 or more server nodes** → uses **embedded etcd**
+=======
+```
+k3d cluster create ha-cluster \
+  --servers 3 \
+  --agents 2 \
+  --wait
+
+gouse@gouse:~/DevOps/k3d$ k get nodes
+NAME                      STATUS   ROLES                       AGE   VERSION
+k3d-ha-cluster-agent-0    Ready    <none>                      35s   v1.31.5+k3s1
+k3d-ha-cluster-agent-1    Ready    <none>                      35s   v1.31.5+k3s1
+k3d-ha-cluster-server-0   Ready    control-plane,etcd,master   71s   v1.31.5+k3s1
+k3d-ha-cluster-server-1   Ready    control-plane,etcd,master   52s   v1.31.5+k3s1
+k3d-ha-cluster-server-2   Ready    control-plane,etcd,master   39s   v1.31.5+k3s1
+```
+>>>>>>> c91f278b3bd9250b0fa8fb946e980dff7cd6132c
 
 ```
 $ k3d cluster delete ha-cluster

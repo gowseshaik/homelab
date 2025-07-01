@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/etcdctl/check%20etcd%20is%20running/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/multipass/k3s%20with%20HA%20in%20multipass/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Check etcd is running - Gouse Shaik</title>
+        <title>k3s with HA in multipass - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#for-a-k3d-cluster" class="md-skip">
+        <a href="#script-k3s_ha_multipasssh" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Check etcd is running
+              k3s with HA in multipass
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/etcdctl/check etcd is running.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/multipass/k3s with HA in multipass.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,99 +362,77 @@
   
 
 
-<p><div class="highlight"><pre><span></span><code>gouse@gouse:~$<span class="w"> </span>etcdctl<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </span><span class="s2">&quot;bar&quot;</span><span class="w"> </span><span class="o">{</span><span class="s2">&quot;level&quot;</span>:<span class="s2">&quot;warn&quot;</span>,<span class="s2">&quot;ts&quot;</span>:<span class="s2">&quot;2025-06-13T18:12:52.857946+0300&quot;</span>,<span class="s2">&quot;logger&quot;</span>:<span class="s2">&quot;etcd-client&quot;</span>,<span class="s2">&quot;caller&quot;</span>:<span class="s2">&quot;v3@v3.5.13/retry_interceptor.go:62&quot;</span>,<span class="s2">&quot;msg&quot;</span>:<span class="s2">&quot;retrying of unary invoker failed&quot;</span>,<span class="s2">&quot;target&quot;</span>:<span class="s2">&quot;etcd-endpoints://0xc0005a2000/127.0.0.1:2379&quot;</span>,<span class="s2">&quot;attempt&quot;</span>:0,<span class="s2">&quot;error&quot;</span>:<span class="s2">&quot;rpc error: code = DeadlineExceeded desc = latest balancer error: last connection error: connection error: desc = \&quot;transport: Error while dialing: dial tcp 127.0.0.1:2379: connect: connection refused\&quot;&quot;</span><span class="o">}</span><span class="w"> </span>Error:<span class="w"> </span>context<span class="w"> </span>deadline<span class="w"> </span>exceeded
-</code></pre></div>
-The error means <code>etcdctl</code> cannot connect to your etcd server at <code>127.0.0.1:2379</code>. The connection is refused because etcd is either not running or not listening on that address/port.</p>
-<p>Check these:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check if etcd is running</span>
-ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>etcd
+  <h1>k3s with HA in multipass</h1>
 
-<span class="c1"># Or if using systemd</span>
-sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>etcd
-
-<span class="c1"># Check if port 2379 is open</span>
-ss<span class="w"> </span>-tlnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">2379</span>
-</code></pre></div>
-<p>If etcd is not running, start it:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>etcd
-</code></pre></div>
-<p>If etcd is running but on a different address/port, set the endpoint explicitly:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span><span class="w"> </span>etcdctl<span class="w"> </span>--endpoints<span class="o">=</span>&lt;your-etcd-ip&gt;:&lt;port&gt;<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </span><span class="s2">&quot;bar&quot;</span>
-</code></pre></div>
-<h1 id="for-a-k3d-cluster">For a k3d cluster<a class="headerlink" href="#for-a-k3d-cluster" title="Permanent link">&para;</a></h1>
-<p>For a <strong>k3d cluster</strong>, etcd runs inside the k3s server container and is not directly accessible on <code>127.0.0.1:2379</code> by default.</p>
-<p>To interact with etcd in k3d/k3s, you usually:</p>
-<ol>
-<li>
-<p><strong>Exec into the k3s server container</strong> where etcd runs.</p>
-</li>
-<li>
-<p>Use etcdctl inside that container with the correct environment variables.</p>
-</li>
-</ol>
-<p>Example commands:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># List k3d containers</span>
-docker<span class="w"> </span>ps<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>k3d
-
-<span class="c1"># Exec into the k3s server container (replace container name)</span>
-docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>&lt;k3d-server-container-name&gt;<span class="w"> </span>sh
-
-<span class="c1"># Inside container, set etcdctl env variables and run command</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_ENDPOINTS</span><span class="o">=</span>https://127.0.0.1:2379
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_CACERT</span><span class="o">=</span>/var/lib/rancher/k3s/server/tls/etcd/server-ca.crt
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_CERT</span><span class="o">=</span>/var/lib/rancher/k3s/server/tls/etcd/client.crt
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_KEY</span><span class="o">=</span>/var/lib/rancher/k3s/server/tls/etcd/client.key
-
-etcdctl<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </span><span class="s2">&quot;bar&quot;</span>
-</code></pre></div>
-<p>If you want, I can give you the exact command to get your k3d server container name and run etcdctl inside it.</p>
-<p>If you <strong>really need etcdctl</strong>, consider:</p>
+<p>Here’s a complete <strong>Multipass script</strong> to set up a <strong>Kubernetes HA cluster</strong> using <code>k3s</code>, with:</p>
 <ul>
-<li>
-<p>Running an etcdctl container inside k3d with mounted certs.</p>
-</li>
-<li>
-<p>Or use the k3s builtin ==<code>3s etcd-snapshot</code>== commands if your version supports it.</p>
-</li>
+<li><strong>2 control plane nodes</strong></li>
+<li><strong>2 worker nodes</strong> </li>
+<li><strong>Embedded etcd (HA enabled)</strong></li>
 </ul>
-<h1 id="to-ensure-etcd-is-configured-for-ha-in-k3s-cluster">To ensure <strong>etcd is configured for HA</strong> in <strong>K3s cluster</strong><a class="headerlink" href="#to-ensure-etcd-is-configured-for-ha-in-k3s-cluster" title="Permanent link">&para;</a></h1>
-<p>verify the following directly on the master nodes:</p>
-<h2 id="checklist-confirm-etcd-is-ha-in-k3s">✅ Checklist: Confirm etcd is HA in K3s<a class="headerlink" href="#checklist-confirm-etcd-is-ha-in-k3s" title="Permanent link">&para;</a></h2>
-<h3 id="1-check-etcd-members">🔹 1. <strong>Check etcd members</strong><a class="headerlink" href="#1-check-etcd-members" title="Permanent link">&para;</a></h3>
-<p>Run on <strong>any master node</strong>:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>k3s<span class="w"> </span>etcd-member-list
+<p>All inside <strong>Multipass VMs</strong>, suitable for your system (15 GiB RAM).</p>
+<h3 id="script-k3s_ha_multipasssh">✅ Script: <code>k3s_ha_multipass.sh</code><a class="headerlink" href="#script-k3s_ha_multipasssh" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Node specs</span>
+<span class="nv">CPUS</span><span class="o">=</span><span class="m">2</span>
+<span class="nv">DISK</span><span class="o">=</span>10G
+<span class="nv">MEM_CP</span><span class="o">=</span>2G
+<span class="nv">MEM_WORKER</span><span class="o">=</span>2G
+
+<span class="c1"># Node names</span>
+<span class="nv">CONTROL_NODES</span><span class="o">=(</span>cp1<span class="w"> </span>cp2<span class="o">)</span>
+<span class="nv">WORKER_NODES</span><span class="o">=(</span>worker1<span class="w"> </span>worker2<span class="o">)</span>
+<span class="nv">ALL_NODES</span><span class="o">=(</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CONTROL_NODES</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">WORKER_NODES</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">)</span>
+
+<span class="c1"># 1. Launch VMs</span>
+<span class="k">for</span><span class="w"> </span>NODE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ALL_NODES</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>multipass<span class="w"> </span>launch<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NODE</span><span class="s2">&quot;</span><span class="w"> </span>--cpus<span class="w"> </span><span class="nv">$CPUS</span><span class="w"> </span>--mem<span class="w"> </span><span class="si">${</span><span class="nv">MEM_CP</span><span class="si">}</span><span class="w"> </span>--disk<span class="w"> </span><span class="nv">$DISK</span>
+<span class="k">done</span>
+
+<span class="c1"># 2. Get IPs</span>
+<span class="k">for</span><span class="w"> </span>NODE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ALL_NODES</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="nv">IP</span><span class="o">=</span><span class="k">$(</span>multipass<span class="w"> </span>info<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NODE</span><span class="s2">&quot;</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;.info[\&quot;</span><span class="nv">$NODE</span><span class="s2">\&quot;].ipv4[0]&quot;</span><span class="k">)</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NODE</span><span class="s2"> IP: </span><span class="nv">$IP</span><span class="s2">&quot;</span>
+<span class="k">done</span>
+
+<span class="c1"># 3. Install k3s on first control-plane (cp1)</span>
+<span class="nv">CP1_IP</span><span class="o">=</span><span class="k">$(</span>multipass<span class="w"> </span>info<span class="w"> </span>cp1<span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.info[&quot;cp1&quot;].ipv4[0]&#39;</span><span class="k">)</span>
+multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp1<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC=&#39;server --cluster-init&#39; sh -&quot;</span>
+
+<span class="c1"># 4. Extract token from cp1</span>
+<span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp1<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/var/lib/rancher/k3s/server/node-token<span class="k">)</span>
+
+<span class="c1"># 5. Join cp2 to HA cluster</span>
+multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp2<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;curl -sfL https://get.k3s.io | K3S_URL=https://</span><span class="si">${</span><span class="nv">CP1_IP</span><span class="si">}</span><span class="s2">:6443 K3S_TOKEN=</span><span class="si">${</span><span class="nv">TOKEN</span><span class="si">}</span><span class="s2"> INSTALL_K3S_EXEC=&#39;server&#39; sh -&quot;</span>
+
+<span class="c1"># 6. Join worker1 and worker2</span>
+<span class="k">for</span><span class="w"> </span>WORKER<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">WORKER_NODES</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="nv">$WORKER</span><span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;curl -sfL https://get.k3s.io | K3S_URL=https://</span><span class="si">${</span><span class="nv">CP1_IP</span><span class="si">}</span><span class="s2">:6443 K3S_TOKEN=</span><span class="si">${</span><span class="nv">TOKEN</span><span class="si">}</span><span class="s2"> sh -&quot;</span>
+<span class="k">done</span>
+
+<span class="c1"># 7. Fetch kubeconfig to local machine</span>
+multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp1<span class="w"> </span>--<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/rancher/k3s/k3s.yaml<span class="w"> </span>&gt;<span class="w"> </span>kubeconfig
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/127.0.0.1/</span><span class="si">${</span><span class="nv">CP1_IP</span><span class="si">}</span><span class="s2">/g&quot;</span><span class="w"> </span>kubeconfig
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Kubeconfig saved to ./kubeconfig&quot;</span>
+
+<span class="c1"># 8. Done</span>
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\n✅ K3s HA cluster setup complete!&quot;</span>
 </code></pre></div>
-<blockquote>
-<p>✅ If you see <strong>3 healthy members</strong> (one per master), it's HA</p>
-</blockquote>
-<h3 id="2-check-etcd-data-directory">🔹 2. <strong>Check etcd data directory</strong><a class="headerlink" href="#2-check-etcd-data-directory" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-l<span class="w"> </span>/var/lib/rancher/k3s/server/db/etcd
-</code></pre></div>
-<blockquote>
-<p>✅ If the directory exists, K3s is using <strong>embedded etcd</strong></p>
-</blockquote>
-<h3 id="3-check-logs-for-etcd-cluster-formation">🔹 3. <strong>Check logs for etcd cluster formation</strong><a class="headerlink" href="#3-check-logs-for-etcd-cluster-formation" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cat<span class="w"> </span>/var/log/syslog<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>etcd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>member
-</code></pre></div>
-<p>or</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cat<span class="w"> </span>/tmp/k3s.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>etcd
-</code></pre></div>
-<blockquote>
-<p>✅ Look for lines showing member joining, leader election, etc.</p>
-</blockquote>
-<h3 id="4-check-k3s-process-flags">🔹 4. <strong>Check K3s process flags</strong><a class="headerlink" href="#4-check-k3s-process-flags" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>k3s
-</code></pre></div>
-<blockquote>
-<p>✅ You should see <code>--cluster-init</code> on the first node, and <code>--server https://...</code> on others.</p>
-</blockquote>
-<h3 id="5-check-kubernetes-node-roles">🔹 5. <strong>Check Kubernetes node roles</strong><a class="headerlink" href="#5-check-kubernetes-node-roles" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>wide
-</code></pre></div>
-<blockquote>
-<p>✅ You should see <strong>3 control-plane nodes</strong>, not just one.</p>
-</blockquote>
+<h3 id="notes">📝 Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Assumes you have <code>multipass</code>, <code>jq</code>, and <code>curl</code> installed.</li>
+<li>Exposes kubeconfig to access the cluster from your local host.</li>
+<li>Uses <strong>embedded etcd</strong> (HA mode).</li>
+<li>
+<p>Avoids external load balancer for simplicity (multi-master access via IP).</p>
+</li>
+<li>
+<p>MetalLB for load balancing</p>
+</li>
+<li>ArgoCD / Prometheus on top</li>
+<li>NGINX ingress setup</li>
+</ul>
 
 
 

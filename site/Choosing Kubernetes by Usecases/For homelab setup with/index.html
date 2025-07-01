@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/etcdctl/check%20etcd%20is%20running/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Choosing%20Kubernetes%20by%20Usecases/For%20homelab%20setup%20with/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Check etcd is running - Gouse Shaik</title>
+        <title>For homelab setup with - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#for-a-k3d-cluster" class="md-skip">
+        <a href="#recommended-setup" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Check etcd is running
+              For homelab setup with
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/etcdctl/check etcd is running.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Choosing Kubernetes by Usecases/For homelab setup with.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,99 +362,172 @@
   
 
 
-<p><div class="highlight"><pre><span></span><code>gouse@gouse:~$<span class="w"> </span>etcdctl<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </span><span class="s2">&quot;bar&quot;</span><span class="w"> </span><span class="o">{</span><span class="s2">&quot;level&quot;</span>:<span class="s2">&quot;warn&quot;</span>,<span class="s2">&quot;ts&quot;</span>:<span class="s2">&quot;2025-06-13T18:12:52.857946+0300&quot;</span>,<span class="s2">&quot;logger&quot;</span>:<span class="s2">&quot;etcd-client&quot;</span>,<span class="s2">&quot;caller&quot;</span>:<span class="s2">&quot;v3@v3.5.13/retry_interceptor.go:62&quot;</span>,<span class="s2">&quot;msg&quot;</span>:<span class="s2">&quot;retrying of unary invoker failed&quot;</span>,<span class="s2">&quot;target&quot;</span>:<span class="s2">&quot;etcd-endpoints://0xc0005a2000/127.0.0.1:2379&quot;</span>,<span class="s2">&quot;attempt&quot;</span>:0,<span class="s2">&quot;error&quot;</span>:<span class="s2">&quot;rpc error: code = DeadlineExceeded desc = latest balancer error: last connection error: connection error: desc = \&quot;transport: Error while dialing: dial tcp 127.0.0.1:2379: connect: connection refused\&quot;&quot;</span><span class="o">}</span><span class="w"> </span>Error:<span class="w"> </span>context<span class="w"> </span>deadline<span class="w"> </span>exceeded
-</code></pre></div>
-The error means <code>etcdctl</code> cannot connect to your etcd server at <code>127.0.0.1:2379</code>. The connection is refused because etcd is either not running or not listening on that address/port.</p>
-<p>Check these:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check if etcd is running</span>
-ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>etcd
+  <h1>For homelab setup with</h1>
 
-<span class="c1"># Or if using systemd</span>
-sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>etcd
-
-<span class="c1"># Check if port 2379 is open</span>
-ss<span class="w"> </span>-tlnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">2379</span>
-</code></pre></div>
-<p>If etcd is not running, start it:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>etcd
-</code></pre></div>
-<p>If etcd is running but on a different address/port, set the endpoint explicitly:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span><span class="w"> </span>etcdctl<span class="w"> </span>--endpoints<span class="o">=</span>&lt;your-etcd-ip&gt;:&lt;port&gt;<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </span><span class="s2">&quot;bar&quot;</span>
-</code></pre></div>
-<h1 id="for-a-k3d-cluster">For a k3d cluster<a class="headerlink" href="#for-a-k3d-cluster" title="Permanent link">&para;</a></h1>
-<p>For a <strong>k3d cluster</strong>, etcd runs inside the k3s server container and is not directly accessible on <code>127.0.0.1:2379</code> by default.</p>
-<p>To interact with etcd in k3d/k3s, you usually:</p>
-<ol>
-<li>
-<p><strong>Exec into the k3s server container</strong> where etcd runs.</p>
-</li>
-<li>
-<p>Use etcdctl inside that container with the correct environment variables.</p>
-</li>
-</ol>
-<p>Example commands:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># List k3d containers</span>
-docker<span class="w"> </span>ps<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>k3d
-
-<span class="c1"># Exec into the k3s server container (replace container name)</span>
-docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>&lt;k3d-server-container-name&gt;<span class="w"> </span>sh
-
-<span class="c1"># Inside container, set etcdctl env variables and run command</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_ENDPOINTS</span><span class="o">=</span>https://127.0.0.1:2379
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_CACERT</span><span class="o">=</span>/var/lib/rancher/k3s/server/tls/etcd/server-ca.crt
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_CERT</span><span class="o">=</span>/var/lib/rancher/k3s/server/tls/etcd/client.crt
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_KEY</span><span class="o">=</span>/var/lib/rancher/k3s/server/tls/etcd/client.key
-
-etcdctl<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </span><span class="s2">&quot;bar&quot;</span>
-</code></pre></div>
-<p>If you want, I can give you the exact command to get your k3d server container name and run etcdctl inside it.</p>
-<p>If you <strong>really need etcdctl</strong>, consider:</p>
+<p>You can <strong>practice Kubernetes with HA (2 control planes + 2 workers)</strong> under <strong>~15 GiB memory</strong> using the tools you listed:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Supports HA</th>
+<th>Min RAM Use</th>
+<th>ETCD Option</th>
+<th>Lightweight</th>
+<th>Recommended</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Multipass (raw K8s)</strong></td>
+<td>✔️ (manual)</td>
+<td>❌ (&gt;15GiB)</td>
+<td>✔️ (manual)</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>K3s with Multipass</strong></td>
+<td>✔️ (with tweaks)</td>
+<td>✅ (~10–12GiB)</td>
+<td>✔️ (external or embedded)</td>
+<td>✔️</td>
+<td>✅ Best</td>
+</tr>
+<tr>
+<td><strong>Kind</strong></td>
+<td>❌ (no multi-master easily)</td>
+<td>✅ (~6–8GiB)</td>
+<td>❌ (uses Docker-in-Docker)</td>
+<td>✔️</td>
+<td>⚠️ Limited (no HA)</td>
+</tr>
+<tr>
+<td><strong>K3s with Docker</strong></td>
+<td>✔️ (complex, not ideal)</td>
+<td>❌ (~&gt;14GiB)</td>
+<td>✔️</td>
+<td>⚠️ (Docker bloat)</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>k0s</strong></td>
+<td>✔️ (native HA)</td>
+<td>✅ (~12GiB)</td>
+<td>✔️ (etcd native)</td>
+<td>✔️</td>
+<td>✅ Good</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recommended-setup">✅ Recommended Setup:<a class="headerlink" href="#recommended-setup" title="Permanent link">&para;</a></h3>
+<p><strong>Option 1: K3s on Multipass</strong></p>
 <ul>
-<li>
-<p>Running an etcdctl container inside k3d with mounted certs.</p>
-</li>
-<li>
-<p>Or use the k3s builtin ==<code>3s etcd-snapshot</code>== commands if your version supports it.</p>
-</li>
+<li>Lightweight</li>
+<li>Native etcd HA support via embedded etcd in K3s</li>
+<li>Low memory footprint</li>
+<li>Easy to automate with cloud-init</li>
 </ul>
-<h1 id="to-ensure-etcd-is-configured-for-ha-in-k3s-cluster">To ensure <strong>etcd is configured for HA</strong> in <strong>K3s cluster</strong><a class="headerlink" href="#to-ensure-etcd-is-configured-for-ha-in-k3s-cluster" title="Permanent link">&para;</a></h1>
-<p>verify the following directly on the master nodes:</p>
-<h2 id="checklist-confirm-etcd-is-ha-in-k3s">✅ Checklist: Confirm etcd is HA in K3s<a class="headerlink" href="#checklist-confirm-etcd-is-ha-in-k3s" title="Permanent link">&para;</a></h2>
-<h3 id="1-check-etcd-members">🔹 1. <strong>Check etcd members</strong><a class="headerlink" href="#1-check-etcd-members" title="Permanent link">&para;</a></h3>
-<p>Run on <strong>any master node</strong>:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>k3s<span class="w"> </span>etcd-member-list
-</code></pre></div>
-<blockquote>
-<p>✅ If you see <strong>3 healthy members</strong> (one per master), it's HA</p>
-</blockquote>
-<h3 id="2-check-etcd-data-directory">🔹 2. <strong>Check etcd data directory</strong><a class="headerlink" href="#2-check-etcd-data-directory" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-l<span class="w"> </span>/var/lib/rancher/k3s/server/db/etcd
-</code></pre></div>
-<blockquote>
-<p>✅ If the directory exists, K3s is using <strong>embedded etcd</strong></p>
-</blockquote>
-<h3 id="3-check-logs-for-etcd-cluster-formation">🔹 3. <strong>Check logs for etcd cluster formation</strong><a class="headerlink" href="#3-check-logs-for-etcd-cluster-formation" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cat<span class="w"> </span>/var/log/syslog<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>etcd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>member
-</code></pre></div>
-<p>or</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cat<span class="w"> </span>/tmp/k3s.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>etcd
-</code></pre></div>
-<blockquote>
-<p>✅ Look for lines showing member joining, leader election, etc.</p>
-</blockquote>
-<h3 id="4-check-k3s-process-flags">🔹 4. <strong>Check K3s process flags</strong><a class="headerlink" href="#4-check-k3s-process-flags" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>k3s
-</code></pre></div>
-<blockquote>
-<p>✅ You should see <code>--cluster-init</code> on the first node, and <code>--server https://...</code> on others.</p>
-</blockquote>
-<h3 id="5-check-kubernetes-node-roles">🔹 5. <strong>Check Kubernetes node roles</strong><a class="headerlink" href="#5-check-kubernetes-node-roles" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>wide
-</code></pre></div>
-<blockquote>
-<p>✅ You should see <strong>3 control-plane nodes</strong>, not just one.</p>
-</blockquote>
+<p><strong>Option 2: k0s</strong></p>
+<ul>
+<li>Built-in support for HA and etcd</li>
+<li>Lightweight binaries</li>
+<li>Works well on multipass or even docker</li>
+</ul>
+<h3 id="suggested-resource-plan-ram-split">🛠️ Suggested Resource Plan (RAM Split):<a class="headerlink" href="#suggested-resource-plan-ram-split" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Node Type</th>
+<th>Count</th>
+<th>RAM Each</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control Plane</td>
+<td>2</td>
+<td>2.5 GiB</td>
+<td>5 GiB</td>
+</tr>
+<tr>
+<td>Worker Node</td>
+<td>2</td>
+<td>2.0 GiB</td>
+<td>4 GiB</td>
+</tr>
+<tr>
+<td>Buffer + Host</td>
+<td>-</td>
+<td>~5–6 GiB</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>You’ll stay under 14–15 GiB with either <strong>k3s with multipass</strong> or <strong>k0s</strong>.</p>
+<p>Yes, here are <strong>other lightweight options</strong> to set up <strong>Kubernetes with HA (2 control + 2 worker) within 15 GiB</strong> RAM usage:</p>
+<table>
+<thead>
+<tr>
+<th>Tool/Platform</th>
+<th>Supports HA</th>
+<th>Memory Use</th>
+<th>ETCD Support</th>
+<th>Runs On</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MicroK8s</strong></td>
+<td>✔️ (manual)</td>
+<td>✅ Low (~3–4GiB per node)</td>
+<td>✔️ (with <code>--ha</code>)</td>
+<td>Native or VM</td>
+<td>Lightweight and simple</td>
+</tr>
+<tr>
+<td><strong>Talos + kubeadm</strong></td>
+<td>✔️ Native</td>
+<td>✅ (~2GiB/node)</td>
+<td>✔️ Full etcd control</td>
+<td>Multipass/VM</td>
+<td>Very clean, secure OS</td>
+</tr>
+<tr>
+<td><strong>Minikube (w/ KVM)</strong></td>
+<td>❌ (no HA)</td>
+<td>❌ (heavy)</td>
+<td>❌</td>
+<td>Local VM</td>
+<td>Not ideal for HA</td>
+</tr>
+<tr>
+<td><strong>Flatcar + kubeadm</strong></td>
+<td>✔️ (manual)</td>
+<td>✅ (~2–3GiB)</td>
+<td>✔️</td>
+<td>Multipass/VM</td>
+<td>Minimal OS</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="recommended-if-you-want-alternatives">✅ Recommended (if you want alternatives):<a class="headerlink" href="#recommended-if-you-want-alternatives" title="Permanent link">&para;</a></h3>
+<h4 id="1-microk8s-with-ha-mode">1. <strong>MicroK8s with HA mode</strong><a class="headerlink" href="#1-microk8s-with-ha-mode" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Use snap: <code>sudo snap install microk8s --classic</code></li>
+<li>Enable HA: <code>microk8s enable ha-cluster</code></li>
+<li>Lightweight and full Kubernetes</li>
+<li>Simple to add/remove nodes</li>
+</ul>
+<h4 id="2-talos-os-with-kubeadm">2. <strong>Talos OS with kubeadm</strong><a class="headerlink" href="#2-talos-os-with-kubeadm" title="Permanent link">&para;</a></h4>
+<ul>
+<li>OS is minimal and API-only, no SSH</li>
+<li>High security</li>
+<li>Cleanest etcd/k8s setup</li>
+<li>Works well even with multipass or QEMU</li>
+</ul>
 
 
 

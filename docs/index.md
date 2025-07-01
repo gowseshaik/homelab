@@ -17,6 +17,7 @@
 - [install-cert-manager](Cert-manager/install-cert-manager.md)
 
 ## Choosing kubernetes by usecases
+- [For homelab setup with](Choosing Kubernetes by Usecases/For homelab setup with.md)
 - [K8s HA clusters](Choosing Kubernetes by Usecases/K8s HA clusters.md)
 - [Kind Vs K3d](Choosing Kubernetes by Usecases/Kind Vs K3d.md)
 - [Kubernetes cluster types on your usecases](Choosing Kubernetes by Usecases/Kubernetes cluster types on your usecases.md)
@@ -38,6 +39,7 @@
 - [DaemonSets in Kubernetes](DaemonSets/DaemonSets in Kubernetes.md)
 
 ## Dailytasks
+- [Important resources to learn k8s](DailyTasks/Important resources to learn k8s.md)
 - [K8s Cmds Cheatsheet](DailyTasks/K8s Cmds Cheatsheet.md)
 - [k8s error codes](DailyTasks/k8s error codes.md)
 - [pod exec and extract info from pods](DailyTasks/pod exec and extract info from pods.md)
@@ -119,6 +121,11 @@
 - [Expose Prometheus and Grafana using Ingress](Prometheus + Grafana/Expose Prometheus and Grafana using Ingress.md)
 - [Set up Prometheus + Grafana for your Kubernetes K3d cluster](Prometheus + Grafana/Set up Prometheus + Grafana for your Kubernetes K3d cluster.md)
 
+## Rbac
+- [Kubernetes RBAC](RBAC/Kubernetes RBAC.md)
+- [htpasswd - based access with basic auth for k3s cluster](RBAC/htpasswd - based access with basic auth for k3s cluster.md)
+- [htpasswd based authentication](RBAC/htpasswd based authentication.md)
+
 ## Secrets
 - [Deep Dive into securing secrets in specific envs](Secrets/Deep Dive into securing secrets in specific envs.md)
 - [Secrets management for sensitive information](Secrets/Secrets management for sensitive information.md)
@@ -151,6 +158,9 @@
 ## Ubuntu
 - [list of good tools to extract rar part files](Ubuntu/list of good tools to extract rar part files.md)
 
+## Annotations
+- [About annotations in k8s](annotations/About annotations in k8s.md)
+
 ## Etcdctl
 - [Install etcdctl tool with supported versions](etcdctl/Install etcdctl tool with supported versions.md)
 - [To take backup of etcd with minIO](etcdctl/To take backup of etcd with minIO.md)
@@ -174,6 +184,12 @@
 ## Mkdocs
 - [mkdocs to github projects](mkdocs/mkdocs to github projects.md)
 - [plugins list used with MkDocs-material](mkdocs/plugins list used with MkDocs-material.md)
+
+## Multipass
+- [1. k8s hardway](multipass/1. k8s hardway.md)
+- [Setup access your cluster from the host machine](multipass/Setup access your cluster from the host machine.md)
+- [k3s with HA in multipass](multipass/k3s with HA in multipass.md)
+- [k8s with hard-way - overview](multipass/k8s with hard-way - overview.md)
 
 ## Python
 - [mkdocs to github pages](python/mkdocs to github pages.md)

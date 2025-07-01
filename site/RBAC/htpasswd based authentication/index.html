@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/etcdctl/check%20etcd%20is%20running/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/RBAC/htpasswd%20based%20authentication/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Check etcd is running - Gouse Shaik</title>
+        <title>Htpasswd based authentication - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#for-a-k3d-cluster" class="md-skip">
+        <a href="#how-htpasswd-fits-with-rbac" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Check etcd is running
+              Htpasswd based authentication
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/etcdctl/check etcd is running.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/RBAC/htpasswd based authentication.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,99 +362,154 @@
   
 
 
-<p><div class="highlight"><pre><span></span><code>gouse@gouse:~$<span class="w"> </span>etcdctl<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </span><span class="s2">&quot;bar&quot;</span><span class="w"> </span><span class="o">{</span><span class="s2">&quot;level&quot;</span>:<span class="s2">&quot;warn&quot;</span>,<span class="s2">&quot;ts&quot;</span>:<span class="s2">&quot;2025-06-13T18:12:52.857946+0300&quot;</span>,<span class="s2">&quot;logger&quot;</span>:<span class="s2">&quot;etcd-client&quot;</span>,<span class="s2">&quot;caller&quot;</span>:<span class="s2">&quot;v3@v3.5.13/retry_interceptor.go:62&quot;</span>,<span class="s2">&quot;msg&quot;</span>:<span class="s2">&quot;retrying of unary invoker failed&quot;</span>,<span class="s2">&quot;target&quot;</span>:<span class="s2">&quot;etcd-endpoints://0xc0005a2000/127.0.0.1:2379&quot;</span>,<span class="s2">&quot;attempt&quot;</span>:0,<span class="s2">&quot;error&quot;</span>:<span class="s2">&quot;rpc error: code = DeadlineExceeded desc = latest balancer error: last connection error: connection error: desc = \&quot;transport: Error while dialing: dial tcp 127.0.0.1:2379: connect: connection refused\&quot;&quot;</span><span class="o">}</span><span class="w"> </span>Error:<span class="w"> </span>context<span class="w"> </span>deadline<span class="w"> </span>exceeded
-</code></pre></div>
-The error means <code>etcdctl</code> cannot connect to your etcd server at <code>127.0.0.1:2379</code>. The connection is refused because etcd is either not running or not listening on that address/port.</p>
-<p>Check these:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check if etcd is running</span>
-ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>etcd
+  <h1>Htpasswd based authentication</h1>
 
-<span class="c1"># Or if using systemd</span>
-sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>etcd
-
-<span class="c1"># Check if port 2379 is open</span>
-ss<span class="w"> </span>-tlnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">2379</span>
-</code></pre></div>
-<p>If etcd is not running, start it:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>etcd
-</code></pre></div>
-<p>If etcd is running but on a different address/port, set the endpoint explicitly:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span><span class="w"> </span>etcdctl<span class="w"> </span>--endpoints<span class="o">=</span>&lt;your-etcd-ip&gt;:&lt;port&gt;<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </span><span class="s2">&quot;bar&quot;</span>
-</code></pre></div>
-<h1 id="for-a-k3d-cluster">For a k3d cluster<a class="headerlink" href="#for-a-k3d-cluster" title="Permanent link">&para;</a></h1>
-<p>For a <strong>k3d cluster</strong>, etcd runs inside the k3s server container and is not directly accessible on <code>127.0.0.1:2379</code> by default.</p>
-<p>To interact with etcd in k3d/k3s, you usually:</p>
+<p>Yes ✅, you can also use <strong><code>htpasswd</code>-based basic authentication</strong> with Kubernetes — but it is <strong>not recommended for production</strong> and is <strong>deprecated in many setups</strong>.</p>
+<h2 id="how-htpasswd-fits-with-rbac">🔗 How htpasswd fits with RBAC<a class="headerlink" href="#how-htpasswd-fits-with-rbac" title="Permanent link">&para;</a></h2>
 <ol>
-<li>
-<p><strong>Exec into the k3s server container</strong> where etcd runs.</p>
-</li>
-<li>
-<p>Use etcdctl inside that container with the correct environment variables.</p>
+<li><strong>htpasswd</strong> file is used to authenticate users (who they are)</li>
+<li><strong>RBAC</strong> is used to <strong>authorize</strong> what those users can do</li>
+<li>Both are needed:<ul>
+<li>AuthN (login): via <code>htpasswd</code></li>
+<li>AuthZ (access): via <code>ClusterRoleBinding</code>, etc.</li>
+</ul>
 </li>
 </ol>
-<p>Example commands:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># List k3d containers</span>
-docker<span class="w"> </span>ps<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>k3d
+<h2 id="important-k3s-does-not-support-basic-auth-file">❗ Important: K3s does <strong>not</strong> support <code>--basic-auth-file</code><a class="headerlink" href="#important-k3s-does-not-support-basic-auth-file" title="Permanent link">&para;</a></h2>
+<p>So you <strong>can’t plug in an <code>htpasswd</code> file directly</strong> like in upstream <code>kube-apiserver</code>.</p>
+<h3 id="difference-at-a-glance">🔍 Difference at a Glance<a class="headerlink" href="#difference-at-a-glance" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Auth Method</th>
+<th>Description</th>
+<th>Recommended For</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OIDC (Keycloak)</strong></td>
+<td>Secure, token-based, modern</td>
+<td>✅ Production-ready</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>htpasswd</strong></td>
+<td>Simple, file-based basic auth</td>
+<td>🚫 Dev/Test only</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>ServiceAccounts</strong></td>
+<td>For pods and automation</td>
+<td>✅ Automation only</td>
+<td></td>
+</tr>
+<tr>
+<td>### ✅ Using <code>htpasswd</code> Authentication (Step-by-Step)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-generate-credentials-with-htpasswd">1️⃣ Generate Credentials with <code>htpasswd</code><a class="headerlink" href="#1-generate-credentials-with-htpasswd" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>apache2-utils<span class="w">  </span><span class="c1"># if not installed</span>
+htpasswd<span class="w"> </span>-c<span class="w"> </span>/etc/kubernetes/htpasswd<span class="w"> </span>gowse
 
-<span class="c1"># Exec into the k3s server container (replace container name)</span>
-docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>&lt;k3d-server-container-name&gt;<span class="w"> </span>sh
+htpasswd<span class="w"> </span>-c<span class="w"> </span>./users.htpasswd<span class="w"> </span>admin1
+<span class="c1"># Enter password when prompted</span>
 
-<span class="c1"># Inside container, set etcdctl env variables and run command</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_ENDPOINTS</span><span class="o">=</span>https://127.0.0.1:2379
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_CACERT</span><span class="o">=</span>/var/lib/rancher/k3s/server/tls/etcd/server-ca.crt
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_CERT</span><span class="o">=</span>/var/lib/rancher/k3s/server/tls/etcd/client.crt
-<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_KEY</span><span class="o">=</span>/var/lib/rancher/k3s/server/tls/etcd/client.key
+htpasswd<span class="w"> </span>./users.htpasswd<span class="w"> </span>admin2
 
-etcdctl<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </span><span class="s2">&quot;bar&quot;</span>
+This<span class="w"> </span>creates<span class="w"> </span><span class="sb">`</span>users.htpasswd<span class="sb">`</span><span class="w"> </span>like:
+admin1:<span class="nv">$apr1$M9b1Z</span>...<span class="w">     </span><span class="c1"># hashed password</span>
+admin2:<span class="nv">$apr1$Yx9ZL</span>...
 </code></pre></div>
-<p>If you want, I can give you the exact command to get your k3d server container name and run etcdctl inside it.</p>
-<p>If you <strong>really need etcdctl</strong>, consider:</p>
+<p>You’ll be prompted to enter a password. It stores a hashed version in the file.</p>
+<h3 id="2-create-kubernetes-secret">2️⃣ Create Kubernetes Secret<a class="headerlink" href="#2-create-kubernetes-secret" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl create secret generic basic-auth \
+  --from-file=auth=users.htpasswd \
+  -n kube-system
+</code></pre></div>
+<h3 id="3-update-kube-apiserver-flags">3 Update kube-apiserver Flags<a class="headerlink" href="#3-update-kube-apiserver-flags" title="Permanent link">&para;</a></h3>
+<p>Edit <code>/etc/kubernetes/manifests/kube-apiserver.yaml</code> and add:</p>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--basic-auth-file=/etc/kubernetes/htpasswd</span>
+</code></pre></div>
+<p>Also ensure the file is mounted inside the static pod:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes/htpasswd</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">htpasswd</span>
+<span class="w">  </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nt">volumes</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">htpasswd</span>
+<span class="w">  </span><span class="nt">hostPath</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes/htpasswd</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">File</span>
+</code></pre></div>
+<blockquote>
+<p>✅ This enables basic HTTP authentication using that file.</p>
+</blockquote>
+<h3 id="3-set-up-kubectl-access-for-user">3️⃣ Set Up <code>kubectl</code> Access for User<a class="headerlink" href="#3-set-up-kubectl-access-for-user" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>set-credentials<span class="w"> </span>gowse<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--username<span class="o">=</span>gowse<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--password<span class="o">=</span>&lt;your-password&gt;
+
+kubectl<span class="w"> </span>config<span class="w"> </span>set-context<span class="w"> </span>test-user<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cluster<span class="o">=</span>&lt;your-cluster&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--user<span class="o">=</span>gowse
+
+kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>test-user
+</code></pre></div>
+<h3 id="4-bind-rbac-role">4️⃣ Bind RBAC Role<a class="headerlink" href="#4-bind-rbac-role" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterRoleBinding</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gowse-binding</span>
+<span class="nt">subjects</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">User</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gowse</span>
+<span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
+<span class="nt">roleRef</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterRole</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-admin</span>
+<span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
+</code></pre></div>
+<h3 id="why-htpasswd-is-not-recommended">🚫 Why <code>htpasswd</code> is Not Recommended<a class="headerlink" href="#why-htpasswd-is-not-recommended" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌ Password sent in base64</td>
+<td>Not secure unless over HTTPS</td>
+</tr>
+<tr>
+<td>❌ No session/token</td>
+<td>Every request uses raw user:pass</td>
+</tr>
+<tr>
+<td>❌ No expiry, MFA, group claims</td>
+<td>Limited features</td>
+</tr>
+<tr>
+<td>❌ Deprecated in kubeadm</td>
+<td>Not used in managed clusters (e.g., EKS, GKE)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="use-it-only-when">✅ Use It Only When:<a class="headerlink" href="#use-it-only-when" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>Running an etcdctl container inside k3d with mounted certs.</p>
-</li>
-<li>
-<p>Or use the k3s builtin ==<code>3s etcd-snapshot</code>== commands if your version supports it.</p>
-</li>
+<li>Doing <strong>quick local testing</strong> (minikube, dev VMs)</li>
+<li>You <strong>can’t set up Keycloak/OIDC</strong> yet</li>
+<li>You’re experimenting with RBAC concepts</li>
 </ul>
-<h1 id="to-ensure-etcd-is-configured-for-ha-in-k3s-cluster">To ensure <strong>etcd is configured for HA</strong> in <strong>K3s cluster</strong><a class="headerlink" href="#to-ensure-etcd-is-configured-for-ha-in-k3s-cluster" title="Permanent link">&para;</a></h1>
-<p>verify the following directly on the master nodes:</p>
-<h2 id="checklist-confirm-etcd-is-ha-in-k3s">✅ Checklist: Confirm etcd is HA in K3s<a class="headerlink" href="#checklist-confirm-etcd-is-ha-in-k3s" title="Permanent link">&para;</a></h2>
-<h3 id="1-check-etcd-members">🔹 1. <strong>Check etcd members</strong><a class="headerlink" href="#1-check-etcd-members" title="Permanent link">&para;</a></h3>
-<p>Run on <strong>any master node</strong>:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>k3s<span class="w"> </span>etcd-member-list
-</code></pre></div>
-<blockquote>
-<p>✅ If you see <strong>3 healthy members</strong> (one per master), it's HA</p>
-</blockquote>
-<h3 id="2-check-etcd-data-directory">🔹 2. <strong>Check etcd data directory</strong><a class="headerlink" href="#2-check-etcd-data-directory" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-l<span class="w"> </span>/var/lib/rancher/k3s/server/db/etcd
-</code></pre></div>
-<blockquote>
-<p>✅ If the directory exists, K3s is using <strong>embedded etcd</strong></p>
-</blockquote>
-<h3 id="3-check-logs-for-etcd-cluster-formation">🔹 3. <strong>Check logs for etcd cluster formation</strong><a class="headerlink" href="#3-check-logs-for-etcd-cluster-formation" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cat<span class="w"> </span>/var/log/syslog<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>etcd<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>member
-</code></pre></div>
-<p>or</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cat<span class="w"> </span>/tmp/k3s.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>etcd
-</code></pre></div>
-<blockquote>
-<p>✅ Look for lines showing member joining, leader election, etc.</p>
-</blockquote>
-<h3 id="4-check-k3s-process-flags">🔹 4. <strong>Check K3s process flags</strong><a class="headerlink" href="#4-check-k3s-process-flags" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>k3s
-</code></pre></div>
-<blockquote>
-<p>✅ You should see <code>--cluster-init</code> on the first node, and <code>--server https://...</code> on others.</p>
-</blockquote>
-<h3 id="5-check-kubernetes-node-roles">🔹 5. <strong>Check Kubernetes node roles</strong><a class="headerlink" href="#5-check-kubernetes-node-roles" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>wide
-</code></pre></div>
-<blockquote>
-<p>✅ You should see <strong>3 control-plane nodes</strong>, not just one.</p>
-</blockquote>
 
 
 
