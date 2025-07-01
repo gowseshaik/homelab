@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Helm/Helm%20Commands%20-%20Cheatsheet/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/ArgoCD/ArgoCD%20with%20HTTPS%20using%20cert-manager/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Helm Commands Cheatsheet - Gouse Shaik</title>
+        <title>ArgoCD with HTTPS using cert manager - Gouse Shaik</title>
       
     
     
@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#step-1-install-cert-manager" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -100,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Helm Commands   Cheatsheet
+              ArgoCD with HTTPS using cert manager
             
           </span>
         </div>
@@ -349,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Helm/Helm Commands - Cheatsheet.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/ArgoCD/ArgoCD with HTTPS using cert-manager.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -357,67 +362,144 @@
   
 
 
-  <h1>Helm Commands   Cheatsheet</h1>
+  <h1>ArgoCD with HTTPS using cert manager</h1>
 
-<table>
-<thead>
-<tr>
-<th>Task</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Create chart</td>
-<td><code>helm create &lt;name&gt;</code></td>
-</tr>
-<tr>
-<td>Install chart</td>
-<td><code>helm install &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Upgrade chart</td>
-<td><code>helm upgrade &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Uninstall chart</td>
-<td><code>helm uninstall &lt;release&gt;</code></td>
-</tr>
-<tr>
-<td>Show values</td>
-<td><code>helm show values &lt;chart&gt;</code></td>
-</tr>
-<tr>
-<td>Validate chart</td>
-<td><code>helm lint &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Dry-run install</td>
-<td><code>helm install --dry-run --debug ...</code></td>
-</tr>
-<tr>
-<td><div class="highlight"><pre><span></span><code>k delete all --all -n longhorn-system
-k delete crds -l app.kubernetes.io/part-of=longhorn
-k delete ns longhorn-system
-helm uninstall longhorn -n longhorn-system || true
-k get crds | grep longhorn
+<p>Great! Let’s configure <strong>ArgoCD with HTTPS using <code>cert-manager</code></strong> for automatic TLS certificates (via Let’s Encrypt) in <strong>k3s (Traefik)</strong>.  </p>
+<h3 id="step-1-install-cert-manager"><strong>Step 1: Install Cert-Manager</strong><a class="headerlink" href="#step-1-install-cert-manager" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># Install cert-manager (adjust version if needed)</span>
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.yaml
+</code></pre></div>
+Verify installation:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>cert-manager
 
-Then delete manually:
-k delete crd &lt;crd-name&gt;
-k get crds | grep longhorn | awk &#39;{print $1}&#39; | xargs k delete crd
-k delete ns longhorn-system --grace-period=0 --force
+gouse@gouse:~$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>cert-manager<span class="w"> </span>-w
+NAME<span class="w">                                       </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+cert-manager-776494b6cf-xb6dc<span class="w">              </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>20s
+cert-manager-cainjector-6cf76fc759-9267r<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>20s
+cert-manager-webhook-7bfbfdc97c-g4btd<span class="w">      </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>19s
+</code></pre></div></p>
+<h3 id="step-2-configure-lets-encrypt-issuer"><strong>Step 2: Configure Let’s Encrypt Issuer</strong><a class="headerlink" href="#step-2-configure-lets-encrypt-issuer" title="Permanent link">&para;</a></h3>
+<p>Create a <code>ClusterIssuer</code> for Let’s Encrypt (replace <code>your-email@example.com</code>):<br />
+<strong>File:</strong> <code>letsencrypt-issuer.yaml</code></p>
+<div class="highlight"><pre><span></span><code>gouse@gouse:~$ k api-resources | grep ClusterIssuer
+clusterissuers      cert-manager.io/v1    false     ClusterIssuer
+</code></pre></div>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterIssuer</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">letsencrypt-prod</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">acme</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your-email@example.com</span>
+<span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://acme-v02.api.letsencrypt.org/directory</span>
+<span class="w">    </span><span class="nt">privateKeySecretRef</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">letsencrypt-prod-account-key</span>
+<span class="w">    </span><span class="nt">solvers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">http01</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">ingress</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">traefik</span><span class="w">  </span><span class="c1"># k3s uses Traefik by default</span>
+</code></pre></div>
+Apply:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>letsencrypt-issuer.yaml
 
-If stuck in `Terminating`, run:
-k get ns longhorn-system -o json | jq &#39;.spec.finalizers=[]&#39; | k replace --raw &quot;/api/v1/namespaces/longhorn-system/finalize&quot; -f -
+gouse@gouse:~/DevOps/multipass_scripts/argocd$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>letsencrypt-issuer.yaml
+clusterissuer.cert-manager.io/letsencrypt-prod<span class="w"> </span>created
 
-Verify cleanup
-k get crds | grep longhorn
-k get ns | grep longhorn
-</code></pre></div></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+gouse@gouse:~/DevOps/multipass_scripts/argocd$<span class="w"> </span>k<span class="w"> </span>get<span class="w"> </span>clusterissuer.cert-manager.io/letsencrypt-prod
+NAME<span class="w">               </span>READY<span class="w">   </span>AGE
+letsencrypt-prod<span class="w">   </span>False<span class="w">   </span>23s
+</code></pre></div></p>
+<h3 id="step-3-deploy-argocd-skip-if-already-done"><strong>Step 3: Deploy ArgoCD (Skip if Already Done)</strong><a class="headerlink" href="#step-3-deploy-argocd-skip-if-already-done" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>argocd
+kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+</code></pre></div>
+<h3 id="step-4-create-ingress-with-tls-automation"><strong>Step 4: Create Ingress with TLS Automation</strong><a class="headerlink" href="#step-4-create-ingress-with-tls-automation" title="Permanent link">&para;</a></h3>
+<p><strong>File:</strong> <code>argocd-ingress-tls.yaml</code><br />
+Replace <code>argocd.yourdomain.com</code> with your actual domain (must resolve to your k3s IP).<br />
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ingress</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">argocd-ingress</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">argocd</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cert-manager.io/cluster-issuer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">letsencrypt-prod</span><span class="w">  </span><span class="c1"># Refers to ClusterIssuer</span>
+<span class="w">    </span><span class="nt">traefik.ingress.kubernetes.io/router.entrypoints</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">websecure</span>
+<span class="w">    </span><span class="nt">traefik.ingress.kubernetes.io/router.tls</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">tls</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">argocd.local.com</span><span class="w">   </span><span class="c1"># Your domain here</span>
+<span class="w">    </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">argocd-tls</span><span class="w">    </span><span class="c1"># cert-manager stores cert here</span>
+<span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">argocd.local.com</span>
+<span class="w">    </span><span class="nt">http</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">paths</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/</span>
+<span class="w">        </span><span class="nt">pathType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prefix</span>
+<span class="w">        </span><span class="nt">backend</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">service</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">argocd-server</span>
+<span class="w">            </span><span class="nt">port</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span><span class="w">     </span><span class="c1"># ArgoCD&#39;s HTTPS port</span>
+</code></pre></div>
+Apply:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>argocd-ingress-tls.yaml
+
+gouse@gouse:~/DevOps/multipass_scripts/argocd$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>argocd-ingress-tls.yaml
+ingress.networking.k8s.io/argocd-ingress<span class="w"> </span>created
+
+gouse@gouse:~/DevOps/multipass_scripts/argocd$<span class="w"> </span>k<span class="w"> </span>get<span class="w"> </span>ingress.networking.k8s.io/argocd-ingress<span class="w"> </span>-n<span class="w"> </span>argocd
+NAME<span class="w">             </span>CLASS<span class="w">     </span>HOSTS<span class="w">              </span>ADDRESS<span class="w">                                                  </span>PORTS<span class="w">     </span>AGE
+argocd-ingress<span class="w">   </span>traefik<span class="w">   </span>argocd.local.com<span class="w">   </span><span class="m">10</span>.94.226.136,10.94.226.145,10.94.226.164,10.94.226.18<span class="w">   </span><span class="m">80</span>,<span class="w"> </span><span class="m">443</span><span class="w">   </span>32s
+</code></pre></div></p>
+<h3 id="step-5-verify-tls-certificate"><strong>Step 5: Verify TLS Certificate</strong><a class="headerlink" href="#step-5-verify-tls-certificate" title="Permanent link">&para;</a></h3>
+<p>Check certificate status:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>certificate<span class="w"> </span>-n<span class="w"> </span>argocd
+
+gouse@gouse:~/DevOps/multipass_scripts/argocd$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>certificate<span class="w"> </span>-n<span class="w"> </span>argocd
+NAME<span class="w">         </span>READY<span class="w">   </span>SECRET<span class="w">       </span>AGE
+argocd-tls<span class="w">   </span>False<span class="w">   </span>argocd-tls<span class="w">   </span>65s
+</code></pre></div>
+Once ready (status <code>True</code>), access ArgoCD securely:
+<div class="highlight"><pre><span></span><code>https://argocd.yourdomain.com
+
+https://argocd.local.com
+</code></pre></div></p>
+<h3 id="step-6-get-admin-password"><strong>Step 6: Get Admin Password</strong><a class="headerlink" href="#step-6-get-admin-password" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>argocd-initial-admin-secret<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.data.password}&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
+</code></pre></div>
+<h3 id="key-notes"><strong>Key Notes</strong><a class="headerlink" href="#key-notes" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Domain Requirements</strong>:  </li>
+<li>Your domain (<code>argocd.yourdomain.com</code>) must point to the public IP of your k3s cluster.  </li>
+<li>
+<p>For local testing, use a DNS service like <code>nip.io</code> (e.g., <code>argocd.192-168-1-100.nip.io</code>).  </p>
+</li>
+<li>
+<p><strong>Traefik + cert-manager</strong>:  </p>
+</li>
+<li>cert-manager automatically creates a challenge (<code>HTTP01</code>) to verify domain ownership.  </li>
+<li>
+<p>Traefik routes the challenge to cert-manager for validation.  </p>
+</li>
+<li>
+<p><strong>Production Security</strong>:  </p>
+</li>
+<li>Use <code>letsencrypt-prod</code> (not staging) for trusted certs.  </li>
+<li>Ensure ArgoCD’s admin password is rotated after setup.  </li>
+</ol>
+<h3 id="troubleshooting"><strong>Troubleshooting</strong><a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Certificate not issued?</strong><br />
+  Check challenges:<br />
+  <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>challenges<span class="w"> </span>-n<span class="w"> </span>argocd
+</code></pre></div></li>
+<li><strong>Traefik not routing?</strong><br />
+  Check logs:<br />
+  <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/name<span class="o">=</span>traefik
+</code></pre></div></li>
+</ul>
+<p>Let me know if you need help debugging! 🛠️</p>
 
 
 

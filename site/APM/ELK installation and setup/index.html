@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Helm/Helm%20Commands%20-%20Cheatsheet/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/APM/ELK%20installation%20and%20setup/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Helm Commands Cheatsheet - Gouse Shaik</title>
+        <title>ELK installation and setup - Gouse Shaik</title>
       
     
     
@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#elk-running-ports" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -100,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Helm Commands   Cheatsheet
+              ELK installation and setup
             
           </span>
         </div>
@@ -349,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Helm/Helm Commands - Cheatsheet.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/APM/ELK installation and setup.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -357,67 +362,127 @@
   
 
 
-  <h1>Helm Commands   Cheatsheet</h1>
+<h3 id="elk-running-ports">ELK running ports<a class="headerlink" href="#elk-running-ports" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kibana : port 5601
+Elasticsearch: (port 9200)
+</code></pre></div>
+<h1 id="kibana-configuration">kibana configuration<a class="headerlink" href="#kibana-configuration" title="Permanent link">&para;</a></h1>
+<p>Open the Kibana configuration file for editing.
+<div class="highlight"><pre><span></span><code>sudo nano /etc/kibana/kibana.yml
+</code></pre></div></p>
+<p>Uncomment and adjust the following lines to bind Kibana to all IP addresses and connect it to Elasticsearch.
+<div class="highlight"><pre><span></span><code>#server.port: 5601
+server.host: &quot;0.0.0.0&quot;
+elasticsearch.hosts: [&quot;http://localhost:9200&quot;]
 
-<table>
-<thead>
-<tr>
-<th>Task</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Create chart</td>
-<td><code>helm create &lt;name&gt;</code></td>
-</tr>
-<tr>
-<td>Install chart</td>
-<td><code>helm install &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Upgrade chart</td>
-<td><code>helm upgrade &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Uninstall chart</td>
-<td><code>helm uninstall &lt;release&gt;</code></td>
-</tr>
-<tr>
-<td>Show values</td>
-<td><code>helm show values &lt;chart&gt;</code></td>
-</tr>
-<tr>
-<td>Validate chart</td>
-<td><code>helm lint &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Dry-run install</td>
-<td><code>helm install --dry-run --debug ...</code></td>
-</tr>
-<tr>
-<td><div class="highlight"><pre><span></span><code>k delete all --all -n longhorn-system
-k delete crds -l app.kubernetes.io/part-of=longhorn
-k delete ns longhorn-system
-helm uninstall longhorn -n longhorn-system || true
-k get crds | grep longhorn
+$ sudo systemctl restart kibana
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>ubuntu@elk-vm:~$ sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
+eyJ2ZXIiOiI4LjE0LjAiLCJhZHIiOlsiMTAuOTQuMjI2LjE0OTo5MjAwIl0sImZnciI6IjllMDM3M2VjMzBhMzFkYmE4ZDUzODdjNzc3ZjQ4ZTA4NWFkNDkxMzk0MTNiNWYzMDUwYTAyMGY4NjgyODRiMTkiLCJrZXkiOiJrVUY0dXBjQnk1eElqNS1OSzVvMjpRN0pTNWNOazA3TWJtMEdad0RjUkxRIn0=
+</code></pre></div>
+<h2 id="kibana-token">kibana token<a class="headerlink" href="#kibana-token" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>ubuntu@elk-vm:~$ sudo /usr/share/kibana/bin/kibana-verification-code
+Your verification code is:  080 708
+</code></pre></div>
+<h3 id="default-superuser-login-elasticsearch-kibana-8x">✅ Default Superuser Login (Elasticsearch / Kibana 8.x+)<a class="headerlink" href="#default-superuser-login-elasticsearch-kibana-8x" title="Permanent link">&para;</a></h3>
+<p>When Elasticsearch was first started, it generated a <strong>password</strong> for the <code>elastic</code> user.</p>
+<h4 id="to-retrieve-it-on-the-elasticsearch-vm">📍 To retrieve it (on the Elasticsearch VM):<a class="headerlink" href="#to-retrieve-it-on-the-elasticsearch-vm" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code># check the elasticsearch service
+sudo systemctl status elasticsearch
+sudo systemctl start elasticsearch --no-page
 
-Then delete manually:
-k delete crd &lt;crd-name&gt;
-k get crds | grep longhorn | awk &#39;{print $1}&#39; | xargs k delete crd
-k delete ns longhorn-system --grace-period=0 --force
+sudo cat /etc/elasticsearch/elasticsearch.keystore | grep elastic
+But more reliably, if you missed the initial message, reset the password:
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ubuntu@elk-vm:~$<span class="w"> </span>sudo<span class="w"> </span>/usr/share/elasticsearch/bin/elasticsearch-reset-password<span class="w"> </span>-u<span class="w"> </span>elastic
+This<span class="w"> </span>tool<span class="w"> </span>will<span class="w"> </span>reset<span class="w"> </span>the<span class="w"> </span>password<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span><span class="o">[</span>elastic<span class="o">]</span><span class="w"> </span>user<span class="w"> </span>to<span class="w"> </span>an<span class="w"> </span>autogenerated<span class="w"> </span>value.
+The<span class="w"> </span>password<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>printed<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>console.
+Please<span class="w"> </span>confirm<span class="w"> </span>that<span class="w"> </span>you<span class="w"> </span>would<span class="w"> </span>like<span class="w"> </span>to<span class="w"> </span><span class="k">continue</span><span class="w"> </span><span class="o">[</span>y/N<span class="o">]</span>y
 
-If stuck in `Terminating`, run:
-k get ns longhorn-system -o json | jq &#39;.spec.finalizers=[]&#39; | k replace --raw &quot;/api/v1/namespaces/longhorn-system/finalize&quot; -f -
 
-Verify cleanup
-k get crds | grep longhorn
-k get ns | grep longhorn
-</code></pre></div></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+Password<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span><span class="o">[</span>elastic<span class="o">]</span><span class="w"> </span>user<span class="w"> </span>successfully<span class="w"> </span>reset.
+New<span class="w"> </span>value:<span class="w"> </span>ZQhiI9Ppr9Z8pTibJ7hJ
+ubuntu@elk-vm:~$<span class="w"> </span>sudo<span class="w"> </span>/usr/share/elasticsearch/bin/elasticsearch-reset-password<span class="w"> </span>-u<span class="w"> </span>elastic<span class="w"> </span>-i
+This<span class="w"> </span>tool<span class="w"> </span>will<span class="w"> </span>reset<span class="w"> </span>the<span class="w"> </span>password<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span><span class="o">[</span>elastic<span class="o">]</span><span class="w"> </span>user.
+You<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>prompted<span class="w"> </span>to<span class="w"> </span>enter<span class="w"> </span>the<span class="w"> </span>password.
+Please<span class="w"> </span>confirm<span class="w"> </span>that<span class="w"> </span>you<span class="w"> </span>would<span class="w"> </span>like<span class="w"> </span>to<span class="w"> </span><span class="k">continue</span><span class="w"> </span><span class="o">[</span>y/N<span class="o">]</span>y
+
+
+Enter<span class="w"> </span>password<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">[</span>elastic<span class="o">]</span>:
+Re-enter<span class="w"> </span>password<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">[</span>elastic<span class="o">]</span>:
+Password<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span><span class="o">[</span>elastic<span class="o">]</span><span class="w"> </span>user<span class="w"> </span>successfully<span class="w"> </span>reset.
+</code></pre></div>
+<h3 id="then-login-to-kibana-with">Then login to Kibana with:<a class="headerlink" href="#then-login-to-kibana-with" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Username</strong>: <code>elastic</code>  </li>
+<li><strong>Password</strong>: the new password you just reset</li>
+</ul>
+<p>Reset the <code>elastic</code> user password:
+<div class="highlight"><pre><span></span><code>sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+This will prompt you to enter a new password (or generate one for you).
+</code></pre></div></p>
+<p>Edit Elasticsearch config:
+if you are not getting the json success output 
+curl http://10.94.226.149:9200
+then check and do the configurations for elasticsearch
+<div class="highlight"><pre><span></span><code>sudo nano /etc/elasticsearch/elasticsearch.yml
+network.host: 0.0.0.0
+http.port: 9200
+sudo systemctl restart elasticsearch
+
+curl http://10.94.226.149:9200
+</code></pre></div></p>
+<p>Modify Elasticsearch configuration for remote access.</p>
+<div class="highlight"><pre><span></span><code>sudo nano /etc/elasticsearch/elasticsearch.yml
+
+set the below values as 
+
+network.host: 0.0.0.0
+discovery.seed_hosts: []
+</code></pre></div>
+<p>For a basic setup (not recommended for production), disable security features.</p>
+<div class="highlight"><pre><span></span><code>xpack.security.enabled: false
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>sudo systemctl restart elasticsearch
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ubuntu@elk-vm:~$<span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;localhost:9200&quot;</span>
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;name&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;elk-vm&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;cluster_name&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;elasticsearch&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;cluster_uuid&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;t5b5MBJiTCS5E68E6Su5Ww&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;version&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;number&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;8.18.3&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;build_flavor&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;default&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;build_type&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;deb&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;build_hash&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;28fc77664903e7de48ba5632e5d8bfeb5e3ed39c&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;build_date&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;2025-06-18T22:08:41.171261054Z&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;build_snapshot&quot;</span><span class="w"> </span>:<span class="w"> </span>false,
+<span class="w">    </span><span class="s2">&quot;lucene_version&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;9.12.1&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;minimum_wire_compatibility_version&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;7.17.0&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;minimum_index_compatibility_version&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;7.0.0&quot;</span>
+<span class="w">  </span><span class="o">}</span>,
+<span class="w">  </span><span class="s2">&quot;tagline&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;You Know, for Search&quot;</span>
+<span class="o">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ubuntu@elk-vm:~$<span class="w"> </span>curl<span class="w"> </span>http://localhost:9200
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;name&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;elk-vm&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;cluster_name&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;elasticsearch&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;cluster_uuid&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;t5b5MBJiTCS5E68E6Su5Ww&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;version&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;number&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;8.18.3&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;build_flavor&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;default&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;build_type&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;deb&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;build_hash&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;28fc77664903e7de48ba5632e5d8bfeb5e3ed39c&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;build_date&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;2025-06-18T22:08:41.171261054Z&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;build_snapshot&quot;</span><span class="w"> </span>:<span class="w"> </span>false,
+<span class="w">    </span><span class="s2">&quot;lucene_version&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;9.12.1&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;minimum_wire_compatibility_version&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;7.17.0&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;minimum_index_compatibility_version&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;7.0.0&quot;</span>
+<span class="w">  </span><span class="o">}</span>,
+<span class="w">  </span><span class="s2">&quot;tagline&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;You Know, for Search&quot;</span>
+<span class="o">}</span>
+</code></pre></div>
 
 
 

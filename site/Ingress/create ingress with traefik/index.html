@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Helm/Helm%20Commands%20-%20Cheatsheet/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Ingress/create%20ingress%20with%20traefik/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Helm Commands Cheatsheet - Gouse Shaik</title>
+        <title>ingress access - Gouse Shaik</title>
       
     
     
@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#ingress-access" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -100,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Helm Commands   Cheatsheet
+              ingress access
             
           </span>
         </div>
@@ -349,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Helm/Helm Commands - Cheatsheet.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Ingress/create ingress with traefik.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -357,67 +362,32 @@
   
 
 
-  <h1>Helm Commands   Cheatsheet</h1>
+<h1 id="ingress-access">ingress access<a class="headerlink" href="#ingress-access" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code># argocd-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  namespace: argocd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: argocd.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
+</code></pre></div>
+<p>update in /etc/hosts
+<div class="highlight"><pre><span></span><code>&lt;host_ip&gt; argocd.local
 
-<table>
-<thead>
-<tr>
-<th>Task</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Create chart</td>
-<td><code>helm create &lt;name&gt;</code></td>
-</tr>
-<tr>
-<td>Install chart</td>
-<td><code>helm install &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Upgrade chart</td>
-<td><code>helm upgrade &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Uninstall chart</td>
-<td><code>helm uninstall &lt;release&gt;</code></td>
-</tr>
-<tr>
-<td>Show values</td>
-<td><code>helm show values &lt;chart&gt;</code></td>
-</tr>
-<tr>
-<td>Validate chart</td>
-<td><code>helm lint &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Dry-run install</td>
-<td><code>helm install --dry-run --debug ...</code></td>
-</tr>
-<tr>
-<td><div class="highlight"><pre><span></span><code>k delete all --all -n longhorn-system
-k delete crds -l app.kubernetes.io/part-of=longhorn
-k delete ns longhorn-system
-helm uninstall longhorn -n longhorn-system || true
-k get crds | grep longhorn
-
-Then delete manually:
-k delete crd &lt;crd-name&gt;
-k get crds | grep longhorn | awk &#39;{print $1}&#39; | xargs k delete crd
-k delete ns longhorn-system --grace-period=0 --force
-
-If stuck in `Terminating`, run:
-k get ns longhorn-system -o json | jq &#39;.spec.finalizers=[]&#39; | k replace --raw &quot;/api/v1/namespaces/longhorn-system/finalize&quot; -f -
-
-Verify cleanup
-k get crds | grep longhorn
-k get ns | grep longhorn
-</code></pre></div></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+then access http://argocd.local
+</code></pre></div></p>
 
 
 

@@ -364,26 +364,40 @@
 
 <h2 id="cluster-management">Cluster Management<a class="headerlink" href="#cluster-management" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl cluster-info</code> - Display cluster information</li>
-<li><code>kubectl get nodes</code> - List all nodes in the cluster</li>
-<li><code>kubectl describe node &lt;node-name&gt;</code> - Show detailed information about a specific node</li>
-<li><code>kubectl top node</code> - Show resource usage (CPU/Memory) for nodes</li>
-<li><code>kubectl top pod</code> - Show resource usage for pods</li>
-<li><code>kubectl cordon &lt;node-name&gt;</code> - Mark node as unschedulable</li>
-<li><code>kubectl uncordon &lt;node-name&gt;</code> - Mark node as schedulable</li>
-<li><code>kubectl drain &lt;node-name&gt;</code> - Drain node in preparation for maintenance</li>
+<li><code>k cluster-info</code> - Display cluster information</li>
+<li><code>k get nodes</code> - List all nodes in the cluster</li>
+<li><code>k describe node &lt;node-name&gt;</code> - Show detailed information about a specific node</li>
+<li><code>k top node</code> - Show resource usage (CPU/Memory) for nodes</li>
+<li><code>k top pod</code> - Show resource usage for pods</li>
+<li><code>k cordon &lt;node-name&gt;</code> - Mark node as unschedulable</li>
+<li><code>k uncordon &lt;node-name&gt;</code> - Mark node as schedulable</li>
+<li><code>k drain &lt;node-name&gt;</code> - Drain node in preparation for maintenance</li>
 </ul>
 <h1 id="apply-and-remove-labels">Apply and Remove Labels<a class="headerlink" href="#apply-and-remove-labels" title="Permanent link">&para;</a></h1>
-<p><code>kubectl label &lt;resource-type&gt; &lt;resource-name&gt; &lt;key&gt;=&lt;value&gt; --overwrite</code>
-<code>kubectl label pod mypod app=nginx --overwrite</code> - apply label</p>
-<p><code>kubectl label &lt;resource-type&gt; &lt;resource-name&gt; &lt;key&gt;-</code>
-<code>kubectl label pod mypod app-</code> - Remove label</p>
+<ul>
+<li><code>k label &lt;resource-type&gt; &lt;resource-name&gt; &lt;key&gt;=&lt;value&gt; --overwrite</code></li>
+<li><code>k label pod mypod app=nginx --overwrite</code> - apply label</li>
+<li>
+<p><code>k label namespace namespace-b name=namespace-b</code> </p>
+</li>
+<li>
+<p><code>k label &lt;resource-type&gt; &lt;resource-name&gt; &lt;key&gt;-</code></p>
+</li>
+<li><code>k label pod mypod app-</code> - Remove label</li>
+<li><code>k label node &lt;node-name&gt; node-role.kubernetes.io/infra=""</code> - Label a node as an infra node</li>
+<li><code>k get nodes --show-labels</code> - to see all labels on nodes(specific resources)\</li>
+<li></li>
+</ul>
+<h1 id="apply-a-taint-to-an-infra-node">Apply a taint to an infra node<a class="headerlink" href="#apply-a-taint-to-an-infra-node" title="Permanent link">&para;</a></h1>
+<ul>
+<li><code>k adm taint node &lt;node-name&gt; node-role.kubernetes.io/infra:NoSchedule</code> - apply taint on infra node</li>
+</ul>
 <h2 id="namespace-operations">Namespace Operations<a class="headerlink" href="#namespace-operations" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl get namespaces</code> - List all namespaces</li>
-<li><code>kubectl create namespace &lt;namespace-name&gt;</code> - Create a new namespace</li>
-<li><code>kubectl config set-context --current --namespace=&lt;namespace-name&gt;</code> - Set default namespace for current context</li>
-<li><code>kubectl delete namespace &lt;namespace-name&gt;</code> - Delete a namespace</li>
+<li><code>k get namespaces</code> - List all namespaces</li>
+<li><code>k create namespace &lt;namespace-name&gt;</code> - Create a new namespace</li>
+<li><code>k config set-context --current --namespace=&lt;namespace-name&gt;</code> - Set default namespace for current context</li>
+<li><code>k delete namespace &lt;namespace-name&gt;</code> - Delete a namespace</li>
 </ul>
 <h2 id="node-role-labels">Node-role labels<a class="headerlink" href="#node-role-labels" title="Permanent link">&para;</a></h2>
 <h4 id="apply-node-role-label">Apply node-role label<a class="headerlink" href="#apply-node-role-label" title="Permanent link">&para;</a></h4>
@@ -470,94 +484,94 @@
 </ul>
 <h2 id="pod-operations">Pod Operations<a class="headerlink" href="#pod-operations" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl get pods</code> - List all pods in current namespace</li>
-<li><code>kubectl get pods -A</code> - List all pods in all namespaces</li>
-<li><code>kubectl get pods -o wide</code> - List pods with additional details (IP, node)</li>
-<li><code>kubectl describe pod &lt;pod-name&gt;</code> - Show detailed information about a pod</li>
-<li><code>kubectl logs &lt;pod-name&gt;</code> - Print pod logs</li>
-<li><code>kubectl logs -f &lt;pod-name&gt;</code> - Stream pod logs (follow)</li>
-<li><code>kubectl logs &lt;pod-name&gt; -c &lt;container-name&gt;</code> - Print logs from a specific container in a pod</li>
-<li><code>kubectl exec -it &lt;pod-name&gt; -- /bin/bash</code> - Execute a command in a pod (interactive)</li>
-<li><code>kubectl delete pod &lt;pod-name&gt;</code> - Delete a pod</li>
-<li><code>kubectl port-forward &lt;pod-name&gt; &lt;local-port&gt;:&lt;pod-port&gt;</code> - Forward a local port to a pod</li>
+<li><code>k get pods</code> - List all pods in current namespace</li>
+<li><code>k get pods -A</code> - List all pods in all namespaces</li>
+<li><code>k get pods -o wide</code> - List pods with additional details (IP, node)</li>
+<li><code>k describe pod &lt;pod-name&gt;</code> - Show detailed information about a pod</li>
+<li><code>k logs &lt;pod-name&gt;</code> - Print pod logs</li>
+<li><code>k logs -f &lt;pod-name&gt;</code> - Stream pod logs (follow)</li>
+<li><code>k logs &lt;pod-name&gt; -c &lt;container-name&gt;</code> - Print logs from a specific container in a pod</li>
+<li><code>k exec -it &lt;pod-name&gt; -- /bin/bash</code> - Execute a command in a pod (interactive)</li>
+<li><code>k delete pod &lt;pod-name&gt;</code> - Delete a pod</li>
+<li><code>k port-forward &lt;pod-name&gt; &lt;local-port&gt;:&lt;pod-port&gt;</code> - Forward a local port to a pod</li>
 </ul>
 <h2 id="deployment-operations">Deployment Operations<a class="headerlink" href="#deployment-operations" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl get deployments</code> - List all deployments</li>
-<li><code>kubectl describe deployment &lt;deployment-name&gt;</code> - Show deployment details</li>
-<li><code>kubectl create deployment &lt;name&gt; --image=&lt;image&gt;</code> - Create a deployment</li>
-<li><code>kubectl scale deployment &lt;deployment-name&gt; --replicas=&lt;number&gt;</code> - Scale a deployment</li>
-<li><code>kubectl rollout status deployment/&lt;deployment-name&gt;</code> - Check rollout status</li>
-<li><code>kubectl rollout history deployment/&lt;deployment-name&gt;</code> - View rollout history</li>
-<li><code>kubectl rollout undo deployment/&lt;deployment-name&gt;</code> - Rollback to previous version</li>
-<li><code>kubectl rollout undo deployment/&lt;deployment-name&gt; --to-revision=&lt;number&gt;</code> - Rollback to specific revision</li>
-<li><code>kubectl set image deployment/&lt;deployment-name&gt; &lt;container-name&gt;=&lt;new-image&gt;</code> - Update deployment image</li>
+<li><code>k get deployments</code> - List all deployments</li>
+<li><code>k describe deployment &lt;deployment-name&gt;</code> - Show deployment details</li>
+<li><code>k create deployment &lt;name&gt; --image=&lt;image&gt;</code> - Create a deployment</li>
+<li><code>k scale deployment &lt;deployment-name&gt; --replicas=&lt;number&gt;</code> - Scale a deployment</li>
+<li><code>k rollout status deployment/&lt;deployment-name&gt;</code> - Check rollout status</li>
+<li><code>k rollout history deployment/&lt;deployment-name&gt;</code> - View rollout history</li>
+<li><code>k rollout undo deployment/&lt;deployment-name&gt;</code> - Rollback to previous version</li>
+<li><code>k rollout undo deployment/&lt;deployment-name&gt; --to-revision=&lt;number&gt;</code> - Rollback to specific revision</li>
+<li><code>k set image deployment/&lt;deployment-name&gt; &lt;container-name&gt;=&lt;new-image&gt;</code> - Update deployment image</li>
 </ul>
 <h2 id="service-operations">Service Operations<a class="headerlink" href="#service-operations" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl get services</code> - List all services</li>
-<li><code>kubectl describe service &lt;service-name&gt;</code> - Show service details</li>
-<li><code>kubectl expose deployment &lt;deployment-name&gt; --port=&lt;port&gt; --target-port=&lt;target-port&gt; --type=&lt;type&gt;</code> - Expose a deployment as a service</li>
-<li><code>kubectl delete service &lt;service-name&gt;</code> - Delete a service</li>
+<li><code>k get services</code> - List all services</li>
+<li><code>k describe service &lt;service-name&gt;</code> - Show service details</li>
+<li><code>k expose deployment &lt;deployment-name&gt; --port=&lt;port&gt; --target-port=&lt;target-port&gt; --type=&lt;type&gt;</code> - Expose a deployment as a service</li>
+<li><code>k delete service &lt;service-name&gt;</code> - Delete a service</li>
 </ul>
 <h2 id="configmap-secrets">ConfigMap &amp; Secrets<a class="headerlink" href="#configmap-secrets" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl get configmaps</code> - List all configmaps</li>
-<li><code>kubectl create configmap &lt;name&gt; --from-file=&lt;path-to-file&gt;</code> - Create configmap from file</li>
-<li><code>kubectl create configmap &lt;name&gt; --from-literal=&lt;key&gt;=&lt;value&gt;</code> - Create configmap from literal</li>
-<li><code>kubectl get secrets</code> - List all secrets</li>
-<li><code>kubectl create secret generic &lt;name&gt; --from-literal=&lt;key&gt;=&lt;value&gt;</code> - Create secret from literal</li>
-<li><code>kubectl create secret generic &lt;name&gt; --from-file=&lt;path-to-file&gt;</code> - Create secret from file</li>
+<li><code>k get configmaps</code> - List all configmaps</li>
+<li><code>k create configmap &lt;name&gt; --from-file=&lt;path-to-file&gt;</code> - Create configmap from file</li>
+<li><code>k create configmap &lt;name&gt; --from-literal=&lt;key&gt;=&lt;value&gt;</code> - Create configmap from literal</li>
+<li><code>k get secrets</code> - List all secrets</li>
+<li><code>k create secret generic &lt;name&gt; --from-literal=&lt;key&gt;=&lt;value&gt;</code> - Create secret from literal</li>
+<li><code>k create secret generic &lt;name&gt; --from-file=&lt;path-to-file&gt;</code> - Create secret from file</li>
 </ul>
 <h2 id="statefulsets-daemonsets">StatefulSets &amp; DaemonSets<a class="headerlink" href="#statefulsets-daemonsets" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl get statefulsets</code> - List all statefulsets</li>
-<li><code>kubectl get daemonsets</code> - List all daemonsets</li>
+<li><code>k get statefulsets</code> - List all statefulsets</li>
+<li><code>k get daemonsets</code> - List all daemonsets</li>
 </ul>
 <h2 id="jobs-cronjobs">Jobs &amp; CronJobs<a class="headerlink" href="#jobs-cronjobs" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl get jobs</code> - List all jobs</li>
-<li><code>kubectl get cronjobs</code> - List all cronjobs</li>
+<li><code>k get jobs</code> - List all jobs</li>
+<li><code>k get cronjobs</code> - List all cronjobs</li>
 </ul>
 <h2 id="persistent-volumes-claims">Persistent Volumes &amp; Claims<a class="headerlink" href="#persistent-volumes-claims" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl get pv</code> - List persistent volumes</li>
-<li><code>kubectl get pvc</code> - List persistent volume claims</li>
+<li><code>k get pv</code> - List persistent volumes</li>
+<li><code>k get pvc</code> - List persistent volume claims</li>
 </ul>
 <h2 id="rbac-security">RBAC &amp; Security<a class="headerlink" href="#rbac-security" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl get roles</code> - List roles</li>
-<li><code>kubectl get rolebindings</code> - List role bindings</li>
-<li><code>kubectl get clusterroles</code> - List cluster roles</li>
-<li><code>kubectl get clusterrolebindings</code> - List cluster role bindings</li>
-<li><code>kubectl auth can-i &lt;verb&gt; &lt;resource&gt;</code> - Check if an action is allowed</li>
+<li><code>k get roles</code> - List roles</li>
+<li><code>k get rolebindings</code> - List role bindings</li>
+<li><code>k get clusterroles</code> - List cluster roles</li>
+<li><code>k get clusterrolebindings</code> - List cluster role bindings</li>
+<li><code>k auth can-i &lt;verb&gt; &lt;resource&gt;</code> - Check if an action is allowed</li>
 </ul>
 <h2 id="troubleshooting-debugging">Troubleshooting &amp; Debugging<a class="headerlink" href="#troubleshooting-debugging" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl get events --sort-by=.metadata.creationTimestamp</code> - Show events sorted by timestamp</li>
-<li><code>kubectl get events -w</code> - Watch events in real-time</li>
-<li><code>kubectl api-resources</code> - List all API resources</li>
-<li><code>kubectl explain &lt;resource&gt;</code> - Get documentation for a resource</li>
+<li><code>k get events --sort-by=.metadata.creationTimestamp</code> - Show events sorted by timestamp</li>
+<li><code>k get events -w</code> - Watch events in real-time</li>
+<li><code>k api-resources</code> - List all API resources</li>
+<li><code>k explain &lt;resource&gt;</code> - Get documentation for a resource</li>
 </ul>
 <h2 id="configuration-context">Configuration &amp; Context<a class="headerlink" href="#configuration-context" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl config view</code> - Show merged kubeconfig settings</li>
-<li><code>kubectl config get-contexts</code> - List all contexts</li>
-<li><code>kubectl config use-context &lt;context-name&gt;</code> - Switch to another context</li>
-<li><code>kubectl config current-context</code> - Show current context</li>
+<li><code>k config view</code> - Show merged kubeconfig settings</li>
+<li><code>k config get-contexts</code> - List all contexts</li>
+<li><code>k config use-context &lt;context-name&gt;</code> - Switch to another context</li>
+<li><code>k config current-context</code> - Show current context</li>
 </ul>
 <h2 id="yaml-operations">YAML Operations<a class="headerlink" href="#yaml-operations" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl apply -f &lt;file.yaml&gt;</code> - Apply configuration from a YAML file</li>
-<li><code>kubectl delete -f &lt;file.yaml&gt;</code> - Delete resources defined in a YAML file</li>
-<li><code>kubectl get &lt;resource&gt; &lt;name&gt; -o yaml</code> - Get resource configuration in YAML format</li>
-<li><code>kubectl get &lt;resource&gt; &lt;name&gt; -o json</code> - Get resource configuration in JSON format</li>
+<li><code>k apply -f &lt;file.yaml&gt;</code> - Apply configuration from a YAML file</li>
+<li><code>k delete -f &lt;file.yaml&gt;</code> - Delete resources defined in a YAML file</li>
+<li><code>k get &lt;resource&gt; &lt;name&gt; -o yaml</code> - Get resource configuration in YAML format</li>
+<li><code>k get &lt;resource&gt; &lt;name&gt; -o json</code> - Get resource configuration in JSON format</li>
 </ul>
 <h2 id="custom-columns-output-formatting">Custom Columns &amp; Output Formatting<a class="headerlink" href="#custom-columns-output-formatting" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>kubectl get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName</code> - Custom columns output</li>
-<li><code>kubectl get pods --sort-by=.metadata.creationTimestamp</code> - Sort by creation time</li>
-<li><code>kubectl get pods --field-selector=status.phase=Running</code> - Filter by field selector</li>
+<li><code>k get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName</code> - Custom columns output</li>
+<li><code>k get pods --sort-by=.metadata.creationTimestamp</code> - Sort by creation time</li>
+<li><code>k get pods --field-selector=status.phase=Running</code> - Filter by field selector</li>
 </ul>
 
 
