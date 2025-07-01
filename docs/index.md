@@ -14,6 +14,7 @@
 - [how to configure Alertmanager on K3d](Alertmanager/how to configure Alertmanager on K3d.md)
 
 ## Argocd
+- [ArgoCD Architecture](ArgoCD/ArgoCD Architecture.md)
 - [ArgoCD installation steps](ArgoCD/ArgoCD installation steps.md)
 - [ArgoCD with HTTPS using cert-manager](ArgoCD/ArgoCD with HTTPS using cert-manager.md)
 
@@ -32,6 +33,9 @@
 - [K8s HA clusters](Choosing Kubernetes by Usecases/K8s HA clusters.md)
 - [Kind Vs K3d](Choosing Kubernetes by Usecases/Kind Vs K3d.md)
 - [Kubernetes cluster types on your usecases](Choosing Kubernetes by Usecases/Kubernetes cluster types on your usecases.md)
+
+## Cluster setup ha
+- [Deploy HA Kubernetes Cluster on Linux using Rancher RKE2](Cluster Setup HA/Deploy HA Kubernetes Cluster on Linux using Rancher RKE2.md)
 
 ## Clusteraccess
 - [Configuring Keycloak for Kubernetes authentication](ClusterAccess/Configuring Keycloak for Kubernetes authentication.md)
@@ -204,6 +208,10 @@
 - [To access ports from the host machine running multipass](multipass/To access ports from the host machine running multipass.md)
 - [k3s with HA in multipass](multipass/k3s with HA in multipass.md)
 - [k8s with hard-way - overview](multipass/k8s with hard-way - overview.md)
+
+## Nginx
+- [Configuring Multiple Services on Common Ports](nginx/Configuring Multiple Services on Common Ports.md)
+- [Installing and Configuring Nginx on Ubuntu](nginx/Installing and Configuring Nginx on Ubuntu.md)
 
 ## Python
 - [mkdocs to github pages](python/mkdocs to github pages.md)
