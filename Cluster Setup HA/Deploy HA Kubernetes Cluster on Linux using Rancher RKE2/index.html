@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/multipass/Setup%20access%20your%20cluster%20from%20the%20host%20machine/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Cluster%20Setup%20HA/Deploy%20HA%20Kubernetes%20Cluster%20on%20Linux%20using%20Rancher%20RKE2/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Setup access your cluster from the host machine - Gouse Shaik</title>
+        <title>Deploy HA Kubernetes Cluster on Linux using Rancher RKE2 - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#steps-to-access-k3s-cluster-from-host" class="md-skip">
+        <a href="#what-is-rke2" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Setup access your cluster from the host machine
+              Deploy HA Kubernetes Cluster on Linux using Rancher RKE2
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/multipass/Setup access your cluster from the host machine.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Cluster Setup HA/Deploy HA Kubernetes Cluster on Linux using Rancher RKE2.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,38 +362,293 @@
   
 
 
-  <h1>Setup access your cluster from the host machine</h1>
+  <h1>Deploy HA Kubernetes Cluster on Linux using Rancher RKE2</h1>
 
-<p>Follow these steps:</p>
-<h2 id="steps-to-access-k3s-cluster-from-host">✅ Steps to Access K3s Cluster from Host<a class="headerlink" href="#steps-to-access-k3s-cluster-from-host" title="Permanent link">&para;</a></h2>
-<h3 id="1-copy-kubeconfig-from-the-primary-node">1. <strong>Copy kubeconfig from the primary node</strong><a class="headerlink" href="#1-copy-kubeconfig-from-the-primary-node" title="Permanent link">&para;</a></h3>
-<p>You already did this in the script:</p>
-<div class="highlight"><pre><span></span><code>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp1<span class="w"> </span>--<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/rancher/k3s/k3s.yaml<span class="w"> </span>&gt;<span class="w"> </span>kubeconfig
+<p><a href="https://www.devopsschool.com/blog/author/rajeshkumar/" title="Posts by Rajesh Kumar">Rajesh Kumar</a> April 2, 2023 <a href="https://www.devopsschool.com/blog/deploy-ha-kubernetes-cluster-on-linux-using-rancher-rke2/#respond">Leave a Comment</a></p>
+<p>Table of Contents</p>
+<p><a href="https://www.devopsschool.com/blog/deploy-ha-kubernetes-cluster-on-linux-using-rancher-rke2/#"></a></p>
+<ul>
+<li><a href="https://www.devopsschool.com/blog/deploy-ha-kubernetes-cluster-on-linux-using-rancher-rke2/#What_is_RKE2">What is RKE2?</a><ul>
+<li><a href="https://www.devopsschool.com/blog/deploy-ha-kubernetes-cluster-on-linux-using-rancher-rke2/#System_Requirements">System Requirements</a></li>
+</ul>
+</li>
+<li><a href="https://www.devopsschool.com/blog/deploy-ha-kubernetes-cluster-on-linux-using-rancher-rke2/#Step_1_%E2%80%93_Set_up_Rocky_Linux_8_Nodes">Step 1 – Set up Rocky Linux 8 Nodes</a></li>
+<li><a href="https://www.devopsschool.com/blog/deploy-ha-kubernetes-cluster-on-linux-using-rancher-rke2/#Step_2_%E2%80%93_Configure_the_Fixed_Registration_Address">Step 2 – Configure the Fixed Registration Address</a></li>
+<li><a href="https://www.devopsschool.com/blog/deploy-ha-kubernetes-cluster-on-linux-using-rancher-rke2/#Step_3_%E2%80%93_Download_installer_script_on_Rocky_Linux_8_Nodes">Step 3 – Download installer script on Rocky Linux 8 Nodes</a></li>
+<li><a href="https://www.devopsschool.com/blog/deploy-ha-kubernetes-cluster-on-linux-using-rancher-rke2/#Step_4_%E2%80%93_Set_up_the_First_Server_Node_Master_Node">Step 4 – Set up the First Server Node (Master Node)</a></li>
+<li><a href="https://www.devopsschool.com/blog/deploy-ha-kubernetes-cluster-on-linux-using-rancher-rke2/#Step_7_%E2%80%93_Deploy_an_Application">Step 7 – Deploy an Application.</a></li>
+<li><a href="https://www.devopsschool.com/blog/deploy-ha-kubernetes-cluster-on-linux-using-rancher-rke2/#Reference">Reference</a></li>
+</ul>
+<h2 id="what-is-rke2">What is RKE2?<a class="headerlink" href="#what-is-rke2" title="Permanent link">&para;</a></h2>
+<p>RKE stands for <strong>Rancher Kubernetes Engine</strong>. RKE2 also known as the (RKE Government) is a combination of RKE1 and K3s. It inherits usability, ease-of-operations, and deployment model from K3s and close alignment with upstream Kubernetes from RKE1. Normally, RKE2 doesn’t rely on docker, it launches the control plane components as static pods that are managed by the kubelet.</p>
+<p>The diagram below will help you understand the RKE2 cluster topology.</p>
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-4-1024x372.png" /></p>
+<p>RKE2 ships a number of open-source components that include:</p>
+<ul>
+<li>K3s<ul>
+<li>Helm Controller</li>
+</ul>
+</li>
+<li>K8s<ul>
+<li>API Server</li>
+<li>Controller Manager</li>
+<li>Kubelet</li>
+<li>SchedulerSet up Linux Nodes</li>
+<li>Proxy</li>
+</ul>
+</li>
+<li>etcd</li>
+<li>containerd/cri</li>
+<li>runc</li>
+<li>Helm</li>
+<li>Metrics Server</li>
+<li>NGINX Ingress Controller</li>
+<li>CoreDNS</li>
+<li>CNI: Canal (Calico &amp; Flannel), Cilium or Calico</li>
+</ul>
+<h3 id="system-requirements">System Requirements<a class="headerlink" href="#system-requirements" title="Permanent link">&para;</a></h3>
+<p>Use a system that meets the below requirements:</p>
+<ul>
+<li>RAM: 4GB Minimum (we recommend at least 8GB)</li>
+<li>CPU: 2 Minimum (we recommend at least 4CPU)</li>
+<li>3 Rocky Linux 8 Nodes</li>
+<li><strong>Zero</strong> or <em>more agent</em> nodes that are designated to run your apps and services</li>
+<li>A <strong>load balancer</strong> to direct front-end traffic to the three nodes.</li>
+<li>A <strong>DNS record</strong> to map a URL to the load balancer</li>
+</ul>
+<h2 id="step-1-set-up-rocky-linux-8-nodes">Step 1 – Set up Rocky Linux 8 Nodes<a class="headerlink" href="#step-1-set-up-rocky-linux-8-nodes" title="Permanent link">&para;</a></h2>
+<p>For this guide, we will use 3 Rocky Linux nodes, a load balancer, and RKE2 agents(1 or more).</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TASK</strong></td>
+<td><strong>HOSTNAME</strong></td>
+<td><strong>IP</strong> <strong>ADDRESS</strong></td>
+</tr>
+<tr>
+<td><em>Server Node 1</em></td>
+<td><em>server1.computingforgeeks.com</em></td>
+<td>192.168.205.2</td>
+</tr>
+<tr>
+<td><em>Server Node 2</em></td>
+<td><em>server2.computingforgeeks.com</em></td>
+<td>192.168.205.3</td>
+</tr>
+<tr>
+<td><em>Server Node</em> 3</td>
+<td><em>server3.computingforgeeks.com</em></td>
+<td>192.168.205.33</td>
+</tr>
+<tr>
+<td><em>Load Balancer</em></td>
+<td><em>rke.computingforgeeks.com</em></td>
+<td>192.168.205.9</td>
+</tr>
+<tr>
+<td><em>Agent Node1</em></td>
+<td><em>agent1.computingforgeeks.com</em></td>
+<td>192.168.205.43</td>
+</tr>
+<tr>
+<td><em>Agent Node2</em></td>
+<td><em>agent2.computingforgeeks.com</em></td>
+<td>192.168.205.44</td>
+</tr>
+</tbody>
+</table>
+<p>Set the hostnames as shown:</p>
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-5.png" /></p>
+<p>Add the hostnames to /etc/hosts on each node</p>
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-6.png" /></p>
+<p>Configure the firewall on all the nodes as shown:</p>
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-7.png" /></p>
+<h2 id="step-2-configure-the-fixed-registration-address">Step 2 – Configure the Fixed Registration Address<a class="headerlink" href="#step-2-configure-the-fixed-registration-address" title="Permanent link">&para;</a></h2>
+<p>To achieve high availability, you are required to set up an odd number of server plane nodes(runs etcd, the Kubernetes API, and other control plane services). The other server nodes and agent nodes need a URL they can use to register against. This is either an IP or domain name of any of the control nodes. This is mainly done to maintain quorum so that the cluster can afford to lose connection with one of the nodes without impacting the functionality cluster.</p>
+<p>This can be achieved using the following:</p>
+<ul>
+<li>A layer 4 (TCP) load balancer</li>
+<li>Round-robin DNS</li>
+<li>Virtual or elastic IP addresses</li>
+</ul>
+<p>In this guide, we will configure NGINX as a layer 4 (TCP) load balancer to forward the connection to one of the RKE nodes.</p>
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-8.png" /></p>
+<hr />
+<div class="highlight"><pre><span></span><code>user nginx;
+worker_processes 4;
+worker_rlimit_nofile 40000;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
 
-<span class="c1"># for kubeadm</span>
-mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$HOME</span>/.kube
-sudo<span class="w"> </span>cp<span class="w"> </span>-i<span class="w"> </span>/etc/kubernetes/admin.conf<span class="w"> </span><span class="nv">$HOME</span>/.kube/config
-sudo<span class="w"> </span>chown<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="w"> </span><span class="nv">$HOME</span>/.kube/config<span class="w"> </span>I
+# Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 8192;
+}
+
+stream {
+upstream backend {
+        least_conn;
+        server &lt;IP_NODE_1&gt;:9345 max_fails=3 fail_timeout=5s;
+        server &lt;IP_NODE_2&gt;:9345 max_fails=3 fail_timeout=5s;
+        server &lt;IP_NODE_3&gt;:9345 max_fails=3 fail_timeout=5s;
+   }
+
+   # This server accepts all traffic to port 9345 and passes it to the upstream. 
+   # Notice that the upstream name and the proxy_pass need to match.
+   server {
+
+      listen 9345;
+
+          proxy_pass backend;
+   }
+    upstream rancher_api {
+        least_conn;
+        server &lt;IP_NODE_1&gt;:6443 max_fails=3 fail_timeout=5s;
+        server &lt;IP_NODE_2&gt;:6443 max_fails=3 fail_timeout=5s;
+        server &lt;IP_NODE_3&gt;:6443 max_fails=3 fail_timeout=5s;
+    }
+        server {
+        listen     6443;
+        proxy_pass rancher_api;
+        }
+    upstream rancher_http {
+        least_conn;
+        server 192.168.205.2:80 max_fails=3 fail_timeout=5s;
+        server 192.168.205.3:80 max_fails=3 fail_timeout=5s;
+        server 192.168.205.33:80 max_fails=3 fail_timeout=5s;
+    }
+        server {
+        listen     80;
+        proxy_pass rancher_http;
+        }
+    upstream rancher_https {
+        least_conn;
+        server 192.168.205.2:443 max_fails=3 fail_timeout=5s;
+        server 192.168.205.3:443 max_fails=3 fail_timeout=5s;
+        server 192.168.205.33:443 max_fails=3 fail_timeout=5s;
+    }
+        server {
+        listen     443;
+        proxy_pass rancher_https;
+        }
+}
 </code></pre></div>
-<h3 id="2-update-server-ip-in-kubeconfig">2. <strong>Update server IP in kubeconfig</strong><a class="headerlink" href="#2-update-server-ip-in-kubeconfig" title="Permanent link">&para;</a></h3>
-<p>Replace <code>127.0.0.1</code> with the actual IP of <code>cp1</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">CP1_IP</span><span class="o">=</span><span class="k">$(</span>multipass<span class="w"> </span>info<span class="w"> </span>cp1<span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.info[&quot;cp1&quot;].ipv4[0]&#39;</span><span class="k">)</span>
-sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/127.0.0.1/</span><span class="si">${</span><span class="nv">CP1_IP</span><span class="si">}</span><span class="s2">/g&quot;</span><span class="w"> </span>kubeconfig
+<hr />
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-9.png" /></p>
+<h2 id="step-3-download-installer-script-on-rocky-linux-8-nodes">Step 3 – Download installer script on Rocky Linux 8 Nodes<a class="headerlink" href="#step-3-download-installer-script-on-rocky-linux-8-nodes" title="Permanent link">&para;</a></h2>
+<p>All the Rocky Linux 8 nodes intended for this use need to be configured with the RKE2 repositories that provide the required packages. Instal curl tool on your system:</p>
+<div class="highlight"><pre><span></span><code>sudo yum -y install curl vim wget
 </code></pre></div>
-<h3 id="3-set-kubeconfig-environment-variable">3. <strong>Set KUBECONFIG environment variable</strong><a class="headerlink" href="#3-set-kubeconfig-environment-variable" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$PWD</span>/kubeconfig
+<p>With curl download the script used to install RKE2 server on your Rocky Linux 8 servers.</p>
+<div class="highlight"><pre><span></span><code>curl -sfL https://get.rke2.io --output install.sh
 </code></pre></div>
-<h3 id="4-test-access-from-host">4. <strong>Test access from host</strong><a class="headerlink" href="#4-test-access-from-host" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
+<p>Make the script executable:</p>
+<div class="highlight"><pre><span></span><code>chmod +x install.sh
 </code></pre></div>
-<p>You should see:</p>
-<div class="highlight"><pre><span></span><code>NAME      STATUS   ROLES                  AGE   VERSION
-cp1       Ready    control-plane,master   5m    v1.xx.x
-cp2       Ready    control-plane,master   4m    v1.xx.x
-worker1   Ready    &lt;none&gt;                 3m    v1.xx.x
-worker2   Ready    &lt;none&gt;                 3m    v1.xx.x
+<p>To see script usage options run:</p>
+<div class="highlight"><pre><span></span><code>less ./install.sh 
 </code></pre></div>
-<p>✅ Done — you're now accessing the HA cluster from your <strong>Ubuntu host directly</strong>.</p>
+<p>Once added, you can install and configure both the RKE2 server and agent on the desired nodes.</p>
+<h2 id="step-4-set-up-the-first-server-node-master-node">Step 4 – Set up the First Server Node (Master Node)<a class="headerlink" href="#step-4-set-up-the-first-server-node-master-node" title="Permanent link">&para;</a></h2>
+<p>Install RKE2 server:</p>
+<div class="highlight"><pre><span></span><code>sudo INSTALL_RKE2_TYPE=server ./install.sh
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>[INFO]  finding release for channel stable
+[INFO]  using 1.23 series from channel stable
+Rocky Linux 8 - AppStream                                                                                                                                              19 kB/s | 4.8 kB     00:00
+Rocky Linux 8 - AppStream                                                                                                                                              11 MB/s | 9.6 MB     00:00
+Rocky Linux 8 - BaseOS                                                                                                                                                 18 kB/s | 4.3 kB     00:00
+Rocky Linux 8 - BaseOS                                                                                                                                                 11 MB/s | 6.7 MB     00:00
+Rocky Linux 8 - Extras                                                                                                                                                 13 kB/s | 3.5 kB     00:00
+Rocky Linux 8 - Extras                                                                                                                                                 41 kB/s |  11 kB     00:00
+Rancher RKE2 Common (stable)                                                                                                                                          1.7 kB/s | 1.7 kB     00:00
+Rancher RKE2 1.23 (stable)                                                                                                                                            4.8 kB/s | 4.6 kB     00:00
+Dependencies resolved.
+======================================================================================================================================================================================================
+.......
+
+Transaction Summary
+======================================================================================================================================================================================================
+Install  5 Packages
+
+Total download size: 34 M
+Installed size: 166 M
+Downloading Packages:
+.....
+</code></pre></div>
+<p>Once installed, you need to create a config file manually. The config file contains the <code>tls-san</code>parameter which avoids certificate errors with the fixed registration address.</p>
+<p>The config file can be created with the command:</p>
+<div class="highlight"><pre><span></span><code>sudo vim /etc/rancher/rke2/config.yaml
+</code></pre></div>
+<p>Add the below lines to the file replacing where required.</p>
+<div class="highlight"><pre><span></span><code>write-kubeconfig-mode: &quot;0644&quot;
+tls-san:
+  - rke.computingforgeeks.com
+  - 192.168.205.9
+</code></pre></div>
+<p>Replace ==rke.computingforgeeks.com== with your fixed registration address and ==192.168.205.9== with its IP address.</p>
+<p>Save the file and start the service;</p>
+<div class="highlight"><pre><span></span><code>sudo systemctl start rke2-server
+sudo systemctl enable rke2-server
+</code></pre></div>
+<p>Confirm status of the service after starting it:</p>
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-10.png" /></p>
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-11.png" /></p>
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-12.png" /></p>
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-13.png" /></p>
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-14.png" /></p>
+<p><img alt="" src="https://www.devopsschool.com/blog/wp-content/uploads/2023/04/image-15.png" /></p>
+<h2 id="step-7-deploy-an-application">Step 7 – Deploy an Application.<a class="headerlink" href="#step-7-deploy-an-application" title="Permanent link">&para;</a></h2>
+<p>Once the above configurations have been made, deploy and application on your cluster. For this guide, we will deploy a demo Nginx application.</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f - &lt;&lt;EOF
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2 
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+EOF
+</code></pre></div>
+<p>Check if the pod is up:</p>
+<div class="highlight"><pre><span></span><code>$ kubectl get pods
+NAME                               READY   STATUS    RESTARTS   AGE
+nginx-deployment-cc7df4f8f-frv65   1/1     Running   0          13s
+nginx-deployment-cc7df4f8f-l9xdb   1/1     Running   0          13s
+</code></pre></div>
+<p>Now expose the service:</p>
+<div class="highlight"><pre><span></span><code>$ kubectl expose deployment nginx-deployment --type=NodePort --port=80
+service/nginx-deployment exposed
+</code></pre></div>
+<p>Obtain the port to which the service has been exposed:</p>
+<div class="highlight"><pre><span></span><code>$ kubectl get svc
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes         ClusterIP   10.43.0.1       &lt;none&gt;        443/TCP          85m
+nginx-deployment   NodePort    10.43.135.164   &lt;none&gt;        80:31042/TCP     2s
+</code></pre></div>
+<p>In my case, the service has been exposed to port <strong>31042</strong>. Access the application using any controller or worker node IP address with the syntax <a href="http://ip_address:31042/">http://IP_Address:31042</a></p>
 
 
 

@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/multipass/Setup%20access%20your%20cluster%20from%20the%20host%20machine/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/nginx/Installing%20and%20Configuring%20Nginx%20on%20Ubuntu/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Setup access your cluster from the host machine - Gouse Shaik</title>
+        <title>Installing and Configuring Nginx on Ubuntu - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#steps-to-access-k3s-cluster-from-host" class="md-skip">
+        <a href="#step-1-install-nginx" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Setup access your cluster from the host machine
+              Installing and Configuring Nginx on Ubuntu
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/multipass/Setup access your cluster from the host machine.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/nginx/Installing and Configuring Nginx on Ubuntu.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,38 +362,129 @@
   
 
 
-  <h1>Setup access your cluster from the host machine</h1>
+  <h1>Installing and Configuring Nginx on Ubuntu</h1>
 
-<p>Follow these steps:</p>
-<h2 id="steps-to-access-k3s-cluster-from-host">✅ Steps to Access K3s Cluster from Host<a class="headerlink" href="#steps-to-access-k3s-cluster-from-host" title="Permanent link">&para;</a></h2>
-<h3 id="1-copy-kubeconfig-from-the-primary-node">1. <strong>Copy kubeconfig from the primary node</strong><a class="headerlink" href="#1-copy-kubeconfig-from-the-primary-node" title="Permanent link">&para;</a></h3>
-<p>You already did this in the script:</p>
-<div class="highlight"><pre><span></span><code>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp1<span class="w"> </span>--<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/rancher/k3s/k3s.yaml<span class="w"> </span>&gt;<span class="w"> </span>kubeconfig
+<h2 id="step-1-install-nginx">Step 1: Install Nginx<a class="headerlink" href="#step-1-install-nginx" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Update your package index:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
+</code></pre></div></p>
+</li>
+<li>
+<p>Install Nginx:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nginx<span class="w"> </span>-y
+</code></pre></div></p>
+</li>
+<li>
+<p>Check if Nginx is running:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>nginx
+</code></pre></div>
+   You should see "active (running)" status.</p>
+</li>
+</ol>
+<h2 id="step-2-configure-firewall">Step 2: Configure Firewall<a class="headerlink" href="#step-2-configure-firewall" title="Permanent link">&para;</a></h2>
+<p>Allow Nginx through the firewall:
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="s1">&#39;Nginx HTTP&#39;</span>
+</code></pre></div></p>
+<h2 id="step-3-create-a-sample-application">Step 3: Create a Sample Application<a class="headerlink" href="#step-3-create-a-sample-application" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Create a directory for your sample application:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/var/www/sample
+</code></pre></div></p>
+</li>
+<li>
+<p>Create a simple HTML file:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nano<span class="w"> </span>/var/www/sample/index.html
+</code></pre></div></p>
+</li>
+<li>
+<p>Add this content:
+   <div class="highlight"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Sample Application<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Welcome to the Sample Application!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Nginx is successfully serving this page.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Set proper permissions:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>www-data:www-data<span class="w"> </span>/var/www/sample
+sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span><span class="m">755</span><span class="w"> </span>/var/www/sample
+</code></pre></div></p>
+</li>
+</ol>
+<h2 id="step-4-configure-nginx-server-block">Step 4: Configure Nginx Server Block<a class="headerlink" href="#step-4-configure-nginx-server-block" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Create a new server block configuration:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/nginx/sites-available/sample
+</code></pre></div></p>
+</li>
+<li>
+<p>Add this configuration (replace <code>your_domain_or_IP</code> with your server's IP or domain):
+   <div class="highlight"><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">your_domain_or_IP</span><span class="p">;</span>
 
-<span class="c1"># for kubeadm</span>
-mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$HOME</span>/.kube
-sudo<span class="w"> </span>cp<span class="w"> </span>-i<span class="w"> </span>/etc/kubernetes/admin.conf<span class="w"> </span><span class="nv">$HOME</span>/.kube/config
-sudo<span class="w"> </span>chown<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="w"> </span><span class="nv">$HOME</span>/.kube/config<span class="w"> </span>I
-</code></pre></div>
-<h3 id="2-update-server-ip-in-kubeconfig">2. <strong>Update server IP in kubeconfig</strong><a class="headerlink" href="#2-update-server-ip-in-kubeconfig" title="Permanent link">&para;</a></h3>
-<p>Replace <code>127.0.0.1</code> with the actual IP of <code>cp1</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">CP1_IP</span><span class="o">=</span><span class="k">$(</span>multipass<span class="w"> </span>info<span class="w"> </span>cp1<span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.info[&quot;cp1&quot;].ipv4[0]&#39;</span><span class="k">)</span>
-sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/127.0.0.1/</span><span class="si">${</span><span class="nv">CP1_IP</span><span class="si">}</span><span class="s2">/g&quot;</span><span class="w"> </span>kubeconfig
-</code></pre></div>
-<h3 id="3-set-kubeconfig-environment-variable">3. <strong>Set KUBECONFIG environment variable</strong><a class="headerlink" href="#3-set-kubeconfig-environment-variable" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$PWD</span>/kubeconfig
-</code></pre></div>
-<h3 id="4-test-access-from-host">4. <strong>Test access from host</strong><a class="headerlink" href="#4-test-access-from-host" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
-</code></pre></div>
-<p>You should see:</p>
-<div class="highlight"><pre><span></span><code>NAME      STATUS   ROLES                  AGE   VERSION
-cp1       Ready    control-plane,master   5m    v1.xx.x
-cp2       Ready    control-plane,master   4m    v1.xx.x
-worker1   Ready    &lt;none&gt;                 3m    v1.xx.x
-worker2   Ready    &lt;none&gt;                 3m    v1.xx.x
-</code></pre></div>
-<p>✅ Done — you're now accessing the HA cluster from your <strong>Ubuntu host directly</strong>.</p>
+<span class="w">    </span><span class="kn">root</span><span class="w"> </span><span class="s">/var/www/sample</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">index</span><span class="w"> </span><span class="s">index.html</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">try_files</span><span class="w"> </span><span class="nv">$uri</span><span class="w"> </span><span class="nv">$uri/</span><span class="w"> </span><span class="p">=</span><span class="mi">404</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Enable the configuration by creating a symbolic link:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/etc/nginx/sites-available/sample<span class="w"> </span>/etc/nginx/sites-enabled/
+</code></pre></div></p>
+</li>
+<li>
+<p>Test the configuration for syntax errors:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nginx<span class="w"> </span>-t
+</code></pre></div></p>
+</li>
+<li>
+<p>Restart Nginx to apply changes:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>nginx
+</code></pre></div></p>
+</li>
+</ol>
+<h2 id="step-5-verify-the-installation">Step 5: Verify the Installation<a class="headerlink" href="#step-5-verify-the-installation" title="Permanent link">&para;</a></h2>
+<p>Open your web browser and navigate to your server's IP address or domain name. You should see your sample application page.</p>
+<h2 id="optional-additional-configurations">Optional: Additional Configurations<a class="headerlink" href="#optional-additional-configurations" title="Permanent link">&para;</a></h2>
+<h3 id="set-up-a-domain-name">Set Up a Domain Name<a class="headerlink" href="#set-up-a-domain-name" title="Permanent link">&para;</a></h3>
+<p>If you have a domain name, update your DNS records to point to your server's IP, then update the <code>server_name</code> in the Nginx configuration.</p>
+<h3 id="enable-https-with-lets-encrypt">Enable HTTPS with Let's Encrypt<a class="headerlink" href="#enable-https-with-lets-encrypt" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Install Certbot:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>certbot<span class="w"> </span>python3-certbot-nginx<span class="w"> </span>-y
+</code></pre></div></p>
+</li>
+<li>
+<p>Obtain and install certificate:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>certbot<span class="w"> </span>--nginx<span class="w"> </span>-d<span class="w"> </span>your_domain
+</code></pre></div></p>
+</li>
+<li>
+<p>Certbot will automatically update your Nginx configuration to use HTTPS.</p>
+</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<ul>
+<li>If you get a 403 Forbidden error, check permissions on your web directory.</li>
+<li>Check Nginx error logs: <code>/var/log/nginx/error.log</code></li>
+<li>If changes don't appear, try clearing your browser cache or use incognito mode.</li>
+</ul>
 
 
 

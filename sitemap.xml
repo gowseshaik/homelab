@@ -37,6 +37,10 @@
          <lastmod>2025-07-01</lastmod>
     </url>
     <url>
+         <loc>https://github.com/gowseshaik/homelab/ArgoCD/ArgoCD%20Architecture/</loc>
+         <lastmod>2025-07-01</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/gowseshaik/homelab/ArgoCD/ArgoCD%20installation%20steps/</loc>
          <lastmod>2025-07-01</lastmod>
     </url>
@@ -74,6 +78,10 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/Choosing%20Kubernetes%20by%20Usecases/Kubernetes%20cluster%20types%20on%20your%20usecases/</loc>
+         <lastmod>2025-07-01</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/Cluster%20Setup%20HA/Deploy%20HA%20Kubernetes%20Cluster%20on%20Linux%20using%20Rancher%20RKE2/</loc>
          <lastmod>2025-07-01</lastmod>
     </url>
     <url>
@@ -474,6 +482,14 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/multipass/k8s%20with%20hard-way%20-%20overview/</loc>
+         <lastmod>2025-07-01</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/nginx/Configuring%20Multiple%20Services%20on%20Common%20Ports/</loc>
+         <lastmod>2025-07-01</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/nginx/Installing%20and%20Configuring%20Nginx%20on%20Ubuntu/</loc>
          <lastmod>2025-07-01</lastmod>
     </url>
     <url>
