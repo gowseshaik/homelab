@@ -3,8 +3,19 @@
 ## Api-resources
 - [k8s-api-resources-details](API-Resources/k8s-api-resources-details.md)
 
+## Apm
+- [Add Elastic repo and install filebeat on app nodes](APM/Add Elastic repo and install filebeat on app nodes.md)
+- [ELK installation and setup](APM/ELK installation and setup.md)
+- [Setup ELK with filebeat](APM/Setup ELK with filebeat.md)
+- [Steps to parse custom logs with Filebeat](APM/Steps to parse custom logs with Filebeat.md)
+- [Why you need Filebeat and Logstash and when to use which](APM/Why you need Filebeat and Logstash and when to use which.md)
+
 ## Alertmanager
 - [how to configure Alertmanager on K3d](Alertmanager/how to configure Alertmanager on K3d.md)
+
+## Argocd
+- [ArgoCD installation steps](ArgoCD/ArgoCD installation steps.md)
+- [ArgoCD with HTTPS using cert-manager](ArgoCD/ArgoCD with HTTPS using cert-manager.md)
 
 ## Ci-cd tools
 - [List of online open-source CI-CD tools](CI-CD Tools/List of online open-source CI-CD tools.md)
@@ -69,6 +80,7 @@
 - [How to confirm Ingress resources, routes, and active requests](Ingress/How to confirm Ingress resources, routes, and active requests.md)
 - [How to confirm the exact Ingress Controller used in your Kubernetes cluster](Ingress/How to confirm the exact Ingress Controller used in your Kubernetes cluster.md)
 - [Types of Ingress Controllers with their pros, cons, and pricing details](Ingress/Types of Ingress Controllers with their pros, cons, and pricing details.md)
+- [create ingress with traefik](Ingress/create ingress with traefik.md)
 
 ## K3d
 - [Complete Traefik Setup Guide for k3d](K3d/Complete Traefik Setup Guide for k3d.md)
@@ -95,6 +107,7 @@
 - [Longhorn in Kubernetes](Longhorn/Longhorn in Kubernetes.md)
 - [Longhorn with loopback file on Kind](Longhorn/Longhorn with loopback file on Kind.md)
 - [Nginx pod with a volume backed by Longhorn](Longhorn/Nginx pod with a volume backed by Longhorn.md)
+- [Steps to Install Longhorn on K3d](Longhorn/Steps to Install Longhorn on K3d.md)
 - [Use Longhorn for PV and mount to MinIO](Longhorn/Use Longhorn for PV and mount to MinIO.md)
 - [Using Longhorn Storage with Kind Cluster](Longhorn/Using Longhorn Storage with Kind Cluster.md)
 
@@ -163,9 +176,9 @@
 
 ## Etcdctl
 - [Install etcdctl tool with supported versions](etcdctl/Install etcdctl tool with supported versions.md)
+- [To take backup of etcd db with etcdctl tool](etcdctl/To take backup of etcd db with etcdctl tool.md)
 - [To take backup of etcd with minIO](etcdctl/To take backup of etcd with minIO.md)
 - [check etcd is running](etcdctl/check etcd is running.md)
-- [etcd in kind](etcdctl/etcd in kind.md)
 - [etcdctl commands for get, put, snapshot save and restore](etcdctl/etcdctl commands for get, put, snapshot save and restore.md)
 - [set up Kind with external etcd and Longhorn](etcdctl/set up Kind with external etcd and Longhorn.md)
 
@@ -188,6 +201,7 @@
 ## Multipass
 - [1. k8s hardway](multipass/1. k8s hardway.md)
 - [Setup access your cluster from the host machine](multipass/Setup access your cluster from the host machine.md)
+- [To access ports from the host machine running multipass](multipass/To access ports from the host machine running multipass.md)
 - [k3s with HA in multipass](multipass/k3s with HA in multipass.md)
 - [k8s with hard-way - overview](multipass/k8s with hard-way - overview.md)
 
