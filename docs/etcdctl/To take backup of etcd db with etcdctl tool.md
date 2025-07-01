@@ -31,6 +31,28 @@ inside docker container
 chmod 777 /usr/local/bin/etcdctl
 ```
 
+or 
+```
+ETCD_VER=v3.5.0
+
+# choose either URL
+GOOGLE_URL=https://storage.googleapis.com/etcd
+GITHUB_URL=https://github.com/etcd-io/etcd/releases/download
+DOWNLOAD_URL=${GOOGLE_URL}
+
+rm -f /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
+rm -rf /tmp/etcd-download-test && mkdir -p /tmp/etcd-download-test
+
+curl -L ${DOWNLOAD_URL}/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
+tar xzvf /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz -C /tmp/etcd-download-test --strip-components=1
+rm -f /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
+
+/tmp/etcd-download-test/etcd --version
+/tmp/etcd-download-test/etcdctl version
+/tmp/etcd-download-test/etcdutl version
+
+mv /tmp/etcd-download-test/etcd /tmp/etcd-download-test/etcdctl /tmp/etcd-download-test/etcdutl /usr/local/bin
+```
 #### 3. Set etcd env vars:
 
 ```sh
@@ -44,7 +66,25 @@ export ETCDCTL_KEY="${K3S_DATA_DIR}/server/tls/etcd/peer/server-client.key"
 #### 3. Run backup command:
 
 ```sh
+ETCDCTL API=3 etcdctl \
+--endpoints https://172.31.20.211:2379 \
+--cacert=/etc/kubernetes/pki/etcd/ca.crt
+--cert=/etc/kubernetes/pki/etcd/server.crt
+- -key=/etc/kubernetes/pki/etcd/server. keym
+snapshot save_snapshot-backup.db
+
+or
+
 etcdctl snapshot save /tmp/etcd-backup.db
+```
+
+## Verify Backup
+
+By the way if you not sure about values used in above command then you can check values from your /etc/kubernetes/manifests/etcd.yaml file.  
+Let’s confirm status of our backup using,
+
+```
+ETCDCTL_API=3 etcdctl --endpoints https://172.17.0.9:2379 snapshot status /tmp/snapshot-backup.db
 ```
 
 #### 4. Exit container and copy file out:
@@ -53,13 +93,13 @@ etcdctl snapshot save /tmp/etcd-backup.db
 docker cp k3d-ha-cluster-server-0:/tmp/etcd-backup.db ./etcd-backup.db
 ```
 
----
-
 ### 🔄 Restore (manually)
 
-Let me know if you want to simulate restore too — restoring etcd involves stopping k3s, wiping old data, restoring snapshot, and starting again.
+```
+etcdctl restore save /tmp/etcd-backup.db
+```
 
----
+Let me know if you want to simulate restore too — restoring etcd involves stopping k3s, wiping old data, restoring snapshot, and starting again.
 
 ### 🛠️ Optional: Automate backup on host
 

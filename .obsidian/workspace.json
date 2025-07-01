@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/ArgoCD/ArgoCD with HTTPS using cert-manager.md",
+                "file": "docs/ArgoCD/ArgoCD Architecture.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ArgoCD with HTTPS using cert-manager"
+              "title": "ArgoCD Architecture"
             }
           }
         ]
@@ -170,6 +170,18 @@
   },
   "active": "e87aa31bb6cd3006",
   "lastOpenFiles": [
+    "docs/images/Argocd-Archtiecture.png",
+    "docs/ArgoCD/ArgoCD installation steps.md",
+    "docs/ArgoCD/ArgoCD Architecture.md",
+    "docs/multipass/Setup access your cluster from the host machine.md",
+    "docs/multipass/k3s with HA in multipass.md",
+    "docs/Cluster Setup HA/Deploy HA Kubernetes Cluster on Linux using Rancher RKE2.md",
+    "docs/etcdctl/To take backup of etcd db with etcdctl tool.md",
+    "docs/Cluster Setup HA",
+    "docs/nginx/Installing and Configuring Nginx on Ubuntu.md",
+    "docs/nginx/Configuring Multiple Services on Common Ports.md",
+    "docs/ArgoCD/ArgoCD with HTTPS using cert-manager.md",
+    "docs/nginx",
     "site/search/search_index.json",
     "site/search",
     "site/velero - for migration/Velero with kind/index.html",
@@ -178,17 +190,12 @@
     "site/python/python pyautogui/index.html",
     "site/python/python pyautogui",
     "site/python/mkdocs to github pages/index.html",
-    "site/python/mkdocs to github pages",
-    "site/python",
-    "site/multipass/k8s with hard-way - overview/index.html",
     "site/assets/images/favicon.png",
     "site/images/logo-design-4.png",
     "site/images/Storage-to-pvs.png",
     "site/images/Pasted image 20250621164906.png",
     "site/images/Pasted image 20250621165152.png",
     "site/images/generated-image-1.png",
-    "docs/multipass/k3s with HA in multipass.md",
-    "docs/multipass/Setup access your cluster from the host machine.md",
     "docs/multipass/1. k8s hardway.md",
     "docs/RBAC/Kubernetes RBAC.md",
     "docs/RBAC/htpasswd based authentication.md",
@@ -196,9 +203,7 @@
     "docs/Ingress/create ingress with traefik.md",
     "docs/DailyTasks/Important resources to learn k8s.md",
     "docs/Choosing Kubernetes by Usecases/For homelab setup with.md",
-    "docs/ArgoCD/ArgoCD installation steps.md",
     "docs/API-Resources/k8s-api-resources-details.md",
-    "docs/ArgoCD/ArgoCD with HTTPS using cert-manager.md",
     "docs/APM/Add Elastic repo and install filebeat on app nodes.md",
     "docs/APM/ELK installation and setup.md",
     "docs/APM/Steps to parse custom logs with Filebeat.md",
@@ -207,11 +212,6 @@
     "docs/multipass/To access ports from the host machine running multipass.md",
     "docs/Helm/Helm Commands - Cheatsheet.md",
     "docs/Helm/Helm charts for deployments.md",
-    "docs/Helm/Checking Traefik Helm Configuration.md",
-    "docs/Helm/1. Check Helm Release(deployed) Information.md",
-    "docs/DailyTasks/K8s Cmds Cheatsheet.md",
-    "docs/annotations/About annotations in k8s.md",
-    "docs/etcdctl/etcdctl commands for get, put, snapshot save and restore.md",
     "docs/images/Pasted image 20250621164906.png",
     "docs/images/Pasted image 20250621165152.png",
     "site/Pasted image 20250621165152.png",
