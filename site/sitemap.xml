@@ -225,10 +225,13 @@
          <lastmod>2025-06-22</lastmod>
     </url>
     <url>
+<<<<<<< HEAD
          <loc>https://github.com/gowseshaik/homelab/Longhorn/Steps%20to%20Install%20Longhorn%20on%20K3d/</loc>
          <lastmod>2025-06-22</lastmod>
     </url>
     <url>
+=======
+>>>>>>> 72684f6deb471cb789bbaa004ab9002ddcff722b
          <loc>https://github.com/gowseshaik/homelab/Longhorn/Use%20Longhorn%20for%20PV%20and%20mount%20to%20MinIO/</loc>
          <lastmod>2025-06-22</lastmod>
     </url>
@@ -343,6 +346,13 @@
     <url>
          <loc>https://github.com/gowseshaik/homelab/Ubuntu/list%20of%20good%20tools%20to%20extract%20rar%20part%20files/</loc>
          <lastmod>2025-06-22</lastmod>
+<<<<<<< HEAD
+=======
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/annotations/About%20annotations%20in%20k8s/</loc>
+         <lastmod>2025-06-22</lastmod>
+>>>>>>> 72684f6deb471cb789bbaa004ab9002ddcff722b
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/etcdctl/Install%20etcdctl%20tool%20with%20supported%20versions/</loc>

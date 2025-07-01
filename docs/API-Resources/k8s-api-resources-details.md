@@ -13,10 +13,21 @@ pods          po           v1             true         Pod
 deployments   deploy       apps/v1        true         Deployment
 services      svc          v1             true         Service
 ingresses     ing          networking.k8s.io/v1   true  Ingress
-...
+clusterissuers             cert-manager.io/v1     false   ClusterIssuer
 ```
 
----
+The `false` value means that `ClusterIssuer` is a cluster-scoped resource, not a namespaced resource. Here's what this means:
+
+1. **`false` (cluster-scoped)**:
+    - The resource exists at the cluster level
+    - Not tied to any specific namespace
+    - Can be referenced from any namespace
+    - Typically includes resources that affect the entire cluster
+        
+2. **`true` (namespaced)**
+    - The resource exists within a specific namespace
+    - Must be created in a namespace
+    - Only accessible within that namespace
 
 ### **2. Get API Version for a Resource**
 ```sh
