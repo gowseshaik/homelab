@@ -18,6 +18,7 @@
 - [ArgoCD installation steps](ArgoCD/ArgoCD installation steps.md)
 - [ArgoCD with HTTPS using cert-manager](ArgoCD/ArgoCD with HTTPS using cert-manager.md)
 - [Argocd CLI](ArgoCD/Argocd CLI.md)
+- [Common misunderstanding in ArgoCD Usage](ArgoCD/Common misunderstanding in ArgoCD Usage.md)
 - [To configure two K3s clusters in ArgoCD](ArgoCD/To configure two K3s clusters in ArgoCD.md)
 
 ## Ci-cd tools
@@ -59,6 +60,7 @@
 ## Dailytasks
 - [Important resources to learn k8s](DailyTasks/Important resources to learn k8s.md)
 - [K8s Cmds Cheatsheet](DailyTasks/K8s Cmds Cheatsheet.md)
+- [Keywords](DailyTasks/Keywords.md)
 - [k8s error codes](DailyTasks/k8s error codes.md)
 - [pod exec and extract info from pods](DailyTasks/pod exec and extract info from pods.md)
 
