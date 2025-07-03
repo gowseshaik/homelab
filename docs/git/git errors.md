@@ -88,6 +88,19 @@ git pull --rebase origin main
 (.venv) gouse@gouse:~/Documents/homelab$ git pull --rebase origin main
 error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
+
+#If you want to **merge** remote changes:
+git pull --no-rebase
+
+# If you want to **rebase** your local commits on top of remote:
+git pull --rebase
+
+If you want to make it permanent for this repo:
+# For **merge (default)**:
+git config pull.rebase false
+
+# For **rebase (recommended for clean history)**:
+git config pull.rebase true
 ```
 #### ✅ 4. **Push your changes**
 ```bash
