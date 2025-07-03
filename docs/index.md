@@ -14,13 +14,11 @@
 - [how to configure Alertmanager on K3d](Alertmanager/how to configure Alertmanager on K3d.md)
 
 ## Argocd
-<<<<<<< HEAD
-- [ArgoCD installation steps](ArgoCD/ArgoCD installation steps.md)
-=======
 - [ArgoCD Architecture](ArgoCD/ArgoCD Architecture.md)
 - [ArgoCD installation steps](ArgoCD/ArgoCD installation steps.md)
 - [ArgoCD with HTTPS using cert-manager](ArgoCD/ArgoCD with HTTPS using cert-manager.md)
->>>>>>> b5826cb900a34189ce218ce14c448556fa3216b9
+- [Argocd CLI](ArgoCD/Argocd CLI.md)
+- [To configure two K3s clusters in ArgoCD](ArgoCD/To configure two K3s clusters in ArgoCD.md)
 
 ## Ci-cd tools
 - [List of online open-source CI-CD tools](CI-CD Tools/List of online open-source CI-CD tools.md)
@@ -44,6 +42,7 @@
 ## Clusteraccess
 - [Configuring Keycloak for Kubernetes authentication](ClusterAccess/Configuring Keycloak for Kubernetes authentication.md)
 - [Create a kubeconfig file for the external users](ClusterAccess/Create a kubeconfig file for the external users.md)
+- [merge two kubeconfig files](ClusterAccess/merge two kubeconfig files.md)
 
 ## Configmaps
 - [ConfigMap is a Kubernetes object used to store non-confidential data](ConfigMaps/ConfigMap is a Kubernetes object used to store non-confidential data.md)
@@ -195,6 +194,9 @@
 - [Fluentd can run on standalone VMs](fluentd/Fluentd can run on standalone VMs.md)
 - [Fluentd in Kubernetes](fluentd/Fluentd in Kubernetes.md)
 - [Fluentd install and config steps for a Linux VM](fluentd/Fluentd install and config steps for a Linux VM.md)
+
+## Git
+- [git errors](git/git errors.md)
 
 ## Images
 
