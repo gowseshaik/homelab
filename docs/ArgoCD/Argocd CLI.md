@@ -17,15 +17,30 @@
 
 ### 📦 **3. Application Management**
 
-|Intent|Command|
-|---|---|
-|Create an application|`argocd app create <APPNAME> --repo <REPO_URL> --path <CHART_PATH> --dest-server <DEST_SERVER> --dest-namespace <NS> --grpc-web`|
-|Delete an app|`argocd app delete <APPNAME> --yes --grpc-web`|
-|List all apps|`argocd app list --grpc-web`|
-|Show app status|`argocd app get <APPNAME> --grpc-web`|
-|Sync (apply latest manifests)|`argocd app sync <APPNAME> --grpc-web`|
-|Rollback to previous revision|`argocd app rollback <APPNAME> <REVISION>`|
-|Manually refresh app state|`argocd app refresh <APPNAME> --grpc-web`|
+| Intent                        | Command                                                                                                                          |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Create an application         | `argocd app create <APPNAME> --repo <REPO_URL> --path <CHART_PATH> --dest-server <DEST_SERVER> --dest-namespace <NS> --grpc-web` |
+| Delete an app                 | `argocd app delete <APPNAME> --yes --grpc-web`                                                                                   |
+| List all apps                 | `argocd app list --grpc-web`                                                                                                     |
+| Show app status               | `argocd app get <APPNAME> --grpc-web`                                                                                            |
+| Sync (apply latest manifests) | `argocd app sync <APPNAME> --grpc-web`                                                                                           |
+| Rollback to previous revision | `argocd app rollback <APPNAME> <REVISION>`                                                                                       |
+| Manually refresh app state    | `argocd app refresh <APPNAME> --grpc-web`                                                                                        |
+### To list ArgoCD apps filtered by **status**
+```bash
+# Get only Synced apps
+argocd app list --grpc-web -o wide | grep Synced
+
+# Get only OutOfSync apps
+argocd app list --grpc-web -o wide | grep OutOfSync
+
+# Get only Healthy apps
+argocd app list --grpc-web -o wide | grep Healthy
+
+# Get only Degraded apps
+argocd app list --grpc-web -o wide | grep Degraded
+```
+
 ### 🧠 **4. App Sync Policies**
 
 |Intent|Command|
