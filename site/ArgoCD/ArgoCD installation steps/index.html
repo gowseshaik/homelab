@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/fluentd/Fluentd%20can%20run%20on%20standalone%20VMs/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/ArgoCD/ArgoCD%20installation%20steps/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Fluentd can run on standalone VMs - Gouse Shaik</title>
+        <title>ArgoCD installation steps - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#how-it-works-on-standalone-vms" class="md-skip">
+        <a href="#ingress-access" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Fluentd can run on standalone VMs
+              ArgoCD installation steps
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/fluentd/Fluentd can run on standalone VMs.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/ArgoCD/ArgoCD installation steps.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,37 +362,112 @@
   
 
 
-  <h1>Fluentd can run on standalone VMs</h1>
+<div class="highlight"><pre><span></span><code>kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+</code></pre></div>
+<h1 id="ingress-access">ingress access<a class="headerlink" href="#ingress-access" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code># argocd-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  namespace: argocd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: argocd.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>k get ingress -n argocd
+</code></pre></div>
+<p>update /etc/hosts file
+<div class="highlight"><pre><span></span><code>sudo sh -c &quot;echo &#39;&lt;multipass-any-node-ip&gt; argocd.local&#39; &gt;&gt; /etc/hosts&quot;
+</code></pre></div></p>
+<p>deployment patch for <code>--insecure</code> access for argocd url http://argocd.local
+<div class="highlight"><pre><span></span><code>kubectl -n argocd patch deployment argocd-server \
+  --type=&#39;json&#39; \
+  -p=&#39;[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/template/spec/containers/0/args&quot;, &quot;value&quot;: [&quot;/usr/local/bin/argocd-server&quot;, &quot;--insecure&quot;]}]&#39;
+</code></pre></div></p>
+<h3 id="get-admin-password">get admin password<a class="headerlink" href="#get-admin-password" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>argocd-initial-admin-secret<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.data.password}&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span>
 
-<p>Yes, Fluentd <strong>can run on standalone VMs</strong> (including those running Siebel or any apps) to collect logs and forward them.</p>
-<h3 id="how-it-works-on-standalone-vms">How it works on standalone VMs:<a class="headerlink" href="#how-it-works-on-standalone-vms" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Install Fluentd agent on the VM.</li>
-<li>Configure Fluentd to <strong>tail application log files</strong> (e.g., Siebel logs).</li>
-<li>Fluentd forwards logs to your desired backend (Elasticsearch, Loki, remote syslog, etc.).</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Setup</th>
-<th>Fluentd Role</th>
-<th>Use Case</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Kubernetes Cluster</td>
-<td>DaemonSet log collector</td>
-<td>Collect container logs</td>
-</tr>
-<tr>
-<td>Standalone VM</td>
-<td>Fluentd agent daemon/service</td>
-<td>Collect app logs from files</td>
-</tr>
-</tbody>
-</table>
-<p>Fluentd is very flexible and works well outside Kubernetes for log collection and forwarding.</p>
+$<span class="w"> </span>FNLoqZlqBZry3Gcc
+</code></pre></div>
+<h3 id="install-argo-cd-cli-linux">✅ Install Argo CD CLI (Linux)<a class="headerlink" href="#install-argo-cd-cli-linux" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nv">VERSION</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span>-s<span class="w"> </span>https://api.github.com/repos/argoproj/argo-cd/releases/latest<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>tag_name<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;&quot;&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">4</span><span class="k">)</span>
+
+curl<span class="w"> </span>-sSL<span class="w"> </span>-o<span class="w"> </span>argocd<span class="w"> </span><span class="s2">&quot;https://github.com/argoproj/argo-cd/releases/download/</span><span class="si">${</span><span class="nv">VERSION</span><span class="si">}</span><span class="s2">/argocd-linux-amd64&quot;</span>
+
+chmod<span class="w"> </span>+x<span class="w"> </span>argocd
+sudo<span class="w"> </span>mv<span class="w"> </span>argocd<span class="w"> </span>/usr/local/bin/
+</code></pre></div>
+<h3 id="verify">🔍 Verify<a class="headerlink" href="#verify" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>version
+</code></pre></div>
+<p>Should output CLI and server versions (CLI only if not logged in yet).</p>
+<h3 id="login-to-argo-cd">✅ Login to Argo CD<a class="headerlink" href="#login-to-argo-cd" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>argocd<span class="w"> </span>login<span class="w"> </span>argocd.local<span class="w"> </span>--username<span class="w"> </span>admin<span class="w"> </span>--password<span class="w"> </span>&lt;current-password&gt;<span class="w"> </span>--insecure
+
+$<span class="w"> </span>argocd<span class="w"> </span>login<span class="w"> </span>argocd.local<span class="w"> </span>--username<span class="w"> </span>admin<span class="w"> </span>--password<span class="w"> </span>FNLoqZlqBZry3Gcc<span class="w"> </span>--insecure
+
+
+gouse@gouse:~/DevOps/multipass_scripts$<span class="w"> </span>argocd<span class="w"> </span>login<span class="w"> </span>argocd.local<span class="w"> </span>--username<span class="w"> </span>admin<span class="w"> </span>--password<span class="w"> </span>FNLoqZlqBZry3Gcc<span class="w"> </span>--insecure
+<span class="o">{</span><span class="s2">&quot;level&quot;</span>:<span class="s2">&quot;warning&quot;</span>,<span class="s2">&quot;msg&quot;</span>:<span class="s2">&quot;Failed to invoke grpc call. Use flag --grpc-web in grpc calls. To avoid this warning message, use flag --grpc-web.&quot;</span>,<span class="s2">&quot;time&quot;</span>:<span class="s2">&quot;2025-06-30T22:28:33+03:00&quot;</span><span class="o">}</span>
+<span class="s1">&#39;admin:login&#39;</span><span class="w"> </span>logged<span class="w"> </span><span class="k">in</span><span class="w"> </span>successfully
+Context<span class="w"> </span><span class="s1">&#39;argocd.local&#39;</span><span class="w"> </span>updated
+</code></pre></div>
+<blockquote>
+<p><code>--insecure</code> is required if you're using plain HTTP or self-signed TLS.</p>
+</blockquote>
+<hr />
+<h3 id="change-password">🔐 Change Password<a class="headerlink" href="#change-password" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>account<span class="w"> </span>update-password<span class="w"> </span>--current-password<span class="w"> </span>&lt;current-password&gt;<span class="w"> </span>--new-password<span class="w"> </span>&lt;new-password&gt;
+
+argocd<span class="w"> </span>account<span class="w"> </span>update-password<span class="w"> </span>--current-password<span class="w"> </span>FNLoqZlqBZry3Gcc<span class="w"> </span>--new-password<span class="w"> </span>admin123
+
+gouse@gouse:~/DevOps/multipass_scripts$<span class="w"> </span>argocd<span class="w"> </span>account<span class="w"> </span>update-password<span class="w"> </span>--current-password<span class="w"> </span>FNLoqZlqBZry3Gcc<span class="w"> </span>--new-password<span class="w"> </span>admin123
+<span class="o">{</span><span class="s2">&quot;level&quot;</span>:<span class="s2">&quot;warning&quot;</span>,<span class="s2">&quot;msg&quot;</span>:<span class="s2">&quot;Failed to invoke grpc call. Use flag --grpc-web in grpc calls. To avoid this warning message, use flag --grpc-web.&quot;</span>,<span class="s2">&quot;time&quot;</span>:<span class="s2">&quot;2025-06-30T22:29:33+03:00&quot;</span><span class="o">}</span>
+Password<span class="w"> </span>updated
+Context<span class="w"> </span><span class="s1">&#39;argocd.local&#39;</span><span class="w"> </span>updated
+</code></pre></div>
+<h3 id="creating-apps-via-cli">Creating Apps Via CLI[<a class="headerlink" href="#creating-apps-via-cli" title="Permanent link">&para;</a></h3>
+<p>First we need to set the current namespace to argocd running the following command:
+<div class="highlight"><pre><span></span><code>kubectl config set-context --current --namespace=argocd
+</code></pre></div></p>
+<p>Create the example guestbook application with the following command:
+<div class="highlight"><pre><span></span><code>argocd app create guestbook --repo https://github.com/argoproj/argocd-example-apps.git --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace default
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>guestbook
+$<span class="w"> </span>argocd<span class="w"> </span>app<span class="w"> </span>get<span class="w"> </span>guestbook
+gouse@gouse:~/DevOps/multipass_scripts$<span class="w"> </span>argocd<span class="w"> </span>app<span class="w"> </span>get<span class="w"> </span>guestbook
+<span class="o">{</span><span class="s2">&quot;level&quot;</span>:<span class="s2">&quot;warning&quot;</span>,<span class="s2">&quot;msg&quot;</span>:<span class="s2">&quot;Failed to invoke grpc call. Use flag --grpc-web in grpc calls. To avoid this warning message, use flag --grpc-web.&quot;</span>,<span class="s2">&quot;time&quot;</span>:<span class="s2">&quot;2025-06-30T22:47:38+03:00&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;level&quot;</span>:<span class="s2">&quot;warning&quot;</span>,<span class="s2">&quot;msg&quot;</span>:<span class="s2">&quot;Failed to invoke grpc call. Use flag --grpc-web in grpc calls. To avoid this warning message, use flag --grpc-web.&quot;</span>,<span class="s2">&quot;time&quot;</span>:<span class="s2">&quot;2025-06-30T22:47:38+03:00&quot;</span><span class="o">}</span>
+Name:<span class="w">               </span>argocd/guestbook
+Project:<span class="w">            </span>default
+Server:<span class="w">             </span>https://kubernetes.default.svc
+Namespace:<span class="w">          </span>default
+URL:<span class="w">                </span>https://argocd.local/applications/guestbook
+Source:
+-<span class="w"> </span>Repo:<span class="w">             </span>http://192.168.100.5:3000/gouse/argocd-example-apps.git
+<span class="w">  </span>Target:<span class="w">           </span>HEAD
+<span class="w">  </span>Path:<span class="w">             </span>guestbook
+SyncWindow:<span class="w">         </span>Sync<span class="w"> </span>Allowed
+Sync<span class="w"> </span>Policy:<span class="w">        </span>Manual
+Sync<span class="w"> </span>Status:<span class="w">        </span>Synced<span class="w"> </span>to<span class="w"> </span>HEAD<span class="w"> </span><span class="o">(</span>f58c7ed<span class="o">)</span>
+Health<span class="w"> </span>Status:<span class="w">      </span>Healthy
+
+GROUP<span class="w">  </span>KIND<span class="w">        </span>NAMESPACE<span class="w">  </span>NAME<span class="w">          </span>STATUS<span class="w">  </span>HEALTH<span class="w">   </span>HOOK<span class="w">  </span>MESSAGE
+<span class="w">       </span>Service<span class="w">     </span>default<span class="w">    </span>guestbook-ui<span class="w">  </span>Synced<span class="w">  </span>Healthy<span class="w">        </span>service/guestbook-ui<span class="w"> </span>created
+apps<span class="w">   </span>Deployment<span class="w">  </span>default<span class="w">    </span>guestbook-ui<span class="w">  </span>Synced<span class="w">  </span>Healthy<span class="w">        </span>deployment.apps/guestbook-ui<span class="w"> </span>created
+</code></pre></div>
 
 
 

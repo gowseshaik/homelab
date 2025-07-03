@@ -6,6 +6,9 @@
 ## Alertmanager
 - [how to configure Alertmanager on K3d](Alertmanager/how to configure Alertmanager on K3d.md)
 
+## Argocd
+- [ArgoCD installation steps](ArgoCD/ArgoCD installation steps.md)
+
 ## Ci-cd tools
 - [List of online open-source CI-CD tools](CI-CD Tools/List of online open-source CI-CD tools.md)
 
@@ -69,6 +72,7 @@
 - [How to confirm Ingress resources, routes, and active requests](Ingress/How to confirm Ingress resources, routes, and active requests.md)
 - [How to confirm the exact Ingress Controller used in your Kubernetes cluster](Ingress/How to confirm the exact Ingress Controller used in your Kubernetes cluster.md)
 - [Types of Ingress Controllers with their pros, cons, and pricing details](Ingress/Types of Ingress Controllers with their pros, cons, and pricing details.md)
+- [create ingress with traefik](Ingress/create ingress with traefik.md)
 
 ## K3d
 - [Complete Traefik Setup Guide for k3d](K3d/Complete Traefik Setup Guide for k3d.md)
