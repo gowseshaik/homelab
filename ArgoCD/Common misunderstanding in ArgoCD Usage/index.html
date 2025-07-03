@@ -369,47 +369,47 @@
 </thead>
 <tbody>
 <tr>
-<td>**Git = Single Source of Truth **</td>
+<td>Git = Single Source of Truth</td>
 <td>Assuming Git always has the correct desired state</td>
 <td>May lead to ignoring live drift or emergency changes outside Git</td>
 </tr>
 <tr>
-<td>**"Sync = Deploy" **</td>
+<td>"Sync = Deploy"</td>
 <td>Believing <code>argocd app sync</code> is equivalent to a full deployment</td>
 <td>Ignores that partial syncs or hooks may not trigger everything</td>
 </tr>
 <tr>
-<td>**Manual Override Ignorance **</td>
+<td>Manual Override Ignorance</td>
 <td>Not tracking manual <code>kubectl</code> changes because "ArgoCD will sync it anyway"</td>
 <td>Causes hidden drift and misalignment with Git</td>
 </tr>
 <tr>
-<td>**UI-Only Comfort **</td>
+<td>UI-Only Comfort</td>
 <td>Relying only on ArgoCD UI instead of CLI or automation</td>
 <td>Slows down automation, less reproducible workflows</td>
 </tr>
 <tr>
-<td><strong>Overtrusting Health Status</strong></td>
+<td>Overtrusting Health Status</td>
 <td>Assuming "Healthy" status means the app works perfectly</td>
 <td>Health checks are often superficial and may not reflect runtime issues</td>
 </tr>
 <tr>
-<td>**One Repo Fits All **</td>
+<td>One Repo Fits All</td>
 <td>Keeping all apps and configs in a single monorepo</td>
 <td>Makes scaling, ownership, and access control harder</td>
 </tr>
 <tr>
-<td>**Ignoring Namespaces **</td>
+<td>Ignoring Namespaces</td>
 <td>Deploying all apps in <code>default</code> or one namespace</td>
 <td>Security, RBAC, and observability become messy</td>
 </tr>
 <tr>
-<td>**No Environment Parity **</td>
+<td>No Environment Parity</td>
 <td>Assuming dev/stage/prod ArgoCD instances behave the same</td>
 <td>Misconfigurations due to mismatched secrets, resources, or RBAC</td>
 </tr>
 <tr>
-<td>**Tooling **</td>
+<td>Tooling</td>
 <td>Thinking ArgoCD replaces Helm/Kustomize completely</td>
 <td>Leads to neglecting proper templating and environment layering</td>
 </tr>
