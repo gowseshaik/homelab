@@ -453,12 +453,10 @@
 <td>Manually refresh app state</td>
 <td><code>argocd app refresh &lt;APPNAME&gt; --grpc-web</code></td>
 </tr>
-<tr>
-<td>### To list ArgoCD apps filtered by <strong>status</strong></td>
-<td></td>
-</tr>
-<tr>
-<td><div class="highlight"><pre><span></span><code><span class="c1"># Get only Synced apps</span>
+</tbody>
+</table>
+<h3 id="to-list-argocd-apps-filtered-by-status">To list ArgoCD apps filtered by <strong>status</strong><a class="headerlink" href="#to-list-argocd-apps-filtered-by-status" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Get only Synced apps</span>
 argocd<span class="w"> </span>app<span class="w"> </span>list<span class="w"> </span>--grpc-web<span class="w"> </span>-o<span class="w"> </span>wide<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Synced
 
 <span class="c1"># Get only OutOfSync apps</span>
@@ -469,11 +467,7 @@ argocd<span class="w"> </span>app<span class="w"> </span>list<span class="w"> </
 
 <span class="c1"># Get only Degraded apps</span>
 argocd<span class="w"> </span>app<span class="w"> </span>list<span class="w"> </span>--grpc-web<span class="w"> </span>-o<span class="w"> </span>wide<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Degraded
-</code></pre></div></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+</code></pre></div>
 <h3 id="4-app-sync-policies">🧠 <strong>4. App Sync Policies</strong><a class="headerlink" href="#4-app-sync-policies" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
