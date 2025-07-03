@@ -1,10 +1,11 @@
 ### 🔐 **1. Authentication**
 
-|Intent|Command|
-|---|---|
-|Login to ArgoCD|`argocd login <ARGOCD_SERVER> --username admin --password <PWD> --grpc-web`|
-|List current context|`argocd context`|
-|Switch to another context|`argocd login <OTHER_ARGOCD_SERVER>`|
+| Intent                    | Command                                                                     |
+| ------------------------- | --------------------------------------------------------------------------- |
+| Login to ArgoCD           | `argocd login <ARGOCD_SERVER> --username admin --password <PWD> --grpc-web` |
+| List current context      | `argocd context`                                                            |
+| Switch to another context | `argocd login <OTHER_ARGOCD_SERVER>`                                        |
+| Current context info      | argocd account get-user-info                                                |
 ### 🔧 **2. Cluster Management**
 
 |Intent|Command|
@@ -26,6 +27,8 @@
 | Sync (apply latest manifests) | `argocd app sync <APPNAME> --grpc-web`                                                                                           |
 | Rollback to previous revision | `argocd app rollback <APPNAME> <REVISION>`                                                                                       |
 | Manually refresh app state    | `argocd app refresh <APPNAME> --grpc-web`                                                                                        |
+| only logs                     | argocd app logs <APP_NAME>                                                                                                       |
+| to get the manifests          | argocd app manifests <APP_NAME> --grpc-web                                                                                       |
 
 ### To list ArgoCD apps filtered by **status**
 ```bash

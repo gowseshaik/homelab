@@ -1,0 +1,3 @@
+- first principle
+- biases (miscommunication)
+- 
