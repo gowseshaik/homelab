@@ -138,3 +138,4 @@ nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
 nginx.ingress.kubernetes.io/grpc-web: "true"
 ```
 Then `--grpc-web` is mandatory or you’ll hit gRPC errors.
+
