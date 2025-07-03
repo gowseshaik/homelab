@@ -26,6 +26,7 @@
 | Sync (apply latest manifests) | `argocd app sync <APPNAME> --grpc-web`                                                                                           |
 | Rollback to previous revision | `argocd app rollback <APPNAME> <REVISION>`                                                                                       |
 | Manually refresh app state    | `argocd app refresh <APPNAME> --grpc-web`                                                                                        |
+
 ### To list ArgoCD apps filtered by **status**
 ```bash
 # Get only Synced apps
