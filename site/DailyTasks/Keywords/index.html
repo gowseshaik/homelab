@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/ArgoCD/Argocd%20CLI/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/DailyTasks/Keywords/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Argocd CLI - Gouse Shaik</title>
+        <title>Keywords - Gouse Shaik</title>
       
     
     
@@ -69,11 +69,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#1-authentication" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -105,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Argocd CLI
+              Keywords
             
           </span>
         </div>
@@ -354,7 +349,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/ArgoCD/Argocd CLI.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/DailyTasks/Keywords.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,284 +357,13 @@
   
 
 
-  <h1>Argocd CLI</h1>
+  <h1>Keywords</h1>
 
-<h3 id="1-authentication">🔐 <strong>1. Authentication</strong><a class="headerlink" href="#1-authentication" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Intent</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Login to ArgoCD</td>
-<td><code>argocd login &lt;ARGOCD_SERVER&gt; --username admin --password &lt;PWD&gt; --grpc-web</code></td>
-</tr>
-<tr>
-<td>List current context</td>
-<td><code>argocd context</code></td>
-</tr>
-<tr>
-<td>Switch to another context</td>
-<td><code>argocd login &lt;OTHER_ARGOCD_SERVER&gt;</code></td>
-</tr>
-<tr>
-<td>Current context info</td>
-<td>argocd account get-user-info</td>
-</tr>
-<tr>
-<td>### 🔧 <strong>2. Cluster Management</strong></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Intent</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>List all known clusters</td>
-<td><code>argocd cluster list --grpc-web</code></td>
-</tr>
-<tr>
-<td>Add external cluster</td>
-<td><code>argocd cluster add &lt;CONTEXT_NAME&gt; --grpc-web</code></td>
-</tr>
-<tr>
-<td>Remove a cluster</td>
-<td><code>argocd cluster rm &lt;SERVER_URL&gt;</code></td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p><em>Use <code>kubectl config get-contexts</code> to find your kube context name.</em></p>
-</blockquote>
-<h3 id="3-application-management">📦 <strong>3. Application Management</strong><a class="headerlink" href="#3-application-management" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Intent</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Create an application</td>
-<td><code>argocd app create &lt;APPNAME&gt; --repo &lt;REPO_URL&gt; --path &lt;CHART_PATH&gt; --dest-server &lt;DEST_SERVER&gt; --dest-namespace &lt;NS&gt; --grpc-web</code></td>
-</tr>
-<tr>
-<td>Delete an app</td>
-<td><code>argocd app delete &lt;APPNAME&gt; --yes --grpc-web</code></td>
-</tr>
-<tr>
-<td>List all apps</td>
-<td><code>argocd app list --grpc-web</code></td>
-</tr>
-<tr>
-<td>Show app status</td>
-<td><code>argocd app get &lt;APPNAME&gt; --grpc-web</code></td>
-</tr>
-<tr>
-<td>Sync (apply latest manifests)</td>
-<td><code>argocd app sync &lt;APPNAME&gt; --grpc-web</code></td>
-</tr>
-<tr>
-<td>Rollback to previous revision</td>
-<td><code>argocd app rollback &lt;APPNAME&gt; &lt;REVISION&gt;</code></td>
-</tr>
-<tr>
-<td>Manually refresh app state</td>
-<td><code>argocd app refresh &lt;APPNAME&gt; --grpc-web</code></td>
-</tr>
-<tr>
-<td>only logs</td>
-<td>argocd app logs <APP_NAME></td>
-</tr>
-<tr>
-<td>to get the manifests</td>
-<td>argocd app manifests <APP_NAME> --grpc-web</td>
-</tr>
-</tbody>
-</table>
-<h3 id="to-list-argocd-apps-filtered-by-status">To list ArgoCD apps filtered by <strong>status</strong><a class="headerlink" href="#to-list-argocd-apps-filtered-by-status" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Get only Synced apps</span>
-argocd<span class="w"> </span>app<span class="w"> </span>list<span class="w"> </span>--grpc-web<span class="w"> </span>-o<span class="w"> </span>wide<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Synced
-
-<span class="c1"># Get only OutOfSync apps</span>
-argocd<span class="w"> </span>app<span class="w"> </span>list<span class="w"> </span>--grpc-web<span class="w"> </span>-o<span class="w"> </span>wide<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>OutOfSync
-
-<span class="c1"># Get only Healthy apps</span>
-argocd<span class="w"> </span>app<span class="w"> </span>list<span class="w"> </span>--grpc-web<span class="w"> </span>-o<span class="w"> </span>wide<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Healthy
-
-<span class="c1"># Get only Degraded apps</span>
-argocd<span class="w"> </span>app<span class="w"> </span>list<span class="w"> </span>--grpc-web<span class="w"> </span>-o<span class="w"> </span>wide<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Degraded
-</code></pre></div>
-<h3 id="4-app-sync-policies">🧠 <strong>4. App Sync Policies</strong><a class="headerlink" href="#4-app-sync-policies" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Intent</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Set auto sync</td>
-<td><code>argocd app set &lt;APPNAME&gt; --sync-policy automated --grpc-web</code></td>
-</tr>
-<tr>
-<td>Set manual sync</td>
-<td><code>argocd app set &lt;APPNAME&gt; --sync-policy none --grpc-web</code></td>
-</tr>
-<tr>
-<td>Enable self-heal (auto repair)</td>
-<td><code>argocd app set &lt;APPNAME&gt; --self-heal --grpc-web</code></td>
-</tr>
-<tr>
-<td>Disable pruning</td>
-<td><code>argocd app set &lt;APPNAME&gt; --auto-prune=false --grpc-web</code></td>
-</tr>
-<tr>
-<td>### 📁 <strong>5. Repositories</strong></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Intent</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>List repos</td>
-<td><code>argocd repo list --grpc-web</code></td>
-</tr>
-<tr>
-<td>Add a new Git repo</td>
-<td><code>argocd repo add &lt;REPO_URL&gt; --username &lt;USER&gt; --password &lt;PWD&gt; --grpc-web</code></td>
-</tr>
-<tr>
-<td>Remove a repo</td>
-<td><code>argocd repo rm &lt;REPO_URL&gt;</code></td>
-</tr>
-<tr>
-<td>### 🔍 <strong>6. Debug / Logs</strong></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Intent</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>View app logs (kubectl way)</td>
-<td><code>kubectl logs -n argocd -l app.kubernetes.io/name=argocd-server</code></td>
-</tr>
-<tr>
-<td>View sync history</td>
-<td><code>argocd app history &lt;APPNAME&gt; --grpc-web</code></td>
-</tr>
-<tr>
-<td>Show diff</td>
-<td><code>argocd app diff &lt;APPNAME&gt; --grpc-web</code></td>
-</tr>
-<tr>
-<td>Got it — let's go deeper with <strong>real-time, practical <code>argocd</code> CLI examples</strong> using <code>--grpc-web</code>, with real-world flows in DevOps.</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="7-login-with-ingress-exposed-argocd">🔐 7. <strong>Login with Ingress-Exposed ArgoCD</strong><a class="headerlink" href="#7-login-with-ingress-exposed-argocd" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>login<span class="w"> </span>argocd.yourdomain.com<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--username<span class="w"> </span>admin<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--password<span class="w"> </span>&lt;YOUR_PASSWORD&gt;<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--insecure<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--grpc-web
-</code></pre></div>
-<blockquote>
-<p>Accessing via <code>argocd.yourdomain.com</code> behind ingress that only supports HTTP/1.1</p>
-</blockquote>
-<h2 id="8-add-external-k8s-cluster-to-argocd">🔗 8. <strong>Add External K8s Cluster to ArgoCD</strong><a class="headerlink" href="#8-add-external-k8s-cluster-to-argocd" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>cluster<span class="w"> </span>add<span class="w"> </span>gouse-k3s-cluster<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--name<span class="w"> </span>dev-k3s<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--grpc-web
-</code></pre></div>
-<blockquote>
-<p><code>gouse-k3s-cluster</code> is your kube context name from <code>kubectl config get-contexts</code></p>
-</blockquote>
-<h2 id="9-create-sync-application-from-git">📦 9. <strong>Create &amp; Sync Application from Git</strong><a class="headerlink" href="#9-create-sync-application-from-git" title="Permanent link">&para;</a></h2>
-<p><div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>gouse-guestbook<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--repo<span class="w"> </span>https://github.com/argoproj/argocd-example-apps.git<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--path<span class="w"> </span>guestbook<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--dest-server<span class="w"> </span>https://kubernetes.default.svc<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--dest-namespace<span class="w"> </span>default<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--sync-policy<span class="w"> </span>automated<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--grpc-web
-</code></pre></div>
-Then manually sync (if auto-sync is off):
-<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>gouse-guestbook<span class="w"> </span>--grpc-web
-</code></pre></div></p>
-<h2 id="10-update-sync-policy-to-self-heal-auto-prune">🔄 10. <strong>Update Sync Policy to Self-Heal &amp; Auto-Prune</strong><a class="headerlink" href="#10-update-sync-policy-to-self-heal-auto-prune" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>app<span class="w"> </span><span class="nb">set</span><span class="w"> </span>gouse-guestbook<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--sync-policy<span class="w"> </span>automated<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--self-heal<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--auto-prune<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--grpc-web
-</code></pre></div>
-<blockquote>
-<p>Ensures ArgoCD keeps the app in the desired state</p>
-</blockquote>
-<h2 id="11-diff-between-live-and-desired">🔍 11. <strong>Diff Between Live and Desired</strong><a class="headerlink" href="#11-diff-between-live-and-desired" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>app<span class="w"> </span>diff<span class="w"> </span>gouse-guestbook<span class="w"> </span>--grpc-web
-</code></pre></div>
-<blockquote>
-<p>Shows what's different between cluster state and Git</p>
-</blockquote>
-<h2 id="12-delete-an-app-including-k8s-resources">🧹 12. <strong>Delete an App (including K8s resources)</strong><a class="headerlink" href="#12-delete-an-app-including-k8s-resources" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>app<span class="w"> </span>delete<span class="w"> </span>gouse-guestbook<span class="w"> </span>--yes<span class="w"> </span>--grpc-web
-</code></pre></div>
-<h2 id="13-sync-a-specific-revision-git-commit-sha">🧪 13. <strong>Sync a Specific Revision (Git commit SHA)</strong><a class="headerlink" href="#13-sync-a-specific-revision-git-commit-sha" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>app<span class="w"> </span>sync<span class="w"> </span>gouse-guestbook<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--revision<span class="w"> </span>5aeff4b7f93e1d4c9c...<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--grpc-web
-</code></pre></div>
-<h2 id="14-manage-git-repos">🧰 14. <strong>Manage Git Repos</strong><a class="headerlink" href="#14-manage-git-repos" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>https://github.com/gouse-devops/demo.git<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--username<span class="w"> </span>gouse<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--password<span class="w"> </span>&lt;TOKEN_OR_PASS&gt;<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--grpc-web
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>repo<span class="w"> </span>list<span class="w"> </span>--grpc-web
-</code></pre></div>
-<h2 id="15-list-all-applications">📜 15. <strong>List All Applications</strong><a class="headerlink" href="#15-list-all-applications" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>argocd<span class="w"> </span>app<span class="w"> </span>list<span class="w"> </span>--grpc-web
-</code></pre></div>
-<h2 id="16-watch-real-time-app-status">💬 16. <strong>Watch Real-time App Status</strong><a class="headerlink" href="#16-watch-real-time-app-status" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>watch<span class="w"> </span>-n2<span class="w"> </span><span class="s2">&quot;argocd app get gouse-guestbook --grpc-web&quot;</span>
-</code></pre></div>
-<blockquote>
-<p>Real-time view like <code>kubectl get pods -w</code></p>
-</blockquote>
-<h2 id="17-using-argocd-behind-ingress-nginx-example">🌐 17. <strong>Using ArgoCD Behind Ingress (NGINX Example)</strong><a class="headerlink" href="#17-using-argocd-behind-ingress-nginx-example" title="Permanent link">&para;</a></h2>
-<p>Your Ingress config must have:
-<div class="highlight"><pre><span></span><code><span class="nt">nginx.ingress.kubernetes.io/backend-protocol</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;HTTP&quot;</span>
-<span class="nt">nginx.ingress.kubernetes.io/grpc-web</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-</code></pre></div>
-Then <code>--grpc-web</code> is mandatory or you’ll hit gRPC errors.</p>
+<ul>
+<li>first principle</li>
+<li>biases (miscommunication)</li>
+<li></li>
+</ul>
 
 
 
