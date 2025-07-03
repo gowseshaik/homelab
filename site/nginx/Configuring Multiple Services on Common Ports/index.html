@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/etcdctl/etcd%20in%20kind/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/nginx/Configuring%20Multiple%20Services%20on%20Common%20Ports/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Etcd in kind - Gouse Shaik</title>
+        <title>Configuring Multiple Services on Common Ports - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#details" class="md-skip">
+        <a href="#solution-name-based-virtual-hosting" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Etcd in kind
+              Configuring Multiple Services on Common Ports
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/etcdctl/etcd in kind.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/nginx/Configuring Multiple Services on Common Ports.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,60 +362,149 @@
   
 
 
-  <h1>Etcd in kind</h1>
+  <h1>Configuring Multiple Services on Common Ports</h1>
 
-<p>In a Kind cluster, <strong>etcd runs as a static Pod</strong> inside the <strong>control-plane node</strong>, just like in a real kubeadm-based cluster.</p>
-<h3 id="details">🔍 Details:<a class="headerlink" href="#details" title="Permanent link">&para;</a></h3>
-<ul>
-<li>The control-plane node in Kind includes:<ul>
-<li><code>kube-apiserver</code></li>
-<li><code>kube-controller-manager</code></li>
-<li><code>kube-scheduler</code></li>
-<li><code>etcd</code>      </li>
-</ul>
-</li>
-</ul>
-<p>These run as static pods defined in:</p>
-<div class="highlight"><pre><span></span><code>/etc/kubernetes/manifests/
+<p>When you need to expose multiple services through the same ports (80 for HTTP or 443 for HTTPS), you'll use <strong>name-based virtual hosting</strong> in Nginx. Here's how to set this up properly:</p>
+<h2 id="solution-name-based-virtual-hosting">Solution: Name-Based Virtual Hosting<a class="headerlink" href="#solution-name-based-virtual-hosting" title="Permanent link">&para;</a></h2>
+<p>All services will share ports 80/443, with Nginx routing traffic based on the hostname.</p>
+<h3 id="1-base-configuration-structure">1. Base Configuration Structure<a class="headerlink" href="#1-base-configuration-structure" title="Permanent link">&para;</a></h3>
+<p>Create separate files in <code>/etc/nginx/sites-available/</code> for each service:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/nginx/sites-available/service1.example.com
+sudo<span class="w"> </span>nano<span class="w"> </span>/etc/nginx/sites-available/service2.example.com
+
+sudo<span class="w"> </span>vi<span class="w"> </span>/etc/nginx/sites-available/argocd.local
 </code></pre></div>
-<h3 id="to-inspect-etcd">📍 To inspect etcd:<a class="headerlink" href="#to-inspect-etcd" title="Permanent link">&para;</a></h3>
+<h3 id="2-sample-configurations">2. Sample Configurations<a class="headerlink" href="#2-sample-configurations" title="Permanent link">&para;</a></h3>
+<p><strong>For HTTP (port 80):</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># /etc/nginx/sites-available/service1.example.com</span>
+<span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">service1.example.com</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://localhost:3000</span><span class="p">;</span><span class="w">  </span><span class="c1"># Your service&#39;s actual port</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+
+
+<span class="c1"># /etc/nginx/sites-available/argocd.local</span>
+<span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">argocd.local</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://localhost:3000</span><span class="p">;</span><span class="w">  </span><span class="c1"># Your service&#39;s actual port</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>For HTTPS (port 443):</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># /etc/nginx/sites-available/service2.example.com</span>
+<span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">service2.example.com</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kn">ssl_certificate</span><span class="w"> </span><span class="s">/etc/ssl/certs/service2.pem</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/etc/ssl/private/service2.key</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://localhost:4000</span><span class="p">;</span><span class="w">  </span><span class="c1"># Your service&#39;s actual port</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-Proto</span><span class="w"> </span><span class="s">https</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="3-enable-the-configurations">3. Enable the Configurations<a class="headerlink" href="#3-enable-the-configurations" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/etc/nginx/sites-available/service1.example.com<span class="w"> </span>/etc/nginx/sites-enabled/
+sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/etc/nginx/sites-available/service2.example.com<span class="w"> </span>/etc/nginx/sites-enabled/
+
+
+sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/etc/nginx/sites-available/argocd.local<span class="w"> </span>/etc/nginx/sites-enabled/
+</code></pre></div>
+<h3 id="4-default-server-handling">4. Default Server Handling<a class="headerlink" href="#4-default-server-handling" title="Permanent link">&para;</a></h3>
+<p>Add a default catch-all server to handle unmatched requests:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/nginx/sites-available/default
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="w"> </span><span class="s">default_server</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="s">[::]:80</span><span class="w"> </span><span class="s">default_server</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">_</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">444</span><span class="p">;</span><span class="w">  </span><span class="c1"># Close connection silently</span>
+<span class="p">}</span>
+
+<span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="w"> </span><span class="s">default_server</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="s">[::]:443</span><span class="w"> </span><span class="s">ssl</span><span class="w"> </span><span class="s">default_server</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">_</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_certificate</span><span class="w"> </span><span class="s">/etc/ssl/certs/default.pem</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/etc/ssl/private/default.key</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">444</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="tailscale-specific-configuration">Tailscale-Specific Configuration<a class="headerlink" href="#tailscale-specific-configuration" title="Permanent link">&para;</a></h2>
+<p>For Tailscale access, you have two options:</p>
+<h3 id="option-a-use-tailscale-magicdns">Option A: Use Tailscale MagicDNS<a class="headerlink" href="#option-a-use-tailscale-magicdns" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">service1.your-tailnet-name.ts.net</span><span class="p">;</span>
+<span class="w">    </span><span class="c1"># ... rest of config</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="option-b-use-tailscale-ip-with-host-header">Option B: Use Tailscale IP with Host Header<a class="headerlink" href="#option-b-use-tailscale-ip-with-host-header" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="mi">100</span><span class="s">.xx.yy.zz</span><span class="p">;</span><span class="w">  </span><span class="c1"># Your Tailscale IP</span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/service1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://localhost:3000</span><span class="p">;</span>
+<span class="w">        </span><span class="c1"># ... headers</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/service2</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://localhost:4000</span><span class="p">;</span>
+<span class="w">        </span><span class="c1"># ... headers</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="verification-and-maintenance">Verification and Maintenance<a class="headerlink" href="#verification-and-maintenance" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
-<p><strong>Enter the control-plane container</strong>:
-    <div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>dev-cluster-control-plane<span class="w"> </span>bash
+<p><strong>Test your configuration</strong>:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nginx<span class="w"> </span>-t
 </code></pre></div></p>
 </li>
 <li>
-<p><strong>List static pod manifests</strong>:
-    <div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/etc/kubernetes/manifests
+<p><strong>Reload Nginx</strong>:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx
 </code></pre></div></p>
 </li>
 <li>
-<p><strong>Check etcd manifest</strong>:
-    <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>/etc/kubernetes/manifests/etcd.yaml
+<p><strong>Check active connections</strong>:
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>/var/log/nginx/access.log
 </code></pre></div></p>
 </li>
 <li>
-<p><strong>Check etcd logs</strong>:
-    <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>logs<span class="w"> </span>dev-cluster-control-plane<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>etcd
-</code></pre></div></p>
+<p><strong>Add new services</strong>:</p>
 </li>
-<li>
-<p><strong>Use <code>etcdctl</code> inside container</strong>:<br />
-    <div class="highlight"><pre><span></span><code><span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span><span class="w"> </span>etcdctl<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--endpoints<span class="o">=</span>https://127.0.0.1:2379<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cacert<span class="o">=</span>/etc/kubernetes/pki/etcd/ca.crt<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cert<span class="o">=</span>/etc/kubernetes/pki/etcd/server.crt<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--key<span class="o">=</span>/etc/kubernetes/pki/etcd/server.key<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>endpoint<span class="w"> </span>status<span class="w"> </span>--write-out<span class="o">=</span>table
-</code></pre></div></p>
-</li>
+<li>Create new config file in <code>/etc/nginx/sites-available/</code></li>
+<li>Link to <code>/etc/nginx/sites-enabled/</code></li>
+<li>Reload Nginx</li>
 </ol>
-<h3 id="note">📌 Note:<a class="headerlink" href="#note" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Kind uses a <strong>single-node control plane</strong>, so etcd is not HA.</li>
-<li>For testing HA etcd, use <strong>kubeadm with VMs</strong> or <strong>K3s with external etcd</strong>.</li>
-</ul>
+<h2 id="important-notes">Important Notes<a class="headerlink" href="#important-notes" title="Permanent link">&para;</a></h2>
+<ol>
+<li>All hostnames must resolve to your server's IP (via DNS or Tailscale MagicDNS)</li>
+<li>For HTTPS, you'll need certificates for each hostname</li>
+<li>Consider using a wildcard certificate if you have many subdomains</li>
+<li>Tailscale can automatically provision certificates for <code>*.ts.net</code> domains</li>
+</ol>
 
 
 

@@ -8,6 +8,11 @@ You already did this in the script:
 
 ```bash
 multipass exec cp1 -- sudo cat /etc/rancher/k3s/k3s.yaml > kubeconfig
+
+# for kubeadm
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u) $(id -g) $HOME/.kube/config I
 ```
 
 ### 2. **Update server IP in kubeconfig**

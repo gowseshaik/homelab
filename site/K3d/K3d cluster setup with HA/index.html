@@ -359,6 +359,10 @@
 
   <h1>K3d cluster setup with HA</h1>
 
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+- <strong>1 server node</strong> → uses <strong>SQLite</strong> (default for k3s)<br />
+- <strong>3 or more server nodes</strong> → uses <strong>embedded etcd</strong>
+=======
 <div class="highlight"><pre><span></span><code>k3d cluster create ha-cluster \
   --servers 3 \
   --agents 2 \
@@ -371,7 +375,22 @@ k3d-ha-cluster-agent-1    Ready    &lt;none&gt;                      35s   v1.31
 k3d-ha-cluster-server-0   Ready    control-plane,etcd,master   71s   v1.31.5+k3s1
 k3d-ha-cluster-server-1   Ready    control-plane,etcd,master   52s   v1.31.5+k3s1
 k3d-ha-cluster-server-2   Ready    control-plane,etcd,master   39s   v1.31.5+k3s1
-</code></pre></div>
+</code></pre></div></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>c91f278b3bd9250b0fa8fb946e980dff7cd6132c</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 <div class="highlight"><pre><span></span><code>$ k3d cluster delete ha-cluster
 
 # Traefik ingress disable
@@ -400,7 +419,7 @@ $ k3d cluster create ha-cluster \
   --k3s-arg &quot;--tls-san=127.0.0.1@server:0&quot; \
   --wait
 </code></pre></div>
-<p>$ k3d cluster create --config k3d-etcd-ha.yaml
+<p>$ k3d cluster create --config k3d-etcd-ha.yaml (it wont restart nodes, if host machine restarted)
 <div class="highlight"><pre><span></span><code>apiVersion: k3d.io/v1alpha5
 kind: Simple
 metadata:
@@ -434,6 +453,43 @@ ports:
     nodeFilters:
       - loadbalancer
 </code></pre></div></p>
+<p>we fixed the cluster to connect without issues by adding 6443 port.</p>
+<div class="highlight"><pre><span></span><code>apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: ha-cluster
+servers: 3
+agents: 2
+options:
+  k3s:
+    extraArgs:
+      - arg: &quot;--cluster-init&quot;
+        nodeFilters:
+          - server:0
+      - arg: &quot;--server=https://k3d-ha-cluster-server-0:6443&quot;
+        nodeFilters:
+          - server:1
+          - server:2
+      - arg: &quot;--tls-san=127.0.0.1&quot;
+        nodeFilters:
+          - server:0
+      - arg: &quot;--disable=servicelb&quot;
+        nodeFilters:
+          - server:*
+      - arg: &quot;--disable=metrics-server&quot;
+        nodeFilters:
+          - server:*
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+  - port: 6443:6443
+    nodeFilters:
+      - loadbalancer
+</code></pre></div>
 
 
 

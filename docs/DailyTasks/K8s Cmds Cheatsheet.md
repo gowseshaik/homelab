@@ -1,18 +1,33 @@
 ## Cluster Management
-- `kubectl cluster-info` - Display cluster information
-- `kubectl get nodes` - List all nodes in the cluster
-- `kubectl describe node <node-name>` - Show detailed information about a specific node
-- `kubectl top node` - Show resource usage (CPU/Memory) for nodes
-- `kubectl top pod` - Show resource usage for pods
-- `kubectl cordon <node-name>` - Mark node as unschedulable
-- `kubectl uncordon <node-name>` - Mark node as schedulable
-- `kubectl drain <node-name>` - Drain node in preparation for maintenance
+- `k cluster-info` - Display cluster information
+- `k get nodes` - List all nodes in the cluster
+- `k describe node <node-name>` - Show detailed information about a specific node
+- `k top node` - Show resource usage (CPU/Memory) for nodes
+- `k top pod` - Show resource usage for pods
+- `k cordon <node-name>` - Mark node as unschedulable
+- `k uncordon <node-name>` - Mark node as schedulable
+- `k drain <node-name>` - Drain node in preparation for maintenance
+
+# Apply and Remove Labels
+
+- `k label <resource-type> <resource-name> <key>=<value> --overwrite`
+- `k label pod mypod app=nginx --overwrite` - apply label
+- `k label namespace namespace-b name=namespace-b` 
+
+- `k label <resource-type> <resource-name> <key>-`
+- `k label pod mypod app-` - Remove label
+- `k label node <node-name> node-role.kubernetes.io/infra=""` - Label a node as an infra node
+- `k get nodes --show-labels` - to see all labels on nodes(specific resources)\
+- 
+# Apply a taint to an infra node
+
+- `k adm taint node <node-name> node-role.kubernetes.io/infra:NoSchedule` - apply taint on infra node
 
 ## Namespace Operations
-- `kubectl get namespaces` - List all namespaces
-- `kubectl create namespace <namespace-name>` - Create a new namespace
-- `kubectl config set-context --current --namespace=<namespace-name>` - Set default namespace for current context
-- `kubectl delete namespace <namespace-name>` - Delete a namespace
+- `k get namespaces` - List all namespaces
+- `k create namespace <namespace-name>` - Create a new namespace
+- `k config set-context --current --namespace=<namespace-name>` - Set default namespace for current context
+- `k delete namespace <namespace-name>` - Delete a namespace
 
 ## Node-role labels
 #### Apply node-role label
@@ -47,80 +62,80 @@
 
 
 ## Pod Operations
-- `kubectl get pods` - List all pods in current namespace
-- `kubectl get pods -A` - List all pods in all namespaces
-- `kubectl get pods -o wide` - List pods with additional details (IP, node)
-- `kubectl describe pod <pod-name>` - Show detailed information about a pod
-- `kubectl logs <pod-name>` - Print pod logs
-- `kubectl logs -f <pod-name>` - Stream pod logs (follow)
-- `kubectl logs <pod-name> -c <container-name>` - Print logs from a specific container in a pod
-- `kubectl exec -it <pod-name> -- /bin/bash` - Execute a command in a pod (interactive)
-- `kubectl delete pod <pod-name>` - Delete a pod
-- `kubectl port-forward <pod-name> <local-port>:<pod-port>` - Forward a local port to a pod
+- `k get pods` - List all pods in current namespace
+- `k get pods -A` - List all pods in all namespaces
+- `k get pods -o wide` - List pods with additional details (IP, node)
+- `k describe pod <pod-name>` - Show detailed information about a pod
+- `k logs <pod-name>` - Print pod logs
+- `k logs -f <pod-name>` - Stream pod logs (follow)
+- `k logs <pod-name> -c <container-name>` - Print logs from a specific container in a pod
+- `k exec -it <pod-name> -- /bin/bash` - Execute a command in a pod (interactive)
+- `k delete pod <pod-name>` - Delete a pod
+- `k port-forward <pod-name> <local-port>:<pod-port>` - Forward a local port to a pod
 
 ## Deployment Operations
-- `kubectl get deployments` - List all deployments
-- `kubectl describe deployment <deployment-name>` - Show deployment details
-- `kubectl create deployment <name> --image=<image>` - Create a deployment
-- `kubectl scale deployment <deployment-name> --replicas=<number>` - Scale a deployment
-- `kubectl rollout status deployment/<deployment-name>` - Check rollout status
-- `kubectl rollout history deployment/<deployment-name>` - View rollout history
-- `kubectl rollout undo deployment/<deployment-name>` - Rollback to previous version
-- `kubectl rollout undo deployment/<deployment-name> --to-revision=<number>` - Rollback to specific revision
-- `kubectl set image deployment/<deployment-name> <container-name>=<new-image>` - Update deployment image
+- `k get deployments` - List all deployments
+- `k describe deployment <deployment-name>` - Show deployment details
+- `k create deployment <name> --image=<image>` - Create a deployment
+- `k scale deployment <deployment-name> --replicas=<number>` - Scale a deployment
+- `k rollout status deployment/<deployment-name>` - Check rollout status
+- `k rollout history deployment/<deployment-name>` - View rollout history
+- `k rollout undo deployment/<deployment-name>` - Rollback to previous version
+- `k rollout undo deployment/<deployment-name> --to-revision=<number>` - Rollback to specific revision
+- `k set image deployment/<deployment-name> <container-name>=<new-image>` - Update deployment image
 
 ## Service Operations
-- `kubectl get services` - List all services
-- `kubectl describe service <service-name>` - Show service details
-- `kubectl expose deployment <deployment-name> --port=<port> --target-port=<target-port> --type=<type>` - Expose a deployment as a service
-- `kubectl delete service <service-name>` - Delete a service
+- `k get services` - List all services
+- `k describe service <service-name>` - Show service details
+- `k expose deployment <deployment-name> --port=<port> --target-port=<target-port> --type=<type>` - Expose a deployment as a service
+- `k delete service <service-name>` - Delete a service
 
 ## ConfigMap & Secrets
-- `kubectl get configmaps` - List all configmaps
-- `kubectl create configmap <name> --from-file=<path-to-file>` - Create configmap from file
-- `kubectl create configmap <name> --from-literal=<key>=<value>` - Create configmap from literal
-- `kubectl get secrets` - List all secrets
-- `kubectl create secret generic <name> --from-literal=<key>=<value>` - Create secret from literal
-- `kubectl create secret generic <name> --from-file=<path-to-file>` - Create secret from file
+- `k get configmaps` - List all configmaps
+- `k create configmap <name> --from-file=<path-to-file>` - Create configmap from file
+- `k create configmap <name> --from-literal=<key>=<value>` - Create configmap from literal
+- `k get secrets` - List all secrets
+- `k create secret generic <name> --from-literal=<key>=<value>` - Create secret from literal
+- `k create secret generic <name> --from-file=<path-to-file>` - Create secret from file
 
 ## StatefulSets & DaemonSets
-- `kubectl get statefulsets` - List all statefulsets
-- `kubectl get daemonsets` - List all daemonsets
+- `k get statefulsets` - List all statefulsets
+- `k get daemonsets` - List all daemonsets
 
 ## Jobs & CronJobs
-- `kubectl get jobs` - List all jobs
-- `kubectl get cronjobs` - List all cronjobs
+- `k get jobs` - List all jobs
+- `k get cronjobs` - List all cronjobs
 
 ## Persistent Volumes & Claims
-- `kubectl get pv` - List persistent volumes
-- `kubectl get pvc` - List persistent volume claims
+- `k get pv` - List persistent volumes
+- `k get pvc` - List persistent volume claims
 
 ## RBAC & Security
-- `kubectl get roles` - List roles
-- `kubectl get rolebindings` - List role bindings
-- `kubectl get clusterroles` - List cluster roles
-- `kubectl get clusterrolebindings` - List cluster role bindings
-- `kubectl auth can-i <verb> <resource>` - Check if an action is allowed
+- `k get roles` - List roles
+- `k get rolebindings` - List role bindings
+- `k get clusterroles` - List cluster roles
+- `k get clusterrolebindings` - List cluster role bindings
+- `k auth can-i <verb> <resource>` - Check if an action is allowed
 
 ## Troubleshooting & Debugging
-- `kubectl get events --sort-by=.metadata.creationTimestamp` - Show events sorted by timestamp
-- `kubectl get events -w` - Watch events in real-time
-- `kubectl api-resources` - List all API resources
-- `kubectl explain <resource>` - Get documentation for a resource
+- `k get events --sort-by=.metadata.creationTimestamp` - Show events sorted by timestamp
+- `k get events -w` - Watch events in real-time
+- `k api-resources` - List all API resources
+- `k explain <resource>` - Get documentation for a resource
 
 ## Configuration & Context
-- `kubectl config view` - Show merged kubeconfig settings
-- `kubectl config get-contexts` - List all contexts
-- `kubectl config use-context <context-name>` - Switch to another context
-- `kubectl config current-context` - Show current context
+- `k config view` - Show merged kubeconfig settings
+- `k config get-contexts` - List all contexts
+- `k config use-context <context-name>` - Switch to another context
+- `k config current-context` - Show current context
 
 ## YAML Operations
-- `kubectl apply -f <file.yaml>` - Apply configuration from a YAML file
-- `kubectl delete -f <file.yaml>` - Delete resources defined in a YAML file
-- `kubectl get <resource> <name> -o yaml` - Get resource configuration in YAML format
-- `kubectl get <resource> <name> -o json` - Get resource configuration in JSON format
+- `k apply -f <file.yaml>` - Apply configuration from a YAML file
+- `k delete -f <file.yaml>` - Delete resources defined in a YAML file
+- `k get <resource> <name> -o yaml` - Get resource configuration in YAML format
+- `k get <resource> <name> -o json` - Get resource configuration in JSON format
 
 ## Custom Columns & Output Formatting
-- `kubectl get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName` - Custom columns output
-- `kubectl get pods --sort-by=.metadata.creationTimestamp` - Sort by creation time
-- `kubectl get pods --field-selector=status.phase=Running` - Filter by field selector
+- `k get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName` - Custom columns output
+- `k get pods --sort-by=.metadata.creationTimestamp` - Sort by creation time
+- `k get pods --field-selector=status.phase=Running` - Filter by field selector

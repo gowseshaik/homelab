@@ -369,6 +369,11 @@
 <h3 id="1-copy-kubeconfig-from-the-primary-node">1. <strong>Copy kubeconfig from the primary node</strong><a class="headerlink" href="#1-copy-kubeconfig-from-the-primary-node" title="Permanent link">&para;</a></h3>
 <p>You already did this in the script:</p>
 <div class="highlight"><pre><span></span><code>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp1<span class="w"> </span>--<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/rancher/k3s/k3s.yaml<span class="w"> </span>&gt;<span class="w"> </span>kubeconfig
+
+<span class="c1"># for kubeadm</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$HOME</span>/.kube
+sudo<span class="w"> </span>cp<span class="w"> </span>-i<span class="w"> </span>/etc/kubernetes/admin.conf<span class="w"> </span><span class="nv">$HOME</span>/.kube/config
+sudo<span class="w"> </span>chown<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="w"> </span><span class="nv">$HOME</span>/.kube/config<span class="w"> </span>I
 </code></pre></div>
 <h3 id="2-update-server-ip-in-kubeconfig">2. <strong>Update server IP in kubeconfig</strong><a class="headerlink" href="#2-update-server-ip-in-kubeconfig" title="Permanent link">&para;</a></h3>
 <p>Replace <code>127.0.0.1</code> with the actual IP of <code>cp1</code>:</p>

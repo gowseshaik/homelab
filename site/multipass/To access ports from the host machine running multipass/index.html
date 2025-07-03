@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Helm/Helm%20Commands%20-%20Cheatsheet/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/multipass/To%20access%20ports%20from%20the%20host%20machine%20running%20multipass/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Helm Commands Cheatsheet - Gouse Shaik</title>
+        <title>To access ports from the host machine running multipass - Gouse Shaik</title>
       
     
     
@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#now-port-forwarding-to-multipass-vms-with-nginx" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -100,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Helm Commands   Cheatsheet
+              To access ports from the host machine running multipass
             
           </span>
         </div>
@@ -349,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Helm/Helm Commands - Cheatsheet.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/multipass/To access ports from the host machine running multipass.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -357,67 +362,157 @@
   
 
 
-  <h1>Helm Commands   Cheatsheet</h1>
+  <h1>To access ports from the host machine running multipass</h1>
 
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ufw
+If<span class="w"> </span>UFW<span class="w"> </span>is<span class="w"> </span>showing<span class="w"> </span>as<span class="w"> </span><span class="s2">&quot;inactive,&quot;</span><span class="w"> </span>you<span class="w"> </span>need<span class="w"> </span>to<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>it<span class="w"> </span>before<span class="w"> </span>allowing<span class="w"> </span>any<span class="w"> </span>ports.<span class="w"> </span>Follow<span class="w"> </span>these<span class="w"> </span>steps:
+sudo<span class="w"> </span>ufw<span class="w"> </span>status
+sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</span>
+
+sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">3389</span>/tcp
+sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">8080</span>/tcp
+sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">80</span>/tcp
+sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">4000</span>/tcp
+sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">5601</span>/tcp<span class="w"> </span><span class="c1"># for kibana</span>
+sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">9200</span><span class="w"> </span><span class="c1"># for elasticsearch</span>
+
+If<span class="w"> </span>you<span class="w"> </span>don<span class="s1">&#39;t want to use UFW and prefer using `iptables`, you can allow the port with:</span>
+
+<span class="s1">sudo iptables -A INPUT -p tcp --dport 3389 -j ACCEPT</span>
+
+<span class="s1">Don&#39;</span>t<span class="w"> </span>forget<span class="w"> </span>to<span class="w"> </span>save<span class="w"> </span>the<span class="w"> </span><span class="sb">`</span>iptables<span class="sb">`</span><span class="w"> </span>rules<span class="w"> </span>to<span class="w"> </span>make<span class="w"> </span>sure<span class="w"> </span>they<span class="w"> </span>persist<span class="w"> </span>after<span class="w"> </span>a<span class="w"> </span>reboot:
+
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>iptables-persistent
+sudo<span class="w"> </span>netfilter-persistent<span class="w"> </span>save
+</code></pre></div>
+<h2 id="now-port-forwarding-to-multipass-vms-with-nginx">Now port forwarding to Multipass VMs with nginx<a class="headerlink" href="#now-port-forwarding-to-multipass-vms-with-nginx" title="Permanent link">&para;</a></h2>
+<p>Yes — if you don’t want to use <code>socat</code> with <code>nohup</code>, here are <strong>cleaner and better alternatives</strong> to forward port 5601 to <code>localhost</code>:</p>
+<h2 id="option-1-use-systemd-service-for-socat-cleaner-than-nohup">✅ Option 1: Use <code>systemd</code> service for socat (cleaner than <code>nohup</code>)<a class="headerlink" href="#option-1-use-systemd-service-for-socat-cleaner-than-nohup" title="Permanent link">&para;</a></h2>
+<h3 id="create-systemd-service-on-host">🔧 Create systemd service on host:<a class="headerlink" href="#create-systemd-service-on-host" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/systemd/system/socat-kibana.service<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">[Unit]</span>
+<span class="s">Description=Port forward Kibana from Multipass VM to localhost:5601</span>
+<span class="s">After=network.target</span>
+
+<span class="s">[Service]</span>
+<span class="s">ExecStart=/usr/bin/socat TCP-LISTEN:5601,fork TCP:$(multipass info elk-vm | grep IPv4 | awk &#39;{print $2}&#39;):5601</span>
+<span class="s">Restart=always</span>
+
+<span class="s">[Install]</span>
+<span class="s">WantedBy=multi-user.target</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Enable and start</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reexec
+sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>socat-kibana.service
+</code></pre></div>
+<blockquote>
+<p>Now, Kibana is always available at <code>localhost:5601</code> and runs cleanly as a background service.</p>
+</blockquote>
+<hr />
+<h2 id="option-2-use-nginx-reverse-proxy-on-host-no-socat">✅ Option 2: Use <code>nginx</code> reverse proxy on host (No socat)<a class="headerlink" href="#option-2-use-nginx-reverse-proxy-on-host-no-socat" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Install nginx on host:</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nginx
+</code></pre></div>
+<ol>
+<li><strong>Create reverse proxy config:</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/nginx/sites-available/kibana<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">server {</span>
+<span class="s">    listen 5601;</span>
+<span class="s">    location / {</span>
+<span class="s">        proxy_pass http://$(multipass info elk-vm | grep IPv4 | awk &#39;{print $2}&#39;):5601;</span>
+<span class="s">        proxy_http_version 1.1;</span>
+<span class="s">        proxy_set_header Upgrade \$http_upgrade;</span>
+<span class="s">        proxy_set_header Connection &#39;upgrade&#39;;</span>
+<span class="s">        proxy_set_header Host \$host;</span>
+<span class="s">        proxy_cache_bypass \$http_upgrade;</span>
+<span class="s">    }</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/nginx/sites-available/elasticsearch<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">server {</span>
+<span class="s">    listen 9200;</span>
+<span class="s">    location / {</span>
+<span class="s">        proxy_pass http://192.168.64.5:9200;</span>
+<span class="s">        proxy_http_version 1.1;</span>
+<span class="s">        proxy_set_header Host \$host;</span>
+<span class="s">        proxy_set_header X-Real-IP \$remote_addr;</span>
+<span class="s">    }</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<ol>
+<li><strong>Enable site and reload nginx:</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/etc/nginx/sites-available/kibana<span class="w"> </span>/etc/nginx/sites-enabled/
+sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/etc/nginx/sites-available/elasticsearch<span class="w"> </span>/etc/nginx/sites-enabled/
+sudo<span class="w"> </span>nginx<span class="w"> </span>-t<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx
+</code></pre></div>
+<blockquote>
+<p>✅ Now open <code>http://localhost:5601</code> — it will reverse proxy to the Kibana inside the VM.</p>
+</blockquote>
+<h2 id="recommendation">✅ Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Task</th>
-<th>Command</th>
+<th>Method</th>
+<th>Use Case</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Create chart</td>
-<td><code>helm create &lt;name&gt;</code></td>
+<td><code>systemd + socat</code></td>
+<td>You want clean auto-starting service</td>
+<td>Better than <code>nohup</code></td>
 </tr>
 <tr>
-<td>Install chart</td>
-<td><code>helm install &lt;release&gt; &lt;chart-path&gt;</code></td>
+<td><code>nginx</code></td>
+<td>You prefer proxy and load balancing</td>
+<td>No <code>socat</code> needed</td>
 </tr>
 <tr>
-<td>Upgrade chart</td>
-<td><code>helm upgrade &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Uninstall chart</td>
-<td><code>helm uninstall &lt;release&gt;</code></td>
-</tr>
-<tr>
-<td>Show values</td>
-<td><code>helm show values &lt;chart&gt;</code></td>
-</tr>
-<tr>
-<td>Validate chart</td>
-<td><code>helm lint &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Dry-run install</td>
-<td><code>helm install --dry-run --debug ...</code></td>
-</tr>
-<tr>
-<td><div class="highlight"><pre><span></span><code>k delete all --all -n longhorn-system
-k delete crds -l app.kubernetes.io/part-of=longhorn
-k delete ns longhorn-system
-helm uninstall longhorn -n longhorn-system || true
-k get crds | grep longhorn
-
-Then delete manually:
-k delete crd &lt;crd-name&gt;
-k get crds | grep longhorn | awk &#39;{print $1}&#39; | xargs k delete crd
-k delete ns longhorn-system --grace-period=0 --force
-
-If stuck in `Terminating`, run:
-k get ns longhorn-system -o json | jq &#39;.spec.finalizers=[]&#39; | k replace --raw &quot;/api/v1/namespaces/longhorn-system/finalize&quot; -f -
-
-Verify cleanup
-k get crds | grep longhorn
-k get ns | grep longhorn
-</code></pre></div></td>
-<td></td>
+<td><code>ssh -L</code></td>
+<td>You want temporary port tunnel</td>
+<td>Manual each time</td>
 </tr>
 </tbody>
 </table>
+<p>Let me know which one you want to keep — I can give cleanup steps for the others.</p>
+<h3 id="port-foward-with-socat">Port foward with socat<a class="headerlink" href="#port-foward-with-socat" title="Permanent link">&para;</a></h3>
+<h3 id="basic-port-forward-host-vm-kibana">✅ Basic Port Forward: Host → VM (Kibana)<a class="headerlink" href="#basic-port-forward-host-vm-kibana" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>socat<span class="w"> </span>TCP-LISTEN:5601,fork<span class="w"> </span>TCP:&lt;vm-ip&gt;:5601
+</code></pre></div>
+<blockquote>
+<p>Forwards <strong>localhost:5601</strong> on host to <code>elk-vm:5601</code></p>
+</blockquote>
+<h3 id="run-in-background-useful-for-long-running">⏳ Run in background (useful for long running)<a class="headerlink" href="#run-in-background-useful-for-long-running" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nohup<span class="w"> </span>socat<span class="w"> </span>TCP-LISTEN:5601,fork<span class="w"> </span>TCP:&lt;vm-ip&gt;:5601<span class="w"> </span><span class="p">&amp;</span>
+</code></pre></div>
+<blockquote>
+<p>Runs <code>socat</code> in background using <code>nohup</code></p>
+</blockquote>
+<h3 id="kill-existing-socat-port-forward-if-stuck">🧼 Kill existing socat port forward (if stuck)<a class="headerlink" href="#kill-existing-socat-port-forward-if-stuck" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>pkill<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;socat.*5601&quot;</span>
+</code></pre></div>
+<blockquote>
+<p>Stops any <code>socat</code> process handling port 5601</p>
+</blockquote>
+<h3 id="test-port-forward-locally">🧪 Test port forward locally<a class="headerlink" href="#test-port-forward-locally" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:5601
+</code></pre></div>
+<blockquote>
+<p>This will now hit the VM's Kibana</p>
+</blockquote>
+<h3 id="replace-vm-ip-using-command">📝 Replace <code>&lt;vm-ip&gt;</code> using command:<a class="headerlink" href="#replace-vm-ip-using-command" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>multipass<span class="w"> </span>info<span class="w"> </span>elk-vm<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>IPv4<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span>
+</code></pre></div>
 
 
 

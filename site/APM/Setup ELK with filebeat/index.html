@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Helm/Helm%20Commands%20-%20Cheatsheet/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/APM/Setup%20ELK%20with%20filebeat/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Helm Commands Cheatsheet - Gouse Shaik</title>
+        <title>Setup ELK with filebeat - Gouse Shaik</title>
       
     
     
@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#best-practice-setup-4-vms" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -100,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Helm Commands   Cheatsheet
+              Setup ELK with filebeat
             
           </span>
         </div>
@@ -349,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Helm/Helm Commands - Cheatsheet.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/APM/Setup ELK with filebeat.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -357,67 +362,169 @@
   
 
 
-  <h1>Helm Commands   Cheatsheet</h1>
+<h3 id="best-practice-setup-4-vms">Best Practice Setup (4 VMs):<a class="headerlink" href="#best-practice-setup-4-vms" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>elk-es</code> – 4 CPU, 4–8 GB RAM, 20+ GB Disk</li>
+<li><code>elk-kibana</code> – 2 CPU, 2 GB RAM</li>
+<li><code>elk-logstash</code> – 2–4 CPU, 4 GB RAM</li>
+<li><code>elk-agent-app1</code> – Filebeat (with your app) – 1 CPU, 1 GB RAM</li>
+</ol>
+<h3 id="step-1-create-vms-with-resources">🔧 Step 1: Create VMs with resources<a class="headerlink" href="#step-1-create-vms-with-resources" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create Elasticsearch VM</span>
+multipass<span class="w"> </span>launch<span class="w"> </span>--name<span class="w"> </span>elk-es<span class="w"> </span>--cpus<span class="w"> </span><span class="m">4</span><span class="w"> </span>--mem<span class="w"> </span>8G<span class="w"> </span>--disk<span class="w"> </span>20G
 
+<span class="c1"># Create Kibana VM</span>
+multipass<span class="w"> </span>launch<span class="w"> </span>--name<span class="w"> </span>elk-kibana<span class="w"> </span>--cpus<span class="w"> </span><span class="m">2</span><span class="w"> </span>--mem<span class="w"> </span>2G<span class="w"> </span>--disk<span class="w"> </span>10G
+
+<span class="c1"># Create Logstash VM</span>
+multipass<span class="w"> </span>launch<span class="w"> </span>--name<span class="w"> </span>elk-logstash<span class="w"> </span>--cpus<span class="w"> </span><span class="m">4</span><span class="w"> </span>--mem<span class="w"> </span>4G<span class="w"> </span>--disk<span class="w"> </span>15G
+
+<span class="c1"># Create Filebeat Agent VM (can simulate app logs)</span>
+multipass<span class="w"> </span>launch<span class="w"> </span>--name<span class="w"> </span>elk-agent-app1<span class="w"> </span>--cpus<span class="w"> </span><span class="m">1</span><span class="w"> </span>--mem<span class="w"> </span>1G<span class="w"> </span>--disk<span class="w"> </span>5G
+</code></pre></div>
+<h3 id="step-2-install-elasticsearch-on-elk-es">🔧 Step 2: Install Elasticsearch on <code>elk-es</code><a class="headerlink" href="#step-2-install-elasticsearch-on-elk-es" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>elk-es<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">sudo apt update</span>
+<span class="s1">sudo apt install -y wget apt-transport-https openjdk-17-jdk</span>
+<span class="s1">wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</span>
+<span class="s1">echo &quot;deb https://artifacts.elastic.co/packages/8.x/apt stable main&quot; | sudo tee /etc/apt/sources.list.d/elastic-8.x.list</span>
+<span class="s1">sudo apt update</span>
+<span class="s1">sudo apt install -y elasticsearch</span>
+<span class="s1">sudo systemctl enable elasticsearch</span>
+<span class="s1">sudo systemctl start elasticsearch</span>
+<span class="s1">&#39;</span>
+</code></pre></div>
+<h3 id="step-3-install-kibana-on-elk-kibana">🔧 Step 3: Install Kibana on <code>elk-kibana</code><a class="headerlink" href="#step-3-install-kibana-on-elk-kibana" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>elk-kibana<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">sudo apt update</span>
+<span class="s1">sudo apt install -y wget apt-transport-https openjdk-17-jdk</span>
+<span class="s1">wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</span>
+<span class="s1">echo &quot;deb https://artifacts.elastic.co/packages/8.x/apt stable main&quot; | sudo tee /etc/apt/sources.list.d/elastic-8.x.list</span>
+<span class="s1">sudo apt update</span>
+<span class="s1">sudo apt install -y kibana</span>
+<span class="s1">sudo systemctl enable kibana</span>
+<span class="s1">sudo systemctl start kibana</span>
+<span class="s1">&#39;</span>
+</code></pre></div>
+<h3 id="step-4-install-logstash-on-elk-logstash">🔧 Step 4: Install Logstash on <code>elk-logstash</code><a class="headerlink" href="#step-4-install-logstash-on-elk-logstash" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>elk-logstash<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">sudo apt update</span>
+<span class="s1">sudo apt install -y wget apt-transport-https openjdk-17-jdk</span>
+<span class="s1">wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</span>
+<span class="s1">echo &quot;deb https://artifacts.elastic.co/packages/8.x/apt stable main&quot; | sudo tee /etc/apt/sources.list.d/elastic-8.x.list</span>
+<span class="s1">sudo apt update</span>
+<span class="s1">sudo apt install -y logstash</span>
+<span class="s1">sudo systemctl enable logstash</span>
+<span class="s1">sudo systemctl start logstash</span>
+<span class="s1">&#39;</span>
+</code></pre></div>
+<h3 id="step-5-install-filebeat-on-elk-agent-app1">🔧 Step 5: Install Filebeat on <code>elk-agent-app1</code><a class="headerlink" href="#step-5-install-filebeat-on-elk-agent-app1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>elk-agent-app1<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">sudo apt update</span>
+<span class="s1">sudo apt install -y wget apt-transport-https</span>
+<span class="s1">wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</span>
+<span class="s1">echo &quot;deb https://artifacts.elastic.co/packages/8.x/apt stable main&quot; | sudo tee /etc/apt/sources.list.d/elastic-8.x.list</span>
+<span class="s1">sudo apt update</span>
+<span class="s1">sudo apt install -y filebeat</span>
+<span class="s1">sudo systemctl enable filebeat</span>
+<span class="s1">sudo systemctl start filebeat</span>
+<span class="s1">&#39;</span>
+</code></pre></div>
+<h3 id="result">✅ Result<a class="headerlink" href="#result" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Task</th>
-<th>Command</th>
+<th>VM Name</th>
+<th>Component</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Create chart</td>
-<td><code>helm create &lt;name&gt;</code></td>
+<td><code>elk-es</code></td>
+<td>Elasticsearch</td>
+<td>✅ Installed</td>
 </tr>
 <tr>
-<td>Install chart</td>
-<td><code>helm install &lt;release&gt; &lt;chart-path&gt;</code></td>
+<td><code>elk-kibana</code></td>
+<td>Kibana</td>
+<td>✅ Installed</td>
 </tr>
 <tr>
-<td>Upgrade chart</td>
-<td><code>helm upgrade &lt;release&gt; &lt;chart-path&gt;</code></td>
+<td><code>elk-logstash</code></td>
+<td>Logstash</td>
+<td>✅ Installed</td>
 </tr>
 <tr>
-<td>Uninstall chart</td>
-<td><code>helm uninstall &lt;release&gt;</code></td>
-</tr>
-<tr>
-<td>Show values</td>
-<td><code>helm show values &lt;chart&gt;</code></td>
-</tr>
-<tr>
-<td>Validate chart</td>
-<td><code>helm lint &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Dry-run install</td>
-<td><code>helm install --dry-run --debug ...</code></td>
-</tr>
-<tr>
-<td><div class="highlight"><pre><span></span><code>k delete all --all -n longhorn-system
-k delete crds -l app.kubernetes.io/part-of=longhorn
-k delete ns longhorn-system
-helm uninstall longhorn -n longhorn-system || true
-k get crds | grep longhorn
-
-Then delete manually:
-k delete crd &lt;crd-name&gt;
-k get crds | grep longhorn | awk &#39;{print $1}&#39; | xargs k delete crd
-k delete ns longhorn-system --grace-period=0 --force
-
-If stuck in `Terminating`, run:
-k get ns longhorn-system -o json | jq &#39;.spec.finalizers=[]&#39; | k replace --raw &quot;/api/v1/namespaces/longhorn-system/finalize&quot; -f -
-
-Verify cleanup
-k get crds | grep longhorn
-k get ns | grep longhorn
-</code></pre></div></td>
-<td></td>
+<td><code>elk-agent-app1</code></td>
+<td>Filebeat</td>
+<td>✅ Installed</td>
 </tr>
 </tbody>
 </table>
+<p>Let me know if you want config files for <code>logstash</code>, <code>filebeat</code>, or port forwarding/Nginx setup.</p>
+<h1 id="below-is-the-single-automated-bash-script-to">Below is the single automated Bash script to:<a class="headerlink" href="#below-is-the-single-automated-bash-script-to" title="Permanent link">&para;</a></h1>
+<p>✅ Create 4 VMs using Multipass<br />
+✅ Install Elasticsearch, Kibana, Logstash, Filebeat<br />
+✅ Set required resources for each<br />
+✅ Enable and start all services</p>
+<h3 id="setup-elksh">✅ <code>setup-elk.sh</code><a class="headerlink" href="#setup-elksh" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+# Create VMs
+echo &quot;Creating VMs...&quot;
+multipass launch --name elk-es --cpus 4 --mem 8G --disk 20G
+multipass launch --name elk-kibana --cpus 2 --mem 2G --disk 10G
+multipass launch --name elk-logstash --cpus 4 --mem 4G --disk 15G
+multipass launch --name elk-agent-app1 --cpus 1 --mem 1G --disk 5G
+
+# Common Elastic APT setup
+APT_SETUP=$(cat &lt;&lt;&#39;EOF&#39;
+sudo apt update
+sudo apt install -y wget apt-transport-https gnupg openjdk-17-jdk
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo &quot;deb https://artifacts.elastic.co/packages/8.x/apt stable main&quot; | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
+sudo apt update
+EOF
+)
+
+# Install Elasticsearch
+echo &quot;Installing Elasticsearch on elk-es...&quot;
+multipass exec elk-es -- bash -c &quot;$APT_SETUP &amp;&amp; sudo apt install -y elasticsearch &amp;&amp; sudo systemctl enable --now elasticsearch&quot;
+
+# Install Kibana
+echo &quot;Installing Kibana on elk-kibana...&quot;
+multipass exec elk-kibana -- bash -c &quot;$APT_SETUP &amp;&amp; sudo apt install -y kibana &amp;&amp; sudo systemctl enable --now kibana&quot;
+
+# Install Logstash
+echo &quot;Installing Logstash on elk-logstash...&quot;
+multipass exec elk-logstash -- bash -c &quot;$APT_SETUP &amp;&amp; sudo apt install -y logstash &amp;&amp; sudo systemctl enable --now logstash&quot;
+
+# Install Filebeat
+echo &quot;Installing Filebeat on elk-agent-app1...&quot;
+multipass exec elk-agent-app1 -- bash -c &quot;$APT_SETUP &amp;&amp; sudo apt install -y filebeat &amp;&amp; sudo systemctl enable --now filebeat&quot;
+
+echo -e &quot;\n✅ ELK Stack setup completed on Multipass VMs!&quot;
+multipass list
+</code></pre></div>
+<hr />
+<h3 id="usage">📌 Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Save as <code>setup-elk.sh</code></li>
+<li>Run:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>setup-elk.sh
+./setup-elk.sh
+</code></pre></div>
+<p>Let me know if you want:</p>
+<ul>
+<li>Config files (<code>filebeat.yml</code>, <code>logstash.conf</code>)</li>
+<li>External access via port forwarding or Nginx</li>
+<li>Sample logs to ingest</li>
+</ul>
+<h1 id="nginx-to-configure">nginx to configure<a class="headerlink" href="#nginx-to-configure" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code>sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code></pre></div>
 
 
 

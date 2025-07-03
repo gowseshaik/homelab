@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Helm/Helm%20Commands%20-%20Cheatsheet/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Longhorn/Steps%20to%20Install%20Longhorn%20on%20K3d/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Helm Commands Cheatsheet - Gouse Shaik</title>
+        <title>Steps to Install Longhorn on K3d - Gouse Shaik</title>
       
     
     
@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#prerequisites" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -100,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Helm Commands   Cheatsheet
+              Steps to Install Longhorn on K3d
             
           </span>
         </div>
@@ -349,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Helm/Helm Commands - Cheatsheet.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Longhorn/Steps to Install Longhorn on K3d.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -357,67 +362,66 @@
   
 
 
-  <h1>Helm Commands   Cheatsheet</h1>
+  <h1>Steps to Install Longhorn on K3d</h1>
 
+<h3 id="prerequisites">✅ Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Task</th>
-<th>Command</th>
+<th>Requirement</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Create chart</td>
-<td><code>helm create &lt;name&gt;</code></td>
+<td>K3d HA cluster</td>
+<td>Already running ✅</td>
 </tr>
 <tr>
-<td>Install chart</td>
-<td><code>helm install &lt;release&gt; &lt;chart-path&gt;</code></td>
+<td>RWX/RWO filesystem</td>
+<td>ext4/xfs (not btrfs)</td>
 </tr>
 <tr>
-<td>Upgrade chart</td>
-<td><code>helm upgrade &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Uninstall chart</td>
-<td><code>helm uninstall &lt;release&gt;</code></td>
-</tr>
-<tr>
-<td>Show values</td>
-<td><code>helm show values &lt;chart&gt;</code></td>
-</tr>
-<tr>
-<td>Validate chart</td>
-<td><code>helm lint &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Dry-run install</td>
-<td><code>helm install --dry-run --debug ...</code></td>
-</tr>
-<tr>
-<td><div class="highlight"><pre><span></span><code>k delete all --all -n longhorn-system
-k delete crds -l app.kubernetes.io/part-of=longhorn
-k delete ns longhorn-system
-helm uninstall longhorn -n longhorn-system || true
-k get crds | grep longhorn
-
-Then delete manually:
-k delete crd &lt;crd-name&gt;
-k get crds | grep longhorn | awk &#39;{print $1}&#39; | xargs k delete crd
-k delete ns longhorn-system --grace-period=0 --force
-
-If stuck in `Terminating`, run:
-k get ns longhorn-system -o json | jq &#39;.spec.finalizers=[]&#39; | k replace --raw &quot;/api/v1/namespaces/longhorn-system/finalize&quot; -f -
-
-Verify cleanup
-k get crds | grep longhorn
-k get ns | grep longhorn
-</code></pre></div></td>
-<td></td>
+<td>Kernel modules</td>
+<td><code>open-iscsi</code> not required inside Docker</td>
 </tr>
 </tbody>
 </table>
+<h3 id="steps-to-install-longhorn-on-k3d">🛠️ Steps to Install Longhorn on K3d<a class="headerlink" href="#steps-to-install-longhorn-on-k3d" title="Permanent link">&para;</a></h3>
+<h4 id="1-label-a-node-with-storage-role">1. <strong>Label a node with storage role</strong><a class="headerlink" href="#1-label-a-node-with-storage-role" title="Permanent link">&para;</a></h4>
+<p>Longhorn needs at least one node to be storage-enabled:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>label<span class="w"> </span>node<span class="w"> </span>k3d-ha-cluster-agent-0<span class="w"> </span>longhorn-node<span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+<h4 id="2-install-longhorn-using-helm">2. <strong>Install Longhorn using Helm</strong><a class="headerlink" href="#2-install-longhorn-using-helm" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>longhorn<span class="w"> </span>https://charts.longhorn.io
+helm<span class="w"> </span>repo<span class="w"> </span>update
+
+kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>longhorn-system
+
+helm<span class="w"> </span>install<span class="w"> </span>longhorn<span class="w"> </span>longhorn/longhorn<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--namespace<span class="w"> </span>longhorn-system<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>defaultSettings.createDefaultDiskLabeledNodes<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>defaultSettings.defaultDataPath<span class="o">=</span><span class="s2">&quot;/var/lib/longhorn&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>persistence.defaultClassReplicaCount<span class="o">=</span><span class="m">1</span>
+</code></pre></div>
+<h4 id="3-access-longhorn-ui">3. <strong>Access Longhorn UI</strong><a class="headerlink" href="#3-access-longhorn-ui" title="Permanent link">&para;</a></h4>
+<p>Expose it via port-forward:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>longhorn-system<span class="w"> </span>port-forward<span class="w"> </span>svc/longhorn-frontend<span class="w"> </span><span class="m">8080</span>:80
+</code></pre></div>
+<p>Open <a href="http://localhost:8080/">http://localhost:8080</a></p>
+<hr />
+<h3 id="note-for-k3d">⚠️ Note for K3d<a class="headerlink" href="#note-for-k3d" title="Permanent link">&para;</a></h3>
+<p>By default, K3d agent containers use <strong>Docker volumes</strong>, so Longhorn's block device support is <strong>virtual</strong>. It still works fine for dev/testing.</p>
+<p>If Longhorn fails to schedule volumes, check:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>wide
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>longhorn-system
+</code></pre></div>
+<hr />
+<h3 id="verify">✅ Verify<a class="headerlink" href="#verify" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>sc
+kubectl<span class="w"> </span>get<span class="w"> </span>volumes<span class="w"> </span>-n<span class="w"> </span>longhorn-system
+</code></pre></div>
+<p>Let me know if you want it added to your K3d YAML config or automated as a script.</p>
 
 
 

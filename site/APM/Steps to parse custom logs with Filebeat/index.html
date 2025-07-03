@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Helm/Helm%20Commands%20-%20Cheatsheet/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/APM/Steps%20to%20parse%20custom%20logs%20with%20Filebeat/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Helm Commands Cheatsheet - Gouse Shaik</title>
+        <title>Steps to parse custom logs with Filebeat - Gouse Shaik</title>
       
     
     
@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#steps-to-parse-custom-logs-with-filebeat" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -100,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Helm Commands   Cheatsheet
+              Steps to parse custom logs with Filebeat
             
           </span>
         </div>
@@ -349,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Helm/Helm Commands - Cheatsheet.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/APM/Steps to parse custom logs with Filebeat.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -357,67 +362,82 @@
   
 
 
-  <h1>Helm Commands   Cheatsheet</h1>
+  <h1>Steps to parse custom logs with Filebeat</h1>
 
-<table>
-<thead>
-<tr>
-<th>Task</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Create chart</td>
-<td><code>helm create &lt;name&gt;</code></td>
-</tr>
-<tr>
-<td>Install chart</td>
-<td><code>helm install &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Upgrade chart</td>
-<td><code>helm upgrade &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Uninstall chart</td>
-<td><code>helm uninstall &lt;release&gt;</code></td>
-</tr>
-<tr>
-<td>Show values</td>
-<td><code>helm show values &lt;chart&gt;</code></td>
-</tr>
-<tr>
-<td>Validate chart</td>
-<td><code>helm lint &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Dry-run install</td>
-<td><code>helm install --dry-run --debug ...</code></td>
-</tr>
-<tr>
-<td><div class="highlight"><pre><span></span><code>k delete all --all -n longhorn-system
-k delete crds -l app.kubernetes.io/part-of=longhorn
-k delete ns longhorn-system
-helm uninstall longhorn -n longhorn-system || true
-k get crds | grep longhorn
+<p>For <strong>custom logs</strong>, you don’t use a module — instead, you configure a <strong>custom Filebeat input</strong> and optionally use <strong>Elasticsearch ingest pipelines</strong> to parse the logs.</p>
+<h3 id="steps-to-parse-custom-logs-with-filebeat">✅ Steps to parse custom logs with Filebeat:<a class="headerlink" href="#steps-to-parse-custom-logs-with-filebeat" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Edit Filebeat config:</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>vi<span class="w"> </span>/etc/filebeat/filebeat.yml
 
-Then delete manually:
-k delete crd &lt;crd-name&gt;
-k get crds | grep longhorn | awk &#39;{print $1}&#39; | xargs k delete crd
-k delete ns longhorn-system --grace-period=0 --force
 
-If stuck in `Terminating`, run:
-k get ns longhorn-system -o json | jq &#39;.spec.finalizers=[]&#39; | k replace --raw &quot;/api/v1/namespaces/longhorn-system/finalize&quot; -f -
+<span class="c1"># ======================= Filebeat inputs ===============================</span>
 
-Verify cleanup
-k get crds | grep longhorn
-k get ns | grep longhorn
-</code></pre></div></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+filebeat.inputs:
+
+<span class="c1"># Each - is an input. Most options can be set at the input level, so</span>
+<span class="c1"># you can use different inputs for various configurations.</span>
+<span class="c1"># Below are the input-specific configurations.</span>
+
+<span class="c1"># filestream is an input for collecting log messages from files.</span>
+-<span class="w"> </span>type:<span class="w"> </span>filestream
+
+<span class="w">  </span><span class="c1"># Unique ID among all inputs, an ID is required.</span>
+<span class="w">  </span>id:<span class="w"> </span>my-filestream-id
+
+<span class="w">  </span><span class="c1"># Change to true to enable this input configuration.</span>
+<span class="w">  </span>enabled:<span class="w"> </span><span class="nb">false</span>
+
+<span class="w">  </span><span class="c1"># Paths that should be crawled and fetched. Glob based paths.</span>
+<span class="w">  </span>paths:
+<span class="w">    </span>-<span class="w"> </span>/var/log/*.log
+
+
+<span class="c1"># ---------------------------- Elasticsearch Output ----------------------------</span>
+output.elasticsearch:
+<span class="w">  </span><span class="c1"># Array of hosts to connect to.</span>
+<span class="w">  </span>hosts:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;http://localhost:9200&quot;</span><span class="o">]</span>
+
+<span class="w">  </span><span class="c1"># Performance preset - one of &quot;balanced&quot;, &quot;throughput&quot;, &quot;scale&quot;,</span>
+<span class="w">  </span><span class="c1"># &quot;latency&quot;, or &quot;custom&quot;.</span>
+<span class="w">  </span>preset:<span class="w"> </span>balanced
+
+<span class="w">  </span><span class="c1"># Protocol - either `http` (default) or `https`.</span>
+<span class="w">  </span><span class="c1">#protocol: &quot;https&quot;</span>
+
+<span class="w">  </span><span class="c1"># Authentication credentials - either API key or username/password.</span>
+<span class="w">  </span><span class="c1">#api_key: &quot;id:api_key&quot;</span>
+<span class="w">  </span>username:<span class="w"> </span><span class="s2">&quot;elastic&quot;</span>
+<span class="w">  </span>password:<span class="w"> </span><span class="s2">&quot;admin123&quot;</span>
+</code></pre></div>
+<ol>
+<li><strong>Add a custom input:</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nt">filebeat.inputs</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">log</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">paths</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/myapp/*.log</span><span class="w">    </span><span class="c1"># Change to your log path</span>
+<span class="w">    </span><span class="nt">fields</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">log_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom</span><span class="w">          </span><span class="c1"># Optional tag</span>
+<span class="w">    </span><span class="nt">multiline.pattern</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;^\[&#39;</span><span class="w">    </span><span class="c1"># If logs span multiple lines, example: starts with [</span>
+<span class="w">    </span><span class="nt">multiline.negate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">multiline.match</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">after</span>
+</code></pre></div>
+<ol>
+<li><strong>(Optional) Define parsing via Elasticsearch pipeline or Logstash (if used)</strong></li>
+</ol>
+<p>If logs are in custom format, you can create a pipeline in Elasticsearch and apply it using:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">output.elasticsearch</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;http://&lt;elk-ip&gt;:9200&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">pipeline</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my-custom-pipeline&quot;</span>
+</code></pre></div>
+<h3 id="optional-test-config-and-start-filebeat">🔍 Optional: Test config and start filebeat<a class="headerlink" href="#optional-test-config-and-start-filebeat" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>filebeat<span class="w"> </span><span class="nb">test</span><span class="w"> </span>config
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>filebeat
+</code></pre></div>
+<p>Let me know if you want help writing a custom <strong>grok pattern</strong> or <strong>pipeline</strong> for your log format (just paste a few sample log lines).</p>
 
 
 

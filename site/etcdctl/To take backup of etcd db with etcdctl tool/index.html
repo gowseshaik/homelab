@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Helm/Helm%20Commands%20-%20Cheatsheet/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/etcdctl/To%20take%20backup%20of%20etcd%20db%20with%20etcdctl%20tool/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Helm Commands Cheatsheet - Gouse Shaik</title>
+        <title>To take backup of etcd db with etcdctl tool - Gouse Shaik</title>
       
     
     
@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#prerequisites" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -100,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Helm Commands   Cheatsheet
+              To take backup of etcd db with etcdctl tool
             
           </span>
         </div>
@@ -349,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Helm/Helm Commands - Cheatsheet.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/etcdctl/To take backup of etcd db with etcdctl tool.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -357,67 +362,89 @@
   
 
 
-  <h1>Helm Commands   Cheatsheet</h1>
+  <h1>To take backup of etcd db with etcdctl tool</h1>
 
-<table>
-<thead>
-<tr>
-<th>Task</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Create chart</td>
-<td><code>helm create &lt;name&gt;</code></td>
-</tr>
-<tr>
-<td>Install chart</td>
-<td><code>helm install &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Upgrade chart</td>
-<td><code>helm upgrade &lt;release&gt; &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Uninstall chart</td>
-<td><code>helm uninstall &lt;release&gt;</code></td>
-</tr>
-<tr>
-<td>Show values</td>
-<td><code>helm show values &lt;chart&gt;</code></td>
-</tr>
-<tr>
-<td>Validate chart</td>
-<td><code>helm lint &lt;chart-path&gt;</code></td>
-</tr>
-<tr>
-<td>Dry-run install</td>
-<td><code>helm install --dry-run --debug ...</code></td>
-</tr>
-<tr>
-<td><div class="highlight"><pre><span></span><code>k delete all --all -n longhorn-system
-k delete crds -l app.kubernetes.io/part-of=longhorn
-k delete ns longhorn-system
-helm uninstall longhorn -n longhorn-system || true
-k get crds | grep longhorn
+<p>Great — since you have a <strong>k3d HA cluster (3 control-plane nodes)</strong>
+you're running <strong>embedded etcd</strong>, and can safely perform etcd backups the k3s way.</p>
+<h3 id="prerequisites">✅ Prerequisites:<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Embedded etcd is used (since you have 3 servers)</li>
+<li>Backup must be done from <strong>only one server node</strong> (typically <code>server-0</code>)</li>
+<li>You can exec into the container or mount volumes</li>
+</ul>
+<h3 id="method-1-manual-backup-via-etcdctl-inside-container">🔧 Method 1: Manual Backup via <code>etcdctl</code> (inside container)<a class="headerlink" href="#method-1-manual-backup-via-etcdctl-inside-container" title="Permanent link">&para;</a></h3>
+<h4 id="1-exec-into-server-0">1. Exec into <code>server-0</code><a class="headerlink" href="#1-exec-into-server-0" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>k3d-ha-cluster-server-0<span class="w"> </span>sh
+</code></pre></div>
+<h4 id="2-install-etcdctl-inside-a-cluster-server-0-container">2. Install etcdctl inside a cluster server-0 container<a class="headerlink" href="#2-install-etcdctl-inside-a-cluster-server-0-container" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>ETCD_VER=v3.5.13
+curl -L https://github.com/etcd-io/etcd/releases/download/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o etcd.tar.gz
+tar xzf etcd.tar.gz
+sudo mv etcd-${ETCD_VER}-linux-amd64/etcdctl /usr/local/bin/
 
-Then delete manually:
-k delete crd &lt;crd-name&gt;
-k get crds | grep longhorn | awk &#39;{print $1}&#39; | xargs k delete crd
-k delete ns longhorn-system --grace-period=0 --force
+docker cp etcdctl &lt;container_name&gt;:/usr/local/bin/etcdctl
+docker cp etcdctl k3d-ha-cluster-server-0:/usr/local/bin/etcdctl
 
-If stuck in `Terminating`, run:
-k get ns longhorn-system -o json | jq &#39;.spec.finalizers=[]&#39; | k replace --raw &quot;/api/v1/namespaces/longhorn-system/finalize&quot; -f -
+docker exec -it &lt;container_name&gt; chmod +x /usr/local/bin/etcdctl
+docker exec -it k3d-ha-cluster-server-0 chmod +x /usr/local/bin/etcdctl
+inside docker container
+chmod 777 /usr/local/bin/etcdctl
+</code></pre></div>
+<p>or 
+<div class="highlight"><pre><span></span><code>ETCD_VER=v3.5.0
 
-Verify cleanup
-k get crds | grep longhorn
-k get ns | grep longhorn
-</code></pre></div></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+# choose either URL
+GOOGLE_URL=https://storage.googleapis.com/etcd
+GITHUB_URL=https://github.com/etcd-io/etcd/releases/download
+DOWNLOAD_URL=${GOOGLE_URL}
+
+rm -f /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
+rm -rf /tmp/etcd-download-test &amp;&amp; mkdir -p /tmp/etcd-download-test
+
+curl -L ${DOWNLOAD_URL}/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
+tar xzvf /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz -C /tmp/etcd-download-test --strip-components=1
+rm -f /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
+
+/tmp/etcd-download-test/etcd --version
+/tmp/etcd-download-test/etcdctl version
+/tmp/etcd-download-test/etcdutl version
+
+mv /tmp/etcd-download-test/etcd /tmp/etcd-download-test/etcdctl /tmp/etcd-download-test/etcdutl /usr/local/bin
+</code></pre></div></p>
+<h4 id="3-set-etcd-env-vars">3. Set etcd env vars:<a class="headerlink" href="#3-set-etcd-env-vars" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_API</span><span class="o">=</span><span class="m">3</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">K3S_DATA_DIR</span><span class="o">=</span>/var/lib/rancher/k3s
+<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_CACERT</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">K3S_DATA_DIR</span><span class="si">}</span><span class="s2">/server/tls/etcd/peer/ca.crt&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_CERT</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">K3S_DATA_DIR</span><span class="si">}</span><span class="s2">/server/tls/etcd/peer/server-client.crt&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">ETCDCTL_KEY</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">K3S_DATA_DIR</span><span class="si">}</span><span class="s2">/server/tls/etcd/peer/server-client.key&quot;</span>
+</code></pre></div>
+<h4 id="3-run-backup-command">3. Run backup command:<a class="headerlink" href="#3-run-backup-command" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>ETCDCTL<span class="w"> </span><span class="nv">API</span><span class="o">=</span><span class="m">3</span><span class="w"> </span>etcdctl<span class="w"> </span><span class="se">\</span>
+--endpoints<span class="w"> </span>https://172.31.20.211:2379<span class="w"> </span><span class="se">\</span>
+--cacert<span class="o">=</span>/etc/kubernetes/pki/etcd/ca.crt
+--cert<span class="o">=</span>/etc/kubernetes/pki/etcd/server.crt
+-<span class="w"> </span>-key<span class="o">=</span>/etc/kubernetes/pki/etcd/server.<span class="w"> </span>keym
+snapshot<span class="w"> </span>save_snapshot-backup.db
+
+or
+
+etcdctl<span class="w"> </span>snapshot<span class="w"> </span>save<span class="w"> </span>/tmp/etcd-backup.db
+</code></pre></div>
+<h2 id="verify-backup">Verify Backup<a class="headerlink" href="#verify-backup" title="Permanent link">&para;</a></h2>
+<p>By the way if you not sure about values used in above command then you can check values from your /etc/kubernetes/manifests/etcd.yaml file.<br />
+Let’s confirm status of our backup using,</p>
+<div class="highlight"><pre><span></span><code>ETCDCTL_API=3 etcdctl --endpoints https://172.17.0.9:2379 snapshot status /tmp/snapshot-backup.db
+</code></pre></div>
+<h4 id="4-exit-container-and-copy-file-out">4. Exit container and copy file out:<a class="headerlink" href="#4-exit-container-and-copy-file-out" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>cp<span class="w"> </span>k3d-ha-cluster-server-0:/tmp/etcd-backup.db<span class="w"> </span>./etcd-backup.db
+</code></pre></div>
+<h3 id="restore-manually">🔄 Restore (manually)<a class="headerlink" href="#restore-manually" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>etcdctl restore save /tmp/etcd-backup.db
+</code></pre></div>
+<p>Let me know if you want to simulate restore too — restoring etcd involves stopping k3s, wiping old data, restoring snapshot, and starting again.</p>
+<h3 id="optional-automate-backup-on-host">🛠️ Optional: Automate backup on host<a class="headerlink" href="#optional-automate-backup-on-host" title="Permanent link">&para;</a></h3>
+<p>If you want to regularly backup etcd from outside using a script, I can prepare that too — let me know your storage preference (host folder, S3, etc.).</p>
+<p>Would you like a backup+restore shell script next?</p>
 
 
 

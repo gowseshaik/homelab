@@ -375,9 +375,28 @@ pods          po           v1             true         Pod
 deployments   deploy       apps/v1        true         Deployment
 services      svc          v1             true         Service
 ingresses     ing          networking.k8s.io/v1   true  Ingress
-...
+clusterissuers             cert-manager.io/v1     false   ClusterIssuer
 </code></pre></div></p>
-<hr />
+<p>The <code>false</code> value means that <code>ClusterIssuer</code> is a cluster-scoped resource, not a namespaced resource. Here's what this means:</p>
+<ol>
+<li>
+<p><strong><code>false</code> (cluster-scoped)</strong>:</p>
+<ul>
+<li>The resource exists at the cluster level</li>
+<li>Not tied to any specific namespace</li>
+<li>Can be referenced from any namespace</li>
+<li>Typically includes resources that affect the entire cluster</li>
+</ul>
+</li>
+<li>
+<p><strong><code>true</code> (namespaced)</strong></p>
+<ul>
+<li>The resource exists within a specific namespace</li>
+<li>Must be created in a namespace</li>
+<li>Only accessible within that namespace</li>
+</ul>
+</li>
+</ol>
 <h3 id="2-get-api-version-for-a-resource"><strong>2. Get API Version for a Resource</strong><a class="headerlink" href="#2-get-api-version-for-a-resource" title="Permanent link">&para;</a></h3>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>&lt;resource&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span>
 </code></pre></div>

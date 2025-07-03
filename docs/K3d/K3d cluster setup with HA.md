@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+- **1 server node** → uses **SQLite** (default for k3s)  
+- **3 or more server nodes** → uses **embedded etcd**
+=======
 ```
 k3d cluster create ha-cluster \
   --servers 3 \
@@ -12,6 +16,7 @@ k3d-ha-cluster-server-0   Ready    control-plane,etcd,master   71s   v1.31.5+k3s
 k3d-ha-cluster-server-1   Ready    control-plane,etcd,master   52s   v1.31.5+k3s1
 k3d-ha-cluster-server-2   Ready    control-plane,etcd,master   39s   v1.31.5+k3s1
 ```
+>>>>>>> c91f278b3bd9250b0fa8fb946e980dff7cd6132c
 
 ```
 $ k3d cluster delete ha-cluster
@@ -43,7 +48,7 @@ $ k3d cluster create ha-cluster \
   --wait
 ```
 
-$ k3d cluster create --config k3d-etcd-ha.yaml
+$ k3d cluster create --config k3d-etcd-ha.yaml (it wont restart nodes, if host machine restarted)
 ```
 apiVersion: k3d.io/v1alpha5
 kind: Simple
@@ -79,3 +84,42 @@ ports:
       - loadbalancer
 ```
 
+we fixed the cluster to connect without issues by adding 6443 port.
+
+```
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: ha-cluster
+servers: 3
+agents: 2
+options:
+  k3s:
+    extraArgs:
+      - arg: "--cluster-init"
+        nodeFilters:
+          - server:0
+      - arg: "--server=https://k3d-ha-cluster-server-0:6443"
+        nodeFilters:
+          - server:1
+          - server:2
+      - arg: "--tls-san=127.0.0.1"
+        nodeFilters:
+          - server:0
+      - arg: "--disable=servicelb"
+        nodeFilters:
+          - server:*
+      - arg: "--disable=metrics-server"
+        nodeFilters:
+          - server:*
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+  - port: 6443:6443
+    nodeFilters:
+      - loadbalancer
+```
