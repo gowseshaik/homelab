@@ -27,7 +27,11 @@ sed -i "s/127.0.0.1/${CP1_IP}/g" kubeconfig
 ### 3. **Set KUBECONFIG environment variable**
 
 ```bash
+#its a customized kube config file
 export KUBECONFIG=$PWD/kubeconfig
+
+if its in home directory, then use as below
+export KUBECONFIG="$HOME/.kube/config"
 ```
 
 ### 4. **Test access from host**
