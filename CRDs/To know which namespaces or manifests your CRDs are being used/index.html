@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/CRDs/Custom%20Resource%20Definition/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/CRDs/To%20know%20which%20namespaces%20or%20manifests%20your%20CRDs%20are%20being%20used/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Custom Resource Definition - Gouse Shaik</title>
+        <title>To know which namespaces or manifests your CRDs are being used - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-what-are-crds" class="md-skip">
+        <a href="#step-1-list-all-resources-of-a-crd-kind" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Custom Resource Definition
+              To know which namespaces or manifests your CRDs are being used
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/CRDs/Custom Resource Definition.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/CRDs/To know which namespaces or manifests your CRDs are being used.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,139 +362,49 @@
   
 
 
-  <h1>Custom Resource Definition</h1>
+  <h1>To know which namespaces or manifests your CRDs are being used</h1>
 
-<ul>
-<li>Sealed Secrets has a CRD <code>SealedSecret</code> and a controller that watches SealedSecret objects and creates Secrets.</li>
-<li>The CRD is just the schema.</li>
-<li>The controller does the work.
-Note: Controllers often come bundled with CRDs (like in Operators), but <strong>a controller is not the same as a CRD</strong>.</li>
-</ul>
-<h3 id="1-what-are-crds"><strong>1. What are CRDs?</strong><a class="headerlink" href="#1-what-are-crds" title="Permanent link">&para;</a></h3>
-<p><strong>Definition:</strong><br />
-CRDs (<strong>Custom Resource Definitions</strong>) extend the Kubernetes API to allow users to create and manage <strong>custom resources</strong> (besides built-in resources like Pods, Deployments, etc.).  </p>
-<p><strong>Key Concepts:</strong><br />
-- <strong>Custom Resource (CR):</strong> An instance of a CRD (e.g., <code>MySQLDatabase</code>, <code>RedisCluster</code>).<br />
-- <strong>CRD:</strong> The schema/definition that describes the custom resource (like a blueprint).  </p>
-<p><strong>Example:</strong><br />
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apiextensions.k8s.io/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CustomResourceDefinition</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsamples.example.com</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com</span>
-<span class="w">  </span><span class="nt">versions</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="w">      </span><span class="nt">served</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">schema</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nv">...</span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Namespaced</span>
-<span class="w">  </span><span class="nt">names</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">plural</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsamples</span>
-<span class="w">    </span><span class="nt">singular</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsample</span>
-<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MySQLSample</span>
-</code></pre></div></p>
-<hr />
-<h3 id="2-why-use-crds"><strong>2. Why Use CRDs?</strong><a class="headerlink" href="#2-why-use-crds" title="Permanent link">&para;</a></h3>
-<p><strong>Purpose/Benefits:</strong><br />
-- <strong>Extend Kubernetes:</strong> Add domain-specific resources (e.g., <code>PostgresDB</code>, <code>TensorFlowJob</code>).<br />
-- <strong>Declarative APIs:</strong> Manage applications/resources using <code>kubectl</code> like native objects.<br />
-- <strong>Automation:</strong> Integrate with operators (e.g., <code>etcd-operator</code>) for lifecycle management.<br />
-- <strong>Reusability:</strong> Share CRDs across teams/organizations.  </p>
-<p><strong>Use Cases:</strong><br />
-- Databases, ML workloads, CI/CD pipelines, etc.  </p>
-<hr />
-<h3 id="3-when-to-use-crds"><strong>3. When to Use CRDs?</strong><a class="headerlink" href="#3-when-to-use-crds" title="Permanent link">&para;</a></h3>
-<p><strong>Scenarios:</strong><br />
-- When Kubernetes lacks a built-in resource for your use case.<br />
-- When you need a <strong>declarative API</strong> for your application.<br />
-- When paired with a <strong>Kubernetes Operator</strong> for complex logic (e.g., backup, scaling).  </p>
-<p><strong>Alternatives:</strong><br />
-- Use <strong>ConfigMaps/Secrets</strong> for simple configurations.<br />
-- Use <strong>Helm charts</strong> for packaging (but Helm doesn’t provide API extensions).  </p>
-<hr />
-<h3 id="4-how-to-use-crds"><strong>4. How to Use CRDs?</strong><a class="headerlink" href="#4-how-to-use-crds" title="Permanent link">&para;</a></h3>
-<p><strong>Steps to Create/Use a CRD:</strong>  </p>
-<h4 id="1-define-the-crd"><strong>1. Define the CRD</strong><a class="headerlink" href="#1-define-the-crd" title="Permanent link">&para;</a></h4>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># mysql-crd.yaml</span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apiextensions.k8s.io/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CustomResourceDefinition</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsamples.example.com</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com</span>
-<span class="w">  </span><span class="nt">versions</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="w">      </span><span class="nt">served</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">schema</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">openAPIV3Schema</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
-<span class="w">          </span><span class="nt">properties</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">spec</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
-<span class="w">              </span><span class="nt">properties</span><span class="p">:</span>
-<span class="w">                </span><span class="nt">dbName</span><span class="p">:</span>
-<span class="w">                  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">                </span><span class="nt">replicas</span><span class="p">:</span>
-<span class="w">                  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<span class="w">  </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Namespaced</span>
-<span class="w">  </span><span class="nt">names</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">plural</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsamples</span>
-<span class="w">    </span><span class="nt">singular</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsample</span>
-<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MySQLSample</span>
+<h3 id="step-1-list-all-resources-of-a-crd-kind">🔍 Step 1: List all resources of a CRD kind<a class="headerlink" href="#step-1-list-all-resources-of-a-crd-kind" title="Permanent link">&para;</a></h3>
+<p>If your CRD is named <code>sealedsecrets.bitnami.com</code>, then the resource kind is <code>SealedSecret</code>.</p>
+<p>Run:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>sealedsecrets<span class="w"> </span>--all-namespaces
 </code></pre></div>
-Apply it:<br />
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>mysql-crd.yaml
-</code></pre></div></p>
-<h4 id="2-create-a-custom-resource-cr"><strong>2. Create a Custom Resource (CR)</strong><a class="headerlink" href="#2-create-a-custom-resource-cr" title="Permanent link">&para;</a></h4>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># mysql-instance.yaml</span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MySQLSample</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-mysql</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">dbName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mydb&quot;</span>
-<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<p>This shows all instances (usages) of <code>SealedSecret</code> in your cluster across all namespaces.</p>
+<p>Replace <code>sealedsecrets</code> with the plural resource name of your CRD.</p>
+<p>To find the kind and plural name from CRD:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>sealedsecrets.bitnami.com<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>kind
+<span class="c1"># kind: SealedSecret</span>
 </code></pre></div>
-Apply it:<br />
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>mysql-instance.yaml
-</code></pre></div></p>
-<h4 id="3-verify"><strong>3. Verify</strong><a class="headerlink" href="#3-verify" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w">                          </span><span class="c1"># List CRDs</span>
-kubectl<span class="w"> </span>get<span class="w"> </span>mysqlsamples<span class="w">                 </span><span class="c1"># List custom resources</span>
-kubectl<span class="w"> </span>describe<span class="w"> </span>mysqlsamples<span class="w"> </span>my-mysql<span class="w">   </span><span class="c1"># Inspect a CR</span>
+<h3 id="step-2-search-for-crd-usage-in-yaml-manifests-gitops-or-local-repo">🔍 Step 2: Search for CRD usage in YAML manifests (GitOps or local repo)<a class="headerlink" href="#step-2-search-for-crd-usage-in-yaml-manifests-gitops-or-local-repo" title="Permanent link">&para;</a></h3>
+<p>If you use Git for infra (e.g., ArgoCD), run:</p>
+<div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-R<span class="w"> </span><span class="s2">&quot;kind: SealedSecret&quot;</span><span class="w"> </span>.
 </code></pre></div>
-<h4 id="4-optional-build-an-operator"><strong>4. (Optional) Build an Operator</strong><a class="headerlink" href="#4-optional-build-an-operator" title="Permanent link">&para;</a></h4>
-<p>Use tools like:<br />
-- <strong>Kubebuilder</strong><br />
-- <strong>Operator SDK</strong><br />
-to automate CRD management (e.g., reconcile loops).</p>
-<hr />
-<h3 id="summary-w3h-table"><strong>Summary (W3H Table)</strong><a class="headerlink" href="#summary-w3h-table" title="Permanent link">&para;</a></h3>
+<p>This shows all YAML files that define <code>SealedSecret</code> objects.</p>
+<h3 id="step-3-get-full-yaml-of-existing-crd-objects">🔍 Step 3: Get full YAML of existing CRD objects<a class="headerlink" href="#step-3-get-full-yaml-of-existing-crd-objects" title="Permanent link">&para;</a></h3>
+<p>To see how it's used (what fields, metadata, etc.):</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>sealedsecrets<span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span>-o<span class="w"> </span>yaml
+</code></pre></div>
+<p>Replace <code>sealedsecrets</code> and <code>default</code> with your CRD and namespace.</p>
+<h3 id="summary">🧠 Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th><strong>Aspect</strong></th>
-<th><strong>Description</strong></th>
+<th>Task</th>
+<th>Command Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>What</strong></td>
-<td>Kubernetes API extension for custom resources.</td>
+<td>List instances of a CRD</td>
+<td><code>kubectl get &lt;crd-resource&gt; --all-namespaces</code></td>
 </tr>
 <tr>
-<td><strong>Why</strong></td>
-<td>To add domain-specific resources declaratively.</td>
+<td>Check CRD usage in Git/YAML files</td>
+<td><code>grep -R "kind: &lt;CRDKind&gt;" .</code></td>
 </tr>
 <tr>
-<td><strong>When</strong></td>
-<td>When built-in resources are insufficient.</td>
-</tr>
-<tr>
-<td><strong>How</strong></td>
-<td>Define CRD → Create CR → (Optional) Use Operator.</td>
+<td>View full object definition</td>
+<td><code>kubectl get &lt;crd-resource&gt; -o yaml</code></td>
 </tr>
 </tbody>
 </table>

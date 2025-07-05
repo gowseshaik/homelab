@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/CRDs/Custom%20Resource%20Definition/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/ArgoCD/How%20ArgoCD%20and%20OpenShift/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Custom Resource Definition - Gouse Shaik</title>
+        <title>How ArgoCD and OpenShift - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-what-are-crds" class="md-skip">
+        <a href="#how-argocd-and-openshift-work-together" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Custom Resource Definition
+              How ArgoCD and OpenShift
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/CRDs/Custom Resource Definition.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/ArgoCD/How ArgoCD and OpenShift.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,142 +362,158 @@
   
 
 
-  <h1>Custom Resource Definition</h1>
+  <h1>How ArgoCD and OpenShift</h1>
 
-<ul>
-<li>Sealed Secrets has a CRD <code>SealedSecret</code> and a controller that watches SealedSecret objects and creates Secrets.</li>
-<li>The CRD is just the schema.</li>
-<li>The controller does the work.
-Note: Controllers often come bundled with CRDs (like in Operators), but <strong>a controller is not the same as a CRD</strong>.</li>
-</ul>
-<h3 id="1-what-are-crds"><strong>1. What are CRDs?</strong><a class="headerlink" href="#1-what-are-crds" title="Permanent link">&para;</a></h3>
-<p><strong>Definition:</strong><br />
-CRDs (<strong>Custom Resource Definitions</strong>) extend the Kubernetes API to allow users to create and manage <strong>custom resources</strong> (besides built-in resources like Pods, Deployments, etc.).  </p>
-<p><strong>Key Concepts:</strong><br />
-- <strong>Custom Resource (CR):</strong> An instance of a CRD (e.g., <code>MySQLDatabase</code>, <code>RedisCluster</code>).<br />
-- <strong>CRD:</strong> The schema/definition that describes the custom resource (like a blueprint).  </p>
-<p><strong>Example:</strong><br />
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apiextensions.k8s.io/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CustomResourceDefinition</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsamples.example.com</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com</span>
-<span class="w">  </span><span class="nt">versions</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="w">      </span><span class="nt">served</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">schema</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nv">...</span><span class="p p-Indicator">}</span>
-<span class="w">  </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Namespaced</span>
-<span class="w">  </span><span class="nt">names</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">plural</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsamples</span>
-<span class="w">    </span><span class="nt">singular</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsample</span>
-<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MySQLSample</span>
-</code></pre></div></p>
-<hr />
-<h3 id="2-why-use-crds"><strong>2. Why Use CRDs?</strong><a class="headerlink" href="#2-why-use-crds" title="Permanent link">&para;</a></h3>
-<p><strong>Purpose/Benefits:</strong><br />
-- <strong>Extend Kubernetes:</strong> Add domain-specific resources (e.g., <code>PostgresDB</code>, <code>TensorFlowJob</code>).<br />
-- <strong>Declarative APIs:</strong> Manage applications/resources using <code>kubectl</code> like native objects.<br />
-- <strong>Automation:</strong> Integrate with operators (e.g., <code>etcd-operator</code>) for lifecycle management.<br />
-- <strong>Reusability:</strong> Share CRDs across teams/organizations.  </p>
-<p><strong>Use Cases:</strong><br />
-- Databases, ML workloads, CI/CD pipelines, etc.  </p>
-<hr />
-<h3 id="3-when-to-use-crds"><strong>3. When to Use CRDs?</strong><a class="headerlink" href="#3-when-to-use-crds" title="Permanent link">&para;</a></h3>
-<p><strong>Scenarios:</strong><br />
-- When Kubernetes lacks a built-in resource for your use case.<br />
-- When you need a <strong>declarative API</strong> for your application.<br />
-- When paired with a <strong>Kubernetes Operator</strong> for complex logic (e.g., backup, scaling).  </p>
-<p><strong>Alternatives:</strong><br />
-- Use <strong>ConfigMaps/Secrets</strong> for simple configurations.<br />
-- Use <strong>Helm charts</strong> for packaging (but Helm doesn’t provide API extensions).  </p>
-<hr />
-<h3 id="4-how-to-use-crds"><strong>4. How to Use CRDs?</strong><a class="headerlink" href="#4-how-to-use-crds" title="Permanent link">&para;</a></h3>
-<p><strong>Steps to Create/Use a CRD:</strong>  </p>
-<h4 id="1-define-the-crd"><strong>1. Define the CRD</strong><a class="headerlink" href="#1-define-the-crd" title="Permanent link">&para;</a></h4>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># mysql-crd.yaml</span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apiextensions.k8s.io/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CustomResourceDefinition</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsamples.example.com</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com</span>
-<span class="w">  </span><span class="nt">versions</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="w">      </span><span class="nt">served</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">schema</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">openAPIV3Schema</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
-<span class="w">          </span><span class="nt">properties</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">spec</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
-<span class="w">              </span><span class="nt">properties</span><span class="p">:</span>
-<span class="w">                </span><span class="nt">dbName</span><span class="p">:</span>
-<span class="w">                  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">                </span><span class="nt">replicas</span><span class="p">:</span>
-<span class="w">                  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<span class="w">  </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Namespaced</span>
-<span class="w">  </span><span class="nt">names</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">plural</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsamples</span>
-<span class="w">    </span><span class="nt">singular</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysqlsample</span>
-<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MySQLSample</span>
-</code></pre></div>
-Apply it:<br />
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>mysql-crd.yaml
-</code></pre></div></p>
-<h4 id="2-create-a-custom-resource-cr"><strong>2. Create a Custom Resource (CR)</strong><a class="headerlink" href="#2-create-a-custom-resource-cr" title="Permanent link">&para;</a></h4>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># mysql-instance.yaml</span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MySQLSample</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-mysql</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">dbName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mydb&quot;</span>
-<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-</code></pre></div>
-Apply it:<br />
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>mysql-instance.yaml
-</code></pre></div></p>
-<h4 id="3-verify"><strong>3. Verify</strong><a class="headerlink" href="#3-verify" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w">                          </span><span class="c1"># List CRDs</span>
-kubectl<span class="w"> </span>get<span class="w"> </span>mysqlsamples<span class="w">                 </span><span class="c1"># List custom resources</span>
-kubectl<span class="w"> </span>describe<span class="w"> </span>mysqlsamples<span class="w"> </span>my-mysql<span class="w">   </span><span class="c1"># Inspect a CR</span>
-</code></pre></div>
-<h4 id="4-optional-build-an-operator"><strong>4. (Optional) Build an Operator</strong><a class="headerlink" href="#4-optional-build-an-operator" title="Permanent link">&para;</a></h4>
-<p>Use tools like:<br />
-- <strong>Kubebuilder</strong><br />
-- <strong>Operator SDK</strong><br />
-to automate CRD management (e.g., reconcile loops).</p>
-<hr />
-<h3 id="summary-w3h-table"><strong>Summary (W3H Table)</strong><a class="headerlink" href="#summary-w3h-table" title="Permanent link">&para;</a></h3>
+<h3 id="how-argocd-and-openshift-work-together">🔁 <strong>How ArgoCD and OpenShift Work Together</strong><a class="headerlink" href="#how-argocd-and-openshift-work-together" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th><strong>Aspect</strong></th>
-<th><strong>Description</strong></th>
+<th><strong>Tool</strong></th>
+<th><strong>Purpose</strong></th>
+<th><strong>Typical Use in DevOps</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>What</strong></td>
-<td>Kubernetes API extension for custom resources.</td>
+<td><strong>ArgoCD</strong></td>
+<td>GitOps continuous delivery for Kubernetes</td>
+<td>Sync Kubernetes manifests from Git repos automatically</td>
 </tr>
 <tr>
-<td><strong>Why</strong></td>
-<td>To add domain-specific resources declaratively.</td>
+<td><strong>OpenShift</strong></td>
+<td>Enterprise Kubernetes platform with enhanced security &amp; UI</td>
+<td>Hosts clusters, manages RBAC, provides developer-friendly UI</td>
 </tr>
 <tr>
-<td><strong>When</strong></td>
-<td>When built-in resources are insufficient.</td>
-</tr>
-<tr>
-<td><strong>How</strong></td>
-<td>Define CRD → Create CR → (Optional) Use Operator.</td>
+<td>### 🔧 <strong>Common Use Case</strong></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p><strong>ArgoCD manages app deployments</strong> into an <strong>OpenShift (OCP) cluster</strong>, syncing Git-based manifests or Helm charts. OpenShift provides the platform, ArgoCD handles the delivery.</p>
+</blockquote>
+<h3 id="devops-challenges-when-using-argocd-on-openshift">🧨 <strong>DevOps Challenges (When Using ArgoCD on OpenShift)</strong><a class="headerlink" href="#devops-challenges-when-using-argocd-on-openshift" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>Problem Area</strong></th>
+<th><strong>Details</strong></th>
+<th><strong>Impact</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RBAC Conflict</strong></td>
+<td>OpenShift's stricter SecurityContextConstraints (SCC) may block ArgoCD apps unless configured</td>
+<td>Pods won't start or get permission denied</td>
+</tr>
+<tr>
+<td><strong>ServiceAccount Confusion</strong></td>
+<td>ArgoCD needs its own ServiceAccount with correct roles; often users forget to bind <code>edit</code> or <code>admin</code> on target namespaces</td>
+<td>ArgoCD syncs fail with <code>permission denied</code></td>
+</tr>
+<tr>
+<td><strong>Ingress Differences</strong></td>
+<td>OpenShift routes vs Kubernetes Ingress objects behave differently</td>
+<td>ArgoCD apps fail unless OpenShift Route is created properly</td>
+</tr>
+<tr>
+<td><strong>ImagePull Secrets</strong></td>
+<td>OpenShift requires secrets to be attached in a specific way</td>
+<td>ArgoCD deployments pull image errors</td>
+</tr>
+<tr>
+<td><strong>Resource Quota Limits</strong></td>
+<td>OCP enforces limits (CPU/Memory/Pod count) tightly</td>
+<td>ArgoCD sync gets stuck or partially applied apps</td>
+</tr>
+<tr>
+<td><strong>Sync Failures</strong></td>
+<td>SCCs or OCP admission controllers reject certain deployments (e.g., privileged containers, hostPaths, etc.)</td>
+<td>ArgoCD shows <code>Health: Degraded</code></td>
+</tr>
+<tr>
+<td><strong>TLS &amp; Route Conflicts</strong></td>
+<td>OpenShift automatically handles routes; deploying ingress.yaml via ArgoCD can conflict</td>
+<td>ArgoCD-managed ingress won’t reflect correctly in OCP UI</td>
+</tr>
+<tr>
+<td><strong>ArgoCD Console Access</strong></td>
+<td>In OpenShift Console, ArgoCD UI is external unless set up with OAuth proxy or Route</td>
+<td>Requires manual <code>oc expose svc/argocd-server</code> or Route CR</td>
+</tr>
+<tr>
+<td>### ✅ <strong>Best Practices</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><strong>Category</strong></th>
+<th><strong>Best Practice</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RBAC</td>
+<td>Bind <code>argocd</code> SA to <code>edit</code> or higher role on target namespaces</td>
+</tr>
+<tr>
+<td>SCC</td>
+<td>Use custom SCCs with <code>runAsNonRoot</code> if needed; avoid default <code>restricted</code> profile for ArgoCD apps</td>
+</tr>
+<tr>
+<td>Route Management</td>
+<td>Let OpenShift handle Routes; avoid managing Ingress via ArgoCD unless explicitly supported</td>
+</tr>
+<tr>
+<td>Image Management</td>
+<td>Use OpenShift internal registry or ensure imagePullSecrets are in the same namespace</td>
+</tr>
+<tr>
+<td>ArgoCD Namespace Control</td>
+<td>Use ArgoCD Projects to limit access to namespaces, resources, and source repos</td>
+</tr>
+<tr>
+<td>OAuth Integration</td>
+<td>Use <code>argocd-dex</code> with OpenShift OAuth provider for smoother login</td>
+</tr>
+<tr>
+<td>Resource Limits</td>
+<td>Ensure ArgoCD apps specify resource requests/limits to comply with OpenShift quotas</td>
+</tr>
+<tr>
+<td>### 🔗 <strong>Typical Real-World Command Flow</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install ArgoCD in OpenShift (namespace: argocd)</span>
+oc<span class="w"> </span>new-project<span class="w"> </span>argocd
+kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+<span class="c1"># Expose ArgoCD UI on OpenShift</span>
+oc<span class="w"> </span>expose<span class="w"> </span>svc/argocd-server<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>--port<span class="o">=</span>http
+
+<span class="c1"># Login to ArgoCD CLI</span>
+argocd<span class="w"> </span>login<span class="w"> </span>&lt;argo_route_url&gt;<span class="w"> </span>--username<span class="w"> </span>admin<span class="w"> </span>--password<span class="w"> </span>&lt;initial_password&gt;<span class="w"> </span>--grpc-web
+
+<span class="c1"># Create app that deploys to OpenShift project &#39;dev&#39;</span>
+argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>my-app<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repo<span class="w"> </span>https://github.com/example/repo.git<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--path<span class="w"> </span>manifests<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--dest-server<span class="w"> </span>https://kubernetes.default.svc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--dest-namespace<span class="w"> </span>dev<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--sync-policy<span class="w"> </span>automated
+
+<span class="c1"># Give ArgoCD service account access to &#39;dev&#39; project</span>
+oc<span class="w"> </span>adm<span class="w"> </span>policy<span class="w"> </span>add-role-to-user<span class="w"> </span>edit<span class="w"> </span>system:serviceaccount:argocd:argocd-application-controller<span class="w"> </span>-n<span class="w"> </span>dev
+</code></pre></div>
 
 
 
