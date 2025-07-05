@@ -180,12 +180,12 @@ spec:
 ---
 
 ### **7. Tools for Working with CRDs**  
-| Tool                | Purpose                          |  
-|---------------------|----------------------------------|  
-| **Kubebuilder**     | Scaffold CRDs + Operators (Go)   |  
-| **Operator SDK**    | Build Operators (Go/Ansible/Helm)|  
-| **kustomize**       | Manage CRD YAMLs                 |  
-| **kubeval**         | Validate CRD schemas             |  
+| Tool             | Purpose                           |     |
+| ---------------- | --------------------------------- | --- |
+| **Kubebuilder**  | Scaffold CRDs + Operators (Go)    |     |
+| **Operator SDK** | Build Operators (Go/Ansible/Helm) |     |
+| **kustomize**    | Manage CRD YAMLs                  |     |
+| **kubeval**      | Validate CRD schemas              |     |
 
 ---
 
