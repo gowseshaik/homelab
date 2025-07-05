@@ -70,7 +70,49 @@ get the default password:
 /home/gouse/nexus3/sonatype-work/nexus3/admin.password
 ```
 
+By **default**, **Nexus Repository Manager OSS** does **not support external databases**. It uses an **embedded, file-based database (OrientDB)** stored in:
 
+```
+<sonatype-work>/nexus3/db/
+```
+
+### ❌ No Support for External Databases Like:
+
+|Database|Supported?|Notes|
+|---|---|---|
+|PostgreSQL|❌|Not supported|
+|MySQL/MariaDB|❌|Not supported|
+|Oracle DB|❌|Not supported|
+|MongoDB|❌|Not supported|
+
+### ✅ What Nexus Does Support:
+
+|Component|Type|Notes|
+|---|---|---|
+|Metadata & config|Embedded DB|Uses embedded OrientDB|
+|Blob storage (artifacts)|File system or S3|You can configure external blob stores|
+|LDAP/SSO|External service|Used for auth, not data|
+
+---
+
+### 🔐 Nexus Pro/Enterprise Edition Adds:
+
+- High Availability (HA)
+    
+- External object stores
+    
+- Smart proxy features  
+    But **still no external RDBMS** support — everything remains file/embedded based.
+    
+
+---
+
+### ✅ Conclusion:
+
+You **cannot use an external DB like PostgreSQL/MySQL** with Nexus.  
+All metadata and artifact info is stored internally, and backups are done by **snapshotting the `sonatype-work/nexus3` directory**.
+
+Let me know if you want steps to **move blob storage to S3** or other persistent volume setup.
 ### ⚙️ Recommended Use in OSS
 
 1. Use **MinIO/SeaweedFS/GlusterFS** as a **mounted local filesystem**
