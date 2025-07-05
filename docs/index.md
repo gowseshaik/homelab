@@ -19,14 +19,18 @@
 - [ArgoCD with HTTPS using cert-manager](ArgoCD/ArgoCD with HTTPS using cert-manager.md)
 - [Argocd CLI](ArgoCD/Argocd CLI.md)
 - [Common misunderstanding in ArgoCD Usage](ArgoCD/Common misunderstanding in ArgoCD Usage.md)
+- [How ArgoCD and OpenShift](ArgoCD/How ArgoCD and OpenShift.md)
 - [To configure two K3s clusters in ArgoCD](ArgoCD/To configure two K3s clusters in ArgoCD.md)
 
 ## Ci-cd tools
 - [List of online open-source CI-CD tools](CI-CD Tools/List of online open-source CI-CD tools.md)
 
 ## Crds
+- [Controllers and CRDs](CRDs/Controllers and CRDs.md)
+- [Create your own Custom Resource Definition (CRD)](CRDs/Create your own Custom Resource Definition (CRD).md)
 - [Custom Resource Definition](CRDs/Custom Resource Definition.md)
 - [Deep Dive into CRDs](CRDs/Deep Dive into CRDs.md)
+- [To know which namespaces or manifests your CRDs are being used](CRDs/To know which namespaces or manifests your CRDs are being used.md)
 
 ## Cert-manager
 - [install-cert-manager](Cert-manager/install-cert-manager.md)
@@ -58,9 +62,11 @@
 - [DaemonSets in Kubernetes](DaemonSets/DaemonSets in Kubernetes.md)
 
 ## Dailytasks
+- [Failures with solution](DailyTasks/Failures with solution.md)
 - [Important resources to learn k8s](DailyTasks/Important resources to learn k8s.md)
 - [K8s Cmds Cheatsheet](DailyTasks/K8s Cmds Cheatsheet.md)
 - [Keywords](DailyTasks/Keywords.md)
+- [Usecases for ConfigMaps and Secrets](DailyTasks/Usecases for ConfigMaps and Secrets.md)
 - [k8s error codes](DailyTasks/k8s error codes.md)
 - [pod exec and extract info from pods](DailyTasks/pod exec and extract info from pods.md)
 
@@ -126,6 +132,7 @@
 ## Nexus
 - [Create a Docker image registry in Nexus](Nexus/Create a Docker image registry in Nexus.md)
 - [Nexus Repository Manager OSS and integrate it with your Kubernetes](Nexus/Nexus Repository Manager OSS and integrate it with your Kubernetes.md)
+- [Nexus oss setup - On-Prem](Nexus/Nexus oss setup - On-Prem.md)
 
 ## Opentofu
 - [About OpenTofu](OpenTofu/About OpenTofu.md)
@@ -147,6 +154,10 @@
 - [Kubernetes RBAC](RBAC/Kubernetes RBAC.md)
 - [htpasswd - based access with basic auth for k3s cluster](RBAC/htpasswd - based access with basic auth for k3s cluster.md)
 - [htpasswd based authentication](RBAC/htpasswd based authentication.md)
+
+## Sealed-secrets
+- [Step By Step- Using Sealed Secrets with GitOps](Sealed-Secrets/Step By Step- Using Sealed Secrets with GitOps.md)
+- [Steps to push sealed secrets for an app](Sealed-Secrets/Steps to push sealed secrets for an app.md)
 
 ## Secrets
 - [Deep Dive into securing secrets in specific envs](Secrets/Deep Dive into securing secrets in specific envs.md)
