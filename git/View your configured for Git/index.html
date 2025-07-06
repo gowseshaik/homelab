@@ -376,6 +376,84 @@
     <div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--list
 </code></pre></div></li>
 </ul>
+<table>
+<thead>
+<tr>
+<th><strong>Command</strong></th>
+<th><strong>Purpose</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git config --list</code></td>
+<td>Show all Git config values (from all levels)</td>
+</tr>
+<tr>
+<td><code>git config --global user.name "Your Name"</code></td>
+<td>Set global username</td>
+</tr>
+<tr>
+<td><code>git config --global user.email "you@example.com"</code></td>
+<td>Set global user email</td>
+</tr>
+<tr>
+<td><code>git config user.name "Your Name"</code></td>
+<td>Set local (repo-level) username</td>
+</tr>
+<tr>
+<td><code>git config user.email "you@example.com"</code></td>
+<td>Set local (repo-level) user email</td>
+</tr>
+<tr>
+<td><code>git config --global core.editor nano</code></td>
+<td>Set default global text editor</td>
+</tr>
+<tr>
+<td><code>git config core.editor code</code></td>
+<td>Set default local text editor</td>
+</tr>
+<tr>
+<td><code>git config --global merge.tool vimdiff</code></td>
+<td>Set merge tool globally</td>
+</tr>
+<tr>
+<td><code>git config --global diff.tool vimdiff</code></td>
+<td>Set diff tool globally</td>
+</tr>
+<tr>
+<td><code>git config --global color.ui auto</code></td>
+<td>Enable colored output globally</td>
+</tr>
+<tr>
+<td><code>git config --system core.autocrlf input</code></td>
+<td>Set line ending handling (system-wide)</td>
+</tr>
+<tr>
+<td><code>git config --global alias.co checkout</code></td>
+<td>Create a shortcut alias (e.g., <code>git co</code> for <code>git checkout</code>)</td>
+</tr>
+<tr>
+<td><code>git config --unset user.name</code></td>
+<td>Remove local user.name setting</td>
+</tr>
+<tr>
+<td><code>git config --unset --global user.email</code></td>
+<td>Remove global user.email setting</td>
+</tr>
+<tr>
+<td><code>git config --edit</code></td>
+<td>Edit local Git config file in editor</td>
+</tr>
+<tr>
+<td><code>git config --global --edit</code></td>
+<td>Edit global Git config file in editor</td>
+</tr>
+<tr>
+<td><code>git config --system --edit</code></td>
+<td>Edit system-level Git config file</td>
+</tr>
+</tbody>
+</table>
 
 
 
