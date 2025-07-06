@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/git/View your configured for Git.md",
+                "file": "docs/git/View_your_configured_for_Git.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "View your configured for Git"
+              "title": "View_your_configured_for_Git"
             }
           }
         ]
@@ -171,7 +171,7 @@
   "active": "e87aa31bb6cd3006",
   "lastOpenFiles": [
     "docs/git/git errors.md",
-    "docs/git/View your configured for Git.md",
+    "docs/git/View_your_configured_for_Git.md",
     "site/search/search_index.json",
     "site/search",
     "site/velero - for migration/Velero with kind/index.html",
