@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ## What are Tolerations?
 
 Tolerations are Kubernetes mechanisms that allow pods to be scheduled onto nodes with matching taints. They work in conjunction with taints to enable advanced scheduling scenarios where certain nodes are "reserved" for specific workloads.

@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 Sharing access to a Kubernetes cluster with other users involves granting them the necessary permissions securely. Below are the steps to achieve this:
 
 ---

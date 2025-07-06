@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-02</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 - `Lack of Self Healing` : No built-in mechanism to automatically re-create containers
 - `High Availability Challenges`:  When server fails, entire application becomes unavailable, causing significant downtime
 - `Scaling hurdles` :  Lacks automatic scaling

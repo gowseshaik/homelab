@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-29</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ```bash
 sudo apt update
 sudo apt install ufw
@@ -21,15 +22,12 @@ Don't forget to save the `iptables` rules to make sure they persist after a rebo
 sudo apt install iptables-persistent
 sudo netfilter-persistent save
 ```
-
 ## Now port forwarding to Multipass VMs with nginx
-
 Yes — if you don’t want to use `socat` with `nohup`, here are **cleaner and better alternatives** to forward port 5601 to `localhost`:
 
 ## ✅ Option 1: Use `systemd` service for socat (cleaner than `nohup`)
 
 ### 🔧 Create systemd service on host:
-
 ```bash
 sudo tee /etc/systemd/system/socat-kibana.service > /dev/null <<EOF
 [Unit]
@@ -54,18 +52,14 @@ sudo systemctl enable --now socat-kibana.service
 
 > Now, Kibana is always available at `localhost:5601` and runs cleanly as a background service.
 
----
-
 ## ✅ Option 2: Use `nginx` reverse proxy on host (No socat)
 
 1. **Install nginx on host:**
-
 ```bash
 sudo apt install nginx
 ```
 
 2. **Create reverse proxy config:**
-
 ```bash
 sudo tee /etc/nginx/sites-available/kibana > /dev/null <<EOF
 server {
@@ -97,7 +91,6 @@ EOF
 ```
 
 3. **Enable site and reload nginx:**
-
 ```bash
 sudo ln -s /etc/nginx/sites-available/kibana /etc/nginx/sites-enabled/
 sudo ln -s /etc/nginx/sites-available/elasticsearch /etc/nginx/sites-enabled/
@@ -118,7 +111,6 @@ Let me know which one you want to keep — I can give cleanup steps for the othe
 ###  Port foward with socat
 
 ### ✅ Basic Port Forward: Host → VM (Kibana)
-
 ```bash
 sudo socat TCP-LISTEN:5601,fork TCP:<vm-ip>:5601
 ```
@@ -126,7 +118,6 @@ sudo socat TCP-LISTEN:5601,fork TCP:<vm-ip>:5601
 > Forwards **localhost:5601** on host to `elk-vm:5601`
 
 ### ⏳ Run in background (useful for long running)
-
 ```bash
 sudo nohup socat TCP-LISTEN:5601,fork TCP:<vm-ip>:5601 &
 ```
@@ -134,7 +125,6 @@ sudo nohup socat TCP-LISTEN:5601,fork TCP:<vm-ip>:5601 &
 > Runs `socat` in background using `nohup`
 
 ### 🧼 Kill existing socat port forward (if stuck)
-
 ```bash
 sudo pkill -f "socat.*5601"
 ```
@@ -142,7 +132,6 @@ sudo pkill -f "socat.*5601"
 > Stops any `socat` process handling port 5601
 
 ### 🧪 Test port forward locally
-
 ```bash
 curl http://localhost:5601
 ```
@@ -150,7 +139,6 @@ curl http://localhost:5601
 > This will now hit the VM's Kibana
 
 ### 📝 Replace `<vm-ip>` using command:
-
 ```bash
 multipass info elk-vm | grep IPv4 | awk '{print $2}'
 ```

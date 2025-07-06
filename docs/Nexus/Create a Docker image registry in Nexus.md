@@ -1,4 +1,5 @@
-Here are the **steps to create a Docker image registry in Nexus** (using Nexus OSS) and allow clients to push/pull using **username/password authentication**.
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+Below are the **steps to create a Docker image registry in Nexus** (using Nexus OSS) and allow clients to push/pull using **username/password authentication**.
 
 ### ✅ 1. **Install Nexus Repository OSS**
 

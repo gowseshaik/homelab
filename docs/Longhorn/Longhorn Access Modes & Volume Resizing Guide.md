@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ## **1. Understanding Access Modes in Longhorn**
 Kubernetes Persistent Volumes (PVs) and Persistent Volume Claims (PVCs) support different **access modes**, which define how volumes can be mounted by pods.
 

@@ -1,5 +1,4 @@
-# **Real-World CronJob Example: Automated Database Backup & Cleanup**
-
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 Here's a complete, production-ready example of a Kubernetes CronJob that:
 1. **Backs up a PostgreSQL database daily at 2 AM**
 2. **Compresses the backup**

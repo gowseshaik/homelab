@@ -1,6 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 Fantastic! Let’s dive deeper into **securing secrets in specific environments**, with real-world examples, tools, and actionable best practices.  
-
----
 
 ## **1. Kubernetes Secrets Management**  
 ### **⚠️ Real-World Incident: Tesla’s Kubernetes Crypto Mining Breach**  
@@ -27,9 +26,6 @@ Fantastic! Let’s dive deeper into **securing secrets in specific environments*
 | **Kubeseal**       | Encrypts secrets for GitOps          |  
 | **Vault Agent**    | Injects secrets into pods securely   |  
 | **Kyverno**        | Policies to block plaintext secrets  |  
-
----
-
 ## **2. CI/CD Pipeline Secrets**  
 ### **⚠️ Real-World Incident: CircleCI Breach (2023)**  
 - **What Happened?** Attackers stole **CI/CD session tokens**, granting access to customer code + secrets.  
@@ -60,9 +56,6 @@ env:
 | **GitHub Actions OIDC** | Temporary AWS creds via IAM Roles |  
 | **HashiCorp Vault** | Dynamic secrets for CI/CD           |  
 | **Argo Workflows**  | Secure secret injection in pipelines |  
-
----
-
 ## **3. Cloud Secrets (AWS/Azure/GCP)**  
 ### **⚠️ Real-World Incident: Uber’s AWS Key Leak (2022)**  
 - **What Happened?** An engineer **committed an AWS key** to a private repo; attackers found it and breached Uber’s internal systems.  
@@ -88,8 +81,6 @@ env:
 | **AWS Secrets Manager** | Auto-rotation + audit logging    |  
 | **GCP Secret Manager** | Versioned secrets for GCP        |  
 | **Azure Key Vault** | Integrates with AAD for RBAC      |  
-
----
 
 ## **4. Developer Workstations (Local Secrets)**  
 ### **⚠️ Real-World Incident: Codecov Hack (2021)**  
@@ -123,16 +114,11 @@ trufflehog git https://github.com/your/repo --fail
 | **1Password CLI**  | Secure local secret storage         |  
 | **TruffleHog**     | Detect secrets in Git history       |  
 | **gopass**         | Team password management            |  
-
----
-
 ## **🔥 Pro Tip: Secret Zero Problem**  
 Even with perfect secrets management, **how do you bootstrap the first secret?** (e.g., the password to unlock Vault?)  
 - **Solutions**:  
   - **Shamir’s Secret Sharing**: Split the root key among team leads.  
   - **Cloud KMS**: AWS KMS/GCP Cloud HSM for auto-unsealing Vault.  
-
----
 
 ## **🚀 Checklist: Immediate Actions**  
 1. **Scan your repos**: `trufflehog git https://github.com/your/repo`  

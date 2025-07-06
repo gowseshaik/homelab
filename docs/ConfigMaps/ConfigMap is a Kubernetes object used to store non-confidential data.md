@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ## What is a ConfigMap?
 A ConfigMap is a Kubernetes object used to store non-confidential data in key-value pairs. It allows you to decouple configuration artifacts from container images, making your applications more portable.
 

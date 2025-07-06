@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ### **Solution: Initialize a Git Repository**
 1. **Check if you’re in a Git repo:**
    ```bash
@@ -41,9 +42,6 @@
   ```bash
   cd your-repo-name/
   ```
-
----
-
 ### **Still Getting the Error?**
 - If you’re in a subdirectory (e.g., `docs/`), move back to the root:
   ```bash
@@ -54,9 +52,6 @@
   ls -la .git
   ```
   - If missing, reinitialize Git (`git init`).
-
----
-
 ### **Final Check**
 After fixing, run:
 ```bash

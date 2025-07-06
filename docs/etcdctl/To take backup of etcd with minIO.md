@@ -1,7 +1,7 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 No, **MinIO is _not mandatory_** — it's just a **self-hosted S3-compatible storage**. But it's an **excellent choice** for storing etcd backups **on-prem** or in air-gapped clusters.
 
 ---
-
 ### ✅ When You Need MinIO
 
 You need MinIO **only if**:

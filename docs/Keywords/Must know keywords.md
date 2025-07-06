@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ==**Ephemeral**== means **temporary** — it **exists only while the pod is running** and gets **deleted when the pod is deleted or restarted**.
 
 | **Term**          | **Definition**                                                            |

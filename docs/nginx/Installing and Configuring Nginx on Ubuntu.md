@@ -1,5 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-01</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ## Step 1: Install Nginx
-
 1. Update your package index:
    ```bash
    sudo apt update
@@ -17,7 +17,6 @@
    You should see "active (running)" status.
 
 ## Step 2: Configure Firewall
-
 Allow Nginx through the firewall:
 ```bash
 sudo ufw allow 'Nginx HTTP'
@@ -95,12 +94,10 @@ sudo ufw allow 'Nginx HTTP'
 ## Step 5: Verify the Installation
 
 Open your web browser and navigate to your server's IP address or domain name. You should see your sample application page.
-
 ## Optional: Additional Configurations
 
 ### Set Up a Domain Name
 If you have a domain name, update your DNS records to point to your server's IP, then update the `server_name` in the Nginx configuration.
-
 ### Enable HTTPS with Let's Encrypt
 1. Install Certbot:
    ```bash
@@ -113,7 +110,6 @@ If you have a domain name, update your DNS records to point to your server's IP,
    ```
 
 3. Certbot will automatically update your Nginx configuration to use HTTPS.
-
 ## Troubleshooting
 
 - If you get a 403 Forbidden error, check permissions on your web directory.

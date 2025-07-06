@@ -1,26 +1,17 @@
-Here's the most efficient way to set up Keycloak on a Kubernetes/OpenShift cluster using the official Helm chart.
-
----
-
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ### ✅ **Steps to Set Up Keycloak (with Helm)**
 
 1. **Add Bitnami repo**
-    
     ```bash
     helm repo add bitnami https://charts.bitnami.com/bitnami
     helm repo update
     ```
-    
 2. **Create namespace**
-    
     ```bash
     kubectl create namespace keycloak
     ```
-    
 3. **Install Keycloak**
 Yes — since you're using **k3d with the default Traefik ingress controller**, you should expose Keycloak via an **Ingress**.
-
----
 
 ### ✅ Steps to Create Ingress for Keycloak on k3d with Traefik
 
@@ -90,27 +81,15 @@ WARNING: There are "resources" sections in the chart not set. Using "resourcesPr
 +info https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 ```
-
-    
 2. **Add host entry (on your machine)**
-    
     ```bash
     echo "127.0.0.1 keycloak.local" | sudo tee -a /etc/hosts
     get the ip from ingress deployed for keycloak
     echo "172.18.0.2 keycloak.local" | sudo tee -a /etc/hosts
     ```
-    
 3. **Check ingress is created**
-    
     ```bash
     kubectl get ingress -n keycloak
     ```
-    
 4. **Access Keycloak**
-    
     - Open browser: [http://keycloak.local](http://keycloak.local)
-        
-
----
-
-Let me know if you need HTTPS (TLS) setup with Traefik too.

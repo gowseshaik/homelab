@@ -1,7 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 Here are some **real-world examples** of secrets mismanagement leading to security incidents, along with best-practice solutions:  
-
----
-
 ### **1. **🚨 GitHub API Key Leak → Unauthorized Cloud Access**  
 **What Happened?**  
 - A developer accidentally committed a `.env` file containing AWS credentials to a public GitHub repo.  
@@ -11,8 +9,6 @@ Here are some **real-world examples** of secrets mismanagement leading to securi
 ✅ **Use Git Secrets/Pre-commit Hooks**: Tools like `git-secrets` block commits containing sensitive data.  
 ✅ **Automated Scanning**: GitHub’s built-in secret scanning or GitGuardian alerts on leaked keys.  
 ✅ **Short-Lived Credentials**: Use AWS IAM roles instead of long-term access keys.  
-
----
 
 ### **2. **🔑 Hardcoded Database Password → Data Breach**  
 **What Happened?**  
@@ -24,8 +20,6 @@ Here are some **real-world examples** of secrets mismanagement leading to securi
 ✅ **Dynamic Secrets**: Tools like Vault generate short-lived DB credentials per request.  
 ✅ **Infra-as-Code Checks**: Use Terraform/Snyk to detect hardcoded secrets in configs.  
 
----
-
 ### **3. **☁️ Exposed Kubernetes Config → Cryptojacking Attack**  
 **What Happened?**  
 - A misconfigured Kubernetes cluster had its `kubeconfig` file (admin access) exposed on a public S3 bucket.  
@@ -35,8 +29,6 @@ Here are some **real-world examples** of secrets mismanagement leading to securi
 ✅ **RBAC**: Limit `kubeconfig` access with Kubernetes Role-Based Access Control.  
 ✅ **Sealed Secrets**: Encrypt Kubernetes secrets using tools like Mozilla SOPS.  
 ✅ **Cloud CSPM**: Tools like Prisma Cloud scan for open S3 buckets/misconfigs.  
-
----
 
 ### **4. **📱 Mobile App API Key → Fake User Impersonation**  
 **What Happened?**  
@@ -48,8 +40,6 @@ Here are some **real-world examples** of secrets mismanagement leading to securi
 ✅ **Restrict Key Usage**: Firebase allows domain/IP restrictions for API keys.  
 ✅ **Key Rotation**: Automatically rotate keys monthly.  
 
----
-
 ### **5. **💾 Stolen SSH Key → Ransomware Attack**  
 **What Happened?**  
 - An employee’s SSH private key (without a passphrase) was stolen from their laptop.  
@@ -59,8 +49,6 @@ Here are some **real-world examples** of secrets mismanagement leading to securi
 ✅ **Passphrase-Protect Keys**: Always encrypt SSH keys with a password.  
 ✅ **Ephemeral SSH**: Use temporary certificates (e.g., Teleport, AWS Session Manager).  
 ✅ **Network Segmentation**: Limit SSH access to jump hosts/VPNs.  
-
----
 
 ### **Best Practices Summary**  
 | **Mistake**          | **Solution**                          | **Tool Example**                |  

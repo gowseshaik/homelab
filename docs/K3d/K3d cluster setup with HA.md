@@ -1,7 +1,8 @@
-<<<<<<< HEAD
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-01</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 - **1 server node** → uses **SQLite** (default for k3s)  
 - **3 or more server nodes** → uses **embedded etcd**
-=======
+
 ```
 k3d cluster create ha-cluster \
   --servers 3 \
@@ -16,7 +17,6 @@ k3d-ha-cluster-server-0   Ready    control-plane,etcd,master   71s   v1.31.5+k3s
 k3d-ha-cluster-server-1   Ready    control-plane,etcd,master   52s   v1.31.5+k3s1
 k3d-ha-cluster-server-2   Ready    control-plane,etcd,master   39s   v1.31.5+k3s1
 ```
->>>>>>> c91f278b3bd9250b0fa8fb946e980dff7cd6132c
 
 ```
 $ k3d cluster delete ha-cluster

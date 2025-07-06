@@ -1,9 +1,9 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ## 🔧 What is a Helm Chart?
 
 A **Helm chart** is a **packaged Kubernetes application**—like a Docker image but for k8s deployments.
 
 ---
-
 ## 📦 Helm Chart Structure
 
 ```bash
@@ -17,17 +17,13 @@ mychart/
 ```
 
 ---
-
 ## 🧪 Sample Chart for Nginx Deployment
 
 ### 1. Create chart:
-
 ```bash
 helm create nginx-app
 ```
-
 ### 2. Edit `values.yaml`:
-
 ```yaml
 replicaCount: 2
 image:
@@ -37,25 +33,18 @@ service:
   type: ClusterIP
   port: 80
 ```
-
 ### 3. Deploy:
-
 ```bash
 helm install my-nginx ./nginx-app
 ```
-
 ### 4. Upgrade:
-
 ```bash
 helm upgrade my-nginx ./nginx-app
 ```
-
 ### 5. Uninstall:
-
 ```bash
 helm uninstall my-nginx
 ```
-
 ## 🧰 Commands Cheat Sheet
 
 | Task            | Command                               |

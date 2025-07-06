@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 Updating a **MongoDB StatefulSet** in Kubernetes requires careful handling since StatefulSets manage stateful applications with persistent data. Below is a step-by-step guide on how to **safely apply changes** (e.g., configuration, image version, or resource limits) without causing downtime or data corruption.
 
 ---

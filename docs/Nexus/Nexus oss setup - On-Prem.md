@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 # ✅ Use this correct working download command:
 ```
 wget https://sonatype-download.global.ssl.fastly.net/repository/downloads-prod-group/3/nexus-3.81.1-01-linux-x86_64.tar.gz
@@ -15,13 +16,11 @@ mv nexus-3.68.0-01 nexus
 
 1. **Edit the `nexus.rc` file**  
     Set run_as_user empty so it runs as current user:
-    
     ```bash
     echo 'run_as_user=""' > ~/nexus/bin/nexus.rc
     ```
 
 2. **Create a systemd service file**
-
 ```bash
 sudo tee /etc/systemd/system/nexus.service > /dev/null <<EOF
 [Unit]
@@ -43,7 +42,6 @@ EOF
 ```
 
 3. **Reload systemd and enable the service**
-
 ```bash
 sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
@@ -51,13 +49,11 @@ sudo systemctl enable nexus
 ```
 
 4. **Start Nexus manually (first time)**
-
 ```bash
 sudo systemctl start nexus
 ```
 
 5. **Check service status**
-
 ```bash
 sudo systemctl status nexus
 ```
@@ -84,7 +80,6 @@ By **default**, **Nexus Repository Manager OSS** does **not support external dat
 |MySQL/MariaDB|❌|Not supported|
 |Oracle DB|❌|Not supported|
 |MongoDB|❌|Not supported|
-
 ### ✅ What Nexus Does Support:
 
 |Component|Type|Notes|
@@ -92,20 +87,12 @@ By **default**, **Nexus Repository Manager OSS** does **not support external dat
 |Metadata & config|Embedded DB|Uses embedded OrientDB|
 |Blob storage (artifacts)|File system or S3|You can configure external blob stores|
 |LDAP/SSO|External service|Used for auth, not data|
-
----
-
 ### 🔐 Nexus Pro/Enterprise Edition Adds:
 
 - High Availability (HA)
-    
 - External object stores
-    
 - Smart proxy features  
     But **still no external RDBMS** support — everything remains file/embedded based.
-    
-
----
 
 ### ✅ Conclusion:
 

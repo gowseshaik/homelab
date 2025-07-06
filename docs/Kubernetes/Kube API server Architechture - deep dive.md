@@ -1,4 +1,4 @@
-
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ![Kube-API-server-Architechture-Diagram](../images/Kube-API-server-Architechture-Diagram.png)
 
 Let's go into **deep-dive explanation** of the diagram, walking you through the **complete internal workflow of Kubernetes from scratch**, including basics of each resource/component being used by kubernetes

@@ -1,5 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ### 🟪 **Kind Admin Commands**
-
 ```bash
 # Create a cluster
 kind create cluster --name demo
@@ -22,9 +22,7 @@ kind export logs ./logs --name demo
 ```
 
 ---
-
 ### 🟩 **K3d Admin Commands**
-
 ```bash
 # Create a cluster
 k3d cluster create demo
@@ -52,7 +50,3 @@ k3d image import myimage:tag -c demo
 # List nodes
 k3d node list
 ```
-
----
-
-Let me know if you want full lifecycle automation or multi-node/HA setup too.

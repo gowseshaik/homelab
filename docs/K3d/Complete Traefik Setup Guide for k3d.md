@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 Great! I'm glad it's working now. Let me provide you with a comprehensive, clean setup guide for Traefik with dashboard on k3d:This guide provides a complete, production-ready setup for Traefik on k3d. The key points to remember:
 
 1. **Disable default k3s Traefik** to install your own version with full control

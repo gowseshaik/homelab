@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ```bash
 # Example: Practical GitOps flow to push sealed secrets for an app config
 
@@ -38,10 +39,6 @@ git push -u origin main
 > **Notes:**
 > 
 > - You run `kubeseal` locally or in CI before pushing to Git.
->     
 > - The Git repo stores only encrypted secrets.
->     
 > - The cluster controller decrypts and creates Kubernetes secrets.
->     
 > - Use this with GitOps tools like ArgoCD or Flux for automated syncing.
->

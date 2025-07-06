@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 Yes, you can list all controllers running in your Kubernetes cluster by checking the pods in the `kube-system` namespace and other namespaces where controllers commonly run.
 ```bash
 # List all pods in kube-system (common place for core controllers)

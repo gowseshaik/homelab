@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ### ✅ Steps Overview
 
 1. **Deploy Nexus on your cluster**
@@ -66,7 +67,6 @@ spec:
 ```
 
 ### 💡 Access Nexus
-
 - Run: `kubectl port-forward svc/nexus 8081:8081`
 - Or: open `http://<NODE_IP>:30081`
 - Default credentials: `admin / <get from admin.password file inside container>`

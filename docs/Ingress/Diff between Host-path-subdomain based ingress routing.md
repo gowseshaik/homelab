@@ -1,20 +1,21 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 # Routing Methods - Real-Time Issues Comparison
 
 ## Main Issues Summary Table
 
-|Issue Category|Path-Based Routing|Host-Based Routing|Subdomain Routing|
-|---|---|---|---|
-|**Static Assets (CSS/JS)**|🔴 **MAJOR ISSUE** - Relative paths break, requires app modification|🟢 **NO ISSUES** - Works perfectly|🟢 **NO ISSUES** - Works perfectly|
-|**DNS Management**|🟢 **SIMPLE** - Single domain|🔴 **COMPLEX** - Multiple domains to manage|🟡 **MODERATE** - Wildcard DNS setup|
-|**SSL Certificates**|🟢 **SIMPLE** - Single certificate|🔴 **COMPLEX** - Multiple certificates|🟡 **MODERATE** - Wildcard certificate|
-|**Application Changes**|🔴 **REQUIRED** - Apps must handle base paths|🟢 **NONE** - Apps work as-is|🟢 **NONE** - Apps work as-is|
-|**Cost**|🟢 **LOW** - Single load balancer|🔴 **HIGH** - Multiple hostnames = higher costs|🟡 **MODERATE** - Single wildcard cert|
-|**Cookie/Session Management**|🔴 **CONFLICTS** - Shared domain causes issues|🟢 **ISOLATED** - Separate cookie domains|🟡 **CONFIGURABLE** - Can share or isolate|
-|**WebSocket Support**|🔴 **PROBLEMATIC** - Many libraries don't handle paths|🟢 **PERFECT** - Full support|🟢 **PERFECT** - Full support|
-|**CORS Issues**|🟢 **NONE** - Same origin|🟡 **SOME** - Cross-origin requests|🟡 **SOME** - Cross-subdomain requests|
-|**SEO Impact**|🟡 **MODERATE** - Paths affect ranking|🔴 **SEPARATE** - Different domains compete|🟡 **MODERATE** - Subdomains share authority|
-|**Debugging Complexity**|🔴 **HIGH** - Path conflicts hard to trace|🟢 **LOW** - Clear separation|🟢 **LOW** - Clear separation|
-|**Legacy App Compatibility**|🔴 **POOR** - Often requires code changes|🟢 **EXCELLENT** - Works with any app|🟢 **EXCELLENT** - Works with any app|
+| Issue Category                | Path-Based Routing                                                   | Host-Based Routing                              | Subdomain Routing                            |
+| ----------------------------- | -------------------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------- |
+| **Static Assets (CSS/JS)**    | 🔴 **MAJOR ISSUE** - Relative paths break, requires app modification | 🟢 **NO ISSUES** - Works perfectly              | 🟢 **NO ISSUES** - Works perfectly           |
+| **DNS Management**            | 🟢 **SIMPLE** - Single domain                                        | 🔴 **COMPLEX** - Multiple domains to manage     | 🟡 **MODERATE** - Wildcard DNS setup         |
+| **SSL Certificates**          | 🟢 **SIMPLE** - Single certificate                                   | 🔴 **COMPLEX** - Multiple certificates          | 🟡 **MODERATE** - Wildcard certificate       |
+| **Application Changes**       | 🔴 **REQUIRED** - Apps must handle base paths                        | 🟢 **NONE** - Apps work as-is                   | 🟢 **NONE** - Apps work as-is                |
+| **Cost**                      | 🟢 **LOW** - Single load balancer                                    | 🔴 **HIGH** - Multiple hostnames = higher costs | 🟡 **MODERATE** - Single wildcard cert       |
+| **Cookie/Session Management** | 🔴 **CONFLICTS** - Shared domain causes issues                       | 🟢 **ISOLATED** - Separate cookie domains       | 🟡 **CONFIGURABLE** - Can share or isolate   |
+| **WebSocket Support**         | 🔴 **PROBLEMATIC** - Many libraries don't handle paths               | 🟢 **PERFECT** - Full support                   | 🟢 **PERFECT** - Full support                |
+| **CORS Issues**               | 🟢 **NONE** - Same origin                                            | 🟡 **SOME** - Cross-origin requests             | 🟡 **SOME** - Cross-subdomain requests       |
+| **SEO Impact**                | 🟡 **MODERATE** - Paths affect ranking                               | 🔴 **SEPARATE** - Different domains compete     | 🟡 **MODERATE** - Subdomains share authority |
+| **Debugging Complexity**      | 🔴 **HIGH** - Path conflicts hard to trace                           | 🟢 **LOW** - Clear separation                   | 🟢 **LOW** - Clear separation                |
+| **Legacy App Compatibility**  | 🔴 **POOR** - Often requires code changes                            | 🟢 **EXCELLENT** - Works with any app           | 🟢 **EXCELLENT** - Works with any app        |
 
 ## Specific Real-Time Production Issues
 

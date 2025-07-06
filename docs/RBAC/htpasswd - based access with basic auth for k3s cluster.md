@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-01</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 To set up **user-based access with basic auth (htpasswd)** for your **K3s cluster**, follow this secure and simple approach using the Kubernetes **basic-auth plugin via Ingress (e.g., Traefik)** or directly via **Kubernetes API with RBAC**.
 
 ## ❗ Important: K3s does **not** support `--basic-auth-file`

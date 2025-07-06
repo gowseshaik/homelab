@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-01</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ### Why Hardway
 Hard disagree because it depends on your goals. Kubernetes the hard way will help you troubleshoot some weird problems with k8s.
 

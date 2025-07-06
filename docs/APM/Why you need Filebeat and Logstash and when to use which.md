@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-29</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 Here's a simple breakdown of **why you need Filebeat and Logstash**, and **when to use which**:
 
 |Tool|Purpose|When to Use|Pros|

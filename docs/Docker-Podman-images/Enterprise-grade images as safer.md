@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 Yes, it's **normal** for UBI (Universal Base Image) images to increase a bit in size when adding packages like `unzip`.
 ### 📌 Details:
 

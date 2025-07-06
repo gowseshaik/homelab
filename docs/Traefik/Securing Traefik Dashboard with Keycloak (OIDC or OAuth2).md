@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 # Securing Traefik Dashboard with Keycloak (OIDC/OAuth2)
 
 Yes, you can definitely use Keycloak instead of basic auth to secure your Traefik dashboard. This is a more secure and modern approach using OIDC/OAuth2. Here's how to set it up:

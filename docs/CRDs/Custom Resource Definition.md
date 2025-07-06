@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 - Sealed Secrets has a CRD `SealedSecret` and a controller that watches SealedSecret objects and creates Secrets.
 - The CRD is just the schema.
 - The controller does the work.

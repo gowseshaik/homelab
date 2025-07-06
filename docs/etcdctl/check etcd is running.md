@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-01</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 ```bash
 gouse@gouse:~$ etcdctl put foo "bar" {"level":"warn","ts":"2025-06-13T18:12:52.857946+0300","logger":"etcd-client","caller":"v3@v3.5.13/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"etcd-endpoints://0xc0005a2000/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: last connection error: connection error: desc = \"transport: Error while dialing: dial tcp 127.0.0.1:2379: connect: connection refused\""} Error: context deadline exceeded
 ```

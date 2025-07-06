@@ -1,5 +1,6 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 Here's a table summarizing **Deployment Strategies** with the **What, Why, When, and How (W3H)** breakdown:  
-	
+
 | **Strategy**  | **What?** | **Why?** | **When?** | **How?** |
 |--------------|----------|----------|----------|----------|
 | **Rolling Update (Default)** | Gradually replaces old Pods with new ones in phases. | Ensures zero downtime during updates. | When high availability is critical (e.g., production environments). | Controlled via `maxUnavailable` (how many Pods can be down) and `maxSurge` (how many extra Pods can be created). |

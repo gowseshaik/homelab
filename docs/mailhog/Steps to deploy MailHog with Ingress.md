@@ -1,7 +1,5 @@
-Here are the **full steps** to deploy **MailHog with Ingress via Traefik** on a **k3d cluster** using port 80.
-
----
-
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+Below are the **full steps** to deploy **MailHog with Ingress via Traefik** on a **k3d cluster** using port 80.
 ### ✅ Step 1: Create `k3d` cluster with port 80 mapped
 
 ```yaml
@@ -19,22 +17,13 @@ ports:
 k3d cluster create --config k3d-mailhog.yaml
 ```
 
----
-
 ### ✅ Step 2: Deploy Traefik (if not already)
-
 Traefik is installed by default with `k3d`. Check with:
-
 ```bash
 kubectl get pods -n kube-system | grep traefik
 ```
-
 If not, install manually via Helm or manifest.
-
----
-
 ### ✅ Step 3: Create MailHog Deployment and Service
-
 ```yaml
 # file: mailhog-deployment.yaml
 apiVersion: apps/v1
@@ -78,10 +67,7 @@ spec:
 kubectl apply -f mailhog-deployment.yaml
 ```
 
----
-
 ### ✅ Step 4: Create Ingress for Traefik
-
 ```yaml
 # file: mailhog-ingress.yaml
 apiVersion: networking.k8s.io/v1
@@ -107,25 +93,12 @@ spec:
 ```bash
 kubectl apply -f mailhog-ingress.yaml
 ```
-
----
-
 ### ✅ Step 5: Add local DNS for `mailhog.local`
-
 Edit `/etc/hosts`:
-
 ```
 127.0.0.1 mailhog.local
 ```
-
----
-
 ### ✅ Step 6: Access MailHog
-
 Open in browser:  
 `http://mailhog.local` → Web UI  
 SMTP will be available at `mailhog.local:1025` (for apps)
-
----
-
-Let me know if you want the same with TLS (HTTPS) using Traefik + cert-manager.

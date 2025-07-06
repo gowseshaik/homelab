@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ### **Traefik Dashboard: Visibility vs. Administration**
 Yes, by default, the **Traefik Dashboard** is primarily for **visibility and monitoring**—it displays routing configurations, services, middlewares, and HTTP traffic metrics. However, **it does not allow direct administration** (e.g., modifying routes, adding TLS, or changing load-balancing rules) unless explicitly configured for write access (which is **not recommended** for security reasons).
 
