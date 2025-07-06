@@ -1,7 +1,7 @@
-updated: 2025-07-06T10:mm:ssZ
-author: Gouse Shaik
----
-created: <% tp.file.creation_date("YYYY-MM-DDTHH:mm:ssZ") %>
-updated: 2025-07-06T10:mm:ssZ
+**`Created`**: <% tp.file.creation_date("YYYY-MM-DD") %>  
+**`Updated`**: <% tp.date.now("YYYY-MM-DD") %>  
+**`Author`**: **Gouse Shaik**
+
+updated: 2025-07-06T11:mm:ssZ
 author: Gouse Shaik
 ---

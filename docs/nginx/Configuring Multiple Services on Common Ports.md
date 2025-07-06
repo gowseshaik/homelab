@@ -1,4 +1,5 @@
 
+
 When you need to expose multiple services through the same ports (80 for HTTP or 443 for HTTPS), you'll use **name-based virtual hosting** in Nginx. Here's how to set this up properly:
 
 ## Solution: Name-Based Virtual Hosting

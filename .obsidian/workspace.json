@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/git/View your configured for Git.md",
+                "file": "docs/Alertmanager/how to configure Alertmanager on K3d.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "View your configured for Git"
+              "title": "how to configure Alertmanager on K3d"
             }
           }
         ]
@@ -164,18 +164,24 @@
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "templater-obsidian:Templater": false
+      "templater-obsidian:Templater": false,
+      "obsidian-git:Open Git source control": false
     }
   },
   "active": "e87aa31bb6cd3006",
   "lastOpenFiles": [
+    "docs/Storage/Storage Types.md",
+    "docs/Storage/Common Kubernetes storage types.md",
+    "docs/Storage/About StorageClass fields.md",
     "docs/templates/frontmatter.md",
-    "docs/templates",
-    "docs/Templater",
-    "docs/git/git errors.md",
+    "docs/nginx/Configuring Multiple Services on Common Ports.md",
+    "docs/git/Untitled.md",
+    "docs/Alertmanager/Untitled.md",
+    "docs/nginx/gouse test.md",
+    "docs/nginx/Installing and Configuring Nginx on Ubuntu.md",
     "docs/git/View your configured for Git.md",
+    "docs/git/git errors.md",
     "site/search/search_index.json",
     "site/search",
     "site/velero - for migration/Velero with kind/index.html",
@@ -184,14 +190,16 @@
     "site/python/python pyautogui/index.html",
     "site/python/python pyautogui",
     "site/python/mkdocs to github pages/index.html",
+    "site/python/mkdocs to github pages",
+    "site/python",
     "site/assets/images/favicon.png",
     "site/images/{E0C131A8-497C-493E-A36A-ED5A2BF6BBF5}.png",
     "site/images/{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png",
     "site/images/{69A7335F-2DAF-486C-8B60-0DD83CDAA5A7}.png",
     "site/images/{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png",
     "site/images/{12236FE0-7B72-4054-9B80-86E6560C67B0}.png",
-    "site/images/Storage-to-pvs.png",
     "site/images/Pasted-image-20250621165152.png",
+    "site/images/Storage-to-pvs.png",
     "site/images/logo-design-4.png",
     "site/images/Kubernetes-history.png",
     "test.md",
@@ -200,8 +208,6 @@
     "docs/about.md",
     "docs/images.md",
     "docs/Kubernetes/Kubernetes history.md",
-    "docs/Storage/Common Kubernetes storage types.md",
-    "docs/Storage/About StorageClass fields.md",
     "docs/Loadbalancers Types/Reverse proxy means.md",
     "docs/Loadbalancers Types/Loadbalancer Types.md",
     "docs/Longhorn/Using Longhorn Storage with Kind Cluster.md",
@@ -211,12 +217,6 @@
     "docs/Longhorn/Longhorn with loopback file on Kind.md",
     "docs/Longhorn/Longhorn in Kubernetes.md",
     "docs/Longhorn/Longhorn for stateful applications.md",
-    "docs/Longhorn/Longhorn Access Modes & Volume Resizing Guide.md",
-    "docs/Longhorn/Hands-On - Deploying Longhorn on Kubernetes.md",
-    "docs/images/Kube.md",
-    "docs/Pods/Kubernetes Pod Architecture & Lifecycle.md",
-    "docs/Docker-Podman-images/Limitations of Containers.md",
-    "docs/Sealed-Secrets/Steps to push sealed secrets for an app.md",
     "Untitled.canvas"
   ]
 }
