@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/python/python%20pyautogui/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Docker-Podman-images/Limitations%20of%20Containers/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Python pyautogui - Gouse Shaik</title>
+        <title>Limitations of Containers - Gouse Shaik</title>
       
     
     
@@ -69,11 +69,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#1-freeze-the-script-as-a-standalone-exe" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -105,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Python pyautogui
+              Limitations of Containers
             
           </span>
         </div>
@@ -354,7 +349,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/python/python pyautogui.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Docker-Podman-images/Limitations of Containers.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,93 +357,170 @@
   
 
 
-  <h1>Python pyautogui</h1>
+  <h1>Limitations of Containers</h1>
 
-<div class="highlight"><pre><span></span><code>You&#39;re hitting the **PEP 668** protection — Ubuntu is blocking system-wide `pip install` to avoid breaking Python.
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>python3 -m venv ~/pyauto-env
-source ~/pyauto-env/bin/activate
-pip install pyautogui
-
-python3 -m venv pyauto-env
-source ./pyauto-env/bin/activate
-pip install pyautogui
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>import pyautogui
-import time
-
-# Give time to switch to desired app
-time.sleep(3)
-
-# Move to specific screen location and click (adjust x, y)
-pyautogui.moveTo(500, 400)
-pyautogui.click()
-
-# Wait a bit
-time.sleep(1)
-
-# Close window (Alt+F4 for Windows/Linux)
-pyautogui.hotkey(&#39;alt&#39;, &#39;f4&#39;)
-
-
-python your_script.py
-</code></pre></div>
-<p>To run your PyAutoGUI script as a <strong>Windows background package</strong>, follow these steps:</p>
-<hr />
-<h3 id="1-freeze-the-script-as-a-standalone-exe">✅ 1. Freeze the script as a standalone <code>.exe</code><a class="headerlink" href="#1-freeze-the-script-as-a-standalone-exe" title="Permanent link">&para;</a></h3>
-<p>Install <code>pyinstaller</code>:</p>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>pyinstaller
-</code></pre></div>
-<p>Create the <code>.exe</code>:</p>
-<div class="highlight"><pre><span></span><code>pyinstaller<span class="w"> </span>--noconsole<span class="w"> </span>--onefile<span class="w"> </span>demo.py
-</code></pre></div>
 <ul>
-<li>
-<p><code>--noconsole</code>: hides terminal window (runs silently in background)</p>
-</li>
-<li>
-<p><code>--onefile</code>: packs everything into a single <code>.exe</code></p>
-</li>
-<li>
-<p>Output will be in <code>dist/demo.exe</code></p>
-</li>
+<li><code>Lack of Self Healing</code> : No built-in mechanism to automatically re-create containers</li>
+<li><code>High Availability Challenges</code>:  When server fails, entire application becomes unavailable, causing significant downtime</li>
+<li><code>Scaling hurdles</code> :  Lacks automatic scaling</li>
+<li><code>Load Balancing Challenges</code> : Doesn't directly handle load balancing</li>
+<li><code>Storage Constraints</code> : Rely on the underlying host system's storage resources</li>
 </ul>
-<hr />
-<h3 id="2-auto-run-in-background-optional">✅ 2. Auto-run in background (optional)<a class="headerlink" href="#2-auto-run-in-background-optional" title="Permanent link">&para;</a></h3>
-<p>To run at startup silently:</p>
-<ul>
-<li>
-<p>Copy <code>demo.exe</code> to:</p>
-<div class="highlight"><pre><span></span><code>C:\Users\&lt;YourUsername&gt;\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
-</code></pre></div>
-</li>
-</ul>
-<hr />
-<h3 id="3-run-minimized-or-background-safe-avoid-popups">✅ 3. Run minimized or background-safe (avoid popups)<a class="headerlink" href="#3-run-minimized-or-background-safe-avoid-popups" title="Permanent link">&para;</a></h3>
-<p>Update your <code>demo.py</code> to avoid mouse jumps while idle:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pyautogui</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-
-<span class="n">pyautogui</span><span class="o">.</span><span class="n">FAILSAFE</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># prevent crash on screen corner</span>
-<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># time to move mouse away if needed</span>
-
-<span class="n">pyautogui</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
-<span class="n">pyautogui</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<span class="n">pyautogui</span><span class="o">.</span><span class="n">hotkey</span><span class="p">(</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;f4&#39;</span><span class="p">)</span>
-</code></pre></div>
-<hr />
-<p>Let me know if you want to:</p>
-<ul>
-<li>
-<p>Add a tray icon to stop it</p>
-</li>
-<li>
-<p>Auto-close specific app by name</p>
-</li>
-<li>
-<p>Make a config file for coordinates</p>
-</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th><strong>Limitation</strong></th>
+<th>**Why It Happens **</th>
+<th><strong>Impact</strong></th>
+<th><strong>Common Bias / Assumption</strong></th>
+<th><strong>Solution / Best Practice</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span style="color:red">Limited OS-level isolation</span></td>
+<td>Containers share host kernel</td>
+<td>Less secure than VMs</td>
+<td>"Containers are like lightweight VMs"</td>
+<td>Use rootless containers, user namespaces, SELinux/AppArmor</td>
+</tr>
+<tr>
+<td><span style="color:orange">Resource contention</span></td>
+<td>Shared CPU/memory between containers</td>
+<td>One container can starve others</td>
+<td>"Kubernetes handles everything"</td>
+<td>Set CPU/memory limits/requests in pod specs</td>
+</tr>
+<tr>
+<td><span style="color:red">Weak security boundaries</span></td>
+<td>Linux namespaces/cgroups offer process-level, not full system isolation</td>
+<td>Exploits can affect host or other containers</td>
+<td>"Containers are secure by default"</td>
+<td>Enable seccomp, AppArmor, non-root users, and readonly filesystems</td>
+</tr>
+<tr>
+<td><span style="color:purple">No persistence by default</span></td>
+<td>Containers are ephemeral/stateless</td>
+<td>Data loss on restarts or removal</td>
+<td>"Containers just work out of the box"</td>
+<td>Mount persistent volumes using PVCs or bind mounts</td>
+</tr>
+<tr>
+<td><span style="color:teal">Networking is complex</span></td>
+<td>Virtual networks and overlays are used</td>
+<td>Harder to debug and manage</td>
+<td>"Networking is auto-managed"</td>
+<td>Use well-documented CNI plugins; visualize with tools like <code>weave</code>, <code>cilium</code>, <code>lens</code></td>
+</tr>
+<tr>
+<td><span style="color:gray">Logging is ephemeral</span></td>
+<td>Logs disappear when containers stop</td>
+<td>Lost logs = lost visibility</td>
+<td>"Container logs are always available"</td>
+<td>Use centralized logging (EFK, Loki, Fluentbit)</td>
+</tr>
+<tr>
+<td><span style="color:brown">Poor for stateful workloads</span></td>
+<td>Stateless is default; state requires extra setup</td>
+<td>Data consistency problems, scaling challenges</td>
+<td>"Just deploy databases in containers"</td>
+<td>Use StatefulSets and persistent volumes; or external DBaaS</td>
+</tr>
+<tr>
+<td><span style="color:darkblue">Cold start issues</span></td>
+<td>Images must be pulled and initialized</td>
+<td>Higher latency on scale-up</td>
+<td>"Containers start instantly"</td>
+<td>Pre-pull images, reduce size, keep base image in memory</td>
+</tr>
+<tr>
+<td><span style="color:crimson">Vulnerable images</span></td>
+<td>Base images may contain CVEs or malware</td>
+<td>Security risk, compliance issues</td>
+<td>"Using Alpine means it's secure"</td>
+<td>Scan with Trivy, Grype; use trusted sources</td>
+</tr>
+<tr>
+<td><span style="color:darkgreen">Image bloat / dependency hell</span></td>
+<td>Unnecessary libs included in images</td>
+<td>Larger attack surface, slower builds</td>
+<td>"Dockerfile is enough"</td>
+<td>Use multi-stage builds; prefer <code>distroless</code>, minimal images</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><strong>Misunderstood</strong></th>
+<th><strong>Why It's Misleading or Dangerous</strong></th>
+<th><strong>Reality Check / Correction</strong></th>
+<th><strong>Fix It</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span style="color:orangered">Containers are like lightweight VMs</span></td>
+<td>Containers share kernel, unlike isolated VMs</td>
+<td>Containers are process-isolated, not fully OS-isolated</td>
+<td>Use user namespaces, seccomp, rootless mode</td>
+</tr>
+<tr>
+<td><span style="color:darkorange">Kubernetes handles everything, I don’t need to worry</span></td>
+<td>K8s doesn't enforce security, resource limits, logging</td>
+<td>You must configure policies, limits, and monitoring</td>
+<td>Set resource requests/limits, apply PodSecurityPolicies, enable logging</td>
+</tr>
+<tr>
+<td><span style="color:goldenrod">Using containers ensures scalability</span></td>
+<td>Badly designed apps won’t scale</td>
+<td>Stateless, loosely coupled design is required</td>
+<td>Build stateless microservices, externalize state, use health checks</td>
+</tr>
+<tr>
+<td><span style="color:crimson">All container images are safe to use</span></td>
+<td>Public images may have CVEs or malware</td>
+<td>Always scan and verify base images</td>
+<td>Use trusted registries, scan with Trivy/Grype, sign images</td>
+</tr>
+<tr>
+<td><span style="color:firebrick">Once it's containerized, it’s production-ready</span></td>
+<td>Dev/test success doesn’t mean it's hardened</td>
+<td>Security, monitoring, and compliance need to be applied</td>
+<td>Use image policies, observability stack, vulnerability scanners</td>
+</tr>
+<tr>
+<td><span style="color:darkslateblue">Dockerfile is enough to define the app</span></td>
+<td>No lifecycle, logging, recovery, scaling in Dockerfile</td>
+<td>Use Helm charts or K8s manifests</td>
+<td>Define full app spec using Helm/Operators</td>
+</tr>
+<tr>
+<td><span style="color:teal">One container = one service = done</span></td>
+<td>Ignores lifecycle, health, state, updates</td>
+<td>Requires orchestration, health checks, rollbacks</td>
+<td>Use readiness/liveness probes, rolling deployments, sidecars if needed</td>
+</tr>
+<tr>
+<td><span style="color:gray">Container logs are always accessible</span></td>
+<td>Logs vanish on restart unless redirected</td>
+<td>Use centralized logging stack</td>
+<td>Deploy EFK/Loki, use persistent log volumes or logging agents</td>
+</tr>
+<tr>
+<td><span style="color:brown">Containers are secure by default</span></td>
+<td>Defaults allow root, no seccomp, no network rules</td>
+<td>Security hardening must be done explicitly</td>
+<td>Apply securityContext, AppArmor, rootless containers</td>
+</tr>
+<tr>
+<td><span style="color:green">Minimal base image = safe image</span></td>
+<td>Even Alpine or scratch can have CVEs</td>
+<td>Minimal != secure, must still be scanned</td>
+<td>Use distroless + image scanners regularly</td>
+</tr>
+</tbody>
+</table>
 
 
 
