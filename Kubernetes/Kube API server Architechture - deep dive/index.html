@@ -366,7 +366,7 @@
 
 <p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
 <p><img alt="Kube-API-server-Architechture-Diagram" src="../../images/Kube-API-server-Architechture-Diagram.png" /></p>
-<p>Let's go into <strong>deep-dive explanation</strong> of the diagram, walking you through the <strong>complete internal workflow of Kubernetes from scratch</strong>, including basics of each resource/component being used by kubernetes</p>
+<p>Let's go into <strong>deep-dive explanation</strong> of the diagram, walking you through the <strong>complete internal workflow of Kubernetes from scratch</strong>, including basics of each resource/component being used by Kubernetes</p>
 <h2 id="1-what-is-kubernetes">🧱 1. <strong>What Is Kubernetes?</strong><a class="headerlink" href="#1-what-is-kubernetes" title="Permanent link">&para;</a></h2>
 <p>Kubernetes (K8s) is an open-source <strong>container orchestration system</strong> that automates:</p>
 <ul>
@@ -474,9 +474,7 @@
 <p><img alt="{12236FE0-7B72-4054-9B80-86E6560C67B0}.png" src="../../images/%7B12236FE0-7B72-4054-9B80-86E6560C67B0%7D.png" /></p>
 <h3 id="step-6-scheduler-binds-pod-to-a-node">📦 Step 6: Scheduler Binds Pod to a Node<a class="headerlink" href="#step-6-scheduler-binds-pod-to-a-node" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>The <strong>Scheduler</strong>:</p>
-<ul>
+<li>The <strong>Scheduler</strong>:<ul>
 <li>Detects the new unassigned pod.</li>
 <li>Evaluates all available nodes.</li>
 <li>Based on resources, taints/tolerations, node selectors, and affinity rules → selects a node.</li>
@@ -501,9 +499,7 @@
 <p><img alt="{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png" src="../../images/%7B58929F8F-D4FD-4F7B-B8D4-08FC574675E1%7D.png" /></p>
 <h3 id="step-810-kube-proxy-configures-networking">🌐 Step 8–10: Kube-proxy Configures Networking<a class="headerlink" href="#step-810-kube-proxy-configures-networking" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p><strong>Kube-proxy</strong> sets up:</p>
-<ul>
+<li><strong>Kube-proxy</strong> sets up:<ul>
 <li>iptables or IPVS rules for service load-balancing.</li>
 <li>Ensures networking for the pod is in place.</li>
 <li>Handles traffic routing to/from the pod.</li>
@@ -512,9 +508,7 @@
 </ul>
 <h3 id="step-1112-internet-access">🌍 Step 11–12: Internet Access<a class="headerlink" href="#step-1112-internet-access" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>If the app needs internet:</p>
-<ul>
+<li>If the app needs internet:<ul>
 <li><strong>NAT / kube-proxy</strong> routes the traffic outside the cluster.</li>
 <li>The pod can access external services like databases, APIs, etc.</li>
 </ul>
