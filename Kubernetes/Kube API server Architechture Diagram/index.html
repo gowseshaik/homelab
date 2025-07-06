@@ -364,7 +364,7 @@
 
   <h1>Kube API server Architechture Diagram</h1>
 
-<p>![[Kube API server Architechture Diagram.png]]</p>
+<p>![[docs/images/Kube API server Architechture Diagram.png]]</p>
 <p>Let's go into <strong>deep-dive explanation</strong> of the diagram, walking you through the <strong>complete internal workflow of Kubernetes from scratch</strong>, including basics of each resource/component being used by kubernetes</p>
 <h2 id="1-what-is-kubernetes">🧱 1. <strong>What Is Kubernetes?</strong><a class="headerlink" href="#1-what-is-kubernetes" title="Permanent link">&para;</a></h2>
 <p>Kubernetes (K8s) is an open-source <strong>container orchestration system</strong> that automates:</p>
@@ -444,7 +444,7 @@
 </li>
 <li>
 <p>The request hits the <strong>Kubernetes API Server</strong>.
-![[{69A7335F-2DAF-486C-8B60-0DD83CDAA5A7}.png]]</p>
+![[docs/images/{69A7335F-2DAF-486C-8B60-0DD83CDAA5A7}.png]]</p>
 </li>
 </ul>
 <h3 id="step-2-api-server-receives-request">📥 Step 2: API Server Receives Request<a class="headerlink" href="#step-2-api-server-receives-request" title="Permanent link">&para;</a></h3>
@@ -472,7 +472,7 @@
 <li>The <strong>Controller Manager</strong> continuously watches etcd.</li>
 <li>It notices a new pod spec and checks if the current state matches the desired state.</li>
 <li>If not, it triggers actions (e.g., create a pod).
-![[{12236FE0-7B72-4054-9B80-86E6560C67B0}.png]]</li>
+![[docs/images/{12236FE0-7B72-4054-9B80-86E6560C67B0}.png]]</li>
 </ul>
 <h3 id="step-6-scheduler-binds-pod-to-a-node">📦 Step 6: Scheduler Binds Pod to a Node<a class="headerlink" href="#step-6-scheduler-binds-pod-to-a-node" title="Permanent link">&para;</a></h3>
 <ul>
@@ -497,7 +497,7 @@
 <li>Pulls the container images (from Docker Hub or private registry).</li>
 <li>Creates containers using the container runtime (containerd, CRI-O, etc).</li>
 <li>Starts the pod.
-![[{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png]]</li>
+![[docs/images/{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png]]</li>
 </ul>
 </li>
 </ul>
@@ -519,7 +519,7 @@
 <ul>
 <li><strong>NAT / kube-proxy</strong> routes the traffic outside the cluster.</li>
 <li>The pod can access external services like databases, APIs, etc.
-![[{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png]]</li>
+![[docs/images/{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png]]</li>
 </ul>
 </li>
 </ul>
@@ -539,7 +539,7 @@
 <p>Helps prevent split-brain scenarios and ensures fault tolerance.</p>
 </li>
 </ul>
-<p>![[{E0C131A8-497C-493E-A36A-ED5A2BF6BBF5}.png]]</p>
+<p>![[docs/images/{E0C131A8-497C-493E-A36A-ED5A2BF6BBF5}.png]]</p>
 <h2 id="summary-kubernetes-control-plane-data-flow">🔁 Summary – Kubernetes Control Plane Data Flow<a class="headerlink" href="#summary-kubernetes-control-plane-data-flow" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>User YAML -&gt; API Server -&gt; ETCD -&gt; Controller Manager -&gt; Scheduler -&gt; Kubelet -&gt; Containers (Pod)
 </code></pre></div>
