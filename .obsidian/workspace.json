@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/Docker-Podman-images/Limitations of Containers.md",
+                "file": "docs/Kubernetes/Kube API server Architechture Diagram.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Limitations of Containers"
+              "title": "Kube API server Architechture Diagram"
             }
           }
         ]
@@ -170,6 +170,21 @@
   },
   "active": "e87aa31bb6cd3006",
   "lastOpenFiles": [
+    "docs/images/{69A7335F-2DAF-486C-8B60-0DD83CDAA5A7}.png",
+    "docs/Kubernetes/Kube API server Architechture Diagram.md",
+    "docs/images/{E0C131A8-497C-493E-A36A-ED5A2BF6BBF5}.png",
+    "docs/images/{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png",
+    "docs/images/{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png",
+    "docs/images/{12236FE0-7B72-4054-9B80-86E6560C67B0}.png",
+    "docs/Kubernetes/Kubernetes history.md",
+    "docs/Pods/Kubernetes Pod Architecture & Lifecycle.md",
+    "docs/images/Pasted image 20250621165152.png",
+    "docs/images/Pasted image 20250621164906.png",
+    "docs/images/K8s Pod Architecture & Lifecycle.png",
+    "docs/images/Kube API server Architechture Diagram.png",
+    "docs/images/K8s Periodic Table.jpg",
+    "docs/Docker-Podman-images/Limitations of Containers.md",
+    "docs/Kubernetes",
     "site/search/search_index.json",
     "site/search",
     "site/velero - for migration/Velero with kind/index.html",
@@ -179,15 +194,6 @@
     "site/python/python pyautogui",
     "site/python/mkdocs to github pages/index.html",
     "site/python/mkdocs to github pages",
-    "site/python",
-    "site/nginx/Installing and Configuring Nginx on Ubuntu/index.html",
-    "site/assets/images/favicon.png",
-    "site/images/logo-design-4.png",
-    "site/images/generated-image-1.png",
-    "site/images/Storage-to-pvs.png",
-    "site/images/Pasted image 20250621165152.png",
-    "site/images/Pasted image 20250621164906.png",
-    "site/images/Argocd-Archtiecture.png",
     "docs/git/git errors.md",
     "docs/Sealed-Secrets/Steps to push sealed secrets for an app.md",
     "docs/Sealed-Secrets/Step By Step- Using Sealed Secrets with GitOps.md",
@@ -205,17 +211,10 @@
     "docs/ArgoCD/Common misunderstanding in ArgoCD Usage.md",
     "docs/ArgoCD/Argocd CLI.md",
     "docs/ArgoCD/ArgoCD Architecture.md",
-    "docs/Docker-Podman-images/Limitations of Containers.md",
     "docs/multipass/k8s with hard-way - overview.md",
-    "docs/images/Argocd-Archtiecture.png",
     "docs/ArgoCD/ArgoCD installation steps.md",
     "docs/multipass/Setup access your cluster from the host machine.md",
     "docs/multipass/k3s with HA in multipass.md",
-    "docs/Cluster Setup HA/Deploy HA Kubernetes Cluster on Linux using Rancher RKE2.md",
-    "docs/etcdctl/To take backup of etcd db with etcdctl tool.md",
-    "docs/nginx/Installing and Configuring Nginx on Ubuntu.md",
-    "docs/images/Pasted image 20250621164906.png",
-    "docs/images/Pasted image 20250621165152.png",
     "Untitled.canvas"
   ]
 }
