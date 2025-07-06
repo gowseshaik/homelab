@@ -362,7 +362,8 @@
   
 
 
-<p>Sure! Here's the final concise documentation on <strong>Using Longhorn with Kind cluster and storage behavior</strong>:</p>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+Sure! Here's the final concise documentation on <strong>Using Longhorn with Kind cluster and storage behavior</strong>:</p>
 <h1 id="using-longhorn-storage-with-kind-cluster">Using Longhorn Storage with Kind Cluster<a class="headerlink" href="#using-longhorn-storage-with-kind-cluster" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>Kind runs Kubernetes inside Docker containers, providing ephemeral nodes without persistent storage by default. To enable persistent volumes (PV) with dynamic provisioning, you can deploy Longhorn, a distributed block storage solution.</p>
@@ -385,7 +386,7 @@ mkfs.ext4<span class="w"> </span>/dev/loopX<span class="w">  </span><span class=
 mount<span class="w"> </span>/dev/loopX<span class="w"> </span>/mnt/longhorn
 </code></pre></div>
 <h3 id="kind-cluster-config-with-mounts">Kind Cluster Config with Mounts<a class="headerlink" href="#kind-cluster-config-with-mounts" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cluster</span>
+<p><div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cluster</span>
 <span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kind.x-k8s.io/v1alpha4</span>
 <span class="nt">nodes</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane</span>
@@ -397,11 +398,11 @@ mount<span class="w"> </span>/dev/loopX<span class="w"> </span>/mnt/longhorn
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/mnt/longhorn</span>
 <span class="w">    </span><span class="nt">containerPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/mnt/longhorn</span>
 </code></pre></div>
-<p>Create cluster using this config.</p>
+Create cluster using this config.</p>
 <h3 id="deploy-longhorn">Deploy Longhorn<a class="headerlink" href="#deploy-longhorn" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/longhorn/longhorn/v1.6.1/deploy/longhorn.yaml
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/longhorn/longhorn/v1.6.1/deploy/longhorn.yaml
 </code></pre></div>
-<p>Set Longhorn’s default data path to <code>/mnt/longhorn</code> in the Longhorn UI or via manifest.</p>
+Set Longhorn’s default data path to <code>/mnt/longhorn</code> in the Longhorn UI or via manifest.</p>
 <h2 id="3-storage-usage">3. Storage Usage<a class="headerlink" href="#3-storage-usage" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -427,14 +428,28 @@ mount<span class="w"> </span>/dev/loopX<span class="w"> </span>/mnt/longhorn
 <td>PVC stays Pending</td>
 <td>No storage provisioned</td>
 </tr>
+<tr>
+<td>## 4. Storage Expansion</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- Loopback file size <strong>does NOT auto-expand</strong>.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- To increase storage, manually create and mount a larger loopback file or add new devices.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- Real production environments use real disks/cloud storage which support dynamic expansion.</td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<h2 id="4-storage-expansion">4. Storage Expansion<a class="headerlink" href="#4-storage-expansion" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Loopback file size <strong>does NOT auto-expand</strong>.</li>
-<li>To increase storage, manually create and mount a larger loopback file or add new devices.</li>
-<li>Real production environments use real disks/cloud storage which support dynamic expansion.</li>
-</ul>
 <h2 id="5-recommendations">5. Recommendations<a class="headerlink" href="#5-recommendations" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Use Longhorn on Kind <strong>only for dev/test/demo</strong>.</li>

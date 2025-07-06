@@ -364,6 +364,7 @@
 
   <h1>Git errors</h1>
 
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 <div class="highlight"><pre><span></span><code><span class="o">(</span>.venv<span class="o">)</span><span class="w"> </span>gouse@gouse:~/Documents/homelab$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>main
 To<span class="w"> </span>https://github.com/gowseshaik/homelab.git
 <span class="w"> </span>!<span class="w"> </span><span class="o">[</span>rejected<span class="o">]</span><span class="w">        </span>main<span class="w"> </span>-&gt;<span class="w"> </span>main<span class="w"> </span><span class="o">(</span>non-fast-forward<span class="o">)</span>
@@ -372,7 +373,7 @@ hint:<span class="w"> </span>Updates<span class="w"> </span>were<span class="w">
 hint:<span class="w"> </span>its<span class="w"> </span>remote<span class="w"> </span>counterpart.<span class="w"> </span>If<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>integrate<span class="w"> </span>the<span class="w"> </span>remote<span class="w"> </span>changes,
 hint:<span class="w"> </span>use<span class="w"> </span><span class="s1">&#39;git pull&#39;</span><span class="w"> </span>before<span class="w"> </span>pushing<span class="w"> </span>again.
 hint:<span class="w"> </span>See<span class="w"> </span>the<span class="w"> </span><span class="s1">&#39;Note about fast-forwards&#39;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s1">&#39;git push --help&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>details.
-</code></pre></div>
+</code></pre></div></p>
 <p>You're getting this error because your local <code>main</code> branch is <strong>behind</strong> the remote <code>main</code> branch — probably due to new commits on GitHub that your local repo doesn't have.</p>
 <h3 id="run-this-to-fix">Run this to fix:<a class="headerlink" href="#run-this-to-fix" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>pull<span class="w"> </span>--rebase<span class="w"> </span>origin<span class="w"> </span>main<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>main

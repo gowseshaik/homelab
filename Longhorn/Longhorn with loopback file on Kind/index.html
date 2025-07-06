@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#w3h-longhorn-on-kind" class="md-skip">
+        <a href="#what" class="md-skip">
           Skip to content
         </a>
       
@@ -364,18 +364,16 @@
 
   <h1>Longhorn with loopback file on Kind</h1>
 
-<h3 id="w3h-longhorn-on-kind">📦 W3H: <strong>Longhorn on Kind</strong><a class="headerlink" href="#w3h-longhorn-on-kind" title="Permanent link">&para;</a></h3>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
 <h3 id="what">🔹 What:<a class="headerlink" href="#what" title="Permanent link">&para;</a></h3>
 <p>Run <a href="https://longhorn.io">Longhorn</a> (distributed block storage for Kubernetes) on a <strong>Kind cluster</strong>.</p>
 <h3 id="why">🔹 Why:<a class="headerlink" href="#why" title="Permanent link">&para;</a></h3>
 <p>To <strong>test or demo</strong> Longhorn in a local Kubernetes environment using containers (Kind) without provisioning real disks or cloud block storage.</p>
 <h3 id="when">🔹 When:<a class="headerlink" href="#when" title="Permanent link">&para;</a></h3>
-<p>Use only for:</p>
-<ul>
-<li><strong>Dev/test/demo</strong></li>
-<li>Learning how Longhorn works</li>
-<li>CI/CD pipeline checks (not real performance)</li>
-</ul>
+<p>Use only for:
+- <strong>Dev/test/demo</strong>
+- Learning how Longhorn works
+- CI/CD pipeline checks (not real performance)</p>
 <p>🛑 <strong>Not for production</strong> due to limitations of Kind (runs in Docker, lacks real disks).</p>
 <h3 id="how">🔹 How:<a class="headerlink" href="#how" title="Permanent link">&para;</a></h3>
 <table>
@@ -402,9 +400,12 @@
 <td>4.</td>
 <td><strong>Use StorageClass</strong> from Longhorn for PVCs</td>
 </tr>
+<tr>
+<td>### Example: loopback setup for Kind</td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<h3 id="example-loopback-setup-for-kind">Example: loopback setup for Kind<a class="headerlink" href="#example-loopback-setup-for-kind" title="Permanent link">&para;</a></h3>
 <h4 id="create-loop-disk">Create loop disk:<a class="headerlink" href="#create-loop-disk" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>/mnt/longhorn
 dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/zero<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/mnt/longhorn/longhorn-disk.img<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>1G<span class="w"> </span><span class="nv">count</span><span class="o">=</span><span class="m">10</span>

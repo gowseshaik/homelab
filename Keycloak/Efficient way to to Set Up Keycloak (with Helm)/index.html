@@ -364,27 +364,19 @@
 
   <h1>Efficient way to to Set Up Keycloak (with Helm)</h1>
 
-<p>Here's the most efficient way to set up Keycloak on a Kubernetes/OpenShift cluster using the official Helm chart.</p>
-<hr />
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
 <h3 id="steps-to-set-up-keycloak-with-helm">✅ <strong>Steps to Set Up Keycloak (with Helm)</strong><a class="headerlink" href="#steps-to-set-up-keycloak-with-helm" title="Permanent link">&para;</a></h3>
 <ol>
-<li>
-<p><strong>Add Bitnami repo</strong></p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>bitnami<span class="w"> </span>https://charts.bitnami.com/bitnami
+<li><strong>Add Bitnami repo</strong>
+    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>bitnami<span class="w"> </span>https://charts.bitnami.com/bitnami
 helm<span class="w"> </span>repo<span class="w"> </span>update
-</code></pre></div>
-</li>
-<li>
-<p><strong>Create namespace</strong></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>keycloak
-</code></pre></div>
-</li>
-<li>
-<p><strong>Install Keycloak</strong>
-Yes — since you're using <strong>k3d with the default Traefik ingress controller</strong>, you should expose Keycloak via an <strong>Ingress</strong>.</p>
-</li>
+</code></pre></div></li>
+<li><strong>Create namespace</strong>
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>keycloak
+</code></pre></div></li>
+<li><strong>Install Keycloak</strong>
+Yes — since you're using <strong>k3d with the default Traefik ingress controller</strong>, you should expose Keycloak via an <strong>Ingress</strong>.</li>
 </ol>
-<hr />
 <h3 id="steps-to-create-ingress-for-keycloak-on-k3d-with-traefik">✅ Steps to Create Ingress for Keycloak on k3d with Traefik<a class="headerlink" href="#steps-to-create-ingress-for-keycloak-on-k3d-with-traefik" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>Install Keycloak with hostname</strong>
@@ -448,29 +440,17 @@ To access Keycloak from outside the cluster execute the following commands:
 WARNING: There are &quot;resources&quot; sections in the chart not set. Using &quot;resourcesPreset&quot; is not recommended for production. For production installations, please set the following values according to your workload needs:
   - resources
 +info https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-</code></pre></div></p>
-<ol>
-<li>
-<p><strong>Add host entry (on your machine)</strong></p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;127.0.0.1 keycloak.local&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/hosts
+</code></pre></div>
+2. <strong>Add host entry (on your machine)</strong>
+    <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;127.0.0.1 keycloak.local&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/hosts
 get<span class="w"> </span>the<span class="w"> </span>ip<span class="w"> </span>from<span class="w"> </span>ingress<span class="w"> </span>deployed<span class="w"> </span><span class="k">for</span><span class="w"> </span>keycloak
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;172.18.0.2 keycloak.local&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/hosts
 </code></pre></div>
-</li>
-<li>
-<p><strong>Check ingress is created</strong></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ingress<span class="w"> </span>-n<span class="w"> </span>keycloak
+3. <strong>Check ingress is created</strong>
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ingress<span class="w"> </span>-n<span class="w"> </span>keycloak
 </code></pre></div>
-</li>
-<li>
-<p><strong>Access Keycloak</strong></p>
-<ul>
-<li>Open browser: <a href="http://keycloak.local">http://keycloak.local</a></li>
-</ul>
-</li>
-</ol>
-<hr />
-<p>Let me know if you need HTTPS (TLS) setup with Traefik too.</p>
+4. <strong>Access Keycloak</strong>
+    - Open browser: <a href="http://keycloak.local">http://keycloak.local</a></p>
 
 
 

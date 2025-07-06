@@ -364,7 +364,8 @@
 
   <h1>List of good tools to extract rar part files</h1>
 
-<p>Here's a list of good tools to extract <code>.part*.rar</code> files on Ubuntu:</p>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+Here's a list of good tools to extract <code>.part*.rar</code> files on Ubuntu:</p>
 <table>
 <thead>
 <tr>
@@ -406,26 +407,19 @@
 </blockquote>
 <p>Yes — <strong>just run <code>7z x filename.part1.rar</code></strong>, and it will:</p>
 <ul>
-<li>
-<p>✅ <strong>Automatically detect and extract all parts</strong> (<code>filename.part2.rar</code>, <code>part3.rar</code>, etc.)</p>
-</li>
-<li>
-<p>❗ All parts must be in the <strong>same directory</strong></p>
-</li>
-<li>
-<p>🚫 Do <strong>not</strong> run it on <code>part2.rar</code> or later — only <code>part1.rar</code> contains the header</p>
-</li>
+<li>✅ <strong>Automatically detect and extract all parts</strong> (<code>filename.part2.rar</code>, <code>part3.rar</code>, etc.)</li>
+<li>❗ All parts must be in the <strong>same directory</strong></li>
+<li>🚫 Do <strong>not</strong> run it on <code>part2.rar</code> or later — only <code>part1.rar</code> contains the header</li>
 </ul>
 <h3 id="example">Example:<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>7z<span class="w"> </span>x<span class="w"> </span>myarchive.part1.rar
 </code></pre></div>
-<p>Will extract the full content from:</p>
+<p>Will extract the full content from:
 <div class="highlight"><pre><span></span><code>myarchive.part1.rar
 myarchive.part2.rar
 myarchive.part3.rar
 ...
-</code></pre></div>
-<p>Let me know if it throws any error.</p>
+</code></pre></div></p>
 
 
 

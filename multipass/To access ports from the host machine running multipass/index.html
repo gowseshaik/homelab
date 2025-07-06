@@ -364,6 +364,7 @@
 
   <h1>To access ports from the host machine running multipass</h1>
 
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-29</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ufw
 If<span class="w"> </span>UFW<span class="w"> </span>is<span class="w"> </span>showing<span class="w"> </span>as<span class="w"> </span><span class="s2">&quot;inactive,&quot;</span><span class="w"> </span>you<span class="w"> </span>need<span class="w"> </span>to<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>it<span class="w"> </span>before<span class="w"> </span>allowing<span class="w"> </span>any<span class="w"> </span>ports.<span class="w"> </span>Follow<span class="w"> </span>these<span class="w"> </span>steps:
@@ -385,7 +386,7 @@ If<span class="w"> </span>you<span class="w"> </span>don<span class="s1">&#39;t 
 
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>iptables-persistent
 sudo<span class="w"> </span>netfilter-persistent<span class="w"> </span>save
-</code></pre></div>
+</code></pre></div></p>
 <h2 id="now-port-forwarding-to-multipass-vms-with-nginx">Now port forwarding to Multipass VMs with nginx<a class="headerlink" href="#now-port-forwarding-to-multipass-vms-with-nginx" title="Permanent link">&para;</a></h2>
 <p>Yes — if you don’t want to use <code>socat</code> with <code>nohup</code>, here are <strong>cleaner and better alternatives</strong> to forward port 5601 to <code>localhost</code>:</p>
 <h2 id="option-1-use-systemd-service-for-socat-cleaner-than-nohup">✅ Option 1: Use <code>systemd</code> service for socat (cleaner than <code>nohup</code>)<a class="headerlink" href="#option-1-use-systemd-service-for-socat-cleaner-than-nohup" title="Permanent link">&para;</a></h2>
@@ -411,16 +412,15 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">en
 <blockquote>
 <p>Now, Kibana is always available at <code>localhost:5601</code> and runs cleanly as a background service.</p>
 </blockquote>
-<hr />
 <h2 id="option-2-use-nginx-reverse-proxy-on-host-no-socat">✅ Option 2: Use <code>nginx</code> reverse proxy on host (No socat)<a class="headerlink" href="#option-2-use-nginx-reverse-proxy-on-host-no-socat" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Install nginx on host:</strong></li>
-</ol>
+<li>
+<p><strong>Install nginx on host:</strong>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nginx
-</code></pre></div>
-<ol>
-<li><strong>Create reverse proxy config:</strong></li>
-</ol>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Create reverse proxy config:</strong>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/nginx/sites-available/kibana<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">server {</span>
 <span class="s">    listen 5601;</span>
@@ -434,7 +434,9 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">en
 <span class="s">    }</span>
 <span class="s">}</span>
 <span class="s">EOF</span>
-</code></pre></div>
+</code></pre></div></p>
+</li>
+</ol>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/nginx/sites-available/elasticsearch<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">server {</span>
 <span class="s">    listen 9200;</span>
@@ -448,12 +450,12 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">en
 <span class="s">EOF</span>
 </code></pre></div>
 <ol>
-<li><strong>Enable site and reload nginx:</strong></li>
-</ol>
+<li><strong>Enable site and reload nginx:</strong>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/etc/nginx/sites-available/kibana<span class="w"> </span>/etc/nginx/sites-enabled/
 sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/etc/nginx/sites-available/elasticsearch<span class="w"> </span>/etc/nginx/sites-enabled/
 sudo<span class="w"> </span>nginx<span class="w"> </span>-t<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx
-</code></pre></div>
+</code></pre></div></li>
+</ol>
 <blockquote>
 <p>✅ Now open <code>http://localhost:5601</code> — it will reverse proxy to the Kibana inside the VM.</p>
 </blockquote>

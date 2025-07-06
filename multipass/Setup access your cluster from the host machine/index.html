@@ -364,22 +364,23 @@
 
   <h1>Setup access your cluster from the host machine</h1>
 
-<p>Follow these steps:</p>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+Follow these steps:</p>
 <h2 id="steps-to-access-k3s-cluster-from-host">✅ Steps to Access K3s Cluster from Host<a class="headerlink" href="#steps-to-access-k3s-cluster-from-host" title="Permanent link">&para;</a></h2>
 <h3 id="1-copy-kubeconfig-from-the-primary-node">1. <strong>Copy kubeconfig from the primary node</strong><a class="headerlink" href="#1-copy-kubeconfig-from-the-primary-node" title="Permanent link">&para;</a></h3>
-<p>You already did this in the script:</p>
+<p>You already did this in the script:
 <div class="highlight"><pre><span></span><code>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cp1<span class="w"> </span>--<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/rancher/k3s/k3s.yaml<span class="w"> </span>&gt;<span class="w"> </span>kubeconfig
 
 <span class="c1"># for kubeadm</span>
 mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$HOME</span>/.kube
 sudo<span class="w"> </span>cp<span class="w"> </span>-i<span class="w"> </span>/etc/kubernetes/admin.conf<span class="w"> </span><span class="nv">$HOME</span>/.kube/config
 sudo<span class="w"> </span>chown<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="w"> </span><span class="nv">$HOME</span>/.kube/config<span class="w"> </span>I
-</code></pre></div>
+</code></pre></div></p>
 <h3 id="2-update-server-ip-in-kubeconfig">2. <strong>Update server IP in kubeconfig</strong><a class="headerlink" href="#2-update-server-ip-in-kubeconfig" title="Permanent link">&para;</a></h3>
-<p>Replace <code>127.0.0.1</code> with the actual IP of <code>cp1</code>:</p>
+<p>Replace <code>127.0.0.1</code> with the actual IP of <code>cp1</code>:
 <div class="highlight"><pre><span></span><code><span class="nv">CP1_IP</span><span class="o">=</span><span class="k">$(</span>multipass<span class="w"> </span>info<span class="w"> </span>cp1<span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.info[&quot;cp1&quot;].ipv4[0]&#39;</span><span class="k">)</span>
 sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/127.0.0.1/</span><span class="si">${</span><span class="nv">CP1_IP</span><span class="si">}</span><span class="s2">/g&quot;</span><span class="w"> </span>kubeconfig
-</code></pre></div>
+</code></pre></div></p>
 <h3 id="3-set-kubeconfig-environment-variable">3. <strong>Set KUBECONFIG environment variable</strong><a class="headerlink" href="#3-set-kubeconfig-environment-variable" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">#its a customized kube config file</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$PWD</span>/kubeconfig
@@ -390,13 +391,13 @@ sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/12
 <h3 id="4-test-access-from-host">4. <strong>Test access from host</strong><a class="headerlink" href="#4-test-access-from-host" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
 </code></pre></div>
-<p>You should see:</p>
+<p>You should see:
 <div class="highlight"><pre><span></span><code>NAME      STATUS   ROLES                  AGE   VERSION
 cp1       Ready    control-plane,master   5m    v1.xx.x
 cp2       Ready    control-plane,master   4m    v1.xx.x
 worker1   Ready    &lt;none&gt;                 3m    v1.xx.x
 worker2   Ready    &lt;none&gt;                 3m    v1.xx.x
-</code></pre></div>
+</code></pre></div></p>
 <p>✅ Done — you're now accessing the HA cluster from your <strong>Ubuntu host directly</strong>.</p>
 
 
