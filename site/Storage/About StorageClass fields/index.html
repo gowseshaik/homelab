@@ -359,6 +359,10 @@
 
   <h1>About StorageClass fields</h1>
 
+<p><strong><code>Created</code></strong>: 2025-06-22<br />
+<strong><code>Updated</code></strong>: 2025-07-06<br />
+<strong><code>Author</code></strong>: <strong>Gouse Shaik</strong></p>
+<hr />
 <table>
 <thead>
 <tr>
@@ -383,13 +387,23 @@
 <td>Lets you grow the size of a volume after the PVC is already created</td>
 <td>• <code>true</code> – you can increase PVC’s storage size• <code>false</code> – size is fixed once PVC is made</td>
 </tr>
+<tr>
+<td>- <strong>Use <code>Delete</code></strong> reclaimPolicy if you want cleanup to happen automatically.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- <strong>Use <code>WaitForFirstConsumer</code></strong> bindingMode for StatefulSets or multi-zone clusters so the volume shows up on the pod’s node.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- <strong>Set allowVolumeExpansion to <code>true</code></strong> if you expect to need more space later.</td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<ul>
-<li><strong>Use <code>Delete</code></strong> reclaimPolicy if you want cleanup to happen automatically.</li>
-<li><strong>Use <code>WaitForFirstConsumer</code></strong> bindingMode for StatefulSets or multi-zone clusters so the volume shows up on the pod’s node.</li>
-<li><strong>Set allowVolumeExpansion to <code>true</code></strong> if you expect to need more space later.</li>
-</ul>
 
 
 

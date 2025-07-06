@@ -1,7 +1,9 @@
 ---
 author: Gouse Shaik
-date: 2025-07-06
+created: 2025-07-06T11:mm:ssZ
+updated: 2025-07-06T11:mm:ssZ
 ---
+
 # Knowledge Base
 
 ## Api-resources
@@ -248,6 +250,9 @@ date: 2025-07-06
 ## Python
 - [mkdocs to github pages](python/mkdocs to github pages.md)
 - [python pyautogui](python/python pyautogui.md)
+
+## Templates
+- [frontmatter](templates/frontmatter.md)
 
 ## Velero - for migration
 - [Velero with kind](velero - for migration/Velero with kind.md)
