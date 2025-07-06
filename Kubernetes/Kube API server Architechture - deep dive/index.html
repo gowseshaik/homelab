@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Kubernetes/Kube%20API%20server%20Architechture%20Diagram/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Kubernetes/Kube%20API%20server%20Architechture%20-%20deep%20dive/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Kube API server Architechture Diagram - Gouse Shaik</title>
+        <title>Kube API server Architechture deep dive - Gouse Shaik</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Kube API server Architechture Diagram
+              Kube API server Architechture   deep dive
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Kubernetes/Kube API server Architechture Diagram.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Kubernetes/Kube API server Architechture - deep dive.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,7 +362,7 @@
   
 
 
-  <h1>Kube API server Architechture Diagram</h1>
+  <h1>Kube API server Architechture   deep dive</h1>
 
 <p><img alt="Kube-API-server-Architechture-Diagram" src="../../images/Kube-API-server-Architechture-Diagram.png" /></p>
 <p>Let's go into <strong>deep-dive explanation</strong> of the diagram, walking you through the <strong>complete internal workflow of Kubernetes from scratch</strong>, including basics of each resource/component being used by kubernetes</p>
@@ -471,9 +471,9 @@
 <ul>
 <li>The <strong>Controller Manager</strong> continuously watches etcd.</li>
 <li>It notices a new pod spec and checks if the current state matches the desired state.</li>
-<li>If not, it triggers actions (e.g., create a pod).
-<img alt="{12236FE0-7B72-4054-9B80-86E6560C67B0}.png" src="../../images/%7B12236FE0-7B72-4054-9B80-86E6560C67B0%7D.png" /></li>
+<li>If not, it triggers actions (e.g., create a pod).</li>
 </ul>
+<p><img alt="{12236FE0-7B72-4054-9B80-86E6560C67B0}.png" src="../../images/%7B12236FE0-7B72-4054-9B80-86E6560C67B0%7D.png" /></p>
 <h3 id="step-6-scheduler-binds-pod-to-a-node">📦 Step 6: Scheduler Binds Pod to a Node<a class="headerlink" href="#step-6-scheduler-binds-pod-to-a-node" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
@@ -496,11 +496,11 @@
 <ul>
 <li>Pulls the container images (from Docker Hub or private registry).</li>
 <li>Creates containers using the container runtime (containerd, CRI-O, etc).</li>
-<li>Starts the pod.
-<img alt="{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png" src="../../images/%7B58929F8F-D4FD-4F7B-B8D4-08FC574675E1%7D.png" /></li>
+<li>Starts the pod.</li>
 </ul>
 </li>
 </ul>
+<p><img alt="{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png" src="../../images/%7B58929F8F-D4FD-4F7B-B8D4-08FC574675E1%7D.png" /></p>
 <h3 id="step-810-kube-proxy-configures-networking">🌐 Step 8–10: Kube-proxy Configures Networking<a class="headerlink" href="#step-810-kube-proxy-configures-networking" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
@@ -518,11 +518,11 @@
 <p>If the app needs internet:</p>
 <ul>
 <li><strong>NAT / kube-proxy</strong> routes the traffic outside the cluster.</li>
-<li>The pod can access external services like databases, APIs, etc.
-<img alt="{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png" src="../../images/%7BA8F2395B-ADE9-4E93-B2B8-948260932F3C%7D.png" /></li>
+<li>The pod can access external services like databases, APIs, etc.</li>
 </ul>
 </li>
 </ul>
+<p><img alt="{A8F2395B-ADE9-4E93-B2B8-948260932F3C}" src="../../images/%7BA8F2395B-ADE9-4E93-B2B8-948260932F3C%7D.png" /></p>
 <h2 id="4-bottom-section-api-server-clustering">🧠 4. <strong>Bottom Section: API Server Clustering</strong><a class="headerlink" href="#4-bottom-section-api-server-clustering" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
