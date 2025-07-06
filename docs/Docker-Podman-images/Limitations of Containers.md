@@ -4,7 +4,7 @@
 - `Load Balancing Challenges` : Doesn't directly handle load balancing
 - `Storage Constraints` : Rely on the underlying host system's storage resources
 
-| **Limitation**                                                     | **Why It Happens **                                                     | **Impact**                                    | **Common Bias / Assumption**          | **Solution / Best Practice**                                                         |
+| **Limitation**                                                     | **Why It Happens**                                                      | **Impact**                                    | **Common Bias / Assumption**          | **Solution / Best Practice**                                                         |
 | ------------------------------------------------------------------ | ----------------------------------------------------------------------- | --------------------------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------ |
 | <span style="color:red">Limited OS-level isolation</span>          | Containers share host kernel                                            | Less secure than VMs                          | "Containers are like lightweight VMs" | Use rootless containers, user namespaces, SELinux/AppArmor                           |
 | <span style="color:orange">Resource contention</span>              | Shared CPU/memory between containers                                    | One container can starve others               | "Kubernetes handles everything"       | Set CPU/memory limits/requests in pod specs                                          |
