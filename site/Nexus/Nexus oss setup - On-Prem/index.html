@@ -18,7 +18,7 @@
     
     
       
-        <title>✅ Use this correct working download command: - Gouse Shaik</title>
+        <title>Nexus oss setup On Prem - Gouse Shaik</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ✅ Use this correct working download command:
+              Nexus oss setup   On Prem
             
           </span>
         </div>
@@ -362,6 +362,7 @@
   
 
 
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
 <h1 id="use-this-correct-working-download-command">✅ Use this correct working download command:<a class="headerlink" href="#use-this-correct-working-download-command" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code>wget https://sonatype-download.global.ssl.fastly.net/repository/downloads-prod-group/3/nexus-3.81.1-01-linux-x86_64.tar.gz
 </code></pre></div>
@@ -377,14 +378,12 @@ And data dir is: <code>~/sonatype-work</code></p>
 <ol>
 <li>
 <p><strong>Edit the <code>nexus.rc</code> file</strong><br />
-    Set run_as_user empty so it runs as current user:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;run_as_user=&quot;&quot;&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>~/nexus/bin/nexus.rc
-</code></pre></div>
+    Set run_as_user empty so it runs as current user:
+    <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;run_as_user=&quot;&quot;&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>~/nexus/bin/nexus.rc
+</code></pre></div></p>
 </li>
 <li>
-<p><strong>Create a systemd service file</strong></p>
-</li>
-</ol>
+<p><strong>Create a systemd service file</strong>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/systemd/system/nexus.service<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">[Unit]</span>
 <span class="s">Description=Nexus Repository Manager</span>
@@ -402,24 +401,26 @@ And data dir is: <code>~/sonatype-work</code></p>
 <span class="s">[Install]</span>
 <span class="s">WantedBy=multi-user.target</span>
 <span class="s">EOF</span>
-</code></pre></div>
-<ol>
-<li><strong>Reload systemd and enable the service</strong></li>
-</ol>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Reload systemd and enable the service</strong>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reexec
 sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
 sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>nexus
-</code></pre></div>
-<ol>
-<li><strong>Start Nexus manually (first time)</strong></li>
-</ol>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Start Nexus manually (first time)</strong>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>nexus
-</code></pre></div>
-<ol>
-<li><strong>Check service status</strong></li>
-</ol>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Check service status</strong>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>nexus
-</code></pre></div>
+</code></pre></div></p>
+</li>
+</ol>
 <p>Now Nexus will start automatically on boot under your user.</p>
 <div class="highlight"><pre><span></span><code>http://localhost:8081
 get the default password: 
@@ -458,9 +459,13 @@ get the default password:
 <td>❌</td>
 <td>Not supported</td>
 </tr>
+<tr>
+<td>### ✅ What Nexus Does Support:</td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<h3 id="what-nexus-does-support">✅ What Nexus Does Support:<a class="headerlink" href="#what-nexus-does-support" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -485,23 +490,19 @@ get the default password:
 <td>External service</td>
 <td>Used for auth, not data</td>
 </tr>
+<tr>
+<td>### 🔐 Nexus Pro/Enterprise Edition Adds:</td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<hr />
-<h3 id="nexus-proenterprise-edition-adds">🔐 Nexus Pro/Enterprise Edition Adds:<a class="headerlink" href="#nexus-proenterprise-edition-adds" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>High Availability (HA)</p>
-</li>
-<li>
-<p>External object stores</p>
-</li>
-<li>
-<p>Smart proxy features<br />
-    But <strong>still no external RDBMS</strong> support — everything remains file/embedded based.</p>
-</li>
+<li>High Availability (HA)</li>
+<li>External object stores</li>
+<li>Smart proxy features<br />
+    But <strong>still no external RDBMS</strong> support — everything remains file/embedded based.</li>
 </ul>
-<hr />
 <h3 id="conclusion">✅ Conclusion:<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h3>
 <p>You <strong>cannot use an external DB like PostgreSQL/MySQL</strong> with Nexus.<br />
 All metadata and artifact info is stored internally, and backups are done by <strong>snapshotting the <code>sonatype-work/nexus3</code> directory</strong>.</p>

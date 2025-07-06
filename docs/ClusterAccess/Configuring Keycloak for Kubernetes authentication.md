@@ -1,4 +1,5 @@
 <span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 Configuring **Keycloak** for Kubernetes authentication allows centralized user management via **OIDC (OpenID Connect)**. Below are the step-by-step instructions to set this up:
 
 ---

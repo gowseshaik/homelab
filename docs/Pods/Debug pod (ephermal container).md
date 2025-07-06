@@ -1,4 +1,5 @@
 <span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 Yes, you **can access the pods**, but **not via external IP** because it's a **headless service (`ClusterIP: None`)** — it only helps with **pod discovery**, not load balancing or external access.
 
 ```bash

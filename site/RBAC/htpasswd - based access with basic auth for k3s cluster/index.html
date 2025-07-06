@@ -364,7 +364,8 @@
 
   <h1>Htpasswd   based access with basic auth for k3s cluster</h1>
 
-<p>To set up <strong>user-based access with basic auth (htpasswd)</strong> for your <strong>K3s cluster</strong>, follow this secure and simple approach using the Kubernetes <strong>basic-auth plugin via Ingress (e.g., Traefik)</strong> or directly via <strong>Kubernetes API with RBAC</strong>.</p>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-01</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+To set up <strong>user-based access with basic auth (htpasswd)</strong> for your <strong>K3s cluster</strong>, follow this secure and simple approach using the Kubernetes <strong>basic-auth plugin via Ingress (e.g., Traefik)</strong> or directly via <strong>Kubernetes API with RBAC</strong>.</p>
 <h2 id="important-k3s-does-not-support-basic-auth-file">❗ Important: K3s does <strong>not</strong> support <code>--basic-auth-file</code><a class="headerlink" href="#important-k3s-does-not-support-basic-auth-file" title="Permanent link">&para;</a></h2>
 <p>So you <strong>can’t plug in an <code>htpasswd</code> file directly</strong> like in upstream <code>kube-apiserver</code>.</p>
 <h3 id="goal">✅ Goal:<a class="headerlink" href="#goal" title="Permanent link">&para;</a></h3>

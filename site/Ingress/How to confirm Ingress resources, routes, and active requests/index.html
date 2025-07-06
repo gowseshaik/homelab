@@ -362,41 +362,32 @@
   
 
 
-<p>To <strong>confirm Ingress resources, routes, and active requests</strong>, follow these steps:</p>
+  <h1>How to confirm Ingress resources, routes, and active requests</h1>
+
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+To <strong>confirm Ingress resources, routes, and active requests</strong>, follow these steps:</p>
 <hr />
 <h3 id="1-list-all-ingress-resources">✅ 1. <strong>List All Ingress Resources</strong><a class="headerlink" href="#1-list-all-ingress-resources" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ingress<span class="w"> </span>-A
-</code></pre></div>
-<hr />
+<h2 id="kubectl-get-ingress-a"><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ingress<span class="w"> </span>-A
+</code></pre></div><a class="headerlink" href="#kubectl-get-ingress-a" title="Permanent link">&para;</a></h2>
 <h3 id="2-inspect-ingress-rules-and-routes">✅ 2. <strong>Inspect Ingress Rules and Routes</strong><a class="headerlink" href="#2-inspect-ingress-rules-and-routes" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>ingress<span class="w"> </span>&lt;ingress-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
-<p>Look for:</p>
-<ul>
-<li>
-<p><code>Host</code></p>
-</li>
-<li>
-<p><code>Path</code></p>
-</li>
-<li>
-<p><code>Service Name</code></p>
-</li>
-<li>
-<p><code>IngressClassName</code></p>
-</li>
-</ul>
-<hr />
+<p>Look for:
+- <code>Host</code>
+- <code>Path</code>
+- <code>Service Name</code>
+- <code>IngressClassName</code></p>
 <h3 id="3-check-ingress-controller-logs-for-requests">✅ 3. <strong>Check Ingress Controller Logs for Requests</strong><a class="headerlink" href="#3-check-ingress-controller-logs-for-requests" title="Permanent link">&para;</a></h3>
-<p>For <strong>NGINX</strong>:</p>
+<p>For <strong>NGINX</strong>:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>ingress-nginx<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/name<span class="o">=</span>ingress-nginx
-</code></pre></div>
-<p>For <strong>Traefik</strong>:</p>
+</code></pre></div></p>
+<p>For <strong>Traefik</strong>:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/name<span class="o">=</span>traefik
-</code></pre></div>
-<p>For <strong>Istio</strong>:</p>
+</code></pre></div></p>
+<p>For <strong>Istio</strong>:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>istio-ingressgateway
-</code></pre></div>
+</code></pre></div></p>
 <hr />
 <p>Perfect — if <strong>Traefik is already installed by default with K3d</strong>, here's the minimal setup to route traffic <strong>using ClusterIP services</strong> like ALB:</p>
 <hr />
@@ -418,7 +409,7 @@ kubectl<span class="w"> </span>expose<span class="w"> </span>deployment<span cla
 </blockquote>
 <hr />
 <h3 id="step-3-create-ingress-resource"><strong>Step 3: Create Ingress Resource</strong><a class="headerlink" href="#step-3-create-ingress-resource" title="Permanent link">&para;</a></h3>
-<h1 id="whoami-ingressyaml">whoami-ingress.yaml<a class="headerlink" href="#whoami-ingressyaml" title="Permanent link">&para;</a></h1>
+<p>whoami-ingress.yaml
 <div class="highlight"><pre><span></span><code><span class="c1"># whoami-ingress.yaml</span>
 <span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ingress</span>
@@ -437,7 +428,7 @@ kubectl<span class="w"> </span>expose<span class="w"> </span>deployment<span cla
 <span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">whoami</span>
 <span class="w">                </span><span class="nt">port</span><span class="p">:</span>
 <span class="w">                  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-</code></pre></div>
+</code></pre></div></p>
 <p>Apply it:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>whoami-ingress.yaml
 </code></pre></div>
@@ -446,33 +437,31 @@ NAMESPACE<span class="w">   </span>NAME<span class="w">             </span>CLASS
 demo<span class="w">        </span>whoami-ingress<span class="w">   </span>traefik<span class="w">   </span>whoami.localhost<span class="w">   </span><span class="m">172</span>.18.0.2,172.18.0.3,172.18.0.4<span class="w">   </span><span class="m">80</span><span class="w">      </span>8m13s
 </code></pre></div><a class="headerlink" href="#gousegousedevopsk3d-k-get-ingress-a-namespace-name-class-hosts-address-ports-age-demo-whoami-ingress-traefik-whoamilocalhost-172180217218031721804-80-8m13s" title="Permanent link">&para;</a></h2>
 <h3 id="step-3-add-host-mapping"><strong>Step 3: Add Host Mapping</strong><a class="headerlink" href="#step-3-add-host-mapping" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;127.0.0.1 whoami.localhost&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/hosts<span class="w"> </span><span class="c1"># Localhost for homeLab</span>
+<h2 id="sudo-echo-127001-whoamilocalhost-etchosts-localhost-for-homelab-sudo-echo-1721802-whoamilocalhost-etchosts-loadbalancer-ip-for-production-grade-setup-and-configurations"><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;127.0.0.1 whoami.localhost&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/hosts<span class="w"> </span><span class="c1"># Localhost for homeLab</span>
 
 sudo<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;172.18.0.2 whoami.localhost&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/hosts<span class="w"> </span><span class="c1"># LoadBalancer IP for Production grade setup and configurations</span>
-</code></pre></div>
-<hr />
+</code></pre></div><a class="headerlink" href="#sudo-echo-127001-whoamilocalhost-etchosts-localhost-for-homelab-sudo-echo-1721802-whoamilocalhost-etchosts-loadbalancer-ip-for-production-grade-setup-and-configurations" title="Permanent link">&para;</a></h2>
 <h3 id="step-4-access-in-browser"><strong>Step 4: Access in Browser</strong><a class="headerlink" href="#step-4-access-in-browser" title="Permanent link">&para;</a></h3>
 <p>Open:<br />
 <strong><a href="http://whoami.localhost">http://whoami.localhost</a></strong></p>
 <hr />
 <h3 id="optional-if-traefik-doesnt-route">⚠️ Optional: If Traefik Doesn't Route<a class="headerlink" href="#optional-if-traefik-doesnt-route" title="Permanent link">&para;</a></h3>
-<p>Check if the default Traefik has IngressClass enabled:</p>
+<p>Check if the default Traefik has IngressClass enabled:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ingressclass
-</code></pre></div>
-<p>You should see something like:</p>
+</code></pre></div></p>
+<p>You should see something like:
 <div class="highlight"><pre><span></span><code>NAME      CONTROLLER             PARAMETERS   AGE
 traefik   traefik.io/ingress-controller   ...   ...
-</code></pre></div>
-<p>If not, you can <strong>explicitly set it</strong> in your Ingress:</p>
+</code></pre></div></p>
+<p>If not, you can <strong>explicitly set it</strong> in your Ingress:
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">ingressClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">traefik</span>
-</code></pre></div>
+</code></pre></div></p>
 <hr />
 <p>You're now running a <strong>ClusterIP-only app with Ingress routing through default Traefik</strong>, exactly like an AWS ALB setup. Let me know if you want TLS added.</p>
 <p>Here's a <strong>Traefik Dashboard Ingress manifest</strong> for your <strong>K3d setup</strong> using existing port <code>30900:9000</code> (from your YAML) and <strong>ClusterIP service</strong>:</p>
-<hr />
 <h3 id="traefik-dashboardyaml">✅ <code>traefik-dashboard.yaml</code><a class="headerlink" href="#traefik-dashboardyaml" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>apiVersion: networking.k8s.io/v1
+<h2 id="apiversion-networkingk8siov1-kind-ingress-metadata-name-traefik-dashboard-namespace-kube-system-annotations-traefikingresskubernetesiorouterentrypoints-web-spec-ingressclassname-traefik-rules-host-traefiklocalhost-http-paths-path-pathtype-prefix-backend-service-name-traefik-port-number-9000"><div class="highlight"><pre><span></span><code>apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: traefik-dashboard
@@ -492,32 +481,19 @@ spec:
                 name: traefik
                 port:
                   number: 9000
-</code></pre></div>
-<hr />
+</code></pre></div><a class="headerlink" href="#apiversion-networkingk8siov1-kind-ingress-metadata-name-traefik-dashboard-namespace-kube-system-annotations-traefikingresskubernetesiorouterentrypoints-web-spec-ingressclassname-traefik-rules-host-traefiklocalhost-http-paths-path-pathtype-prefix-backend-service-name-traefik-port-number-9000" title="Permanent link">&para;</a></h2>
 <h3 id="etchosts-entry">✅ <code>/etc/hosts</code> Entry<a class="headerlink" href="#etchosts-entry" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="m">127</span>.0.0.1<span class="w"> </span>traefik.localhost
-</code></pre></div>
-<hr />
+<h2 id="127001-traefiklocalhost"><div class="highlight"><pre><span></span><code><span class="m">127</span>.0.0.1<span class="w"> </span>traefik.localhost
+</code></pre></div><a class="headerlink" href="#127001-traefiklocalhost" title="Permanent link">&para;</a></h2>
 <h3 id="access-dashboard">✅ Access Dashboard<a class="headerlink" href="#access-dashboard" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>http://traefik.localhost:30900
 </code></pre></div>
-<p>OR (if you prefer Ingress via port 80 → 30080):</p>
+<p>OR (if you prefer Ingress via port 80 → 30080):
 <div class="highlight"><pre><span></span><code>http://traefik.localhost:30080
-</code></pre></div>
+</code></pre></div></p>
 <blockquote>
 <p>In that case, change <code>port: 9000</code> to <code>port: 80</code> in the Ingress and make sure Traefik listens on web entrypoint for both.</p>
 </blockquote>
-<hr />
-<p>Let me know which way you prefer:</p>
-<ul>
-<li>
-<p>Direct: <code>30900</code></p>
-</li>
-<li>
-<p>Through Ingress: <code>30080</code><br />
-    I’ll adjust the manifest accordingly.</p>
-</li>
-</ul>
 
 
 

@@ -1,4 +1,5 @@
 <span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 Below are the **full steps** to deploy **MailHog with Ingress via Traefik** on a **k3d cluster** using port 80.
 ### ✅ Step 1: Create `k3d` cluster with port 80 mapped
 

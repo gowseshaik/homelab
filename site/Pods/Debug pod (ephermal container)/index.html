@@ -364,7 +364,8 @@
 
   <h1>Debug pod (ephermal container)</h1>
 
-<p>Yes, you <strong>can access the pods</strong>, but <strong>not via external IP</strong> because it's a <strong>headless service (<code>ClusterIP: None</code>)</strong> — it only helps with <strong>pod discovery</strong>, not load balancing or external access.</p>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+Yes, you <strong>can access the pods</strong>, but <strong>not via external IP</strong> because it's a <strong>headless service (<code>ClusterIP: None</code>)</strong> — it only helps with <strong>pod discovery</strong>, not load balancing or external access.</p>
 <div class="highlight"><pre><span></span><code>gouse@gouse:~/DevOps/k3d$<span class="w"> </span>kubectl<span class="w"> </span>run<span class="w"> </span>curlpod<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>curlimages/curl<span class="w"> </span>--<span class="w"> </span>/bin/sh
 If<span class="w"> </span>you<span class="w"> </span>don<span class="s1">&#39;t see a command prompt, try pressing enter.</span>
 <span class="s1">~ $ curl nginx-0.nginx-headless.default.svc.cluster.local</span>

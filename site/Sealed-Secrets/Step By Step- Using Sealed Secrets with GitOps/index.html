@@ -364,6 +364,7 @@
 
   <h1>Step By Step  Using Sealed Secrets with GitOps</h1>
 
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -393,13 +394,12 @@
 </li>
 </ul>
 <h2 id="step-1-install-sealed-secrets-controller">Step 1: Install Sealed Secrets Controller<a class="headerlink" href="#step-1-install-sealed-secrets-controller" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/bitnami-labs/sealed-secrets/releases/latest/download/controller.yaml
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/bitnami-labs/sealed-secrets/releases/latest/download/controller.yaml
 </code></pre></div>
-<p>This installs the controller pod that will decrypt sealed secrets inside the cluster.</p>
-<hr />
+This installs the controller pod that will decrypt sealed secrets inside the cluster.</p>
 <h2 id="step-2-create-plain-kubernetes-secret-and-configmap-files">Step 2: Create Plain Kubernetes Secret and ConfigMap Files<a class="headerlink" href="#step-2-create-plain-kubernetes-secret-and-configmap-files" title="Permanent link">&para;</a></h2>
-<p>Create files locally for your app configuration.</p>
-<p><strong>configmap.yaml</strong></p>
+<p>Create files locally for your app configuration.
+<strong>configmap.yaml</strong>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -408,8 +408,8 @@
 <span class="nt">data</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">DB_HOST</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;db.example.com&quot;</span>
 <span class="w">  </span><span class="nt">DB_PORT</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;5432&quot;</span>
-</code></pre></div>
-<p><strong>secret.yaml</strong></p>
+</code></pre></div></p>
+<p><strong>secret.yaml</strong>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -419,15 +419,13 @@
 <span class="nt">data</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">YWRtaW4=</span><span class="w">       </span><span class="c1"># base64 encoded &#39;admin&#39;</span>
 <span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cGFzc3dvcmQ=</span><span class="w">   </span><span class="c1"># base64 encoded &#39;password&#39;</span>
-</code></pre></div>
-<hr />
+</code></pre></div></p>
 <h2 id="step-3-seal-the-configmap-and-secret-locally">Step 3: Seal the ConfigMap and Secret Locally<a class="headerlink" href="#step-3-seal-the-configmap-and-secret-locally" title="Permanent link">&para;</a></h2>
-<p>Use <code>kubeseal</code> to encrypt your plain secrets before pushing to Git.</p>
+<p>Use <code>kubeseal</code> to encrypt your plain secrets before pushing to Git.
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>configmap.yaml<span class="w"> </span>--dry-run<span class="o">=</span>client<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>kubeseal<span class="w"> </span>--format<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>sealed-configmap.yaml
 kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>secret.yaml<span class="w"> </span>--dry-run<span class="o">=</span>client<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>kubeseal<span class="w"> </span>--format<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>sealed-secret.yaml
 </code></pre></div>
-<p>Now you have <strong>sealed-configmap.yaml</strong> and <strong>sealed-secret.yaml</strong> with encrypted data safe for Git.</p>
-<hr />
+Now you have <strong>sealed-configmap.yaml</strong> and <strong>sealed-secret.yaml</strong> with encrypted data safe for Git.</p>
 <h2 id="step-4-add-sealed-secrets-manifests-to-git-repository">Step 4: Add Sealed Secrets Manifests to Git Repository<a class="headerlink" href="#step-4-add-sealed-secrets-manifests-to-git-repository" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:youruser/yourrepo.git
 <span class="nb">cd</span><span class="w"> </span>yourrepo
@@ -440,10 +438,9 @@ git<span class="w"> </span>add<span class="w"> </span>k8s/secrets/sealed-*.yaml
 git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add sealed ConfigMap and Secret for app&quot;</span>
 git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
 </code></pre></div>
-<hr />
 <h2 id="step-5-deployment-yaml-referring-to-secrets-and-configmaps">Step 5: Deployment YAML Referring to Secrets and ConfigMaps<a class="headerlink" href="#step-5-deployment-yaml-referring-to-secrets-and-configmaps" title="Permanent link">&para;</a></h2>
 <p>Create or update your deployment manifest to inject env vars from ConfigMap and Secret.</p>
-<p><strong>deployment.yaml</strong></p>
+<p><strong>deployment.yaml</strong>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -483,32 +480,29 @@ git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </
 <span class="w">            </span><span class="nt">secretKeyRef</span><span class="p">:</span>
 <span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app-secret</span>
 <span class="w">              </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span>
-</code></pre></div>
-<p>Add this deployment manifest to Git repo alongside sealed secrets:</p>
+</code></pre></div></p>
+<p>Add this deployment manifest to Git repo alongside sealed secrets:
 <div class="highlight"><pre><span></span><code>cp<span class="w"> </span>../deployment.yaml<span class="w"> </span>k8s/deployments/
 git<span class="w"> </span>add<span class="w"> </span>k8s/deployments/deployment.yaml
 git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add deployment for express app&quot;</span>
 git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
-</code></pre></div>
-<hr />
+</code></pre></div></p>
 <h2 id="step-6-use-gitops-tool-to-sync-repo-to-cluster">Step 6: Use GitOps Tool to Sync Repo to Cluster<a class="headerlink" href="#step-6-use-gitops-tool-to-sync-repo-to-cluster" title="Permanent link">&para;</a></h2>
-<p>Use ArgoCD, Flux, or manual <code>kubectl apply -f</code> on the repo manifests:</p>
+<p>Use ArgoCD, Flux, or manual <code>kubectl apply -f</code> on the repo manifests:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>k8s/secrets/sealed-configmap.yaml
 kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>k8s/secrets/sealed-secret.yaml
 kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>k8s/deployments/deployment.yaml
 </code></pre></div>
-<p>The Sealed Secrets controller will automatically decrypt sealed secrets and create normal Kubernetes Secret and ConfigMap objects.</p>
-<hr />
+The Sealed Secrets controller will automatically decrypt sealed secrets and create normal Kubernetes Secret and ConfigMap objects.</p>
 <h2 id="step-7-application-reads-environment-variables">Step 7: Application Reads Environment Variables<a class="headerlink" href="#step-7-application-reads-environment-variables" title="Permanent link">&para;</a></h2>
-<p>Your Node.js app code reads env vars:</p>
+<p>Your Node.js app code reads env vars:
 <div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="nx">host</span><span class="o">:</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">DB_HOST</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">port</span><span class="o">:</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">DB_PORT</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;5432&#39;</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">DB_USER</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;user&#39;</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">pass</span><span class="o">:</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">DB_PASS</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;pass&#39;</span><span class="p">,</span>
 <span class="p">};</span>
-</code></pre></div>
-<hr />
+</code></pre></div></p>
 <h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

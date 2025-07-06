@@ -1,4 +1,5 @@
 <span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 When you **setup Longhorn in your cluster**, it uses the storage available on the cluster nodes (e.g., the mounted `/mnt/longhorn` directory in Kind) as its **underlying storage pool**.
 
 - Longhorn manages that storage to create **persistent volumes** (block devices).

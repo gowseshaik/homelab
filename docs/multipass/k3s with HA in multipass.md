@@ -1,4 +1,5 @@
 <span style="color:#4caf50;"><b>Created:</b> 2025-07-01</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 A complete **Multipass script** to set up a **Kubernetes HA cluster** using `k3s`, with:
 
 - **2 control plane nodes**

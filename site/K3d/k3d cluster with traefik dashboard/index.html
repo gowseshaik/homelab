@@ -364,8 +364,8 @@
 
   <h1>K3d cluster with traefik dashboard</h1>
 
-<p>To enable and expose the <strong>Traefik dashboard</strong> in <code>k3d</code> at cluster creation, you need to do <strong>two things</strong> in the config file:</p>
-<hr />
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+To enable and expose the <strong>Traefik dashboard</strong> in <code>k3d</code> at cluster creation, you need to do <strong>two things</strong> in the config file:</p>
 <h3 id="1-enable-traefik-dashboard-via-k3s-arg">✅ 1. Enable Traefik Dashboard via k3s Arg<a class="headerlink" href="#1-enable-traefik-dashboard-via-k3s-arg" title="Permanent link">&para;</a></h3>
 <p>Add this under the <code>k3s</code> section:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">k3s</span><span class="p">:</span>
@@ -374,14 +374,12 @@
 <span class="w">      </span><span class="nt">nodeFilters</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">server:*</span>
 </code></pre></div>
-<hr />
 <h3 id="2-expose-traefik-dashboard-port-default-is-9000">✅ 2. Expose Traefik Dashboard Port (default is 9000)<a class="headerlink" href="#2-expose-traefik-dashboard-port-default-is-9000" title="Permanent link">&para;</a></h3>
-<p>Add this under the <code>ports:</code> section:</p>
+<p>Add this under the <code>ports:</code> section:
 <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30900:9000</span><span class="w">      </span><span class="c1"># Traefik Dashboard</span>
 <span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
-</code></pre></div>
-<hr />
+</code></pre></div></p>
 <h3 id="final-config-k3d-configyaml">✅ ✅ Final Config: <code>k3d-config.yaml</code><a class="headerlink" href="#final-config-k3d-configyaml" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>apiVersion: k3d.io/v1alpha5
 kind: Simple
@@ -426,14 +424,12 @@ k3s:                      # not working for k3s version, so you can remove it.
       nodeFilters:
         - server:*
 </code></pre></div>
-<hr />
 <p>but it getting below error for k3s 
 <div class="highlight"><pre><span></span><code><span class="w"> </span>k3d<span class="w"> </span>cluster<span class="w"> </span>create<span class="w"> </span>--config<span class="w"> </span>dev-cluster.yaml
 FATA<span class="o">[</span><span class="m">0000</span><span class="o">]</span><span class="w"> </span>Schema<span class="w"> </span>Validation<span class="w"> </span>failed<span class="w"> </span><span class="k">for</span><span class="w"> </span>config<span class="w"> </span>file<span class="w"> </span>dev-cluster.yaml:<span class="w"> </span>-<span class="w"> </span><span class="o">(</span>root<span class="o">)</span>:<span class="w"> </span>Additional<span class="w"> </span>property<span class="w"> </span>k3s<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>allowed
 </code></pre></div></p>
 <p>You're seeing the error because <code>k3d v5+</code> <strong>no longer supports</strong> the <code>k3s:</code> block in the config file.<br />
 That field is <strong>not valid</strong> in the latest schema (v1alpha5).</p>
-<hr />
 <h3 id="solution-use-k3s-arg-from-cli-instead">✅ <strong>Solution: Use <code>--k3s-arg</code> from CLI instead</strong><a class="headerlink" href="#solution-use-k3s-arg-from-cli-instead" title="Permanent link">&para;</a></h3>
 <p>Yes, exactly.</p>
 <p>Remove the entire <code>k3s:</code> section from your config file.</p>
@@ -443,41 +439,26 @@ That field is <strong>not valid</strong> in the latest schema (v1alpha5).</p>
 <span class="w">  </span>--k3s-arg<span class="w"> </span><span class="s2">&quot;--traefik.dashboard=true@server:0&quot;</span>
 </code></pre></div>
 <p>This passes the arg <code>--traefik.dashboard=true</code> to the first server node.</p>
-<hr />
 <h3 id="optional-alias-for-simplicity">✅ Optional: Alias for Simplicity<a class="headerlink" href="#optional-alias-for-simplicity" title="Permanent link">&para;</a></h3>
 <p>If you want to reuse this, put it in a shell script:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 k3d<span class="w"> </span>cluster<span class="w"> </span>create<span class="w"> </span>--config<span class="w"> </span>dev-cluster.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--k3s-arg<span class="w"> </span><span class="s2">&quot;--traefik.dashboard=true@server:*&quot;</span>
 </code></pre></div>
-<hr />
 <p>Let me know if you want a workaround to fully control the k3s startup args from config (e.g., custom entrypoint container).</p>
 <h2 id="why-cant-we-use-these-values-in-config-file">why can't we use these values in config file ?<a class="headerlink" href="#why-cant-we-use-these-values-in-config-file" title="Permanent link">&para;</a></h2>
-<p>Great question — here’s a straight answer:</p>
-<hr />
+<p>Great question — here’s a straight answer:---</p>
 <h3 id="why-you-cant-use-k3s-in-k3d-config-anymore">🔴 <strong>Why you can't use <code>k3s:</code> in <code>k3d</code> config anymore</strong><a class="headerlink" href="#why-you-cant-use-k3s-in-k3d-config-anymore" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>In <strong><code>k3d v5+</code></strong>, the config file follows a <strong>strict JSON schema</strong> (<code>v1alpha5</code>) that <strong>does not include</strong> a <code>k3s:</code> field.</p>
-</li>
-<li>
-<p>The field was <strong>removed</strong> to simplify the config format and separate cluster structure (YAML) from runtime behavior (CLI flags).</p>
-</li>
-<li>
-<p>So, <code>k3s:</code> and <code>extraArgs</code> were <strong>deprecated</strong> and <strong>replaced</strong> by <code>--k3s-arg</code> flags in the CLI only.</p>
-</li>
+<li>In <strong><code>k3d v5+</code></strong>, the config file follows a <strong>strict JSON schema</strong> (<code>v1alpha5</code>) that <strong>does not include</strong> a <code>k3s:</code> field.</li>
+<li>The field was <strong>removed</strong> to simplify the config format and separate cluster structure (YAML) from runtime behavior (CLI flags).</li>
+<li>So, <code>k3s:</code> and <code>extraArgs</code> were <strong>deprecated</strong> and <strong>replaced</strong> by <code>--k3s-arg</code> flags in the CLI only.</li>
 </ul>
-<hr />
 <h3 id="current-rule">✅ Current Rule:<a class="headerlink" href="#current-rule" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>Cluster topology (nodes, ports, volumes, registries) → ✅ defined in YAML.</p>
-</li>
-<li>
-<p>Runtime args (like <code>--traefik.*</code>, <code>--disable-*</code>, <code>--tls-san</code>, etc.) → ❌ not in YAML → ✅ only via CLI <code>--k3s-arg</code>.</p>
-</li>
+<li>Cluster topology (nodes, ports, volumes, registries) → ✅ defined in YAML.</li>
+<li>Runtime args (like <code>--traefik.*</code>, <code>--disable-*</code>, <code>--tls-san</code>, etc.) → ❌ not in YAML → ✅ only via CLI <code>--k3s-arg</code>.</li>
 </ul>
-<hr />
 <h3 id="legacy-compatibility">🔄 Legacy Compatibility?<a class="headerlink" href="#legacy-compatibility" title="Permanent link">&para;</a></h3>
 <p>No official backward support. Even if you add <code>k3s:</code> in the YAML, <code>k3d</code> will <strong>fail schema validation</strong>.</p>
 <hr />
@@ -490,74 +471,62 @@ k3d<span class="w"> </span>cluster<span class="w"> </span>create<span class="w">
 <p>If your cluster creation <strong>hangs on starting the server</strong>, here are the most common and effective fixes:</p>
 <hr />
 <h3 id="1-check-for-docker-conflicts">✅ <strong>1. Check for Docker Conflicts</strong><a class="headerlink" href="#1-check-for-docker-conflicts" title="Permanent link">&para;</a></h3>
-<p>Run this to see if containers are stuck or conflicting:</p>
+<p>Run this to see if containers are stuck or conflicting:
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>k3d
-</code></pre></div>
-<p>If any containers are in a <code>Created</code> or <code>Exited</code> state, clean them:</p>
+</code></pre></div></p>
+<p>If any containers are in a <code>Created</code> or <code>Exited</code> state, clean them:
 <div class="highlight"><pre><span></span><code>k3d<span class="w"> </span>cluster<span class="w"> </span>delete<span class="w"> </span>dev-cluster
 docker<span class="w"> </span>system<span class="w"> </span>prune<span class="w"> </span>-f
 </code></pre></div>
-<p>Then try again.</p>
-<hr />
+Then try again.</p>
 <h3 id="2-make-sure-ports-arent-already-in-use">✅ <strong>2. Make Sure Ports Aren’t Already in Use</strong><a class="headerlink" href="#2-make-sure-ports-arent-already-in-use" title="Permanent link">&para;</a></h3>
 <p>You’re mapping ports like <code>31446</code>, <code>31447</code>, etc.<br />
-Run:</p>
+Run:
 <div class="highlight"><pre><span></span><code>lsof<span class="w"> </span>-i<span class="w"> </span>-P<span class="w"> </span>-n<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>LISTEN
-</code></pre></div>
-<p>Look for conflicting ports. If a port is in use, either:</p>
-<ul>
-<li>
-<p>Stop the app using it, or</p>
-</li>
-<li>
-<p>Change the port in <code>dev-cluster.yaml</code></p>
-</li>
-</ul>
-<hr />
+</code></pre></div></p>
+<p>Look for conflicting ports. If a port is in use, either:
+- Stop the app using it, or
+- Change the port in <code>dev-cluster.yaml</code></p>
 <h3 id="3-disable-traefik-temporarily">✅ <strong>3. Disable Traefik Temporarily</strong><a class="headerlink" href="#3-disable-traefik-temporarily" title="Permanent link">&para;</a></h3>
-<p>Test if the arg is causing the issue by removing it:</p>
+<p>Test if the arg is causing the issue by removing it:
 <div class="highlight"><pre><span></span><code>k3d<span class="w"> </span>cluster<span class="w"> </span>create<span class="w"> </span>--config<span class="w"> </span>dev-cluster.yaml
 </code></pre></div>
-<p>If that works, try:</p>
+If that works, try:
 <div class="highlight"><pre><span></span><code>k3d<span class="w"> </span>cluster<span class="w"> </span>create<span class="w"> </span>--config<span class="w"> </span>dev-cluster.yaml<span class="w"> </span>--k3s-arg<span class="w"> </span><span class="s2">&quot;--disable=traefik@server:0&quot;</span>
 </code></pre></div>
-<p>Then install your own ingress later (e.g., Traefik/NGINX manually).</p>
-<hr />
+Then install your own ingress later (e.g., Traefik/NGINX manually).</p>
 <h3 id="4-increase-docker-memory">✅ <strong>4. Increase Docker Memory</strong><a class="headerlink" href="#4-increase-docker-memory" title="Permanent link">&para;</a></h3>
 <p>If your Docker is low on memory (common with 2+ agents), bump it up in Docker Desktop:</p>
 <blockquote>
 <p>Settings → Resources → Memory → Increase to at least <strong>4–6 GB</strong></p>
 </blockquote>
-<hr />
 <h3 id="5-check-logs">✅ <strong>5. Check Logs</strong><a class="headerlink" href="#5-check-logs" title="Permanent link">&para;</a></h3>
-<p>If it still hangs, grab logs from the server node:</p>
+<p>If it still hangs, grab logs from the server node:
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>logs<span class="w"> </span>k3d-dev-cluster-server-0
 </code></pre></div>
-<p>Paste the output here if you'd like me to help debug further.</p>
+Paste the output here if you'd like me to help debug further.</p>
 <p>Thanks — this confirms it clearly:</p>
 <blockquote>
 <p><strong>Port 9000 is mapped</strong>, but <strong>nothing is listening on it inside the cluster.</strong><br />
 → That means the <strong>Traefik dashboard is not enabled</strong> in your k3s setup.</p>
 </blockquote>
-<hr />
 <h3 id="fix-recreate-cluster-with-dashboard-enabled">✅ Fix: Recreate Cluster with Dashboard Enabled<a class="headerlink" href="#fix-recreate-cluster-with-dashboard-enabled" title="Permanent link">&para;</a></h3>
-<p>You need to add this flag during cluster creation:</p>
+<p>You need to add this flag during cluster creation:
 <div class="highlight"><pre><span></span><code>--k3s-arg<span class="w"> </span><span class="s2">&quot;--traefik.dashboard=true@server:0&quot;</span>
-</code></pre></div>
-<p>So update your <code>k3d</code> create command like:</p>
+</code></pre></div></p>
+<p>So update your <code>k3d</code> create command like:
 <div class="highlight"><pre><span></span><code>k3d<span class="w"> </span>cluster<span class="w"> </span>delete<span class="w"> </span>dev-cluster
 
 k3d<span class="w"> </span>cluster<span class="w"> </span>create<span class="w"> </span>--config<span class="w"> </span>dev-cluster.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--k3s-arg<span class="w"> </span><span class="s2">&quot;--traefik.dashboard=true@server:0&quot;</span>
-</code></pre></div>
-<p>Make sure this is already in your <code>dev-cluster.yaml</code>:</p>
+</code></pre></div></p>
+<p>Make sure this is already in your <code>dev-cluster.yaml</code>:
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30900:9000</span>
 <span class="w">  </span><span class="nt">nodeFilters</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
-</code></pre></div>
-<hr />
+</code></pre></div></p>
 <h3 id="optional-also-expose-dashboard-via-ingress-cleaner">🔍 Optional: Also expose dashboard via ingress (cleaner)<a class="headerlink" href="#optional-also-expose-dashboard-via-ingress-cleaner" title="Permanent link">&para;</a></h3>
-<p>You can create an ingress like this (after cluster up):</p>
+<p>You can create an ingress like this (after cluster up):
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ingress</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -578,62 +547,43 @@ k3d<span class="w"> </span>cluster<span class="w"> </span>create<span class="w">
 <span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">traefik</span>
 <span class="w">                </span><span class="nt">port</span><span class="p">:</span>
 <span class="w">                  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
-</code></pre></div>
-<p>Then access:</p>
+</code></pre></div></p>
+<p>Then access:
 <div class="highlight"><pre><span></span><code>http://traefik.localhost/dashboard/
-</code></pre></div>
+</code></pre></div></p>
 <p>(using a <code>hosts</code> file entry if needed)</p>
 <hr />
-<p>Let me know once you recreate the cluster with the dashboard flag — you should be able to access:</p>
+<p>Let me know once you recreate the cluster with the dashboard flag — you should be able to access:
 <div class="highlight"><pre><span></span><code>http://localhost:30900/dashboard/
-</code></pre></div>
+</code></pre></div></p>
 <p>To access <code>http://traefik.localhost/dashboard/</code> from your browser, you need to map the custom domain <code>traefik.localhost</code> to your local machine.</p>
 <hr />
 <h3 id="steps-to-add-entry-in-etchosts">✅ Steps to Add Entry in <code>/etc/hosts</code><a class="headerlink" href="#steps-to-add-entry-in-etchosts" title="Permanent link">&para;</a></h3>
 <ol>
-<li>
-<p>Open the <code>/etc/hosts</code> file with root privileges:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/hosts
-</code></pre></div>
-</li>
-<li>
-<p>Add this line at the end of the file:</p>
-<div class="highlight"><pre><span></span><code>127.0.0.1 traefik.localhost
-</code></pre></div>
-</li>
-<li>
-<p>Save and exit:</p>
-<ul>
-<li>
-<p>Press <code>Ctrl + O</code> to save</p>
-</li>
-<li>
-<p>Press <code>Enter</code> to confirm</p>
-</li>
-<li>
-<p>Press <code>Ctrl + X</code> to exit</p>
-</li>
+<li>Open the <code>/etc/hosts</code> file with root privileges:
+    <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/hosts
+</code></pre></div></li>
+<li>Add this line at the end of the file:
+    <div class="highlight"><pre><span></span><code>127.0.0.1 traefik.localhost
+</code></pre></div></li>
+<li>Save and exit:<ul>
+<li>Press <code>Ctrl + O</code> to save</li>
+<li>Press <code>Enter</code> to confirm</li>
+<li>Press <code>Ctrl + X</code> to exit</li>
 </ul>
 </li>
 </ol>
 <hr />
 <h3 id="after-that">📌 After That<a class="headerlink" href="#after-that" title="Permanent link">&para;</a></h3>
-<p>Make sure:</p>
-<ul>
-<li>
-<p>You’ve created an <strong>Ingress</strong> with <code>host: traefik.localhost</code></p>
-</li>
-<li>
-<p>Traefik is listening on port 80 (mapped via <code>30080:80@loadbalancer</code>)</p>
-</li>
-</ul>
-<p>Then access:</p>
+<p>Make sure:
+- You’ve created an <strong>Ingress</strong> with <code>host: traefik.localhost</code>
+- Traefik is listening on port 80 (mapped via <code>30080:80@loadbalancer</code>)</p>
+<p>Then access:
 <div class="highlight"><pre><span></span><code>http://traefik.localhost:30080/dashboard/
-</code></pre></div>
+</code></pre></div></p>
 <blockquote>
 <p>(or just <code>http://traefik.localhost/dashboard/</code> if port 80 is directly forwarded)</p>
 </blockquote>
-<p>Let me know if you want the ingress YAML again.</p>
 
 
 

@@ -364,6 +364,7 @@
 
   <h1>Etcdctl commands for get, put, snapshot save and restore</h1>
 
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 <div class="highlight"><pre><span></span><code><span class="c1"># Set a key</span>
 etcdctl<span class="w"> </span>put<span class="w"> </span>foo<span class="w"> </span><span class="s2">&quot;bar&quot;</span>
 
@@ -376,7 +377,7 @@ etcdctl<span class="w"> </span>snapshot<span class="w"> </span>save<span class="
 <span class="c1"># Restore a snapshot</span>
 etcdctl<span class="w"> </span>snapshot<span class="w"> </span>restore<span class="w"> </span>/backup/etcd-snapshot.db<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--data-dir<span class="o">=</span>/var/lib/etcd-restored
-</code></pre></div>
+</code></pre></div></p>
 <h3 id="basic-setup">✅ <strong>Basic Setup</strong><a class="headerlink" href="#basic-setup" title="Permanent link">&para;</a></h3>
 <ol>
 <li>

@@ -364,6 +364,7 @@
 
   <h1>W3H Understanding StatefulSets in Kubernetes</h1>
 
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
 <h2 id="what-are-statefulsets">What are StatefulSets?<a class="headerlink" href="#what-are-statefulsets" title="Permanent link">&para;</a></h2>
 <p>StatefulSets are a Kubernetes workload API object used to manage stateful applications. They provide guarantees about the ordering and uniqueness of Pods, which is essential for applications that require:</p>
 <ul>
@@ -380,13 +381,11 @@
 <li><strong>Ordered operations</strong>: Pods are created, updated, and deleted in a predictable order (ordinal index)</li>
 </ol>
 <h2 id="when-to-use-statefulsets">When to Use StatefulSets?<a class="headerlink" href="#when-to-use-statefulsets" title="Permanent link">&para;</a></h2>
-<p>Use StatefulSets for applications like:</p>
-<ul>
-<li>Databases (MongoDB, PostgreSQL, MySQL clusters)</li>
-<li>Message queues (Kafka, RabbitMQ)</li>
-<li>Any application that requires stable network identity or persistent storage</li>
-<li>Distributed systems that require ordered deployment/scaling</li>
-</ul>
+<p>Use StatefulSets for applications like:
+- Databases (MongoDB, PostgreSQL, MySQL clusters)
+- Message queues (Kafka, RabbitMQ)
+- Any application that requires stable network identity or persistent storage
+- Distributed systems that require ordered deployment/scaling</p>
 <h2 id="how-statefulsets-work-key-concepts">How StatefulSets Work: Key Concepts<a class="headerlink" href="#how-statefulsets-work-key-concepts" title="Permanent link">&para;</a></h2>
 <h3 id="1-pod-identity">1. Pod Identity<a class="headerlink" href="#1-pod-identity" title="Permanent link">&para;</a></h3>
 <ul>
@@ -406,7 +405,7 @@
 <li>Updates follow the same ordering</li>
 </ul>
 <h2 id="how-to-create-a-statefulset">How to Create a StatefulSet<a class="headerlink" href="#how-to-create-a-statefulset" title="Permanent link">&para;</a></h2>
-<p>Here's a basic example for a MongoDB StatefulSet:</p>
+<p>Here's a basic example for a MongoDB StatefulSet:
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StatefulSet</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -438,7 +437,7 @@
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10Gi</span>
-</code></pre></div>
+</code></pre></div></p>
 <h3 id="key-components">Key Components:<a class="headerlink" href="#key-components" title="Permanent link">&para;</a></h3>
 <ul>
 <li><code>serviceName</code>: Headless Service that controls the network domain</li>
@@ -491,7 +490,6 @@
 <li>Use readiness probes to ensure proper startup ordering</li>
 </ol>
 <p>StatefulSets bring the benefits of Kubernetes to stateful applications while providing the stability and predictability these applications require.</p>
-<hr />
 <h3 id="1-statefulsets-vs-deployments"><strong>1. StatefulSets vs Deployments</strong><a class="headerlink" href="#1-statefulsets-vs-deployments" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -537,10 +535,13 @@
 <td>Regular ClusterIP/LoadBalancer</td>
 <td>Headless Service (for stable DNS)</td>
 </tr>
+<tr>
+<td>### <strong>2. When to Use StatefulSets?</strong></td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<hr />
-<h3 id="2-when-to-use-statefulsets"><strong>2. When to Use StatefulSets?</strong><a class="headerlink" href="#2-when-to-use-statefulsets" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -565,10 +566,12 @@
 <td><strong>Applications with Persistent Data</strong></td>
 <td>Data must survive Pod restarts</td>
 </tr>
+<tr>
+<td>### <strong>3. Key Features of StatefulSets</strong></td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<hr />
-<h3 id="3-key-features-of-statefulsets"><strong>3. Key Features of StatefulSets</strong><a class="headerlink" href="#3-key-features-of-statefulsets" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -597,10 +600,12 @@
 <td><strong>Graceful Scaling</strong></td>
 <td>Scaling down removes the highest ordinal first</td>
 </tr>
+<tr>
+<td>### <strong>4. Example StatefulSet YAML Breakdown</strong></td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<hr />
-<h3 id="4-example-statefulset-yaml-breakdown"><strong>4. Example StatefulSet YAML Breakdown</strong><a class="headerlink" href="#4-example-statefulset-yaml-breakdown" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">StatefulSet</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -633,7 +638,6 @@
 <span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10Gi</span>
 </code></pre></div>
-<hr />
 <h3 id="summary-table-statefulset-key-points"><strong>Summary Table: StatefulSet Key Points</strong><a class="headerlink" href="#summary-table-statefulset-key-points" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -669,7 +673,6 @@
 </tr>
 </tbody>
 </table>
-<p>Would you like a deeper dive into any specific part? 🚀</p>
 
 
 

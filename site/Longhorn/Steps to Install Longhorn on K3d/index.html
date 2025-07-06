@@ -364,6 +364,7 @@
 
   <h1>Steps to Install Longhorn on K3d</h1>
 
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
 <h3 id="prerequisites">✅ Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -385,9 +386,12 @@
 <td>Kernel modules</td>
 <td><code>open-iscsi</code> not required inside Docker</td>
 </tr>
+<tr>
+<td>### 🛠️ Steps to Install Longhorn on K3d</td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<h3 id="steps-to-install-longhorn-on-k3d">🛠️ Steps to Install Longhorn on K3d<a class="headerlink" href="#steps-to-install-longhorn-on-k3d" title="Permanent link">&para;</a></h3>
 <h4 id="1-label-a-node-with-storage-role">1. <strong>Label a node with storage role</strong><a class="headerlink" href="#1-label-a-node-with-storage-role" title="Permanent link">&para;</a></h4>
 <p>Longhorn needs at least one node to be storage-enabled:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>label<span class="w"> </span>node<span class="w"> </span>k3d-ha-cluster-agent-0<span class="w"> </span>longhorn-node<span class="o">=</span><span class="nb">true</span>
@@ -405,18 +409,16 @@ helm<span class="w"> </span>install<span class="w"> </span>longhorn<span class="
 <span class="w">  </span>--set<span class="w"> </span>persistence.defaultClassReplicaCount<span class="o">=</span><span class="m">1</span>
 </code></pre></div>
 <h4 id="3-access-longhorn-ui">3. <strong>Access Longhorn UI</strong><a class="headerlink" href="#3-access-longhorn-ui" title="Permanent link">&para;</a></h4>
-<p>Expose it via port-forward:</p>
+<p>Expose it via port-forward:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>longhorn-system<span class="w"> </span>port-forward<span class="w"> </span>svc/longhorn-frontend<span class="w"> </span><span class="m">8080</span>:80
 </code></pre></div>
-<p>Open <a href="http://localhost:8080/">http://localhost:8080</a></p>
-<hr />
+Open <a href="http://localhost:8080/">http://localhost:8080</a></p>
 <h3 id="note-for-k3d">⚠️ Note for K3d<a class="headerlink" href="#note-for-k3d" title="Permanent link">&para;</a></h3>
 <p>By default, K3d agent containers use <strong>Docker volumes</strong>, so Longhorn's block device support is <strong>virtual</strong>. It still works fine for dev/testing.</p>
-<p>If Longhorn fails to schedule volumes, check:</p>
+<p>If Longhorn fails to schedule volumes, check:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>wide
 kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>longhorn-system
-</code></pre></div>
-<hr />
+</code></pre></div></p>
 <h3 id="verify">✅ Verify<a class="headerlink" href="#verify" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>sc
 kubectl<span class="w"> </span>get<span class="w"> </span>volumes<span class="w"> </span>-n<span class="w"> </span>longhorn-system

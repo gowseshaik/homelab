@@ -1,4 +1,5 @@
 <span style="color:#4caf50;"><b>Created:</b> 2025-06-29</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 ### Best Practice Setup (4 VMs):
 
 1. `elk-es` – 4 CPU, 4–8 GB RAM, 20+ GB Disk

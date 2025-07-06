@@ -1,4 +1,5 @@
 <span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 To enable and expose the **Traefik dashboard** in `k3d` at cluster creation, you need to do **two things** in the config file:
 ### ✅ 1. Enable Traefik Dashboard via k3s Arg
 Add this under the `k3s` section:

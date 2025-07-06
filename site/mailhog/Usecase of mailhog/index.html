@@ -359,15 +359,14 @@
 
   <h1>Usecase of mailhog</h1>
 
-<p>No, <strong>MailHog does not send emails to real recipients</strong>.</p>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+No, <strong>MailHog does not send emails to real recipients</strong>.</p>
 <p>It acts as a <strong>fake SMTP server</strong> that <strong>captures emails locally</strong> for testing and debugging.</p>
-<p>You can:</p>
-<ul>
-<li>Send emails <em>to</em> MailHog from your app</li>
-<li>View those emails in MailHog’s web UI</li>
-<li>Inspect content, headers, attachments</li>
-<li>Resend emails <em>within</em> MailHog (to test again internally)</li>
-</ul>
+<p>You can:
+- Send emails <em>to</em> MailHog from your app
+- View those emails in MailHog’s web UI
+- Inspect content, headers, attachments
+- Resend emails <em>within</em> MailHog (to test again internally)</p>
 <p>But MailHog <strong>won’t deliver emails to external addresses</strong>. It’s only for local/dev use.</p>
 <p>If you want to send real emails, you must configure your app to use a real SMTP service (e.g., Gmail SMTP, SendGrid, AWS SES).</p>
 

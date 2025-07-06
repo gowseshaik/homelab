@@ -1,4 +1,5 @@
 <span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 Great — since you have a **k3d HA cluster (3 control-plane nodes)**
 you're running **embedded etcd**, and can safely perform etcd backups the k3s way.
 

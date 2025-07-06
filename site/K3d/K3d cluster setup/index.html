@@ -364,7 +364,8 @@
 
   <h1>K3d cluster setup</h1>
 
-<p><code>k3d</code> also supports cluster creation using a <strong>YAML config file</strong>, similar to `kind.</p>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+<code>k3d</code> also supports cluster creation using a <strong>YAML config file</strong>, similar to `kind.</p>
 <hr />
 <h3 id="1-sample-k3d-cluster-config-yaml-k3d-configyaml">✅ <strong>1. Sample k3d Cluster Config YAML (<code>k3d-config.yaml</code>)</strong><a class="headerlink" href="#1-sample-k3d-cluster-config-yaml-k3d-configyaml" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k3d.io/v1alpha5</span>
@@ -402,13 +403,10 @@
 <span class="w">    </span><span class="nt">nodeFilters</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">loadbalancer</span>
 </code></pre></div>
-<hr />
 <h3 id="2-create-cluster-using-config">✅ <strong>2. Create Cluster Using Config</strong><a class="headerlink" href="#2-create-cluster-using-config" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>k3d cluster create --config k3d-config.yaml
+<p><div class="highlight"><pre><span></span><code>k3d cluster create --config k3d-config.yaml
 </code></pre></div>
-<hr />
-<p>This will expose your services directly on the host ports without needing port-forward. You can add or change ports anytime by editing the config.</p>
-<p>Let me know if you want an example with volumes or registries too.</p>
+This will expose your services directly on the host ports without needing port-forward. You can add or change ports anytime by editing the config.</p>
 
 
 

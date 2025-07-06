@@ -359,6 +359,7 @@
 
   <h1>Steps to push sealed secrets for an app</h1>
 
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 <div class="highlight"><pre><span></span><code><span class="c1"># Example: Practical GitOps flow to push sealed secrets for an app config</span>
 
 <span class="c1"># 1. Prepare plain secret YAML locally</span>
@@ -392,23 +393,14 @@ git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span
 
 <span class="c1"># 6. Apply manifests from GitOps pipeline or manually trigger a sync (e.g. ArgoCD/Flux)</span>
 <span class="c1"># Cluster will automatically decrypt sealed-secret.yaml and create the actual secret.</span>
-</code></pre></div>
+</code></pre></div></p>
 <blockquote>
 <p><strong>Notes:</strong></p>
 <ul>
-<li>
-<p>You run <code>kubeseal</code> locally or in CI before pushing to Git.</p>
-</li>
-<li>
-<p>The Git repo stores only encrypted secrets.</p>
-</li>
-<li>
-<p>The cluster controller decrypts and creates Kubernetes secrets.</p>
-</li>
-<li>
-<p>Use this with GitOps tools like ArgoCD or Flux for automated syncing.
-</p>
-</li>
+<li>You run <code>kubeseal</code> locally or in CI before pushing to Git.</li>
+<li>The Git repo stores only encrypted secrets.</li>
+<li>The cluster controller decrypts and creates Kubernetes secrets.</li>
+<li>Use this with GitOps tools like ArgoCD or Flux for automated syncing.</li>
 </ul>
 </blockquote>
 

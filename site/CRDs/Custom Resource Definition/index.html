@@ -364,12 +364,11 @@
 
   <h1>Custom Resource Definition</h1>
 
-<ul>
-<li>Sealed Secrets has a CRD <code>SealedSecret</code> and a controller that watches SealedSecret objects and creates Secrets.</li>
-<li>The CRD is just the schema.</li>
-<li>The controller does the work.
-Note: Controllers often come bundled with CRDs (like in Operators), but <strong>a controller is not the same as a CRD</strong>.</li>
-</ul>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+- Sealed Secrets has a CRD <code>SealedSecret</code> and a controller that watches SealedSecret objects and creates Secrets.
+- The CRD is just the schema.
+- The controller does the work.
+Note: Controllers often come bundled with CRDs (like in Operators), but <strong>a controller is not the same as a CRD</strong>.</p>
 <h3 id="1-what-are-crds"><strong>1. What are CRDs?</strong><a class="headerlink" href="#1-what-are-crds" title="Permanent link">&para;</a></h3>
 <p><strong>Definition:</strong><br />
 CRDs (<strong>Custom Resource Definitions</strong>) extend the Kubernetes API to allow users to create and manage <strong>custom resources</strong> (besides built-in resources like Pods, Deployments, etc.).  </p>

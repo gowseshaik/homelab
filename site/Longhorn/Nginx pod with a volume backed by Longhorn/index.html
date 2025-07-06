@@ -364,7 +364,8 @@
 
   <h1>Nginx pod with a volume backed by Longhorn</h1>
 
-<p>When you <strong>setup Longhorn in your cluster</strong>, it uses the storage available on the cluster nodes (e.g., the mounted <code>/mnt/longhorn</code> directory in Kind) as its <strong>underlying storage pool</strong>.</p>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+When you <strong>setup Longhorn in your cluster</strong>, it uses the storage available on the cluster nodes (e.g., the mounted <code>/mnt/longhorn</code> directory in Kind) as its <strong>underlying storage pool</strong>.</p>
 <ul>
 <li>Longhorn manages that storage to create <strong>persistent volumes</strong> (block devices).</li>
 <li>It dynamically allocates space from that pool when you create PVCs.</li>
@@ -451,7 +452,6 @@
 <span class="w">        </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn-pvc-demo</span>
 </code></pre></div>
-<hr />
 <h3 id="usage">Usage:<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>longhorn-pv.yaml
 kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>longhorn-pvc.yaml

@@ -364,50 +364,42 @@
 
   <h1>How to confirm the exact Ingress Controller used in your Kubernetes cluster</h1>
 
-<p>To <strong>confirm the exact Ingress Controller</strong> used in your Kubernetes cluster, follow these steps:</p>
-<hr />
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+To <strong>confirm the exact Ingress Controller</strong> used in your Kubernetes cluster, follow these steps:</p>
 <h3 id="1-check-ingressclass-resource">✅ <strong>1. Check IngressClass Resource</strong><a class="headerlink" href="#1-check-ingressclass-resource" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ingressclass
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ingressclass
 </code></pre></div>
-<p>Output example:</p>
+Output example:
 <div class="highlight"><pre><span></span><code>NAME             CONTROLLER                   ...
 nginx            k8s.io/ingress-nginx         ...
 traefik          traefik.io/ingress-controller ...
-</code></pre></div>
+</code></pre></div></p>
 <h3 id="2-describe-the-active-ingressclass">✅ <strong>2. Describe the Active IngressClass</strong><a class="headerlink" href="#2-describe-the-active-ingressclass" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>ingressclass<span class="w"> </span>&lt;name&gt;
 </code></pre></div>
 <p>Look for the <code>controller:</code> field. It tells you which controller manages it.</p>
 <hr />
 <h3 id="3-verify-the-ingress-controller-deployment">✅ <strong>3. Verify the Ingress Controller Deployment</strong><a class="headerlink" href="#3-verify-the-ingress-controller-deployment" title="Permanent link">&para;</a></h3>
-<p>Use the controller name from above to filter pods:</p>
+<p>Use the controller name from above to filter pods:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>--all-namespaces<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ingress
-</code></pre></div>
-<p>Or more specifically:</p>
+</code></pre></div></p>
+<p>Or more specifically:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>deployments<span class="w"> </span>--all-namespaces<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ingress
-</code></pre></div>
+</code></pre></div></p>
 <p>Look for deployments like:</p>
 <ul>
-<li>
-<p><code>ingress-nginx-controller</code></p>
-</li>
-<li>
-<p><code>traefik</code></p>
-</li>
-<li>
-<p><code>istio-ingressgateway</code></p>
-</li>
+<li><code>ingress-nginx-controller</code></li>
+<li><code>traefik</code></li>
+<li><code>istio-ingressgateway</code></li>
 </ul>
 <hr />
 <h3 id="4-confirm-by-ingress-resource">✅ <strong>4. Confirm by Ingress Resource</strong><a class="headerlink" href="#4-confirm-by-ingress-resource" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ingress<span class="w"> </span>-A
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ingress<span class="w"> </span>-A
 </code></pre></div>
-<p>Then:</p>
+Then:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>ingress<span class="w"> </span>&lt;name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
-<p>Check if it refers to a specific <code>ingressClassName</code>.</p>
-<hr />
-<p>Let me know if you want a script to automate this.</p>
+Check if it refers to a specific <code>ingressClassName</code>.</p>
 
 
 
