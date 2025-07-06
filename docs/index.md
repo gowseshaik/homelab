@@ -1,3 +1,7 @@
+---
+author: Gouse Shaik
+date: 2025-07-06
+---
 # Knowledge Base
 
 ## Api-resources
@@ -216,6 +220,7 @@
 - [Fluentd install and config steps for a Linux VM](fluentd/Fluentd install and config steps for a Linux VM.md)
 
 ## Git
+- [View your configured for Git](git/View your configured for Git.md)
 - [git errors](git/git errors.md)
 
 ## Images
@@ -246,4 +251,3 @@
 
 ## Velero - for migration
 - [Velero with kind](velero - for migration/Velero with kind.md)
-

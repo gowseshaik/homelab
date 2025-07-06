@@ -170,8 +170,6 @@
   },
   "active": "e87aa31bb6cd3006",
   "lastOpenFiles": [
-    "docs/Kubernetes/Kube API server Architechture - deep dive.md",
-    "docs/git/View your configured for Git.md",
     "site/search/search_index.json",
     "site/search",
     "site/velero - for migration/Velero with kind/index.html",
@@ -182,7 +180,11 @@
     "site/python/mkdocs to github pages/index.html",
     "site/python/mkdocs to github pages",
     "site/python",
+    "site/nginx/Installing and Configuring Nginx on Ubuntu/index.html",
     "site/assets/images/favicon.png",
+    "Git.md",
+    "docs/Kubernetes/Kube API server Architechture - deep dive.md",
+    "docs/git/View your configured for Git.md",
     "site/images/{E0C131A8-497C-493E-A36A-ED5A2BF6BBF5}.png",
     "site/images/{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png",
     "site/images/{69A7335F-2DAF-486C-8B60-0DD83CDAA5A7}.png",
@@ -214,8 +216,6 @@
     "docs/git/git errors.md",
     "docs/Sealed-Secrets/Steps to push sealed secrets for an app.md",
     "docs/Sealed-Secrets/Step By Step- Using Sealed Secrets with GitOps.md",
-    "docs/Nexus/nexus3-cli (deprecated).md",
-    "docs/Nexus/Nexus oss setup - On-Prem.md",
     "Untitled.canvas"
   ]
 }
