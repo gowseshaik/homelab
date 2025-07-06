@@ -113,6 +113,7 @@
 - [Must know keywords](Keywords/Must know keywords.md)
 
 ## Kubernetes
+- [K8s Pod Architecture & Lifecycle](Kubernetes/K8s Pod Architecture & Lifecycle.md)
 - [Kube API server Architechture - deep dive](Kubernetes/Kube API server Architechture - deep dive.md)
 - [Kubernetes history](Kubernetes/Kubernetes history.md)
 
@@ -220,7 +221,6 @@
 - [git errors](git/git errors.md)
 
 ## Images
-- [Kube](images/Kube.md)
 
 ## Mailhog
 - [Steps to deploy MailHog with Ingress](mailhog/Steps to deploy MailHog with Ingress.md)
