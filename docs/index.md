@@ -113,7 +113,7 @@
 - [Must know keywords](Keywords/Must know keywords.md)
 
 ## Kubernetes
-- [Kube API server Architechture Diagram](Kubernetes/Kube API server Architechture Diagram.md)
+- [Kube API server Architechture - deep dive](Kubernetes/Kube API server Architechture - deep dive.md)
 - [Kubernetes history](Kubernetes/Kubernetes history.md)
 
 ## Loadbalancers types

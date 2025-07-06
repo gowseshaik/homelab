@@ -61,6 +61,7 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
 - The **Controller Manager** continuously watches etcd.
 - It notices a new pod spec and checks if the current state matches the desired state.
 - If not, it triggers actions (e.g., create a pod).
+
 ![{12236FE0-7B72-4054-9B80-86E6560C67B0}.png](../images/{12236FE0-7B72-4054-9B80-86E6560C67B0}.png)
 ### 📦 Step 6: Scheduler Binds Pod to a Node
 
@@ -79,6 +80,7 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
     - Pulls the container images (from Docker Hub or private registry).
     - Creates containers using the container runtime (containerd, CRI-O, etc).
     - Starts the pod.
+
 ![{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png](../images/{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png)
 ### 🌐 Step 8–10: Kube-proxy Configures Networking
 
@@ -94,7 +96,8 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
 
     - **NAT / kube-proxy** routes the traffic outside the cluster.
     - The pod can access external services like databases, APIs, etc.
-![{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png](../images/{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png)
+
+![{A8F2395B-ADE9-4E93-B2B8-948260932F3C}](../images/{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png)
 
 ## 🧠 4. **Bottom Section: API Server Clustering**
 
