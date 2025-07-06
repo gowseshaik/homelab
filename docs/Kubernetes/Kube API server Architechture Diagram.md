@@ -1,5 +1,5 @@
 
-![Kube-API-server-Architechture-Diagram.png](docs/images/Kube-API-server-Architechture-Diagram.png)
+![Kube-API-server-Architechture-Diagram](docs/images/Kube-API-server-Architechture-Diagram.png)
 
 Let's go into **deep-dive explanation** of the diagram, walking you through the **complete internal workflow of Kubernetes from scratch**, including basics of each resource/component being used by kubernetes
 
