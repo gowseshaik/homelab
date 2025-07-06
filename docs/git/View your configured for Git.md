@@ -32,3 +32,20 @@ git config user.name
 | `git config --edit`                                | Edit local Git config file in editor                        |
 | `git config --global --edit`                       | Edit global Git config file in editor                       |
 | `git config --system --edit`                       | Edit system-level Git config file                           |
+
+|Command|Description|
+|---|---|
+|`git config --global user.name "Your Name"`|Set global Git username|
+|`git config --global user.email "you@example.com"`|Set global Git email|
+|`git config --local core.editor "vim"`|Set editor for Git commit messages in current repo|
+|`git config --global core.autocrlf true`|Handle line endings automatically (Windows)|
+|`git config --global credential.helper cache`|Cache credentials temporarily|
+|`git config --global alias.co checkout`|Create alias `co` for `checkout` command|
+|`git config --global push.default simple`|Set default push behavior|
+|`git config --list`|List all current Git configurations|
+|`git config --local merge.tool vimdiff`|Set merge tool for the local repo|
+|`git config --global color.ui auto`|Enable colored output in Git commands|
+|`git config --global core.excludesfile ~/.gitignore_global`|Set global ignore file|
+|`git config --local diff.algorithm patience`|Use "patience" diff algorithm locally|
+|`git config --global init.defaultBranch main`|Set default branch name for new repos|
+|`git config --global pull.rebase true`|Enable rebase on git pull globally|
