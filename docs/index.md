@@ -1,9 +1,3 @@
----
-author: Gouse Shaik
-created: 2025-07-06T11:mm:ssZ
-updated: 2025-07-06T11:mm:ssZ
----
-<span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 # Knowledge Base
 
 ## Api-resources
@@ -195,7 +189,7 @@ updated: 2025-07-06T11:mm:ssZ
 
 ## Taint-tolerations
 - [Understanding Tolerations in Kubernetes](Taint-Tolerations/Understanding Tolerations in Kubernetes.md)
-- [What is taint _](Taint-Tolerations/What is taint _.md)
+- [What is taint-toleration](Taint-Tolerations/What is taint-toleration.md)
 
 ## Traefik
 - [Securing Traefik Dashboard with Keycloak (OIDC or OAuth2)](Traefik/Securing Traefik Dashboard with Keycloak (OIDC or OAuth2).md)
