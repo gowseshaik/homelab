@@ -1,4 +1,5 @@
-![[docs/images/Kube API server Architechture Diagram.png]]
+
+![Kube-API-server-Architechture-Diagram.png](docs/images/Kube-API-server-Architechture-Diagram.png)
 
 Let's go into **deep-dive explanation** of the diagram, walking you through the **complete internal workflow of Kubernetes from scratch**, including basics of each resource/component being used by kubernetes
 
@@ -39,7 +40,7 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
     ```
    
 - The request hits the **Kubernetes API Server**.
-![[docs/images/{69A7335F-2DAF-486C-8B60-0DD83CDAA5A7}.png]]
+![{69A7335F-2DAF-486C-8B60-0DD83CDAA5A7}.png](docs/images/{69A7335F-2DAF-486C-8B60-0DD83CDAA5A7}.png)
 ### 📥 Step 2: API Server Receives Request
 
 - The **API Server**:
@@ -60,7 +61,7 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
 - The **Controller Manager** continuously watches etcd.
 - It notices a new pod spec and checks if the current state matches the desired state.
 - If not, it triggers actions (e.g., create a pod).
-![[docs/images/{12236FE0-7B72-4054-9B80-86E6560C67B0}.png]]
+![{12236FE0-7B72-4054-9B80-86E6560C67B0}.png](docs/images/{12236FE0-7B72-4054-9B80-86E6560C67B0}.png)
 ### 📦 Step 6: Scheduler Binds Pod to a Node
 
 - The **Scheduler**:
@@ -78,7 +79,7 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
     - Pulls the container images (from Docker Hub or private registry).
     - Creates containers using the container runtime (containerd, CRI-O, etc).
     - Starts the pod.
-![[docs/images/{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png]]
+![{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png](docs/images/{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png)
 ### 🌐 Step 8–10: Kube-proxy Configures Networking
 
 - **Kube-proxy** sets up:
@@ -93,7 +94,7 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
 
     - **NAT / kube-proxy** routes the traffic outside the cluster.
     - The pod can access external services like databases, APIs, etc.
-![[docs/images/{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png]]
+![{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png](docs/images/{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png)
 
 ## 🧠 4. **Bottom Section: API Server Clustering**
 
@@ -106,7 +107,7 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
 
 - Helps prevent split-brain scenarios and ensures fault tolerance.
 
-![[docs/images/{E0C131A8-497C-493E-A36A-ED5A2BF6BBF5}.png]]
+![{E0C131A8-497C-493E-A36A-ED5A2BF6BBF5}.png](docs/images/{E0C131A8-497C-493E-A36A-ED5A2BF6BBF5}.png)]
 ## 🔁 Summary – Kubernetes Control Plane Data Flow
 
 ```

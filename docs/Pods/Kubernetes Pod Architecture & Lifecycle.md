@@ -1,1 +1,1 @@
-![[K8s Pod Architecture & Lifecycle.png]]
+![[K8s-Pod-Architecture-Lifecycle.png]]
