@@ -219,6 +219,7 @@
 - [git errors](git/git errors.md)
 
 ## Images
+- [Kube](images/Kube.md)
 
 ## Mailhog
 - [Steps to deploy MailHog with Ingress](mailhog/Steps to deploy MailHog with Ingress.md)
