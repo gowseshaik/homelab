@@ -1,5 +1,5 @@
-![Kubernetes-history.png](docs/images/Kubernetes-history.png)
+![Kubernetes-history.png](../images/Kubernetes-history.png)
 
 
-![K8s-Periodic-Table.jpg](docs/images/K8s-Periodic-Table.jpg)
+![K8s-Periodic-Table.jpg](../images/K8s-Periodic-Table.jpg)
 
