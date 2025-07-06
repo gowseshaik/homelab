@@ -12,4 +12,4 @@ Hello! I'm Gouse Shaik, a DevOps Engineer and Homelab enthusiast passionate abou
 - **Scripting**: Python, Bash  
 
 ## 🏠 My Homelab  
-![Pasted image 20250621165152.png](../images/Pasted%20image%2020250621165152.png)
+![Pasted image 20250621165152.png](../images/Pasted-image-20250621165152.png)
