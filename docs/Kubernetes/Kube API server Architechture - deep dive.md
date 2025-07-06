@@ -27,6 +27,7 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
 | **Scheduler**                | Assigns unscheduled pods to suitable nodes.                              |
 | **Controller Manager**       | Runs background loops (controllers) that watch and adjust cluster state. |
 | **Cloud Controller Manager** | Integrates cloud-specific operations (e.g., load balancers).             |
+
 ## ⚙️ 3. **Step-by-Step Explanation of Diagram**
 
 ### 🧑‍💻 Step 1: Submit Configuration (YAML)
