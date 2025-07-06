@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/git/View_your_configured_for_Git.md",
+                "file": "docs/git/View your configured for Git.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "View_your_configured_for_Git"
+              "title": "View your configured for Git"
             }
           }
         ]
@@ -165,13 +165,17 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "templater-obsidian:Templater": false
     }
   },
   "active": "e87aa31bb6cd3006",
   "lastOpenFiles": [
+    "docs/templates/frontmatter.md",
+    "docs/templates",
+    "docs/Templater",
     "docs/git/git errors.md",
-    "docs/git/View_your_configured_for_Git.md",
+    "docs/git/View your configured for Git.md",
     "site/search/search_index.json",
     "site/search",
     "site/velero - for migration/Velero with kind/index.html",
@@ -180,8 +184,6 @@
     "site/python/python pyautogui/index.html",
     "site/python/python pyautogui",
     "site/python/mkdocs to github pages/index.html",
-    "site/python/mkdocs to github pages",
-    "site/python",
     "site/assets/images/favicon.png",
     "site/images/{E0C131A8-497C-493E-A36A-ED5A2BF6BBF5}.png",
     "site/images/{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png",
