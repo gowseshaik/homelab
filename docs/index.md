@@ -112,6 +112,10 @@
 ## Keywords
 - [Must know keywords](Keywords/Must know keywords.md)
 
+## Kubernetes
+- [Kube API server Architechture Diagram](Kubernetes/Kube API server Architechture Diagram.md)
+- [Kubernetes history](Kubernetes/Kubernetes history.md)
+
 ## Loadbalancers types
 - [Loadbalancer Types](Loadbalancers Types/Loadbalancer Types.md)
 - [Reverse proxy means](Loadbalancers Types/Reverse proxy means.md)
@@ -144,6 +148,7 @@
 
 ## Pods
 - [Debug pod (ephermal container)](Pods/Debug pod (ephermal container).md)
+- [Kubernetes Pod Architecture & Lifecycle](Pods/Kubernetes Pod Architecture & Lifecycle.md)
 - [List all pods with their init containers and sidecar containers info](Pods/List all pods with their init containers and sidecar containers info.md)
 - [Types of Containers in Kubernetes](Pods/Types of Containers in Kubernetes.md)
 - [Types of Pods](Pods/Types of Pods.md)
