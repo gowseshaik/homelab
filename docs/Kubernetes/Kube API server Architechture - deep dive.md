@@ -2,7 +2,7 @@
 
 ![Kube-API-server-Architechture-Diagram](../images/Kube-API-server-Architechture-Diagram.png)
 
-Let's go into **deep-dive explanation** of the diagram, walking you through the **complete internal workflow of Kubernetes from scratch**, including basics of each resource/component being used by kubernetes
+Let's go into **deep-dive explanation** of the diagram, walking you through the **complete internal workflow of Kubernetes from scratch**, including basics of each resource/component being used by Kubernetes
 
 ## 🧱 1. **What Is Kubernetes?**
 
@@ -68,7 +68,6 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
 ### 📦 Step 6: Scheduler Binds Pod to a Node
 
 - The **Scheduler**:
-
     - Detects the new unassigned pod.
     - Evaluates all available nodes.
     - Based on resources, taints/tolerations, node selectors, and affinity rules → selects a node.
@@ -87,7 +86,6 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
 ### 🌐 Step 8–10: Kube-proxy Configures Networking
 
 - **Kube-proxy** sets up:
-
     - iptables or IPVS rules for service load-balancing.
     - Ensures networking for the pod is in place.
     - Handles traffic routing to/from the pod.
@@ -95,7 +93,6 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
 ### 🌍 Step 11–12: Internet Access
 
 - If the app needs internet:
-
     - **NAT / kube-proxy** routes the traffic outside the cluster.
     - The pod can access external services like databases, APIs, etc.
 
@@ -106,7 +103,6 @@ Kubernetes (K8s) is an open-source **container orchestration system** that autom
 - Shows multiple **API server replicas** (API-1 to API-7) behind a load balancer for **High Availability** (HA).
 
 - Follows **etcd quorum** rule:
-    
     - Minimum `n/2 + 1` nodes must be alive to maintain consistency.
     - For 7 API servers: Quorum = 4.
 
@@ -121,11 +117,11 @@ User YAML -> API Server -> ETCD -> Controller Manager -> Scheduler -> Kubelet ->
 
 ## ✅ Summary
 
-|Principle|Kubernetes Implementation|
-|---|---|
-|**State Machine**|etcd as the consistent, distributed key-value store|
-|**Reconciliation Loop**|Controllers continuously watch and reconcile desired vs actual state|
-|**Declarative Intent**|YAML files define _what_ you want, not _how_ to do it|
-|**Loose Coupling**|Modular architecture (API Server, Scheduler, Kubelet, etc.)|
-|**Fault Tolerance by Design**|HA API servers + etcd quorum logic|
-|**Idempotency**|Reapplying manifests results in the same outcome|
+| Principle                     | Kubernetes Implementation                                            |
+| ----------------------------- | -------------------------------------------------------------------- |
+| **State Machine**             | etcd as the consistent, distributed key-value store                  |
+| **Reconciliation Loop**       | Controllers continuously watch and reconcile desired vs actual state |
+| **Declarative Intent**        | YAML files define _what_ you want, not _how_ to do it                |
+| **Loose Coupling**            | Modular architecture (API Server, Scheduler, Kubelet, etc.)          |
+| **Fault Tolerance by Design** | HA API servers + etcd quorum logic                                   |
+| **Idempotency**               | Reapplying manifests results in the same outcome                     |

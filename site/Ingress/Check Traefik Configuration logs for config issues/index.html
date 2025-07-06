@@ -362,7 +362,7 @@
   
 
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Check Traefik deployment</span>
 kubectl<span class="w"> </span>get<span class="w"> </span>deployment<span class="w"> </span>traefik<span class="w"> </span>-n<span class="w"> </span>traefik-system<span class="w"> </span>-o<span class="w"> </span>yaml
 
@@ -376,7 +376,7 @@ kubectl<span class="w"> </span>describe<span class="w"> </span>configmap<span cl
 <span class="c1"># Check Traefik pods</span>
 kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>traefik-system
 kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>traefik-xxx-xxx<span class="w"> </span>-n<span class="w"> </span>traefik-system
-</code></pre></div></p>
+</code></pre></div>
 <h1 id="check-traefik-logs-for-configuration-issues">Check Traefik Logs for Configuration Issues<a class="headerlink" href="#check-traefik-logs-for-configuration-issues" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code><span class="c1"># Check Traefik logs</span>
 kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>traefik-system<span class="w"> </span>deployment/traefik

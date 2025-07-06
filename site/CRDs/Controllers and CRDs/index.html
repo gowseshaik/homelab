@@ -359,8 +359,8 @@
 
   <h1>Controllers and CRDs</h1>
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
-Yes, you can list all controllers running in your Kubernetes cluster by checking the pods in the <code>kube-system</code> namespace and other namespaces where controllers commonly run.
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
+<p>Yes, you can list all controllers running in your Kubernetes cluster by checking the pods in the <code>kube-system</code> namespace and other namespaces where controllers commonly run.
 <div class="highlight"><pre><span></span><code><span class="c1"># List all pods in kube-system (common place for core controllers)</span>
 kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kube-system
 
