@@ -464,6 +464,28 @@ git<span class="w"> </span>config<span class="w"> </span>pull.rebase<span class=
 <h4 id="4-push-your-changes">✅ 4. <strong>Push your changes</strong><a class="headerlink" href="#4-push-your-changes" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>main
 </code></pre></div>
+<h4 id="5-pull-from-remote-to-sync-local-and-push-your-changes">✅ 5. <strong>Pull from remote to sync local and Push your changes</strong><a class="headerlink" href="#5-pull-from-remote-to-sync-local-and-push-your-changes" title="Permanent link">&para;</a></h4>
+<p>Run this single command to resolve it:
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>stash<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>--rebase<span class="w"> </span>origin<span class="w"> </span>main<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>stash<span class="w"> </span>pop
+</code></pre></div></p>
+<h3 id="what-each-does">🔍 What each does:<a class="headerlink" href="#what-each-does" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>git add .</code> → stages all changes (to avoid stash errors on untracked files).</li>
+<li><code>git stash</code> → saves local changes temporarily.</li>
+<li><code>git pull --rebase origin main</code> → pulls remote changes cleanly.</li>
+<li><code>git stash pop</code> → restores your local changes back on top.</li>
+</ul>
+<h4 id="5-to-discard-all-local-unstaged-changes-and-pull">✅ 5. To <strong>discard</strong> all local unstaged changes and pull<a class="headerlink" href="#5-to-discard-all-local-unstaged-changes-and-pull" title="Permanent link">&para;</a></h4>
+<p>If you want to <strong>discard</strong> all local unstaged changes and pull with rebase, run:
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clean<span class="w"> </span>-fd<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>--rebase<span class="w"> </span>origin<span class="w"> </span>main
+</code></pre></div></p>
+<h3 id="explanation_1">🔍 Explanation:<a class="headerlink" href="#explanation_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>git reset --hard</code> → discards all tracked file changes.</li>
+<li><code>git clean -fd</code> → removes untracked files and directories.</li>
+<li><code>git pull --rebase origin main</code> → pulls latest changes with rebase.</li>
+</ul>
+<p>⚠️ <strong>Warning</strong>: This will delete all your local changes permanently.</p>
 
 
 
