@@ -1,4 +1,4 @@
-### **Critical Thinking: A Structured Approach**  
+#### **Critical Thinking: A Structured Approach**  
 Critical thinking is the disciplined process of **analyzing, evaluating, and synthesizing information** to form reasoned judgments. It involves questioning assumptions, identifying biases, and applying logic to solve problems effectively. Below is a breakdown of its core components, methods, and applications.
 
 ## **1. Core Principles of Critical Thinking**  

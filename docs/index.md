@@ -62,6 +62,7 @@
 - [DaemonSets in Kubernetes](DaemonSets/DaemonSets in Kubernetes.md)
 
 ## Dailytasks
+- [Critical Thinking](DailyTasks/Critical Thinking.md)
 - [Failures with solution](DailyTasks/Failures with solution.md)
 - [Important resources to learn k8s](DailyTasks/Important resources to learn k8s.md)
 - [K8s Cmds Cheatsheet](DailyTasks/K8s Cmds Cheatsheet.md)
