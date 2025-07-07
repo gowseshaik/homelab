@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/DailyTasks/Keywords/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/git/How%20to%20Set%20Up%20Git%20Aliases/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Keywords - Gouse Shaik</title>
+        <title>How to Set Up Git Aliases - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#qdprc" class="md-skip">
+        <a href="#1-using-git-config" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Keywords
+              How to Set Up Git Aliases
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/DailyTasks/Keywords.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/git/How to Set Up Git Aliases.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,65 +362,127 @@
   
 
 
-  <h1>Keywords</h1>
+  <h1>How to Set Up Git Aliases</h1>
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<h3 id="qdprc">QDPRC:<a class="headerlink" href="#qdprc" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Question:</strong> Start by framing the right question to ensure focus.</li>
-<li><strong>Data:</strong> Collect objective information to support analysis. (.csv file)</li>
-<li><strong>Principles:</strong> Use established laws, theories, or ethical guidelines.</li>
-<li><strong>Reasoning:</strong> Apply deductive or inductive logic to connect data and principles.</li>
-<li>
-<p><strong>Conclusion:</strong> Arrive at a justified answer or decision.</p>
-</li>
-<li>
-<p><strong>GPT</strong> (Generative Pre-trained Transformer) is a family of <strong>large language models (LLMs)</strong> developed by <strong>OpenAI</strong></p>
-</li>
-<li>data will be in the format of Text, video, Audio formats</li>
-<li>first principle</li>
-<li>biases (miscommunication)</li>
-<li>[[Critical Thinking]] (thinks about big problems)</li>
-<li>Pre-trained</li>
-<li>Questioning</li>
-<li></li>
-</ul>
+<p>Git aliases are shortcuts that allow you to create custom Git commands or abbreviate existing ones. They can save you time and make your Git workflow more efficient. You can define them in your Git configuration file (<code>~/.gitconfig</code>) or by using the <code>git config</code> command.</p>
+<h4 id="1-using-git-config"><strong>1. Using <code>git config</code></strong><a class="headerlink" href="#1-using-git-config" title="Permanent link">&para;</a></h4>
+<p>You can create aliases directly from the command line:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>alias.&lt;shortcut&gt;<span class="w"> </span><span class="s2">&quot;&lt;full-command&gt;&quot;</span>
+</code></pre></div>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>alias.co<span class="w"> </span>checkout<span class="w">  </span><span class="c1"># Now `git co` = `git checkout`</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>alias.br<span class="w"> </span>branch<span class="w">   </span><span class="c1"># Now `git br` = `git branch`</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>alias.ci<span class="w"> </span>commit<span class="w">   </span><span class="c1"># Now `git ci` = `git commit`</span>
+</code></pre></div></p>
+<h4 id="2-editing-gitconfig-directly"><strong>2. Editing <code>~/.gitconfig</code> Directly</strong><a class="headerlink" href="#2-editing-gitconfig-directly" title="Permanent link">&para;</a></h4>
+<p>You can manually add aliases to your Git config file (usually at <code>~/.gitconfig</code> or <code>~/.config/git/config</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="k">[alias]</span>
+<span class="w">    </span><span class="na">co</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">checkout</span>
+<span class="w">    </span><span class="na">br</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">branch</span>
+<span class="w">    </span><span class="na">ci</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">commit</span>
+<span class="w">    </span><span class="na">st</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">status</span>
+<span class="w">    </span><span class="na">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">log -1 HEAD</span><span class="w">  </span><span class="c1"># Show the last commit</span>
+<span class="w">    </span><span class="na">lg = log --graph --pretty=format</span><span class="o">:</span><span class="s">&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39;</span><span class="w"> </span><span class="na">--abbrev-commit --date</span><span class="o">=</span><span class="s">relative</span>
+</code></pre></div>
+<h3 id="common-useful-git-aliases"><strong>Common &amp; Useful Git Aliases</strong><a class="headerlink" href="#common-useful-git-aliases" title="Permanent link">&para;</a></h3>
+<p>Here are some popular aliases:</p>
 <table>
 <thead>
 <tr>
-<th>Model</th>
-<th>Creator</th>
-<th>Key Difference</th>
+<th>Alias</th>
+<th>Command</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>GPT</strong></td>
-<td>OpenAI</td>
-<td>Best at creative text generation.</td>
+<td><code>git co</code></td>
+<td><code>checkout</code></td>
+<td>Switch branches</td>
 </tr>
 <tr>
-<td><strong>BERT</strong></td>
-<td>Google</td>
-<td>Better for search &amp; classification.</td>
+<td><code>git ci</code></td>
+<td><code>commit</code></td>
+<td>Commit changes</td>
 </tr>
 <tr>
-<td><strong>Claude</strong></td>
-<td>Anthropic</td>
-<td>Focuses on safety &amp; reasoning.</td>
+<td><code>git st</code></td>
+<td><code>status</code></td>
+<td>Show working tree status</td>
 </tr>
 <tr>
-<td><strong>Llama</strong></td>
-<td>Meta</td>
-<td>Open-source alternative.</td>
+<td><code>git br</code></td>
+<td><code>branch</code></td>
+<td>List branches</td>
+</tr>
+<tr>
+<td><code>git unstage</code></td>
+<td><code>reset HEAD --</code></td>
+<td>Unstage changes</td>
+</tr>
+<tr>
+<td><code>git last</code></td>
+<td><code>log -1 HEAD</code></td>
+<td>Show the last commit</td>
+</tr>
+<tr>
+<td><code>git lg</code></td>
+<td>Custom log format</td>
+<td>Pretty commit history</td>
+</tr>
+<tr>
+<td><code>git amend</code></td>
+<td><code>commit --amend</code></td>
+<td>Amend the last commit</td>
+</tr>
+<tr>
+<td><code>git fp</code></td>
+<td><code>push --force-with-lease</code></td>
+<td>Safer force push</td>
+</tr>
+<tr>
+<td>### <strong>Advanced Aliases</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>You can even chain commands or use shell functions:</td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<p>✅ <strong>Text Generation</strong> (articles, stories, emails)<br />
-✅ <strong>Code Writing &amp; Debugging</strong> (Python, JavaScript, etc.)<br />
-✅ <strong>Translation &amp; Summarization</strong><br />
-✅ <strong>Chatbots &amp; Virtual Assistants</strong> (like ChatGPT)<br />
-✅ <strong>Answering Questions</strong> (but may hallucinate facts)</p>
+<div class="highlight"><pre><span></span><code><span class="k">[alias]</span>
+<span class="w">    </span><span class="c1"># Reset last commit while keeping changes</span>
+<span class="w">    </span><span class="na">undo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">reset --soft HEAD~1</span>
+
+<span class="w">    </span><span class="c1"># List all branches (local &amp; remote)</span>
+<span class="w">    </span><span class="na">branches</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">!git branch -a</span>
+
+<span class="w">    </span><span class="c1"># Delete merged branches</span>
+<span class="w">    </span><span class="na">cleanup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;!git branch --merged | grep -v &#39;</span><span class="na">\\*\\|main\\|master&#39; | xargs -n 1 git branch -d&quot;</span>
+
+<span class="w">    </span><span class="c1"># Update &amp; rebase current branch</span>
+<span class="w">    </span><span class="na">sync</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">!git pull --rebase origin $(git rev-parse --abbrev-ref HEAD)</span>
+</code></pre></div>
+<h3 id="listing-removing-aliases"><strong>Listing &amp; Removing Aliases</strong><a class="headerlink" href="#listing-removing-aliases" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>List all aliases:</strong>
+  <div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--get-regexp<span class="w"> </span><span class="nb">alias</span>
+</code></pre></div>
+  or
+  <div class="highlight"><pre><span></span><code>git<span class="w"> </span><span class="nb">alias</span><span class="w"> </span><span class="c1"># (if you have an alias for this)</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Remove an alias:</strong>
+  <div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>--unset<span class="w"> </span>alias.&lt;name&gt;
+</code></pre></div></p>
+</li>
+</ul>
+<h3 id="final-thoughts"><strong>Final Thoughts</strong><a class="headerlink" href="#final-thoughts" title="Permanent link">&para;</a></h3>
+<p>Git aliases can significantly speed up your workflow. Start with simple ones and gradually add more as you discover repetitive tasks.</p>
 
 
 
