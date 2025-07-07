@@ -139,7 +139,7 @@
 - [Create a Docker image registry in Nexus](Nexus/Create a Docker image registry in Nexus.md)
 - [Nexus Repository Manager OSS and integrate it with your Kubernetes](Nexus/Nexus Repository Manager OSS and integrate it with your Kubernetes.md)
 - [Nexus oss setup - On-Prem](Nexus/Nexus oss setup - On-Prem.md)
-- [nexus3-cli (deprecated)](Nexus/nexus3-cli (deprecated).md)
+- [nexus3-cli-deprecated](Nexus/nexus3-cli-deprecated.md)
 
 ## Opentofu
 - [About OpenTofu](OpenTofu/About OpenTofu.md)
