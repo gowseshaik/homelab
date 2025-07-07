@@ -218,6 +218,7 @@
 - [Fluentd install and config steps for a Linux VM](fluentd/Fluentd install and config steps for a Linux VM.md)
 
 ## Git
+- [How to Set Up Git Aliases](git/How to Set Up Git Aliases.md)
 - [View your configured for Git](git/View your configured for Git.md)
 - [git errors](git/git errors.md)
 
