@@ -4,7 +4,6 @@
 **Use Case:** Inject a custom NGINX config via ConfigMap.
 
 - **What to develop:** Pod running NGINX, config file (nginx.conf) mounted from ConfigMap.
-    
 - **What to test:** Change the ConfigMap, reload the pod, and see config take effect.
 
 ### ✅ **2. Python Flask App Reading Config via ENV (ConfigMap)**
@@ -12,7 +11,6 @@
 **Use Case:** Pass app config (e.g., `APP_MODE=dev`) via environment variables.
 
 - **What to develop:** Flask app that reads `APP_MODE` from `os.environ`.
-    
 - **What to test:** Update ConfigMap → redeploy → check changed behavior.
 
 ### ✅ **3. MySQL Pod with Password from Secret**
@@ -20,7 +18,6 @@
 **Use Case:** Inject DB password using Kubernetes Secrets.
 
 - **What to develop:** Pod running MySQL, `MYSQL_ROOT_PASSWORD` from a Secret.
-    
 - **What to test:** Try to connect using the injected password.
 
 ### ✅ **4. Node.js App Reading DB Credentials (ConfigMap + Secret)**
@@ -28,9 +25,7 @@
 **Use Case:** Use both ConfigMap and Secret.
 
 - ConfigMap → DB Host/Port
-    
 - Secret → DB username & password
-    
 - **What to test:** Print connection config in logs, verify secure loading.
 
 ### ✅ **5. Spring Boot App with Externalized Config**
@@ -38,7 +33,6 @@
 **Use Case:** Use `application.properties` from a ConfigMap.
 
 - Mount as file to `/config/application.properties`
-    
 - App reads from external config path
 
 ### ✅ **6. Static Web App (React/Angular) Using ConfigMap for API URL**
@@ -46,7 +40,6 @@
 **Use Case:** Inject dynamic API endpoint using ConfigMap.
 
 - Mount JSON file or inject via ENV at build/start
-    
 - Rebuild only when API endpoint changes
 ---
 
@@ -55,13 +48,11 @@ we can go with an example of **#4: Node.js App reading DB config from ConfigMap 
 ### 📦 App Overview
 
 - Simple Node.js Express app
-    
 - Reads DB config from:
     
     - `ConfigMap` → `DB_HOST`, `DB_PORT`
-        
     - `Secret` → `DB_USER`, `DB_PASS`
-        
+
 - Prints values on `/config` endpoint
 
 ### 📁 1. **app.js**
@@ -115,7 +106,6 @@ app.listen(3000, () => {
 ```
 
 ---
-
 ### 🐳 2. **Dockerfile**
 
 ```Dockerfile
@@ -127,11 +117,9 @@ CMD ["node", "app.js"]
 ```
 
 ---
-
 ### 🛠️ 3. **Kubernetes YAMLs**
 
 #### 📘 `configmap.yaml`
-
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -143,9 +131,7 @@ data:
 ```
 
 ---
-
 #### 🔐 `secret.yaml`
-
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -158,9 +144,7 @@ stringData:
 ```
 
 ---
-
 #### 🚀 `deployment.yaml`
-
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -205,9 +189,7 @@ spec:
 ```
 
 ---
-
 ### 🌐 4. **Service (Optional)**
-
 ```yaml
 apiVersion: v1
 kind: Service
@@ -222,9 +204,7 @@ spec:
 ```
 
 ---
-
 ### 🧪 Test
-
 ```bash
 kubectl apply -f configmap.yaml
 kubectl apply -f secret.yaml
@@ -236,4 +216,3 @@ kubectl port-forward svc/node-config-svc 8080:80
 
 # Then open http://localhost:8080/config
 ```
-

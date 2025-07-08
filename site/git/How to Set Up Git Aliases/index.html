@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/API-Resources/k8s-api-resources-details/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/git/How%20to%20Set%20Up%20Git%20Aliases/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>K8s api resources details - Gouse Shaik</title>
+        <title>How to Set Up Git Aliases - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-list-all-api-resources" class="md-skip">
+        <a href="#1-using-git-config" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              K8s api resources details
+              How to Set Up Git Aliases
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/API-Resources/k8s-api-resources-details.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/git/How to Set Up Git Aliases.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,196 +362,127 @@
   
 
 
-  <h1>K8s api resources details</h1>
+  <h1>How to Set Up Git Aliases</h1>
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<p>To discover <strong>Kubernetes API resources</strong> and their available <strong>fields/values</strong> for YAML files, you can use the following commands:</p>
-<h3 id="1-list-all-api-resources"><strong>1. List All API Resources</strong><a class="headerlink" href="#1-list-all-api-resources" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>api-resources
+<p>Git aliases are shortcuts that allow you to create custom Git commands or abbreviate existing ones. They can save you time and make your Git workflow more efficient. You can define them in your Git configuration file (<code>~/.gitconfig</code>) or by using the <code>git config</code> command.</p>
+<h4 id="1-using-git-config"><strong>1. Using <code>git config</code></strong><a class="headerlink" href="#1-using-git-config" title="Permanent link">&para;</a></h4>
+<p>You can create aliases directly from the command line:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>alias.&lt;shortcut&gt;<span class="w"> </span><span class="s2">&quot;&lt;full-command&gt;&quot;</span>
 </code></pre></div>
-<strong>Output Example:</strong>
-<div class="highlight"><pre><span></span><code>NAME          SHORTNAMES   APIVERSION     NAMESPACED   KIND
-pods          po           v1             true         Pod
-deployments   deploy       apps/v1        true         Deployment
-services      svc          v1             true         Service
-ingresses     ing          networking.k8s.io/v1   true  Ingress
-clusterissuers             cert-manager.io/v1     false   ClusterIssuer
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>alias.co<span class="w"> </span>checkout<span class="w">  </span><span class="c1"># Now `git co` = `git checkout`</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>alias.br<span class="w"> </span>branch<span class="w">   </span><span class="c1"># Now `git br` = `git branch`</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>alias.ci<span class="w"> </span>commit<span class="w">   </span><span class="c1"># Now `git ci` = `git commit`</span>
 </code></pre></div></p>
-<p>The <code>false</code> value means that <code>ClusterIssuer</code> is a cluster-scoped resource, not a namespaced resource. Here's what this means:</p>
-<ol>
-<li>
-<p><strong><code>false</code> (cluster-scoped)</strong>:</p>
-<ul>
-<li>The resource exists at the cluster level</li>
-<li>Not tied to any specific namespace</li>
-<li>Can be referenced from any namespace</li>
-<li>Typically includes resources that affect the entire cluster</li>
-</ul>
-</li>
-<li>
-<p><strong><code>true</code> (namespaced)</strong></p>
-<ul>
-<li>The resource exists within a specific namespace</li>
-<li>Must be created in a namespace</li>
-<li>Only accessible within that namespace</li>
-</ul>
-</li>
-</ol>
-<h3 id="2-get-api-version-for-a-resource"><strong>2. Get API Version for a Resource</strong><a class="headerlink" href="#2-get-api-version-for-a-resource" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>&lt;resource&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span>
+<h4 id="2-editing-gitconfig-directly"><strong>2. Editing <code>~/.gitconfig</code> Directly</strong><a class="headerlink" href="#2-editing-gitconfig-directly" title="Permanent link">&para;</a></h4>
+<p>You can manually add aliases to your Git config file (usually at <code>~/.gitconfig</code> or <code>~/.config/git/config</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="k">[alias]</span>
+<span class="w">    </span><span class="na">co</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">checkout</span>
+<span class="w">    </span><span class="na">br</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">branch</span>
+<span class="w">    </span><span class="na">ci</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">commit</span>
+<span class="w">    </span><span class="na">st</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">status</span>
+<span class="w">    </span><span class="na">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">log -1 HEAD</span><span class="w">  </span><span class="c1"># Show the last commit</span>
+<span class="w">    </span><span class="na">lg = log --graph --pretty=format</span><span class="o">:</span><span class="s">&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39;</span><span class="w"> </span><span class="na">--abbrev-commit --date</span><span class="o">=</span><span class="s">relative</span>
 </code></pre></div>
-<strong>Example:</strong>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>deployment<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span>
-</code></pre></div>
-<strong>Output:</strong>
-<div class="highlight"><pre><span></span><code>KIND:     Deployment
-VERSION:  apps/v1
-</code></pre></div></p>
-<hr />
-<h3 id="3-view-all-available-fields-in-a-resource"><strong>3. View All Available Fields in a Resource</strong><a class="headerlink" href="#3-view-all-available-fields-in-a-resource" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>&lt;resource&gt;<span class="w"> </span>--recursive
-</code></pre></div>
-<strong>Example (Deployment):</strong>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>deployment<span class="w"> </span>--recursive
-</code></pre></div>
-<strong>Output (Partial):</strong>
-<div class="highlight"><pre><span></span><code><span class="nt">KIND</span><span class="p">:</span><span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
-<span class="nt">VERSION</span><span class="p">:</span><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
-<span class="nt">DESCRIPTION</span><span class="p">:</span>
-<span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">Deployment enables declarative updates for Pods and ReplicaSets.</span>
-<span class="nt">FIELDS</span><span class="p">:</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">apiVersion   &lt;string&gt;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">kind &lt;string&gt;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">metadata     &lt;Object&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">annotations       &lt;map[string]string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">creationTimestamp &lt;string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">name      &lt;string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">namespace &lt;string&gt;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">spec &lt;Object&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">replicas  &lt;integer&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">selector  &lt;Object&gt;</span>
-<span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">matchLabels    &lt;map[string]string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">template  &lt;Object&gt;</span>
-<span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">metadata       &lt;Object&gt;</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">labels      &lt;map[string]string&gt;</span>
-<span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">spec   &lt;Object&gt;</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">containers  &lt;[]Object&gt;</span>
-<span class="w">               </span><span class="l l-Scalar l-Scalar-Plain">name     &lt;string&gt;</span>
-<span class="w">               </span><span class="l l-Scalar l-Scalar-Plain">image    &lt;string&gt;</span>
-<span class="w">               </span><span class="l l-Scalar l-Scalar-Plain">ports    &lt;[]Object&gt;</span>
-<span class="w">                  </span><span class="l l-Scalar l-Scalar-Plain">containerPort    &lt;integer&gt;</span>
-<span class="nn">...</span>
-</code></pre></div></p>
-<hr />
-<h3 id="4-check-specific-field-details"><strong>4. Check Specific Field Details</strong><a class="headerlink" href="#4-check-specific-field-details" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>&lt;resource&gt;.&lt;field&gt;
-</code></pre></div>
-<strong>Examples:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check Deployment&#39;s `spec.strategy`</span>
-kubectl<span class="w"> </span>explain<span class="w"> </span>deployment.spec.strategy
-
-<span class="c1"># Check Pod&#39;s `spec.containers`</span>
-kubectl<span class="w"> </span>explain<span class="w"> </span>pod.spec.containers
-
-<span class="c1"># Check Ingress `spec.rules`</span>
-kubectl<span class="w"> </span>explain<span class="w"> </span>ingress.spec.rules
-</code></pre></div></p>
-<hr />
-<h3 id="5-list-all-possible-values-for-enums-eg-restartpolicy"><strong>5. List All Possible Values for Enums (e.g., <code>restartPolicy</code>)</strong><a class="headerlink" href="#5-list-all-possible-values-for-enums-eg-restartpolicy" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>pod.spec.restartPolicy
-</code></pre></div>
-<strong>Output:</strong>
-<div class="highlight"><pre><span></span><code>KIND:     Pod
-VERSION:  v1
-FIELD:    restartPolicy &lt;string&gt;
-DESCRIPTION:
-     Restart policy for all containers within the pod.
-     Possible enum values:
-     - `&quot;Always&quot;`
-     - `&quot;OnFailure&quot;`
-     - `&quot;Never&quot;`
-</code></pre></div></p>
-<hr />
-<h3 id="6-view-openapiswagger-docs-full-schema"><strong>6. View OpenAPI/Swagger Docs (Full Schema)</strong><a class="headerlink" href="#6-view-openapiswagger-docs-full-schema" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>--raw<span class="w"> </span>/openapi/v2<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
-</code></pre></div>
-(Use <code>jq</code> for filtering, e.g., <code>kubectl get --raw /openapi/v2 | jq '.definitions["io.k8s.api.apps.v1.Deployment"]'</code>)</p>
-<hr />
-<h3 id="7-check-crd-custom-resource-schema"><strong>7. Check CRD (Custom Resource) Schema</strong><a class="headerlink" href="#7-check-crd-custom-resource-schema" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>&lt;crd-name&gt;<span class="w"> </span>-o<span class="w"> </span>yaml
-</code></pre></div>
-<strong>Example:</strong>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>traefikservices.traefik.io<span class="w"> </span>-o<span class="w"> </span>yaml
-</code></pre></div></p>
-<hr />
-<h3 id="8-shortcut-for-common-resources"><strong>8. Shortcut for Common Resources</strong><a class="headerlink" href="#8-shortcut-for-common-resources" title="Permanent link">&para;</a></h3>
+<h3 id="common-useful-git-aliases"><strong>Common &amp; Useful Git Aliases</strong><a class="headerlink" href="#common-useful-git-aliases" title="Permanent link">&para;</a></h3>
+<p>Here are some popular aliases:</p>
 <table>
 <thead>
 <tr>
-<th>Resource</th>
-<th>Command to View Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Pod</td>
-<td><code>kubectl explain pod</code></td>
-</tr>
-<tr>
-<td>Deployment</td>
-<td><code>kubectl explain deployment</code></td>
-</tr>
-<tr>
-<td>Service</td>
-<td><code>kubectl explain service</code></td>
-</tr>
-<tr>
-<td>Ingress</td>
-<td><code>kubectl explain ingress</code></td>
-</tr>
-<tr>
-<td>ConfigMap</td>
-<td><code>kubectl explain configmap</code></td>
-</tr>
-<tr>
-<td>Secret</td>
-<td><code>kubectl explain secret</code></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h3 id="summary-cheatsheet"><strong>Summary Cheatsheet</strong><a class="headerlink" href="#summary-cheatsheet" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
+<th>Alias</th>
 <th>Command</th>
-<th>Purpose</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>kubectl api-resources</code></td>
-<td>List all available resources</td>
+<td><code>git co</code></td>
+<td><code>checkout</code></td>
+<td>Switch branches</td>
 </tr>
 <tr>
-<td><code>kubectl explain &lt;resource&gt;</code></td>
-<td>Show YAML structure of a resource</td>
+<td><code>git ci</code></td>
+<td><code>commit</code></td>
+<td>Commit changes</td>
 </tr>
 <tr>
-<td><code>kubectl explain &lt;resource&gt; --recursive</code></td>
-<td>Show all nested fields</td>
+<td><code>git st</code></td>
+<td><code>status</code></td>
+<td>Show working tree status</td>
 </tr>
 <tr>
-<td><code>kubectl explain &lt;resource&gt;.&lt;field&gt;</code></td>
-<td>Check a specific field</td>
+<td><code>git br</code></td>
+<td><code>branch</code></td>
+<td>List branches</td>
 </tr>
 <tr>
-<td><code>kubectl get --raw /openapi/v2</code></td>
-<td>View full OpenAPI schema</td>
+<td><code>git unstage</code></td>
+<td><code>reset HEAD --</code></td>
+<td>Unstage changes</td>
+</tr>
+<tr>
+<td><code>git last</code></td>
+<td><code>log -1 HEAD</code></td>
+<td>Show the last commit</td>
+</tr>
+<tr>
+<td><code>git lg</code></td>
+<td>Custom log format</td>
+<td>Pretty commit history</td>
+</tr>
+<tr>
+<td><code>git amend</code></td>
+<td><code>commit --amend</code></td>
+<td>Amend the last commit</td>
+</tr>
+<tr>
+<td><code>git fp</code></td>
+<td><code>push --force-with-lease</code></td>
+<td>Safer force push</td>
+</tr>
+<tr>
+<td>### <strong>Advanced Aliases</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>You can even chain commands or use shell functions:</td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<p>These commands help you <strong>discover valid fields and values</strong> when writing Kubernetes YAML files. 🚀</p>
+<div class="highlight"><pre><span></span><code><span class="k">[alias]</span>
+<span class="w">    </span><span class="c1"># Reset last commit while keeping changes</span>
+<span class="w">    </span><span class="na">undo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">reset --soft HEAD~1</span>
+
+<span class="w">    </span><span class="c1"># List all branches (local &amp; remote)</span>
+<span class="w">    </span><span class="na">branches</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">!git branch -a</span>
+
+<span class="w">    </span><span class="c1"># Delete merged branches</span>
+<span class="w">    </span><span class="na">cleanup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;!git branch --merged | grep -v &#39;</span><span class="na">\\*\\|main\\|master&#39; | xargs -n 1 git branch -d&quot;</span>
+
+<span class="w">    </span><span class="c1"># Update &amp; rebase current branch</span>
+<span class="w">    </span><span class="na">sync</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">!git pull --rebase origin $(git rev-parse --abbrev-ref HEAD)</span>
+</code></pre></div>
+<h3 id="listing-removing-aliases"><strong>Listing &amp; Removing Aliases</strong><a class="headerlink" href="#listing-removing-aliases" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>List all aliases:</strong>
+  <div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--get-regexp<span class="w"> </span><span class="nb">alias</span>
+</code></pre></div>
+  or
+  <div class="highlight"><pre><span></span><code>git<span class="w"> </span><span class="nb">alias</span><span class="w"> </span><span class="c1"># (if you have an alias for this)</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Remove an alias:</strong>
+  <div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>--unset<span class="w"> </span>alias.&lt;name&gt;
+</code></pre></div></p>
+</li>
+</ul>
+<h3 id="final-thoughts"><strong>Final Thoughts</strong><a class="headerlink" href="#final-thoughts" title="Permanent link">&para;</a></h3>
+<p>Git aliases can significantly speed up your workflow. Start with simple ones and gradually add more as you discover repetitive tasks.</p>
 
 
 

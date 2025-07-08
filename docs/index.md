@@ -62,6 +62,7 @@
 - [DaemonSets in Kubernetes](DaemonSets/DaemonSets in Kubernetes.md)
 
 ## Dailytasks
+- [Critical Thinking](DailyTasks/Critical Thinking.md)
 - [Failures with solution](DailyTasks/Failures with solution.md)
 - [Important resources to learn k8s](DailyTasks/Important resources to learn k8s.md)
 - [K8s Cmds Cheatsheet](DailyTasks/K8s Cmds Cheatsheet.md)
@@ -139,7 +140,7 @@
 - [Create a Docker image registry in Nexus](Nexus/Create a Docker image registry in Nexus.md)
 - [Nexus Repository Manager OSS and integrate it with your Kubernetes](Nexus/Nexus Repository Manager OSS and integrate it with your Kubernetes.md)
 - [Nexus oss setup - On-Prem](Nexus/Nexus oss setup - On-Prem.md)
-- [nexus3-cli (deprecated)](Nexus/nexus3-cli (deprecated).md)
+- [nexus3-cli-deprecated not working](Nexus/nexus3-cli-deprecated not working.md)
 
 ## Opentofu
 - [About OpenTofu](OpenTofu/About OpenTofu.md)
@@ -217,6 +218,8 @@
 - [Fluentd install and config steps for a Linux VM](fluentd/Fluentd install and config steps for a Linux VM.md)
 
 ## Git
+- [Git file attributes](git/Git file attributes.md)
+- [How to Set Up Git Aliases](git/How to Set Up Git Aliases.md)
 - [View your configured for Git](git/View your configured for Git.md)
 - [git errors](git/git errors.md)
 

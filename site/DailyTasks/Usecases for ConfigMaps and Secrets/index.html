@@ -368,77 +368,50 @@
 <h3 id="1-nginx-with-custom-config-from-configmap">✅ <strong>1. NGINX with Custom Config from ConfigMap</strong><a class="headerlink" href="#1-nginx-with-custom-config-from-configmap" title="Permanent link">&para;</a></h3>
 <p><strong>Use Case:</strong> Inject a custom NGINX config via ConfigMap.</p>
 <ul>
-<li>
-<p><strong>What to develop:</strong> Pod running NGINX, config file (nginx.conf) mounted from ConfigMap.</p>
-</li>
-<li>
-<p><strong>What to test:</strong> Change the ConfigMap, reload the pod, and see config take effect.</p>
-</li>
+<li><strong>What to develop:</strong> Pod running NGINX, config file (nginx.conf) mounted from ConfigMap.</li>
+<li><strong>What to test:</strong> Change the ConfigMap, reload the pod, and see config take effect.</li>
 </ul>
 <h3 id="2-python-flask-app-reading-config-via-env-configmap">✅ <strong>2. Python Flask App Reading Config via ENV (ConfigMap)</strong><a class="headerlink" href="#2-python-flask-app-reading-config-via-env-configmap" title="Permanent link">&para;</a></h3>
 <p><strong>Use Case:</strong> Pass app config (e.g., <code>APP_MODE=dev</code>) via environment variables.</p>
 <ul>
-<li>
-<p><strong>What to develop:</strong> Flask app that reads <code>APP_MODE</code> from <code>os.environ</code>.</p>
-</li>
-<li>
-<p><strong>What to test:</strong> Update ConfigMap → redeploy → check changed behavior.</p>
-</li>
+<li><strong>What to develop:</strong> Flask app that reads <code>APP_MODE</code> from <code>os.environ</code>.</li>
+<li><strong>What to test:</strong> Update ConfigMap → redeploy → check changed behavior.</li>
 </ul>
 <h3 id="3-mysql-pod-with-password-from-secret">✅ <strong>3. MySQL Pod with Password from Secret</strong><a class="headerlink" href="#3-mysql-pod-with-password-from-secret" title="Permanent link">&para;</a></h3>
 <p><strong>Use Case:</strong> Inject DB password using Kubernetes Secrets.</p>
 <ul>
-<li>
-<p><strong>What to develop:</strong> Pod running MySQL, <code>MYSQL_ROOT_PASSWORD</code> from a Secret.</p>
-</li>
-<li>
-<p><strong>What to test:</strong> Try to connect using the injected password.</p>
-</li>
+<li><strong>What to develop:</strong> Pod running MySQL, <code>MYSQL_ROOT_PASSWORD</code> from a Secret.</li>
+<li><strong>What to test:</strong> Try to connect using the injected password.</li>
 </ul>
 <h3 id="4-nodejs-app-reading-db-credentials-configmap-secret">✅ <strong>4. Node.js App Reading DB Credentials (ConfigMap + Secret)</strong><a class="headerlink" href="#4-nodejs-app-reading-db-credentials-configmap-secret" title="Permanent link">&para;</a></h3>
 <p><strong>Use Case:</strong> Use both ConfigMap and Secret.</p>
 <ul>
-<li>
-<p>ConfigMap → DB Host/Port</p>
-</li>
-<li>
-<p>Secret → DB username &amp; password</p>
-</li>
-<li>
-<p><strong>What to test:</strong> Print connection config in logs, verify secure loading.</p>
-</li>
+<li>ConfigMap → DB Host/Port</li>
+<li>Secret → DB username &amp; password</li>
+<li><strong>What to test:</strong> Print connection config in logs, verify secure loading.</li>
 </ul>
 <h3 id="5-spring-boot-app-with-externalized-config">✅ <strong>5. Spring Boot App with Externalized Config</strong><a class="headerlink" href="#5-spring-boot-app-with-externalized-config" title="Permanent link">&para;</a></h3>
 <p><strong>Use Case:</strong> Use <code>application.properties</code> from a ConfigMap.</p>
 <ul>
-<li>
-<p>Mount as file to <code>/config/application.properties</code></p>
-</li>
-<li>
-<p>App reads from external config path</p>
-</li>
+<li>Mount as file to <code>/config/application.properties</code></li>
+<li>App reads from external config path</li>
 </ul>
 <h3 id="6-static-web-app-reactangular-using-configmap-for-api-url">✅ <strong>6. Static Web App (React/Angular) Using ConfigMap for API URL</strong><a class="headerlink" href="#6-static-web-app-reactangular-using-configmap-for-api-url" title="Permanent link">&para;</a></h3>
 <p><strong>Use Case:</strong> Inject dynamic API endpoint using ConfigMap.</p>
 <ul>
 <li>Mount JSON file or inject via ENV at build/start</li>
+<li>Rebuild only when API endpoint changes</li>
 </ul>
-<h2 id="-rebuild-only-when-api-endpoint-changes">- Rebuild only when API endpoint changes<a class="headerlink" href="#-rebuild-only-when-api-endpoint-changes" title="Permanent link">&para;</a></h2>
+<hr />
 <p>we can go with an example of <strong>#4: Node.js App reading DB config from ConfigMap and Secret</strong>.</p>
 <h3 id="app-overview">📦 App Overview<a class="headerlink" href="#app-overview" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>Simple Node.js Express app</p>
-</li>
+<li>Simple Node.js Express app</li>
 <li>
 <p>Reads DB config from:</p>
 <ul>
-<li>
-<p><code>ConfigMap</code> → <code>DB_HOST</code>, <code>DB_PORT</code></p>
-</li>
-<li>
-<p><code>Secret</code> → <code>DB_USER</code>, <code>DB_PASS</code></p>
-</li>
+<li><code>ConfigMap</code> → <code>DB_HOST</code>, <code>DB_PORT</code></li>
+<li><code>Secret</code> → <code>DB_USER</code>, <code>DB_PASS</code></li>
 </ul>
 </li>
 <li>

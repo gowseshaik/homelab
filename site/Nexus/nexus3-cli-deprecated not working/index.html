@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/API-Resources/k8s-api-resources-details/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Nexus/nexus3-cli-deprecated%20not%20working/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>K8s api resources details - Gouse Shaik</title>
+        <title>Nexus3 cli deprecated not working - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-list-all-api-resources" class="md-skip">
+        <a href="#tool-nexus3-cli" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              K8s api resources details
+              Nexus3 cli deprecated not working
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/API-Resources/k8s-api-resources-details.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Nexus/nexus3-cli-deprecated not working.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,196 +362,127 @@
   
 
 
-  <h1>K8s api resources details</h1>
+  <h1>Nexus3 cli deprecated not working</h1>
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<p>To discover <strong>Kubernetes API resources</strong> and their available <strong>fields/values</strong> for YAML files, you can use the following commands:</p>
-<h3 id="1-list-all-api-resources"><strong>1. List All API Resources</strong><a class="headerlink" href="#1-list-all-api-resources" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>api-resources
-</code></pre></div>
-<strong>Output Example:</strong>
-<div class="highlight"><pre><span></span><code>NAME          SHORTNAMES   APIVERSION     NAMESPACED   KIND
-pods          po           v1             true         Pod
-deployments   deploy       apps/v1        true         Deployment
-services      svc          v1             true         Service
-ingresses     ing          networking.k8s.io/v1   true  Ingress
-clusterissuers             cert-manager.io/v1     false   ClusterIssuer
-</code></pre></div></p>
-<p>The <code>false</code> value means that <code>ClusterIssuer</code> is a cluster-scoped resource, not a namespaced resource. Here's what this means:</p>
-<ol>
-<li>
-<p><strong><code>false</code> (cluster-scoped)</strong>:</p>
-<ul>
-<li>The resource exists at the cluster level</li>
-<li>Not tied to any specific namespace</li>
-<li>Can be referenced from any namespace</li>
-<li>Typically includes resources that affect the entire cluster</li>
-</ul>
-</li>
-<li>
-<p><strong><code>true</code> (namespaced)</strong></p>
-<ul>
-<li>The resource exists within a specific namespace</li>
-<li>Must be created in a namespace</li>
-<li>Only accessible within that namespace</li>
-</ul>
-</li>
-</ol>
-<h3 id="2-get-api-version-for-a-resource"><strong>2. Get API Version for a Resource</strong><a class="headerlink" href="#2-get-api-version-for-a-resource" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>&lt;resource&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span>
-</code></pre></div>
-<strong>Example:</strong>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>deployment<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span>
-</code></pre></div>
-<strong>Output:</strong>
-<div class="highlight"><pre><span></span><code>KIND:     Deployment
-VERSION:  apps/v1
-</code></pre></div></p>
-<hr />
-<h3 id="3-view-all-available-fields-in-a-resource"><strong>3. View All Available Fields in a Resource</strong><a class="headerlink" href="#3-view-all-available-fields-in-a-resource" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>&lt;resource&gt;<span class="w"> </span>--recursive
-</code></pre></div>
-<strong>Example (Deployment):</strong>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>deployment<span class="w"> </span>--recursive
-</code></pre></div>
-<strong>Output (Partial):</strong>
-<div class="highlight"><pre><span></span><code><span class="nt">KIND</span><span class="p">:</span><span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
-<span class="nt">VERSION</span><span class="p">:</span><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
-<span class="nt">DESCRIPTION</span><span class="p">:</span>
-<span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">Deployment enables declarative updates for Pods and ReplicaSets.</span>
-<span class="nt">FIELDS</span><span class="p">:</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">apiVersion   &lt;string&gt;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">kind &lt;string&gt;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">metadata     &lt;Object&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">annotations       &lt;map[string]string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">creationTimestamp &lt;string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">name      &lt;string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">namespace &lt;string&gt;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">spec &lt;Object&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">replicas  &lt;integer&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">selector  &lt;Object&gt;</span>
-<span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">matchLabels    &lt;map[string]string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">template  &lt;Object&gt;</span>
-<span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">metadata       &lt;Object&gt;</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">labels      &lt;map[string]string&gt;</span>
-<span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">spec   &lt;Object&gt;</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">containers  &lt;[]Object&gt;</span>
-<span class="w">               </span><span class="l l-Scalar l-Scalar-Plain">name     &lt;string&gt;</span>
-<span class="w">               </span><span class="l l-Scalar l-Scalar-Plain">image    &lt;string&gt;</span>
-<span class="w">               </span><span class="l l-Scalar l-Scalar-Plain">ports    &lt;[]Object&gt;</span>
-<span class="w">                  </span><span class="l l-Scalar l-Scalar-Plain">containerPort    &lt;integer&gt;</span>
-<span class="nn">...</span>
-</code></pre></div></p>
-<hr />
-<h3 id="4-check-specific-field-details"><strong>4. Check Specific Field Details</strong><a class="headerlink" href="#4-check-specific-field-details" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>&lt;resource&gt;.&lt;field&gt;
-</code></pre></div>
-<strong>Examples:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check Deployment&#39;s `spec.strategy`</span>
-kubectl<span class="w"> </span>explain<span class="w"> </span>deployment.spec.strategy
-
-<span class="c1"># Check Pod&#39;s `spec.containers`</span>
-kubectl<span class="w"> </span>explain<span class="w"> </span>pod.spec.containers
-
-<span class="c1"># Check Ingress `spec.rules`</span>
-kubectl<span class="w"> </span>explain<span class="w"> </span>ingress.spec.rules
-</code></pre></div></p>
-<hr />
-<h3 id="5-list-all-possible-values-for-enums-eg-restartpolicy"><strong>5. List All Possible Values for Enums (e.g., <code>restartPolicy</code>)</strong><a class="headerlink" href="#5-list-all-possible-values-for-enums-eg-restartpolicy" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>pod.spec.restartPolicy
-</code></pre></div>
-<strong>Output:</strong>
-<div class="highlight"><pre><span></span><code>KIND:     Pod
-VERSION:  v1
-FIELD:    restartPolicy &lt;string&gt;
-DESCRIPTION:
-     Restart policy for all containers within the pod.
-     Possible enum values:
-     - `&quot;Always&quot;`
-     - `&quot;OnFailure&quot;`
-     - `&quot;Never&quot;`
-</code></pre></div></p>
-<hr />
-<h3 id="6-view-openapiswagger-docs-full-schema"><strong>6. View OpenAPI/Swagger Docs (Full Schema)</strong><a class="headerlink" href="#6-view-openapiswagger-docs-full-schema" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>--raw<span class="w"> </span>/openapi/v2<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
-</code></pre></div>
-(Use <code>jq</code> for filtering, e.g., <code>kubectl get --raw /openapi/v2 | jq '.definitions["io.k8s.api.apps.v1.Deployment"]'</code>)</p>
-<hr />
-<h3 id="7-check-crd-custom-resource-schema"><strong>7. Check CRD (Custom Resource) Schema</strong><a class="headerlink" href="#7-check-crd-custom-resource-schema" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>&lt;crd-name&gt;<span class="w"> </span>-o<span class="w"> </span>yaml
-</code></pre></div>
-<strong>Example:</strong>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>traefikservices.traefik.io<span class="w"> </span>-o<span class="w"> </span>yaml
-</code></pre></div></p>
-<hr />
-<h3 id="8-shortcut-for-common-resources"><strong>8. Shortcut for Common Resources</strong><a class="headerlink" href="#8-shortcut-for-common-resources" title="Permanent link">&para;</a></h3>
+<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
+<p>there is an <strong>official Nexus CLI tool</strong> called <strong><code>nexus3-cli</code></strong>, which is open-source and supports basic operations for <strong>Nexus Repository Manager 3</strong>.</p>
+<h3 id="tool-nexus3-cli">📦 Tool: <code>nexus3-cli</code><a class="headerlink" href="#tool-nexus3-cli" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Resource</th>
-<th>Command to View Schema</th>
+<th>Feature</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Pod</td>
-<td><code>kubectl explain pod</code></td>
+<td>Tool Name</td>
+<td><code>nexus3-cli</code></td>
 </tr>
 <tr>
-<td>Deployment</td>
-<td><code>kubectl explain deployment</code></td>
+<td>Language</td>
+<td>Python</td>
 </tr>
 <tr>
-<td>Service</td>
-<td><code>kubectl explain service</code></td>
+<td>Maintained by</td>
+<td>Community (not Sonatype)</td>
 </tr>
 <tr>
-<td>Ingress</td>
-<td><code>kubectl explain ingress</code></td>
+<td>Install via</td>
+<td><code>pip install nexus3-cli</code></td>
 </tr>
 <tr>
-<td>ConfigMap</td>
-<td><code>kubectl explain configmap</code></td>
+<td>Supported operations</td>
+<td>Repositories, users, roles, blobstores, cleanup</td>
 </tr>
 <tr>
-<td>Secret</td>
-<td><code>kubectl explain secret</code></td>
+<td>### ✅ Install it</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h3 id="summary-cheatsheet"><strong>Summary Cheatsheet</strong><a class="headerlink" href="#summary-cheatsheet" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>nexus3-cli
+</code></pre></div>
+<h3 id="recommended-fix-use-a-virtual-environment">✅ Recommended Fix: Use a <strong>virtual environment</strong><a class="headerlink" href="#recommended-fix-use-a-virtual-environment" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>python3 -m venv ~/venvs/nexus3-cli
+source ~/venvs/nexus3-cli/bin/activate
+pip install nexus3-cli
+pip install setuptools
+</code></pre></div>
+<p>🧪 Optional: Install with <code>pipx</code> (preferred for CLI tools)</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install `pipx`:</span>
+$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>pipx
+$<span class="w"> </span>pipx<span class="w"> </span>inject<span class="w"> </span>nexus3-cli<span class="w"> </span>setuptools
+<span class="c1"># Install `nexus3-cli`:</span>
+$<span class="w"> </span>pipx<span class="w"> </span>install<span class="w"> </span>nexus3-cli
+$<span class="w"> </span>pipx<span class="w"> </span>ensurepath
+$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/.bashrc
+
+$<span class="w"> </span>nexus3<span class="w"> </span>--help
+</code></pre></div>
+<h3 id="basic-usage">🔧 Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>nexus3<span class="w"> </span>--help
+</code></pre></div>
+<p>Example: list all hosted repos</p>
+<div class="highlight"><pre><span></span><code>nexus3<span class="w"> </span>repository<span class="w"> </span>list<span class="w"> </span>--host<span class="w"> </span>http://localhost:8081<span class="w"> </span>--user<span class="w"> </span>admin<span class="w"> </span>--password<span class="w"> </span><span class="s1">&#39;yourpass&#39;</span>
+</code></pre></div>
+<h3 id="key-features-supported">🛠️ Key Features Supported<a class="headerlink" href="#key-features-supported" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
 <th>Command</th>
-<th>Purpose</th>
+<th>What it does</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>kubectl api-resources</code></td>
-<td>List all available resources</td>
+<td><code>repository list/create/delete</code></td>
+<td>Manage repositories</td>
 </tr>
 <tr>
-<td><code>kubectl explain &lt;resource&gt;</code></td>
-<td>Show YAML structure of a resource</td>
+<td><code>user list/create/delete</code></td>
+<td>Manage users</td>
 </tr>
 <tr>
-<td><code>kubectl explain &lt;resource&gt; --recursive</code></td>
-<td>Show all nested fields</td>
+<td><code>blobstore list/create</code></td>
+<td>Manage blob stores</td>
 </tr>
 <tr>
-<td><code>kubectl explain &lt;resource&gt;.&lt;field&gt;</code></td>
-<td>Check a specific field</td>
+<td><code>script list/run/delete</code></td>
+<td>Manage Groovy scripts (REST automation)</td>
 </tr>
 <tr>
-<td><code>kubectl get --raw /openapi/v2</code></td>
-<td>View full OpenAPI schema</td>
+<td>### 🧩 Alternatives</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<p>These commands help you <strong>discover valid fields and values</strong> when writing Kubernetes YAML files. 🚀</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nexus3-cli</code></td>
+<td>CLI tool</td>
+<td>Python-based, good for admin automation</td>
+</tr>
+<tr>
+<td>REST API</td>
+<td>HTTP-based</td>
+<td>Official API by Sonatype, full control via scripts</td>
+</tr>
+<tr>
+<td>Groovy scripts</td>
+<td>Embedded</td>
+<td>Run via UI/API, full server-side admin access</td>
+</tr>
+</tbody>
+</table>
 
 
 

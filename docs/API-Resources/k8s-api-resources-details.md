@@ -2,9 +2,6 @@
 
 To discover **Kubernetes API resources** and their available **fields/values** for YAML files, you can use the following commands:
 
-updated: 2025-07-06T12:mm:ssZ
-author: Gouse Shaik
----
 ### **1. List All API Resources**
 ```sh
 kubectl api-resources

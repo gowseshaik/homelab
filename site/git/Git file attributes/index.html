@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/API-Resources/k8s-api-resources-details/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/git/Git%20file%20attributes/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>K8s api resources details - Gouse Shaik</title>
+        <title>Git file attributes - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-list-all-api-resources" class="md-skip">
+        <a href="#1-handling-line-endings-windows-vs-unix" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              K8s api resources details
+              Git file attributes
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/API-Resources/k8s-api-resources-details.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/git/Git file attributes.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,196 +362,170 @@
   
 
 
-  <h1>K8s api resources details</h1>
+  <h1>Git file attributes</h1>
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<p>To discover <strong>Kubernetes API resources</strong> and their available <strong>fields/values</strong> for YAML files, you can use the following commands:</p>
-<h3 id="1-list-all-api-resources"><strong>1. List All API Resources</strong><a class="headerlink" href="#1-list-all-api-resources" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>api-resources
-</code></pre></div>
-<strong>Output Example:</strong>
-<div class="highlight"><pre><span></span><code>NAME          SHORTNAMES   APIVERSION     NAMESPACED   KIND
-pods          po           v1             true         Pod
-deployments   deploy       apps/v1        true         Deployment
-services      svc          v1             true         Service
-ingresses     ing          networking.k8s.io/v1   true  Ingress
-clusterissuers             cert-manager.io/v1     false   ClusterIssuer
-</code></pre></div></p>
-<p>The <code>false</code> value means that <code>ClusterIssuer</code> is a cluster-scoped resource, not a namespaced resource. Here's what this means:</p>
+<h2 id="1-handling-line-endings-windows-vs-unix"><strong>1. Handling Line Endings (Windows vs. Unix)</strong><a class="headerlink" href="#1-handling-line-endings-windows-vs-unix" title="Permanent link">&para;</a></h2>
+<p><strong>Scenario</strong>: Your team uses both Windows (CRLF) and Unix (LF) systems, leading to inconsistent line endings.  </p>
+<h3 id="solution-use-gitattributes-to-enforce-consistent-line-endings"><strong>Solution</strong>: Use <code>.gitattributes</code> to enforce consistent line endings.<a class="headerlink" href="#solution-use-gitattributes-to-enforce-consistent-line-endings" title="Permanent link">&para;</a></h3>
+<h4 id="steps"><strong>Steps</strong>:<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h4>
 <ol>
-<li>
-<p><strong><code>false</code> (cluster-scoped)</strong>:</p>
-<ul>
-<li>The resource exists at the cluster level</li>
-<li>Not tied to any specific namespace</li>
-<li>Can be referenced from any namespace</li>
-<li>Typically includes resources that affect the entire cluster</li>
-</ul>
-</li>
-<li>
-<p><strong><code>true</code> (namespaced)</strong></p>
-<ul>
-<li>The resource exists within a specific namespace</li>
-<li>Must be created in a namespace</li>
-<li>Only accessible within that namespace</li>
-</ul>
-</li>
+<li><strong>Create/Edit <code>.gitattributes</code></strong>:
+   <div class="highlight"><pre><span></span><code>touch<span class="w"> </span>.gitattributes
+</code></pre></div></li>
+<li><strong>Define rules</strong>:
+   <div class="highlight"><pre><span></span><code># Auto-detect line endings for text files
+* text=auto
+
+# Force LF for scripts (Unix-compatible)
+*.sh eol=lf
+
+# Force CRLF for Windows-specific files
+*.bat eol=crlf
+</code></pre></div></li>
+<li><strong>Apply changes</strong>:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.gitattributes
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Normalize line endings&quot;</span>
+</code></pre></div></li>
+<li><strong>Verify</strong>:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>ls-files<span class="w"> </span>--eol<span class="w">  </span><span class="c1"># Shows line endings per file</span>
+</code></pre></div></li>
 </ol>
-<h3 id="2-get-api-version-for-a-resource"><strong>2. Get API Version for a Resource</strong><a class="headerlink" href="#2-get-api-version-for-a-resource" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>&lt;resource&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span>
-</code></pre></div>
-<strong>Example:</strong>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>deployment<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span>
-</code></pre></div>
-<strong>Output:</strong>
-<div class="highlight"><pre><span></span><code>KIND:     Deployment
-VERSION:  apps/v1
-</code></pre></div></p>
 <hr />
-<h3 id="3-view-all-available-fields-in-a-resource"><strong>3. View All Available Fields in a Resource</strong><a class="headerlink" href="#3-view-all-available-fields-in-a-resource" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>&lt;resource&gt;<span class="w"> </span>--recursive
-</code></pre></div>
-<strong>Example (Deployment):</strong>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>deployment<span class="w"> </span>--recursive
-</code></pre></div>
-<strong>Output (Partial):</strong>
-<div class="highlight"><pre><span></span><code><span class="nt">KIND</span><span class="p">:</span><span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
-<span class="nt">VERSION</span><span class="p">:</span><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
-<span class="nt">DESCRIPTION</span><span class="p">:</span>
-<span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">Deployment enables declarative updates for Pods and ReplicaSets.</span>
-<span class="nt">FIELDS</span><span class="p">:</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">apiVersion   &lt;string&gt;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">kind &lt;string&gt;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">metadata     &lt;Object&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">annotations       &lt;map[string]string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">creationTimestamp &lt;string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">name      &lt;string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">namespace &lt;string&gt;</span>
-<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">spec &lt;Object&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">replicas  &lt;integer&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">selector  &lt;Object&gt;</span>
-<span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">matchLabels    &lt;map[string]string&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">template  &lt;Object&gt;</span>
-<span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">metadata       &lt;Object&gt;</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">labels      &lt;map[string]string&gt;</span>
-<span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">spec   &lt;Object&gt;</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">containers  &lt;[]Object&gt;</span>
-<span class="w">               </span><span class="l l-Scalar l-Scalar-Plain">name     &lt;string&gt;</span>
-<span class="w">               </span><span class="l l-Scalar l-Scalar-Plain">image    &lt;string&gt;</span>
-<span class="w">               </span><span class="l l-Scalar l-Scalar-Plain">ports    &lt;[]Object&gt;</span>
-<span class="w">                  </span><span class="l l-Scalar l-Scalar-Plain">containerPort    &lt;integer&gt;</span>
-<span class="nn">...</span>
-</code></pre></div></p>
+<h2 id="2-treating-files-as-binary-avoiding-merge-conflicts"><strong>2. Treating Files as Binary (Avoiding Merge Conflicts)</strong><a class="headerlink" href="#2-treating-files-as-binary-avoiding-merge-conflicts" title="Permanent link">&para;</a></h2>
+<p><strong>Scenario</strong>: Your repo has PDFs, Word docs, or JAR files that should not be diffed/merged.  </p>
+<h3 id="solution-mark-them-as-binary-in-gitattributes"><strong>Solution</strong>: Mark them as <code>binary</code> in <code>.gitattributes</code>.<a class="headerlink" href="#solution-mark-them-as-binary-in-gitattributes" title="Permanent link">&para;</a></h3>
+<h4 id="steps_1"><strong>Steps</strong>:<a class="headerlink" href="#steps_1" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Edit <code>.gitattributes</code></strong>:
+   <div class="highlight"><pre><span></span><code>*.pdf binary
+*.docx binary
+*.jar binary
+</code></pre></div></li>
+<li><strong>Commit changes</strong>:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.gitattributes
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Treat PDF/DOCX/JAR as binary&quot;</span>
+</code></pre></div></li>
+<li><strong>Test</strong>:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>diff<span class="w">  </span><span class="c1"># Should skip binary files</span>
+</code></pre></div></li>
+</ol>
 <hr />
-<h3 id="4-check-specific-field-details"><strong>4. Check Specific Field Details</strong><a class="headerlink" href="#4-check-specific-field-details" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>&lt;resource&gt;.&lt;field&gt;
-</code></pre></div>
-<strong>Examples:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check Deployment&#39;s `spec.strategy`</span>
-kubectl<span class="w"> </span>explain<span class="w"> </span>deployment.spec.strategy
-
-<span class="c1"># Check Pod&#39;s `spec.containers`</span>
-kubectl<span class="w"> </span>explain<span class="w"> </span>pod.spec.containers
-
-<span class="c1"># Check Ingress `spec.rules`</span>
-kubectl<span class="w"> </span>explain<span class="w"> </span>ingress.spec.rules
-</code></pre></div></p>
+<h2 id="3-custom-diff-for-specific-files-eg-java-csv"><strong>3. Custom Diff for Specific Files (e.g., Java, CSV)</strong><a class="headerlink" href="#3-custom-diff-for-specific-files-eg-java-csv" title="Permanent link">&para;</a></h2>
+<p><strong>Scenario</strong>: You want better <code>git diff</code> output for structured files (Java, CSV, JSON).  </p>
+<h3 id="solution-use-a-custom-diff-driver"><strong>Solution</strong>: Use a custom diff driver.<a class="headerlink" href="#solution-use-a-custom-diff-driver" title="Permanent link">&para;</a></h3>
+<h4 id="steps_2"><strong>Steps</strong>:<a class="headerlink" href="#steps_2" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Define a diff driver in <code>.gitconfig</code></strong>:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>diff.java.textconv<span class="w"> </span><span class="s2">&quot;java -jar /path/to/javaprettifier.jar&quot;</span>
+</code></pre></div></li>
+<li><strong>Map it in <code>.gitattributes</code></strong>:
+   <div class="highlight"><pre><span></span><code>*.java diff=java
+*.csv diff=csv
+</code></pre></div></li>
+<li><strong>Test</strong>:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>diff<span class="w"> </span>MyFile.java<span class="w">  </span><span class="c1"># Should use the custom formatter</span>
+</code></pre></div></li>
+</ol>
 <hr />
-<h3 id="5-list-all-possible-values-for-enums-eg-restartpolicy"><strong>5. List All Possible Values for Enums (e.g., <code>restartPolicy</code>)</strong><a class="headerlink" href="#5-list-all-possible-values-for-enums-eg-restartpolicy" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>explain<span class="w"> </span>pod.spec.restartPolicy
-</code></pre></div>
-<strong>Output:</strong>
-<div class="highlight"><pre><span></span><code>KIND:     Pod
-VERSION:  v1
-FIELD:    restartPolicy &lt;string&gt;
-DESCRIPTION:
-     Restart policy for all containers within the pod.
-     Possible enum values:
-     - `&quot;Always&quot;`
-     - `&quot;OnFailure&quot;`
-     - `&quot;Never&quot;`
-</code></pre></div></p>
+<h2 id="4-git-lfs-handling-large-files"><strong>4. Git LFS (Handling Large Files)</strong><a class="headerlink" href="#4-git-lfs-handling-large-files" title="Permanent link">&para;</a></h2>
+<p><strong>Scenario</strong>: Your repo has large files (videos, datasets, PSDs), bloating Git history.  </p>
+<h3 id="solution-use-git-lfs-large-file-storage"><strong>Solution</strong>: Use <strong>Git LFS (Large File Storage)</strong>.<a class="headerlink" href="#solution-use-git-lfs-large-file-storage" title="Permanent link">&para;</a></h3>
+<h4 id="steps_3"><strong>Steps</strong>:<a class="headerlink" href="#steps_3" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Install Git LFS</strong>:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>lfs<span class="w"> </span>install
+</code></pre></div></li>
+<li><strong>Track large files</strong> (in <code>.gitattributes</code>):
+   <div class="highlight"><pre><span></span><code>*.psd filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+</code></pre></div></li>
+<li><strong>Commit &amp; push</strong>:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.gitattributes
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Track PSD/MP4 with LFS&quot;</span>
+git<span class="w"> </span>push
+</code></pre></div></li>
+<li><strong>Verify</strong>:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>lfs<span class="w"> </span>ls-files<span class="w">  </span><span class="c1"># Lists LFS-tracked files</span>
+</code></pre></div></li>
+</ol>
 <hr />
-<h3 id="6-view-openapiswagger-docs-full-schema"><strong>6. View OpenAPI/Swagger Docs (Full Schema)</strong><a class="headerlink" href="#6-view-openapiswagger-docs-full-schema" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>--raw<span class="w"> </span>/openapi/v2<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
-</code></pre></div>
-(Use <code>jq</code> for filtering, e.g., <code>kubectl get --raw /openapi/v2 | jq '.definitions["io.k8s.api.apps.v1.Deployment"]'</code>)</p>
+<h2 id="5-export-ignore-exclude-files-from-archives"><strong>5. Export-Ignore (Exclude Files from Archives)</strong><a class="headerlink" href="#5-export-ignore-exclude-files-from-archives" title="Permanent link">&para;</a></h2>
+<p><strong>Scenario</strong>: You generate <code>git archive</code> releases but want to exclude test files.  </p>
+<h3 id="solution-use-export-ignore"><strong>Solution</strong>: Use <code>export-ignore</code>.<a class="headerlink" href="#solution-use-export-ignore" title="Permanent link">&para;</a></h3>
+<h4 id="steps_4"><strong>Steps</strong>:<a class="headerlink" href="#steps_4" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Edit <code>.gitattributes</code></strong>:
+   <div class="highlight"><pre><span></span><code>/tests/ export-ignore
+*.tmp export-ignore
+</code></pre></div></li>
+<li><strong>Test</strong>:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>archive<span class="w"> </span>--format<span class="o">=</span>zip<span class="w"> </span>-o<span class="w"> </span>release.zip<span class="w"> </span>HEAD
+unzip<span class="w"> </span>-l<span class="w"> </span>release.zip<span class="w">  </span><span class="c1"># Should exclude /tests/ and *.tmp</span>
+</code></pre></div></li>
+</ol>
 <hr />
-<h3 id="7-check-crd-custom-resource-schema"><strong>7. Check CRD (Custom Resource) Schema</strong><a class="headerlink" href="#7-check-crd-custom-resource-schema" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>&lt;crd-name&gt;<span class="w"> </span>-o<span class="w"> </span>yaml
-</code></pre></div>
-<strong>Example:</strong>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>traefikservices.traefik.io<span class="w"> </span>-o<span class="w"> </span>yaml
-</code></pre></div></p>
+<h2 id="6-filter-drivers-pre-process-files-on-commitcheckout"><strong>6. Filter Drivers (Pre-Process Files on Commit/Checkout)</strong><a class="headerlink" href="#6-filter-drivers-pre-process-files-on-commitcheckout" title="Permanent link">&para;</a></h2>
+<p><strong>Scenario</strong>: You want to strip debug logs before committing.  </p>
+<h3 id="solution-use-a-cleansmudge-filter"><strong>Solution</strong>: Use a <strong>clean/smudge filter</strong>.<a class="headerlink" href="#solution-use-a-cleansmudge-filter" title="Permanent link">&para;</a></h3>
+<h4 id="steps_5"><strong>Steps</strong>:<a class="headerlink" href="#steps_5" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Define filter in <code>.gitconfig</code></strong>:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>filter.clean_logs.clean<span class="w"> </span><span class="s2">&quot;sed &#39;/DEBUG/d&#39;&quot;</span>
+</code></pre></div></li>
+<li><strong>Map it in <code>.gitattributes</code></strong>:
+   <div class="highlight"><pre><span></span><code>*.log filter=clean_logs
+</code></pre></div></li>
+<li><strong>Test</strong>:
+   <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;INFO: OK&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>test.log
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;DEBUG: Remove me&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>test.log
+git<span class="w"> </span>add<span class="w"> </span>test.log
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Test filter&quot;</span>
+git<span class="w"> </span>show<span class="w"> </span>:test.log<span class="w">  </span><span class="c1"># Should exclude DEBUG lines</span>
+</code></pre></div></li>
+</ol>
 <hr />
-<h3 id="8-shortcut-for-common-resources"><strong>8. Shortcut for Common Resources</strong><a class="headerlink" href="#8-shortcut-for-common-resources" title="Permanent link">&para;</a></h3>
+<h2 id="summary-table-key-scenarios-fixes"><strong>Summary Table: Key Scenarios &amp; Fixes</strong><a class="headerlink" href="#summary-table-key-scenarios-fixes" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Resource</th>
-<th>Command to View Schema</th>
+<th>Scenario</th>
+<th>Solution</th>
+<th><code>.gitattributes</code> Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Pod</td>
-<td><code>kubectl explain pod</code></td>
+<td><strong>Line endings</strong></td>
+<td><code>text=auto</code>, <code>eol=lf/crlf</code></td>
+<td><code>*.sh eol=lf</code></td>
 </tr>
 <tr>
-<td>Deployment</td>
-<td><code>kubectl explain deployment</code></td>
+<td><strong>Binary files</strong></td>
+<td><code>binary</code>, <code>-diff -merge</code></td>
+<td><code>*.pdf binary</code></td>
 </tr>
 <tr>
-<td>Service</td>
-<td><code>kubectl explain service</code></td>
+<td><strong>Custom diffs</strong></td>
+<td><code>diff=driver</code></td>
+<td><code>*.java diff=java</code></td>
 </tr>
 <tr>
-<td>Ingress</td>
-<td><code>kubectl explain ingress</code></td>
+<td><strong>Large files</strong></td>
+<td><code>filter=lfs</code></td>
+<td><code>*.mp4 filter=lfs</code></td>
 </tr>
 <tr>
-<td>ConfigMap</td>
-<td><code>kubectl explain configmap</code></td>
+<td><strong>Exclude from zip</strong></td>
+<td><code>export-ignore</code></td>
+<td><code>/tests/ export-ignore</code></td>
 </tr>
 <tr>
-<td>Secret</td>
-<td><code>kubectl explain secret</code></td>
+<td><strong>Pre-process files</strong></td>
+<td><code>filter=clean/smudge</code></td>
+<td><code>*.log filter=clean_logs</code></td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h3 id="summary-cheatsheet"><strong>Summary Cheatsheet</strong><a class="headerlink" href="#summary-cheatsheet" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>kubectl api-resources</code></td>
-<td>List all available resources</td>
-</tr>
-<tr>
-<td><code>kubectl explain &lt;resource&gt;</code></td>
-<td>Show YAML structure of a resource</td>
-</tr>
-<tr>
-<td><code>kubectl explain &lt;resource&gt; --recursive</code></td>
-<td>Show all nested fields</td>
-</tr>
-<tr>
-<td><code>kubectl explain &lt;resource&gt;.&lt;field&gt;</code></td>
-<td>Check a specific field</td>
-</tr>
-<tr>
-<td><code>kubectl get --raw /openapi/v2</code></td>
-<td>View full OpenAPI schema</td>
-</tr>
-</tbody>
-</table>
-<p>These commands help you <strong>discover valid fields and values</strong> when writing Kubernetes YAML files. 🚀</p>
 
 
 

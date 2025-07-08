@@ -108,3 +108,29 @@ git config pull.rebase true
 ```bash
 git push -u origin main
 ```
+
+#### ✅ 5. **Pull from remote to sync local and Push your changes**
+Run this single command to resolve it:
+```bash
+git add . && git stash && git pull --rebase origin main && git stash pop
+```
+### 🔍 What each does:
+
+- `git add .` → stages all changes (to avoid stash errors on untracked files).
+- `git stash` → saves local changes temporarily.
+- `git pull --rebase origin main` → pulls remote changes cleanly.
+- `git stash pop` → restores your local changes back on top.
+
+#### ✅ 5. To **discard** all local unstaged changes and pull 
+If you want to **discard** all local unstaged changes and pull with rebase, run:
+```bash
+git reset --hard && git clean -fd && git pull --rebase origin main
+```
+### 🔍 Explanation:
+
+- `git reset --hard` → discards all tracked file changes.
+- `git clean -fd` → removes untracked files and directories.
+- `git pull --rebase origin main` → pulls latest changes with rebase.
+
+⚠️ **Warning**: This will delete all your local changes permanently.
+
