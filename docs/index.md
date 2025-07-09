@@ -114,6 +114,7 @@
 - [Must know keywords](Keywords/Must know keywords.md)
 
 ## Kubernetes
+- [Full Sequence to Implement Kubernetes with kubeadm](Kubernetes/Full Sequence to Implement Kubernetes with kubeadm.md)
 - [K8s Pod Architecture & Lifecycle](Kubernetes/K8s Pod Architecture & Lifecycle.md)
 - [Kube API server Architechture - deep dive](Kubernetes/Kube API server Architechture - deep dive.md)
 - [Kubernetes history](Kubernetes/Kubernetes history.md)
@@ -198,6 +199,7 @@
 - [Traefik Dashboard only for Visibility not for Administration](Traefik/Traefik Dashboard only for Visibility not for Administration.md)
 
 ## Ubuntu
+- [Check memory slots available](Ubuntu/Check memory slots available.md)
 - [list of good tools to extract rar part files](Ubuntu/list of good tools to extract rar part files.md)
 
 ## Annotations

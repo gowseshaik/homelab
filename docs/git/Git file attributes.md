@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-08</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-08</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 ## **1. Handling Line Endings (Windows vs. Unix)**
 **Scenario**: Your team uses both Windows (CRLF) and Unix (LF) systems, leading to inconsistent line endings.  
 

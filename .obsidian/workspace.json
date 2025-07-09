@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/git/git errors.md",
+                "file": "docs/Kubernetes/Full Sequence to Implement Kubernetes with kubeadm.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "git errors"
+              "title": "Full Sequence to Implement Kubernetes with kubeadm"
             }
           }
         ]
@@ -170,6 +170,22 @@
   },
   "active": "e87aa31bb6cd3006",
   "lastOpenFiles": [
+    "docs/Kubernetes/K8s Pod Architecture & Lifecycle.md",
+    "docs/Kubernetes/Kubernetes history.md",
+    "docs/Kubernetes/Kube API server Architechture - deep dive.md",
+    "docs/Kubernetes/Full Sequence to Implement Kubernetes with kubeadm.md",
+    "docs/Helm/Checking Traefik Helm Configuration.md",
+    "docs/Helm/1. Check Helm Release(deployed) Information.md",
+    "docs/images/Pre-REquisties-Cluster_setup.png",
+    "docs/Statefulsets/W3H-Understanding StatefulSets in Kubernetes.md",
+    "docs/Statefulsets/Updating a MongoDB StatefulSet in Kubernetes.md",
+    "docs/Ubuntu/Check memory slots available.md",
+    "docs/Ubuntu/list of good tools to extract rar part files.md",
+    "docs/templates/frontmatter.md",
+    "docs/git/Git file attributes.md",
+    "docs/git/View your configured for Git.md",
+    "docs/git/How to Set Up Git Aliases.md",
+    "docs/git/git errors.md",
     "site/git/How to Set Up Git Aliases/index.html",
     "site/git/How to Set Up Git Aliases",
     "site/git/Git file attributes/index.html",
@@ -178,16 +194,10 @@
     "site/Nexus/nexus3-cli-deprecated not working",
     "site/DailyTasks/Critical Thinking/index.html",
     "site/DailyTasks/Critical Thinking",
-    "docs/git/How to Set Up Git Aliases.md",
-    "docs/git/Git file attributes.md",
     "docs/Nexus/nexus3-cli-deprecated not working.md",
     "docs/DailyTasks/Critical Thinking.md",
-    "docs/git/View your configured for Git.md",
-    "docs/git/git errors.md",
-    "docs/Kubernetes/Kube API server Architechture - deep dive.md",
     "site/search/search_index.json",
     "site/search",
-    "site/velero - for migration/Velero with kind/index.html",
     "site/assets/images/favicon.png",
     "site/images/{E0C131A8-497C-493E-A36A-ED5A2BF6BBF5}.png",
     "site/images/{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png",
@@ -197,9 +207,6 @@
     "site/images/Storage-to-pvs.png",
     "site/images/Pasted-image-20250621165152.png",
     "site/images/Kubernetes-history.png",
-    "site/images/logo-design-4.png",
-    "docs/Kubernetes/Kubernetes history.md",
-    "docs/Kubernetes/K8s Pod Architecture & Lifecycle.md",
     "docs/images/Kube.md",
     "docs/Alertmanager/how to configure Alertmanager on K3d.md",
     "docs/annotations/About annotations in k8s.md",
@@ -209,13 +216,6 @@
     "docs/APM/Setup ELK with filebeat.md",
     "docs/APM/ELK installation and setup.md",
     "docs/APM/Add Elastic repo and install filebeat on app nodes.md",
-    "docs/ArgoCD/ArgoCD Architecture.md",
-    "docs/ArgoCD/Argocd CLI.md",
-    "docs/ArgoCD/ArgoCD installation steps.md",
-    "docs/ArgoCD/ArgoCD with HTTPS using cert-manager.md",
-    "docs/ArgoCD/Common misunderstanding in ArgoCD Usage.md",
-    "docs/ArgoCD/How ArgoCD and OpenShift.md",
-    "docs/ArgoCD/To configure two K3s clusters in ArgoCD.md",
     "Untitled.canvas"
   ]
 }

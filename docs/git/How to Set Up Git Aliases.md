@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-08</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-08</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 Git aliases are shortcuts that allow you to create custom Git commands or abbreviate existing ones. They can save you time and make your Git workflow more efficient. You can define them in your Git configuration file (`~/.gitconfig`) or by using the `git config` command.
 #### **1. Using `git config`**
 You can create aliases directly from the command line:
