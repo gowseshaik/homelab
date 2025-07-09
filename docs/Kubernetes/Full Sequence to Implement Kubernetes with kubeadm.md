@@ -1,7 +1,7 @@
 <span style="color:#4caf50;"><b>Created:</b> 2025-07-08</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-08</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 
 ---
-![Pre-REquisties-Cluster_Setup](../images/Pre-REquisties-Cluster_Setup.png) 
+![Pre-REquisties-Cluster_Setup](../images/Pre-REquisties-Cluster_setup.png) 
 ### **1. Infra Readiness**
 
 > _Provision VM or physical machines with minimum: 2 vCPU, 4GB RAM, 20GB disk_

@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/git/Git%20file%20attributes/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Ubuntu/Check%20memory%20slots%20available/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Git file attributes - Gouse Shaik</title>
+        <title>Check memory slots available - Gouse Shaik</title>
       
     
     
@@ -69,11 +69,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#1-handling-line-endings-windows-vs-unix" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -105,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Git file attributes
+              Check memory slots available
             
           </span>
         </div>
@@ -354,7 +349,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/git/Git file attributes.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Ubuntu/Check memory slots available.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,171 +357,18 @@
   
 
 
-  <h1>Git file attributes</h1>
+  <h1>Check memory slots available</h1>
 
 <p><span style="color:#4caf50;"><b>Created:</b> 2025-07-08</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-08</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<h2 id="1-handling-line-endings-windows-vs-unix"><strong>1. Handling Line Endings (Windows vs. Unix)</strong><a class="headerlink" href="#1-handling-line-endings-windows-vs-unix" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: Your team uses both Windows (CRLF) and Unix (LF) systems, leading to inconsistent line endings.  </p>
-<h3 id="solution-use-gitattributes-to-enforce-consistent-line-endings"><strong>Solution</strong>: Use <code>.gitattributes</code> to enforce consistent line endings.<a class="headerlink" href="#solution-use-gitattributes-to-enforce-consistent-line-endings" title="Permanent link">&para;</a></h3>
-<h4 id="steps"><strong>Steps</strong>:<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Create/Edit <code>.gitattributes</code></strong>:
-   <div class="highlight"><pre><span></span><code>touch<span class="w"> </span>.gitattributes
-</code></pre></div></li>
-<li><strong>Define rules</strong>:
-   <div class="highlight"><pre><span></span><code># Auto-detect line endings for text files
-* text=auto
-
-# Force LF for scripts (Unix-compatible)
-*.sh eol=lf
-
-# Force CRLF for Windows-specific files
-*.bat eol=crlf
-</code></pre></div></li>
-<li><strong>Apply changes</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.gitattributes
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Normalize line endings&quot;</span>
-</code></pre></div></li>
-<li><strong>Verify</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>ls-files<span class="w"> </span>--eol<span class="w">  </span><span class="c1"># Shows line endings per file</span>
-</code></pre></div></li>
-</ol>
-<hr />
-<h2 id="2-treating-files-as-binary-avoiding-merge-conflicts"><strong>2. Treating Files as Binary (Avoiding Merge Conflicts)</strong><a class="headerlink" href="#2-treating-files-as-binary-avoiding-merge-conflicts" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: Your repo has PDFs, Word docs, or JAR files that should not be diffed/merged.  </p>
-<h3 id="solution-mark-them-as-binary-in-gitattributes"><strong>Solution</strong>: Mark them as <code>binary</code> in <code>.gitattributes</code>.<a class="headerlink" href="#solution-mark-them-as-binary-in-gitattributes" title="Permanent link">&para;</a></h3>
-<h4 id="steps_1"><strong>Steps</strong>:<a class="headerlink" href="#steps_1" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Edit <code>.gitattributes</code></strong>:
-   <div class="highlight"><pre><span></span><code>*.pdf binary
-*.docx binary
-*.jar binary
-</code></pre></div></li>
-<li><strong>Commit changes</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.gitattributes
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Treat PDF/DOCX/JAR as binary&quot;</span>
-</code></pre></div></li>
-<li><strong>Test</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>diff<span class="w">  </span><span class="c1"># Should skip binary files</span>
-</code></pre></div></li>
-</ol>
-<hr />
-<h2 id="3-custom-diff-for-specific-files-eg-java-csv"><strong>3. Custom Diff for Specific Files (e.g., Java, CSV)</strong><a class="headerlink" href="#3-custom-diff-for-specific-files-eg-java-csv" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: You want better <code>git diff</code> output for structured files (Java, CSV, JSON).  </p>
-<h3 id="solution-use-a-custom-diff-driver"><strong>Solution</strong>: Use a custom diff driver.<a class="headerlink" href="#solution-use-a-custom-diff-driver" title="Permanent link">&para;</a></h3>
-<h4 id="steps_2"><strong>Steps</strong>:<a class="headerlink" href="#steps_2" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Define a diff driver in <code>.gitconfig</code></strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>diff.java.textconv<span class="w"> </span><span class="s2">&quot;java -jar /path/to/javaprettifier.jar&quot;</span>
-</code></pre></div></li>
-<li><strong>Map it in <code>.gitattributes</code></strong>:
-   <div class="highlight"><pre><span></span><code>*.java diff=java
-*.csv diff=csv
-</code></pre></div></li>
-<li><strong>Test</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>diff<span class="w"> </span>MyFile.java<span class="w">  </span><span class="c1"># Should use the custom formatter</span>
-</code></pre></div></li>
-</ol>
-<hr />
-<h2 id="4-git-lfs-handling-large-files"><strong>4. Git LFS (Handling Large Files)</strong><a class="headerlink" href="#4-git-lfs-handling-large-files" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: Your repo has large files (videos, datasets, PSDs), bloating Git history.  </p>
-<h3 id="solution-use-git-lfs-large-file-storage"><strong>Solution</strong>: Use <strong>Git LFS (Large File Storage)</strong>.<a class="headerlink" href="#solution-use-git-lfs-large-file-storage" title="Permanent link">&para;</a></h3>
-<h4 id="steps_3"><strong>Steps</strong>:<a class="headerlink" href="#steps_3" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Install Git LFS</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>lfs<span class="w"> </span>install
-</code></pre></div></li>
-<li><strong>Track large files</strong> (in <code>.gitattributes</code>):
-   <div class="highlight"><pre><span></span><code>*.psd filter=lfs diff=lfs merge=lfs -text
-*.mp4 filter=lfs diff=lfs merge=lfs -text
-</code></pre></div></li>
-<li><strong>Commit &amp; push</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.gitattributes
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Track PSD/MP4 with LFS&quot;</span>
-git<span class="w"> </span>push
-</code></pre></div></li>
-<li><strong>Verify</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>lfs<span class="w"> </span>ls-files<span class="w">  </span><span class="c1"># Lists LFS-tracked files</span>
-</code></pre></div></li>
-</ol>
-<hr />
-<h2 id="5-export-ignore-exclude-files-from-archives"><strong>5. Export-Ignore (Exclude Files from Archives)</strong><a class="headerlink" href="#5-export-ignore-exclude-files-from-archives" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: You generate <code>git archive</code> releases but want to exclude test files.  </p>
-<h3 id="solution-use-export-ignore"><strong>Solution</strong>: Use <code>export-ignore</code>.<a class="headerlink" href="#solution-use-export-ignore" title="Permanent link">&para;</a></h3>
-<h4 id="steps_4"><strong>Steps</strong>:<a class="headerlink" href="#steps_4" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Edit <code>.gitattributes</code></strong>:
-   <div class="highlight"><pre><span></span><code>/tests/ export-ignore
-*.tmp export-ignore
-</code></pre></div></li>
-<li><strong>Test</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>archive<span class="w"> </span>--format<span class="o">=</span>zip<span class="w"> </span>-o<span class="w"> </span>release.zip<span class="w"> </span>HEAD
-unzip<span class="w"> </span>-l<span class="w"> </span>release.zip<span class="w">  </span><span class="c1"># Should exclude /tests/ and *.tmp</span>
-</code></pre></div></li>
-</ol>
-<hr />
-<h2 id="6-filter-drivers-pre-process-files-on-commitcheckout"><strong>6. Filter Drivers (Pre-Process Files on Commit/Checkout)</strong><a class="headerlink" href="#6-filter-drivers-pre-process-files-on-commitcheckout" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: You want to strip debug logs before committing.  </p>
-<h3 id="solution-use-a-cleansmudge-filter"><strong>Solution</strong>: Use a <strong>clean/smudge filter</strong>.<a class="headerlink" href="#solution-use-a-cleansmudge-filter" title="Permanent link">&para;</a></h3>
-<h4 id="steps_5"><strong>Steps</strong>:<a class="headerlink" href="#steps_5" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Define filter in <code>.gitconfig</code></strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>filter.clean_logs.clean<span class="w"> </span><span class="s2">&quot;sed &#39;/DEBUG/d&#39;&quot;</span>
-</code></pre></div></li>
-<li><strong>Map it in <code>.gitattributes</code></strong>:
-   <div class="highlight"><pre><span></span><code>*.log filter=clean_logs
-</code></pre></div></li>
-<li><strong>Test</strong>:
-   <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;INFO: OK&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>test.log
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;DEBUG: Remove me&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>test.log
-git<span class="w"> </span>add<span class="w"> </span>test.log
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Test filter&quot;</span>
-git<span class="w"> </span>show<span class="w"> </span>:test.log<span class="w">  </span><span class="c1"># Should exclude DEBUG lines</span>
-</code></pre></div></li>
-</ol>
-<hr />
-<h2 id="summary-table-key-scenarios-fixes"><strong>Summary Table: Key Scenarios &amp; Fixes</strong><a class="headerlink" href="#summary-table-key-scenarios-fixes" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Scenario</th>
-<th>Solution</th>
-<th><code>.gitattributes</code> Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Line endings</strong></td>
-<td><code>text=auto</code>, <code>eol=lf/crlf</code></td>
-<td><code>*.sh eol=lf</code></td>
-</tr>
-<tr>
-<td><strong>Binary files</strong></td>
-<td><code>binary</code>, <code>-diff -merge</code></td>
-<td><code>*.pdf binary</code></td>
-</tr>
-<tr>
-<td><strong>Custom diffs</strong></td>
-<td><code>diff=driver</code></td>
-<td><code>*.java diff=java</code></td>
-</tr>
-<tr>
-<td><strong>Large files</strong></td>
-<td><code>filter=lfs</code></td>
-<td><code>*.mp4 filter=lfs</code></td>
-</tr>
-<tr>
-<td><strong>Exclude from zip</strong></td>
-<td><code>export-ignore</code></td>
-<td><code>/tests/ export-ignore</code></td>
-</tr>
-<tr>
-<td><strong>Pre-process files</strong></td>
-<td><code>filter=clean/smudge</code></td>
-<td><code>*.log filter=clean_logs</code></td>
-</tr>
-</tbody>
-</table>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>dmidecode<span class="w"> </span>-t<span class="w"> </span>memory<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;Size:|Locator:&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-B1<span class="w"> </span><span class="s1">&#39;Size:&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;Locator\|Size&#39;</span>
+$<span class="w"> </span>sudo<span class="w"> </span>dmidecode<span class="w"> </span>-t<span class="w"> </span>memory<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;Size:|Locator:&#39;</span>
+<span class="w">        </span>Size:<span class="w"> </span><span class="m">8</span><span class="w"> </span>GB
+<span class="w">        </span>Locator:<span class="w"> </span>ChannelA-DIMM0
+<span class="w">        </span>Bank<span class="w"> </span>Locator:<span class="w"> </span>BANK<span class="w"> </span><span class="m">0</span>
+<span class="w">        </span>Size:<span class="w"> </span><span class="m">8</span><span class="w"> </span>GB
+<span class="w">        </span>Locator:<span class="w"> </span>ChannelB-DIMM0
+<span class="w">        </span>Bank<span class="w"> </span>Locator:<span class="w"> </span>BANK<span class="w"> </span><span class="m">2</span>
+</code></pre></div>
 
 
 

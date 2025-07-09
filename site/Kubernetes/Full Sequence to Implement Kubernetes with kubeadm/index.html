@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/git/Git%20file%20attributes/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Kubernetes/Full%20Sequence%20to%20Implement%20Kubernetes%20with%20kubeadm/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Git file attributes - Gouse Shaik</title>
+        <title>Full Sequence to Implement Kubernetes with kubeadm - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-handling-line-endings-windows-vs-unix" class="md-skip">
+        <a href="#1-infra-readiness" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Git file attributes
+              Full Sequence to Implement Kubernetes with kubeadm
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/git/Git file attributes.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Kubernetes/Full Sequence to Implement Kubernetes with kubeadm.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,171 +362,219 @@
   
 
 
-  <h1>Git file attributes</h1>
+  <h1>Full Sequence to Implement Kubernetes with kubeadm</h1>
 
 <p><span style="color:#4caf50;"><b>Created:</b> 2025-07-08</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-08</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<h2 id="1-handling-line-endings-windows-vs-unix"><strong>1. Handling Line Endings (Windows vs. Unix)</strong><a class="headerlink" href="#1-handling-line-endings-windows-vs-unix" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: Your team uses both Windows (CRLF) and Unix (LF) systems, leading to inconsistent line endings.  </p>
-<h3 id="solution-use-gitattributes-to-enforce-consistent-line-endings"><strong>Solution</strong>: Use <code>.gitattributes</code> to enforce consistent line endings.<a class="headerlink" href="#solution-use-gitattributes-to-enforce-consistent-line-endings" title="Permanent link">&para;</a></h3>
-<h4 id="steps"><strong>Steps</strong>:<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Create/Edit <code>.gitattributes</code></strong>:
-   <div class="highlight"><pre><span></span><code>touch<span class="w"> </span>.gitattributes
-</code></pre></div></li>
-<li><strong>Define rules</strong>:
-   <div class="highlight"><pre><span></span><code># Auto-detect line endings for text files
-* text=auto
-
-# Force LF for scripts (Unix-compatible)
-*.sh eol=lf
-
-# Force CRLF for Windows-specific files
-*.bat eol=crlf
-</code></pre></div></li>
-<li><strong>Apply changes</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.gitattributes
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Normalize line endings&quot;</span>
-</code></pre></div></li>
-<li><strong>Verify</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>ls-files<span class="w"> </span>--eol<span class="w">  </span><span class="c1"># Shows line endings per file</span>
-</code></pre></div></li>
-</ol>
 <hr />
-<h2 id="2-treating-files-as-binary-avoiding-merge-conflicts"><strong>2. Treating Files as Binary (Avoiding Merge Conflicts)</strong><a class="headerlink" href="#2-treating-files-as-binary-avoiding-merge-conflicts" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: Your repo has PDFs, Word docs, or JAR files that should not be diffed/merged.  </p>
-<h3 id="solution-mark-them-as-binary-in-gitattributes"><strong>Solution</strong>: Mark them as <code>binary</code> in <code>.gitattributes</code>.<a class="headerlink" href="#solution-mark-them-as-binary-in-gitattributes" title="Permanent link">&para;</a></h3>
-<h4 id="steps_1"><strong>Steps</strong>:<a class="headerlink" href="#steps_1" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Edit <code>.gitattributes</code></strong>:
-   <div class="highlight"><pre><span></span><code>*.pdf binary
-*.docx binary
-*.jar binary
-</code></pre></div></li>
-<li><strong>Commit changes</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.gitattributes
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Treat PDF/DOCX/JAR as binary&quot;</span>
-</code></pre></div></li>
-<li><strong>Test</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>diff<span class="w">  </span><span class="c1"># Should skip binary files</span>
-</code></pre></div></li>
-</ol>
-<hr />
-<h2 id="3-custom-diff-for-specific-files-eg-java-csv"><strong>3. Custom Diff for Specific Files (e.g., Java, CSV)</strong><a class="headerlink" href="#3-custom-diff-for-specific-files-eg-java-csv" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: You want better <code>git diff</code> output for structured files (Java, CSV, JSON).  </p>
-<h3 id="solution-use-a-custom-diff-driver"><strong>Solution</strong>: Use a custom diff driver.<a class="headerlink" href="#solution-use-a-custom-diff-driver" title="Permanent link">&para;</a></h3>
-<h4 id="steps_2"><strong>Steps</strong>:<a class="headerlink" href="#steps_2" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Define a diff driver in <code>.gitconfig</code></strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>diff.java.textconv<span class="w"> </span><span class="s2">&quot;java -jar /path/to/javaprettifier.jar&quot;</span>
-</code></pre></div></li>
-<li><strong>Map it in <code>.gitattributes</code></strong>:
-   <div class="highlight"><pre><span></span><code>*.java diff=java
-*.csv diff=csv
-</code></pre></div></li>
-<li><strong>Test</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>diff<span class="w"> </span>MyFile.java<span class="w">  </span><span class="c1"># Should use the custom formatter</span>
-</code></pre></div></li>
-</ol>
-<hr />
-<h2 id="4-git-lfs-handling-large-files"><strong>4. Git LFS (Handling Large Files)</strong><a class="headerlink" href="#4-git-lfs-handling-large-files" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: Your repo has large files (videos, datasets, PSDs), bloating Git history.  </p>
-<h3 id="solution-use-git-lfs-large-file-storage"><strong>Solution</strong>: Use <strong>Git LFS (Large File Storage)</strong>.<a class="headerlink" href="#solution-use-git-lfs-large-file-storage" title="Permanent link">&para;</a></h3>
-<h4 id="steps_3"><strong>Steps</strong>:<a class="headerlink" href="#steps_3" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Install Git LFS</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>lfs<span class="w"> </span>install
-</code></pre></div></li>
-<li><strong>Track large files</strong> (in <code>.gitattributes</code>):
-   <div class="highlight"><pre><span></span><code>*.psd filter=lfs diff=lfs merge=lfs -text
-*.mp4 filter=lfs diff=lfs merge=lfs -text
-</code></pre></div></li>
-<li><strong>Commit &amp; push</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.gitattributes
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Track PSD/MP4 with LFS&quot;</span>
-git<span class="w"> </span>push
-</code></pre></div></li>
-<li><strong>Verify</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>lfs<span class="w"> </span>ls-files<span class="w">  </span><span class="c1"># Lists LFS-tracked files</span>
-</code></pre></div></li>
-</ol>
-<hr />
-<h2 id="5-export-ignore-exclude-files-from-archives"><strong>5. Export-Ignore (Exclude Files from Archives)</strong><a class="headerlink" href="#5-export-ignore-exclude-files-from-archives" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: You generate <code>git archive</code> releases but want to exclude test files.  </p>
-<h3 id="solution-use-export-ignore"><strong>Solution</strong>: Use <code>export-ignore</code>.<a class="headerlink" href="#solution-use-export-ignore" title="Permanent link">&para;</a></h3>
-<h4 id="steps_4"><strong>Steps</strong>:<a class="headerlink" href="#steps_4" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Edit <code>.gitattributes</code></strong>:
-   <div class="highlight"><pre><span></span><code>/tests/ export-ignore
-*.tmp export-ignore
-</code></pre></div></li>
-<li><strong>Test</strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>archive<span class="w"> </span>--format<span class="o">=</span>zip<span class="w"> </span>-o<span class="w"> </span>release.zip<span class="w"> </span>HEAD
-unzip<span class="w"> </span>-l<span class="w"> </span>release.zip<span class="w">  </span><span class="c1"># Should exclude /tests/ and *.tmp</span>
-</code></pre></div></li>
-</ol>
-<hr />
-<h2 id="6-filter-drivers-pre-process-files-on-commitcheckout"><strong>6. Filter Drivers (Pre-Process Files on Commit/Checkout)</strong><a class="headerlink" href="#6-filter-drivers-pre-process-files-on-commitcheckout" title="Permanent link">&para;</a></h2>
-<p><strong>Scenario</strong>: You want to strip debug logs before committing.  </p>
-<h3 id="solution-use-a-cleansmudge-filter"><strong>Solution</strong>: Use a <strong>clean/smudge filter</strong>.<a class="headerlink" href="#solution-use-a-cleansmudge-filter" title="Permanent link">&para;</a></h3>
-<h4 id="steps_5"><strong>Steps</strong>:<a class="headerlink" href="#steps_5" title="Permanent link">&para;</a></h4>
-<ol>
-<li><strong>Define filter in <code>.gitconfig</code></strong>:
-   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>filter.clean_logs.clean<span class="w"> </span><span class="s2">&quot;sed &#39;/DEBUG/d&#39;&quot;</span>
-</code></pre></div></li>
-<li><strong>Map it in <code>.gitattributes</code></strong>:
-   <div class="highlight"><pre><span></span><code>*.log filter=clean_logs
-</code></pre></div></li>
-<li><strong>Test</strong>:
-   <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;INFO: OK&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>test.log
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;DEBUG: Remove me&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>test.log
-git<span class="w"> </span>add<span class="w"> </span>test.log
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Test filter&quot;</span>
-git<span class="w"> </span>show<span class="w"> </span>:test.log<span class="w">  </span><span class="c1"># Should exclude DEBUG lines</span>
-</code></pre></div></li>
-</ol>
-<hr />
-<h2 id="summary-table-key-scenarios-fixes"><strong>Summary Table: Key Scenarios &amp; Fixes</strong><a class="headerlink" href="#summary-table-key-scenarios-fixes" title="Permanent link">&para;</a></h2>
+<p><img alt="Pre-REquisties-Cluster_Setup" src="../images/Pre-REquisties-Cluster_Setup.png" /> </p>
+<h3 id="1-infra-readiness"><strong>1. Infra Readiness</strong><a class="headerlink" href="#1-infra-readiness" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><em>Provision VM or physical machines with minimum: 2 vCPU, 4GB RAM, 20GB disk</em></p>
+</blockquote>
+<ul>
+<li>Assign <strong>unique hostnames</strong> and <strong>static IPs</strong></li>
+<li>Ensure <strong>NTP/time sync</strong> is active (chronyd or systemd-timesyncd)</li>
+</ul>
+<h3 id="2-open-required-network-ports-firewall-security-groups"><strong>2. Open Required Network Ports (Firewall / Security Groups)</strong><a class="headerlink" href="#2-open-required-network-ports-firewall-security-groups" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><em>Critical: Must be done <strong>before</strong> kubeadm runs. These are required for node registration, etcd, kubelet API.</em></p>
+</blockquote>
+<h4 id="master-node-inbound-ports">🔹 Master Node Inbound Ports:<a class="headerlink" href="#master-node-inbound-ports" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
-<th>Scenario</th>
-<th>Solution</th>
-<th><code>.gitattributes</code> Example</th>
+<th>Port</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Line endings</strong></td>
-<td><code>text=auto</code>, <code>eol=lf/crlf</code></td>
-<td><code>*.sh eol=lf</code></td>
+<td><code>6443</code></td>
+<td>Kubernetes API server</td>
 </tr>
 <tr>
-<td><strong>Binary files</strong></td>
-<td><code>binary</code>, <code>-diff -merge</code></td>
-<td><code>*.pdf binary</code></td>
+<td><code>2379-2380</code></td>
+<td>etcd client &amp; peer</td>
 </tr>
 <tr>
-<td><strong>Custom diffs</strong></td>
-<td><code>diff=driver</code></td>
-<td><code>*.java diff=java</code></td>
+<td><code>10250</code></td>
+<td>Kubelet API</td>
 </tr>
 <tr>
-<td><strong>Large files</strong></td>
-<td><code>filter=lfs</code></td>
-<td><code>*.mp4 filter=lfs</code></td>
+<td><code>10257</code></td>
+<td>Controller manager</td>
 </tr>
 <tr>
-<td><strong>Exclude from zip</strong></td>
-<td><code>export-ignore</code></td>
-<td><code>/tests/ export-ignore</code></td>
+<td><code>10259</code></td>
+<td>Scheduler</td>
 </tr>
 <tr>
-<td><strong>Pre-process files</strong></td>
-<td><code>filter=clean/smudge</code></td>
-<td><code>*.log filter=clean_logs</code></td>
+<td><code>10256</code></td>
+<td>kube-proxy (for service LB)</td>
+</tr>
+<tr>
+<td>#### 🔹 Worker Node Inbound Ports:</td>
+<td></td>
 </tr>
 </tbody>
 </table>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>10250</code></td>
+<td>Kubelet API</td>
+</tr>
+<tr>
+<td><code>30000–32767</code></td>
+<td>NodePort services</td>
+</tr>
+<tr>
+<td><code>10256</code></td>
+<td>kube-proxy</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🧠 <em>First Principle</em>: A distributed system is <strong>communication-first</strong>. Blocked ports = broken cluster.</p>
+</blockquote>
+<h3 id="3-bootstrap-os-configuration-all-nodes"><strong>3. Bootstrap OS Configuration (All Nodes)</strong><a class="headerlink" href="#3-bootstrap-os-configuration-all-nodes" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><em>Use this script on all nodes (master + workers)</em></p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-e
+
+<span class="c1"># Disable swap</span>
+swapoff<span class="w"> </span>-a
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;/ swap / s/^/#/&#39;</span><span class="w"> </span>/etc/fstab
+
+<span class="c1"># Set hostnames (optional)</span>
+<span class="c1"># hostnamectl set-hostname master-node-1 or worker-node-1</span>
+
+<span class="c1"># Enable required kernel modules</span>
+modprobe<span class="w"> </span>br_netfilter
+modprobe<span class="w"> </span>overlay
+
+<span class="c1"># System-level networking configs</span>
+tee<span class="w"> </span>/etc/sysctl.d/k8s.conf<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">net.bridge.bridge-nf-call-ip6tables = 1</span>
+<span class="s">net.bridge.bridge-nf-call-iptables = 1</span>
+<span class="s">net.ipv4.ip_forward = 1</span>
+<span class="s">EOF</span>
+sysctl<span class="w"> </span>--system
+
+<span class="c1"># Install containerd</span>
+apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>containerd
+mkdir<span class="w"> </span>-p<span class="w"> </span>/etc/containerd
+containerd<span class="w"> </span>config<span class="w"> </span>default<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>/etc/containerd/config.toml<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/SystemdCgroup = false/SystemdCgroup = true/&#39;</span><span class="w"> </span>/etc/containerd/config.toml
+systemctl<span class="w"> </span>restart<span class="w"> </span>containerd
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>containerd
+
+<span class="c1"># Install kubeadm, kubelet, kubectl</span>
+apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>apt-transport-https<span class="w"> </span>ca-certificates<span class="w"> </span>curl
+curl<span class="w"> </span>-fsSL<span class="w"> </span>https://packages.cloud.google.com/apt/doc/apt-key.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/k8s-archive-keyring.gpg
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [signed-by=/usr/share/keyrings/k8s-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/apt/sources.list.d/kubernetes.list
+apt<span class="w"> </span>update
+apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>kubelet<span class="w"> </span>kubeadm<span class="w"> </span>kubectl
+apt-mark<span class="w"> </span>hold<span class="w"> </span>kubelet<span class="w"> </span>kubeadm<span class="w"> </span>kubectl
+</code></pre></div>
+<h3 id="4-initialize-master-node"><strong>4. Initialize Master Node</strong><a class="headerlink" href="#4-initialize-master-node" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><em>Run on master node only</em></p>
+</blockquote>
+<p><div class="highlight"><pre><span></span><code>kubeadm<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--pod-network-cidr<span class="o">=</span><span class="m">10</span>.244.0.0/16<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--apiserver-advertise-address<span class="o">=</span>&lt;MASTER_NODE_IP&gt;
+</code></pre></div>
+Copy the <code>kubeadm join</code> command at the end.</p>
+<h3 id="5-configure-kubectl-on-master"><strong>5. Configure <code>kubectl</code> on Master</strong><a class="headerlink" href="#5-configure-kubectl-on-master" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$HOME</span>/.kube
+cp<span class="w"> </span>/etc/kubernetes/admin.conf<span class="w"> </span><span class="nv">$HOME</span>/.kube/config
+chown<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span>:<span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="w"> </span><span class="nv">$HOME</span>/.kube/config
+</code></pre></div>
+<h3 id="6-install-pod-network-add-on-eg-flannel"><strong>6. Install Pod Network Add-on (e.g., Flannel)</strong><a class="headerlink" href="#6-install-pod-network-add-on-eg-flannel" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+</code></pre></div>
+<blockquote>
+<p>You’ll see node change from <code>NotReady</code> to <code>Ready</code>.</p>
+</blockquote>
+<h3 id="7-join-worker-nodes"><strong>7. Join Worker Nodes</strong><a class="headerlink" href="#7-join-worker-nodes" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><em>Run the saved <code>kubeadm join</code> command from step 4 on each worker node</em></p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>kubeadm<span class="w"> </span>join<span class="w"> </span>&lt;MASTER_IP&gt;:6443<span class="w"> </span>--token<span class="w"> </span>...<span class="w"> </span>--discovery-token-ca-cert-hash<span class="w"> </span>sha256:...
+</code></pre></div>
+<h3 id="8-verify-cluster"><strong>8. Verify Cluster</strong><a class="headerlink" href="#8-verify-cluster" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>wide
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
+</code></pre></div>
+You should see all nodes in <code>Ready</code> state and <code>kube-system</code> pods running.</p>
+<hr />
+<h2 id="critical-checkpoints">🧠 Critical Checkpoints<a class="headerlink" href="#critical-checkpoints" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Checkpoint</th>
+<th>Why it Matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ports opened <strong>first</strong></td>
+<td>Else <code>kubeadm join</code> or API calls silently fail</td>
+</tr>
+<tr>
+<td>Swap disabled <strong>before kubelet runs</strong></td>
+<td>Prevents runtime crashes and cgroup failures</td>
+</tr>
+<tr>
+<td>Containerd uses <code>SystemdCgroup=true</code></td>
+<td>Aligns with kubelet's expectations</td>
+</tr>
+<tr>
+<td>Network add-on installed <strong>after init</strong></td>
+<td>Else Pods stuck in <code>ContainerCreating</code></td>
+</tr>
+<tr>
+<td>Hostname and IP consistency</td>
+<td>Prevents kubelet re-registration or duplication</td>
+</tr>
+<tr>
+<td>Static IP or reservation via DHCP</td>
+<td>Prevents cluster break after reboot</td>
+</tr>
+<tr>
+<td>## 📦 Optional (Post Setup)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Install <strong>metrics-server</strong>: <code>kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml</code></li>
+<li>Install <strong>Ingress</strong>: NGINX or Traefik</li>
+<li>Setup <strong>RBAC</strong>, <strong>PSA</strong>, <strong>audit logs</strong>, <strong>cert-manager</strong></li>
+</ul>
+<hr />
+<p>Let me know if you want:</p>
+<ul>
+<li>
+<p>Air-gapped version of the setup</p>
+</li>
+<li>
+<p>HA control plane (with stacked etcd or external)</p>
+</li>
+<li>
+<p>Ansible script to automate all of the above</p>
+</li>
+</ul>
+<p>Your infra. Your control. No fluff.</p>
 
 
 
