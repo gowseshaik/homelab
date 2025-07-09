@@ -297,6 +297,10 @@
          <lastmod>2025-07-09</lastmod>
     </url>
     <url>
+         <loc>https://github.com/gowseshaik/homelab/Kubernetes/K8s%20-%20manifest%20files%20structure/</loc>
+         <lastmod>2025-07-09</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/gowseshaik/homelab/Kubernetes/K8s%20Pod%20Architecture%20%26%20Lifecycle/</loc>
          <lastmod>2025-07-09</lastmod>
     </url>
@@ -350,6 +354,10 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/Longhorn/Using%20Longhorn%20Storage%20with%20Kind%20Cluster/</loc>
+         <lastmod>2025-07-09</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/Namespace/Default%20namespaces/</loc>
          <lastmod>2025-07-09</lastmod>
     </url>
     <url>
