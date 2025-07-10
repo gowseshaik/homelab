@@ -76,6 +76,7 @@
 - [Deployments in kubernetes](Deployments/Deployments in kubernetes.md)
 
 ## Docker-podman-images
+- [Docker-compose to K8s](Docker-Podman-images/Docker-compose to K8s.md)
 - [Enterprise-grade images as safer](Docker-Podman-images/Enterprise-grade images as safer.md)
 - [Limitations of Containers](Docker-Podman-images/Limitations of Containers.md)
 - [Tag images to push](Docker-Podman-images/Tag images to push.md)
@@ -118,6 +119,7 @@
 - [K8s - manifest files structure](Kubernetes/K8s - manifest files structure.md)
 - [K8s Pod Architecture & Lifecycle](Kubernetes/K8s Pod Architecture & Lifecycle.md)
 - [Kube API server Architechture - deep dive](Kubernetes/Kube API server Architechture - deep dive.md)
+- [Kuberentes usecases-deepdive flow](Kubernetes/Kuberentes usecases-deepdive flow.md)
 - [Kubernetes history](Kubernetes/Kubernetes history.md)
 
 ## Loadbalancers types
@@ -249,6 +251,7 @@
 - [Installing and Configuring Nginx on Ubuntu](nginx/Installing and Configuring Nginx on Ubuntu.md)
 
 ## Python
+- [Microservice for Amazon affiliate marketing data scraping](python/Microservice for Amazon affiliate marketing data scraping.md)
 - [mkdocs to github pages](python/mkdocs to github pages.md)
 - [python pyautogui](python/python pyautogui.md)
 
