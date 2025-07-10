@@ -115,6 +115,7 @@
 
 ## Kubernetes
 - [Full Sequence to Implement Kubernetes with kubeadm](Kubernetes/Full Sequence to Implement Kubernetes with kubeadm.md)
+- [K8s - manifest files structure](Kubernetes/K8s - manifest files structure.md)
 - [K8s Pod Architecture & Lifecycle](Kubernetes/K8s Pod Architecture & Lifecycle.md)
 - [Kube API server Architechture - deep dive](Kubernetes/Kube API server Architechture - deep dive.md)
 - [Kubernetes history](Kubernetes/Kubernetes history.md)
@@ -135,6 +136,7 @@
 - [Using Longhorn Storage with Kind Cluster](Longhorn/Using Longhorn Storage with Kind Cluster.md)
 
 ## Namespace
+- [Default namespaces](Namespace/Default namespaces.md)
 - [Delete all resources from namespace](Namespace/Delete all resources from namespace.md)
 
 ## Nexus
