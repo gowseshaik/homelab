@@ -1,3 +1,9 @@
+##### to get the list of commits and authors for the specific file:
+```json
+git log --pretty=format:"%h %an %ad %s" --date=short -- src/AmytodoApp/my_index.thml
+```
+
+
 ##### To get **only the most recent commit** that modified the file, use:
 ```json
 git log -1 --pretty=format:"%ae" -- src/AmytodoApp/my_index.thml
