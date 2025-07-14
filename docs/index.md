@@ -1,5 +1,15 @@
 # Knowledge Base
 
+## Ai engineer
+- [Agents](AI Engineer/Agents.md)
+- [Fine-tuning](AI Engineer/Fine-tuning.md)
+- [Github Repos](AI Engineer/Github Repos.md)
+- [Multi-Agents](AI Engineer/Multi-Agents.md)
+- [RAG-based DevOps assistant using an LLM](AI Engineer/RAG-based DevOps assistant using an LLM.md)
+- [RAG](AI Engineer/RAG.md)
+- [Reasoning Models](AI Engineer/Reasoning Models.md)
+- [Vibe Checking](AI Engineer/Vibe Checking.md)
+
 ## Api-resources
 - [k8s-api-resources-details](API-Resources/k8s-api-resources-details.md)
 
@@ -76,10 +86,13 @@
 - [Deployments in kubernetes](Deployments/Deployments in kubernetes.md)
 
 ## Docker-podman-images
+- [Build Docker images directly from Git repos](Docker-Podman-images/Build Docker images directly from Git repos.md)
 - [Docker-compose to K8s](Docker-Podman-images/Docker-compose to K8s.md)
 - [Enterprise-grade images as safer](Docker-Podman-images/Enterprise-grade images as safer.md)
 - [Limitations of Containers](Docker-Podman-images/Limitations of Containers.md)
+- [Run a container with all resource limits](Docker-Podman-images/Run a container with all resource limits.md)
 - [Tag images to push](Docker-Podman-images/Tag images to push.md)
+- [To find the memory usage of containers](Docker-Podman-images/To find the memory usage of containers.md)
 - [scp images in tar format to remote hosts - offline](Docker-Podman-images/scp images in tar format to remote hosts - offline.md)
 
 ## Helm
@@ -127,6 +140,8 @@
 - [Reverse proxy means](Loadbalancers Types/Reverse proxy means.md)
 
 ## Longhorn
+- [Can You Use Longhorn _on top of_ NFS ?](Longhorn/Can You Use Longhorn _on top of_ NFS ?.md)
+- [Create a PV and PVC using longhorn-static](Longhorn/Create a PV and PVC using longhorn-static.md)
 - [Hands-On - Deploying Longhorn on Kubernetes](Longhorn/Hands-On - Deploying Longhorn on Kubernetes.md)
 - [Longhorn Access Modes & Volume Resizing Guide](Longhorn/Longhorn Access Modes & Volume Resizing Guide.md)
 - [Longhorn for stateful applications](Longhorn/Longhorn for stateful applications.md)
@@ -137,6 +152,10 @@
 - [Use Longhorn for PV and mount to MinIO](Longhorn/Use Longhorn for PV and mount to MinIO.md)
 - [Using Longhorn Storage with Kind Cluster](Longhorn/Using Longhorn Storage with Kind Cluster.md)
 
+## Minio
+- [MinIO cli with MinIO and velero](MinIO/MinIO cli with MinIO and velero.md)
+- [MinIO external for Velero backups](MinIO/MinIO external for Velero backups.md)
+
 ## Namespace
 - [Default namespaces](Namespace/Default namespaces.md)
 - [Delete all resources from namespace](Namespace/Delete all resources from namespace.md)
@@ -145,6 +164,7 @@
 - [Create a Docker image registry in Nexus](Nexus/Create a Docker image registry in Nexus.md)
 - [Nexus Repository Manager OSS and integrate it with your Kubernetes](Nexus/Nexus Repository Manager OSS and integrate it with your Kubernetes.md)
 - [Nexus oss setup - On-Prem](Nexus/Nexus oss setup - On-Prem.md)
+- [Steps to uninstall Nexus it cleanly](Nexus/Steps to uninstall Nexus it cleanly.md)
 - [nexus3-cli-deprecated not working](Nexus/nexus3-cli-deprecated not working.md)
 
 ## Opentofu
@@ -192,6 +212,7 @@
 ## Storage
 - [About StorageClass fields](Storage/About StorageClass fields.md)
 - [Common Kubernetes storage types](Storage/Common Kubernetes storage types.md)
+- [Setup NFS on Ubuntu Local Machine](Storage/Setup NFS on Ubuntu Local Machine.md)
 - [Storage Types](Storage/Storage Types.md)
 
 ## Taint-tolerations
@@ -252,6 +273,7 @@
 
 ## Python
 - [Microservice for Amazon affiliate marketing data scraping](python/Microservice for Amazon affiliate marketing data scraping.md)
+- [Microservices - Project](python/Microservices - Project.md)
 - [mkdocs to github pages](python/mkdocs to github pages.md)
 - [python pyautogui](python/python pyautogui.md)
 
@@ -259,5 +281,8 @@
 - [frontmatter](templates/frontmatter.md)
 
 ## Velero - for migration
+- [Schedule backups of NFS volumes using Velero](velero - for migration/Schedule backups of NFS volumes using Velero.md)
+- [Velero backup + restore setup with Longhorn](velero - for migration/Velero backup + restore setup with Longhorn.md)
+- [Velero backup and restore command examples](velero - for migration/Velero backup and restore command examples.md)
 - [Velero with kind](velero - for migration/Velero with kind.md)
 
