@@ -387,11 +387,153 @@
 <td><code>open-iscsi</code> not required inside Docker</td>
 </tr>
 <tr>
-<td>### 🛠️ Steps to Install Longhorn on K3d</td>
+<td>## 🧱 Can Longhorn Be Inside Kubernetes or External?</td>
+<td></td>
+</tr>
+<tr>
+<td>Excellent question. The answer depends on <strong>how you want to design your storage architecture</strong>. Here's a full breakdown:</td>
 <td></td>
 </tr>
 </tbody>
 </table>
+<table>
+<thead>
+<tr>
+<th>Deployment Mode</th>
+<th>Supported?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ <strong>Inside Kubernetes</strong></td>
+<td>✅ <strong>Yes (Default)</strong></td>
+<td>Longhorn runs as a <strong>Kubernetes-native storage system</strong> (pods + CRDs inside your cluster)</td>
+</tr>
+<tr>
+<td>❌ <strong>Fully external</strong></td>
+<td>❌ <strong>Not supported</strong></td>
+<td>Longhorn <strong>cannot run as a standalone external storage appliance</strong></td>
+</tr>
+<tr>
+<td>⚠️ <strong>Hybrid (dedicated storage cluster)</strong></td>
+<td>⚠️ Yes, with advanced config</td>
+<td>You can build a <strong>dedicated Longhorn K3s cluster</strong> acting as networked storage for other clusters (via NFS/iSCSI)**</td>
+</tr>
+<tr>
+<td>## ✅ Default: Longhorn <strong>Inside</strong> Your K3s/K8s Cluster</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>This is the recommended, supported, and most stable setup:</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- Longhorn runs in <code>longhorn-system</code> namespace</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- Each node contributes local disks (e.g., <code>/var/lib/longhorn</code>)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- Volumes are created, replicated, snapshotted via Kubernetes APIs</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- Integrated with CSI</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>### Pros:</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- Simple, Kubernetes-native</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- No external dependencies</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- Works with Velero, VolumeSnapshotClass, PVCs</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>### Example Setup:</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>longhorn-system
+kubectl<span class="w"> </span>get<span class="w"> </span>storageclass<span class="w"> </span>longhorn
+</code></pre></div></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="advanced-dedicated-longhorn-cluster-hybrid-storage-mode">🧪 Advanced: Dedicated Longhorn Cluster (Hybrid Storage Mode)<a class="headerlink" href="#advanced-dedicated-longhorn-cluster-hybrid-storage-mode" title="Permanent link">&para;</a></h2>
+<p>You can <strong>run Longhorn in a separate K3s cluster</strong>, and expose volumes to other clusters via:</p>
+<ul>
+<li><strong>iSCSI</strong> (manual)</li>
+<li><strong>NFS</strong> (using Longhorn volumes + nfs-provisioner)</li>
+<li><strong>Restic/NFS for Velero restore/backup</strong></li>
+</ul>
+<blockquote>
+<p>But this is <strong>not supported directly by Longhorn</strong> as external storage — it's a workaround.</p>
+</blockquote>
+<h2 id="not-possible-longhorn-as-a-pure-external-storage-appliance">❌ Not Possible: Longhorn as a Pure External Storage Appliance<a class="headerlink" href="#not-possible-longhorn-as-a-pure-external-storage-appliance" title="Permanent link">&para;</a></h2>
+<p>Unlike Ceph, TrueNAS, or NetApp:
+- Longhorn is <strong>not designed to be installed on bare metal or VMs outside Kubernetes</strong>
+- It <strong>must run inside a Kubernetes cluster</strong> (even a minimal K3s)</p>
+<h2 id="first-insight">🧠 First Insight<a class="headerlink" href="#first-insight" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Storage Type</th>
+<th>Suitable For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Longhorn inside K3s</td>
+<td>✅ Most apps, PVCs, CSI, snapshots</td>
+</tr>
+<tr>
+<td>Longhorn in separate K3s cluster (storage-only)</td>
+<td>⚠️ Shared storage for other clusters, requires NFS/iSCSI export</td>
+</tr>
+<tr>
+<td>External NAS (e.g. NFS, Ceph, SAN)</td>
+<td>✅ Multi-cluster, legacy workloads, direct access</td>
+</tr>
+<tr>
+<td>Longhorn as external appliance</td>
+<td>❌ Not supported or intended</td>
+</tr>
+</tbody>
+</table>
+<h2 id="want-to-try-dedicated-storage-k3s-cluster-with-longhorn">🧰 Want to Try: Dedicated Storage K3s Cluster with Longhorn?<a class="headerlink" href="#want-to-try-dedicated-storage-k3s-cluster-with-longhorn" title="Permanent link">&para;</a></h2>
+<p>If you're interested in running <strong>Longhorn as a storage service</strong> using a separate K3s setup, I can provide:</p>
+<ul>
+<li>Setup steps for <code>longhorn + nfs-provisioner</code></li>
+<li>Export volumes from storage cluster</li>
+<li>Mount them on other K3s clusters via NFS PVC</li>
+</ul>
+<p>Let me know if you want that architecture.</p>
+<h3 id="steps-to-install-longhorn-on-k3d">🛠️ Steps to Install Longhorn on K3d<a class="headerlink" href="#steps-to-install-longhorn-on-k3d" title="Permanent link">&para;</a></h3>
 <h4 id="1-label-a-node-with-storage-role">1. <strong>Label a node with storage role</strong><a class="headerlink" href="#1-label-a-node-with-storage-role" title="Permanent link">&para;</a></h4>
 <p>Longhorn needs at least one node to be storage-enabled:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>label<span class="w"> </span>node<span class="w"> </span>k3d-ha-cluster-agent-0<span class="w"> </span>longhorn-node<span class="o">=</span><span class="nb">true</span>
@@ -407,7 +549,132 @@ helm<span class="w"> </span>install<span class="w"> </span>longhorn<span class="
 <span class="w">  </span>--set<span class="w"> </span>defaultSettings.createDefaultDiskLabeledNodes<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>defaultSettings.defaultDataPath<span class="o">=</span><span class="s2">&quot;/var/lib/longhorn&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>persistence.defaultClassReplicaCount<span class="o">=</span><span class="m">1</span>
+
+or
+
+helm<span class="w"> </span>install<span class="w"> </span>longhorn<span class="w"> </span>longhorn/longhorn<span class="w"> </span>--namespace<span class="w"> </span>longhorn-system
+<span class="c1"># Verify CSI + StorageClass</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>storageclass
+Should<span class="w"> </span>show:
+NAME<span class="w">       </span>PROVISIONER<span class="w">             </span>DEFAULT
+longhorn<span class="w">   </span>driver.longhorn.io<span class="w">      </span>no
+
+<span class="c1"># To make longhorn as default:</span>
+kubectl<span class="w"> </span>patch<span class="w"> </span>storageclass<span class="w"> </span>longhorn<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;metadata&quot;: {&quot;annotations&quot;:{&quot;storageclass.kubernetes.io/is-default-class&quot;:&quot;true&quot;}}}&#39;</span>
+
+$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>longhorn-system
+
+gouse@gouse:~$<span class="w"> </span>k<span class="w"> </span>get<span class="w"> </span>storageclass
+NAME<span class="w">                   </span>PROVISIONER<span class="w">             </span>RECLAIMPOLICY<span class="w">   </span>VOLUMEBINDINGMODE<span class="w">      </span>ALLOWVOLUMEEXPANSION<span class="w">   </span>AGE
+local-path<span class="w"> </span><span class="o">(</span>default<span class="o">)</span><span class="w">   </span>rancher.io/local-path<span class="w">   </span>Delete<span class="w">          </span>WaitForFirstConsumer<span class="w">   </span><span class="nb">false</span><span class="w">                  </span>8d
+longhorn<span class="w"> </span><span class="o">(</span>default<span class="o">)</span><span class="w">     </span>driver.longhorn.io<span class="w">      </span>Delete<span class="w">          </span>Immediate<span class="w">              </span><span class="nb">true</span><span class="w">                   </span>4m20s
+longhorn-static<span class="w">        </span>driver.longhorn.io<span class="w">      </span>Delete<span class="w">          </span>Immediate<span class="w">              </span><span class="nb">true</span><span class="w">                   </span>4m17s
 </code></pre></div>
+<p>🧾 What This Means</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>StorageClass Name</strong></td>
+<td><code>local-path</code></td>
+</tr>
+<tr>
+<td><strong>Provisioner</strong></td>
+<td><code>rancher.io/local-path</code> (default for K3s)</td>
+</tr>
+<tr>
+<td><strong>Reclaim Policy</strong></td>
+<td><code>Delete</code> — PVs will be deleted when PVCs are deleted</td>
+</tr>
+<tr>
+<td><strong>Binding Mode</strong></td>
+<td><code>WaitForFirstConsumer</code> — volume is not provisioned until Pod is scheduled</td>
+</tr>
+<tr>
+<td><strong>Expansion Support</strong></td>
+<td>❌ <code>false</code> — PVCs <strong>cannot</strong> be resized dynamically</td>
+</tr>
+<tr>
+<td><strong>Default?</strong></td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>## 📦 What is <code>longhorn-static</code> StorageClass?</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>longhorn-static</code></strong> is a <strong>StorageClass used for statically provisioning</strong> volumes that were <strong>already created manually</strong> in the Longhorn UI or API — i.e., volumes that exist before any PVC binds to them.</p>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th><code>longhorn</code> (dynamic)</th>
+<th><code>longhorn-static</code> (static)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Who creates the volume?</td>
+<td>Kubernetes (via PVC)</td>
+<td>You (via Longhorn UI, script, etc.)</td>
+</tr>
+<tr>
+<td>When is it created?</td>
+<td>When a PVC is applied</td>
+<td>Before PVC exists</td>
+</tr>
+<tr>
+<td>How is it bound?</td>
+<td>PVC → Longhorn creates volume</td>
+<td>PVC binds to pre-existing volume</td>
+</tr>
+<tr>
+<td>Use case</td>
+<td>Dynamic workloads</td>
+<td>Manual restore, pre-imported disks, migration</td>
+</tr>
+<tr>
+<td>## ✅ When to Use <code>longhorn-static</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>You use <code>longhorn-static</code> when:</p>
+<ol>
+<li>You <strong>manually created a volume</strong> in the Longhorn UI<br />
+    (e.g., from a backup, snapshot, or disk import)</li>
+<li>You want to <strong>bind it to a PVC</strong> inside Kubernetes</li>
+<li>You <strong>don’t want K8s to create a new volume</strong>, but reuse an existing one</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Why It Matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CSI = Container Storage Interface</td>
+<td>Standard for dynamic volume provisioning across all K8s distros</td>
+</tr>
+<tr>
+<td>Longhorn/Ceph use CSI drivers</td>
+<td>To allow <code>PersistentVolumeClaim</code> to dynamically bind to real volumes</td>
+</tr>
+<tr>
+<td>Works with Velero</td>
+<td>For CSI snapshots (backup/restore PVCs)</td>
+</tr>
+</tbody>
+</table>
 <h4 id="3-access-longhorn-ui">3. <strong>Access Longhorn UI</strong><a class="headerlink" href="#3-access-longhorn-ui" title="Permanent link">&para;</a></h4>
 <p>Expose it via port-forward:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>longhorn-system<span class="w"> </span>port-forward<span class="w"> </span>svc/longhorn-frontend<span class="w"> </span><span class="m">8080</span>:80
@@ -424,6 +691,9 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 kubectl<span class="w"> </span>get<span class="w"> </span>volumes<span class="w"> </span>-n<span class="w"> </span>longhorn-system
 </code></pre></div>
 <p>Let me know if you want it added to your K3d YAML config or automated as a script.</p>
+<h2 id="how-to-list-existing-longhorn-volumes">How to List Existing Longhorn Volumes<a class="headerlink" href="#how-to-list-existing-longhorn-volumes" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>longhorn-system<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>&lt;longhorn-manager-pod&gt;<span class="w"> </span>--<span class="w"> </span>longhorn<span class="w"> </span>ls
+</code></pre></div>
 
 
 
