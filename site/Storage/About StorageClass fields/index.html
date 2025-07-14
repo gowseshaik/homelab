@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#how-it-works" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -398,6 +403,256 @@
 <td>- <strong>Set allowVolumeExpansion to <code>true</code></strong> if you expect to need more space later.</td>
 <td></td>
 <td></td>
+</tr>
+</tbody>
+</table>
+<p>✅ <strong>Yes</strong>, you can attach and use <strong>multiple StorageClasses</strong> in your K3s cluster.</p>
+<p>Kubernetes (and K3s) fully support <strong>multiple StorageClasses</strong>, and you can pick the right one per PVC using the <code>storageClassName</code> field.</p>
+<h2 id="how-it-works">🔧 How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<ul>
+<li>You can install multiple <strong>CSI drivers</strong> (like Longhorn, NFS, Ceph, etc.).</li>
+<li>Each driver typically registers its own <strong>StorageClass</strong>.</li>
+<li>You choose which StorageClass to use <strong>per PVC</strong>.</li>
+</ul>
+<h2 id="example-using-multiple-storageclasses">🧠 Example: Using Multiple StorageClasses<a class="headerlink" href="#example-using-multiple-storageclasses" title="Permanent link">&para;</a></h2>
+<h3 id="1-list-all-storageclasses">1. <strong>List all StorageClasses</strong><a class="headerlink" href="#1-list-all-storageclasses" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>storageclass
+</code></pre></div>
+<p>Example output:
+<div class="highlight"><pre><span></span><code>NAME             PROVISIONER             DEFAULT
+local-path       rancher.io/local-path   yes
+longhorn         driver.longhorn.io      no
+nfs-client       nfs.csi.k8s.io          no
+</code></pre></div></p>
+<h3 id="2-use-specific-storageclass-in-your-pvc">2. <strong>Use Specific StorageClass in Your PVC</strong><a class="headerlink" href="#2-use-specific-storageclass-in-your-pvc" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data-volume</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
+<span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">longhorn</span>
+</code></pre></div>
+<p>You can change <code>storageClassName</code> to <code>nfs-client</code>, <code>local-path</code>, etc.</p>
+<h2 id="how-to-add-a-new-storageclass">⚙️ How to Add a New StorageClass<a class="headerlink" href="#how-to-add-a-new-storageclass" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Backend</th>
+<th>Install Guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Longhorn</strong></td>
+<td><code>helm install</code> or official YAML</td>
+</tr>
+<tr>
+<td><strong>NFS</strong></td>
+<td>Install NFS CSI driver and create StorageClass</td>
+</tr>
+<tr>
+<td><strong>Ceph/Rook</strong></td>
+<td>Deploy Rook operator and Ceph cluster</td>
+</tr>
+<tr>
+<td><strong>HostPath (custom)</strong></td>
+<td>Manually create PVs + StorageClass</td>
+</tr>
+<tr>
+<td><strong>iSCSI, OpenEBS, etc.</strong></td>
+<td>Install respective CSI drivers</td>
+</tr>
+<tr>
+<td>## 📌 Optional: Change the Default StorageClass</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set Longhorn as default</span>
+kubectl<span class="w"> </span>patch<span class="w"> </span>storageclass<span class="w"> </span>longhorn<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;metadata&quot;: {&quot;annotations&quot;:{&quot;storageclass.kubernetes.io/is-default-class&quot;:&quot;true&quot;}}}&#39;</span>
+
+<span class="c1"># Remove default from local-path</span>
+kubectl<span class="w"> </span>patch<span class="w"> </span>storageclass<span class="w"> </span>local-path<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;metadata&quot;: {&quot;annotations&quot;:{&quot;storageclass.kubernetes.io/is-default-class&quot;:&quot;false&quot;}}}&#39;</span>
+</code></pre></div>
+<h2 id="best-use-case-examples">🧠 Best Use Case Examples<a class="headerlink" href="#best-use-case-examples" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>App</th>
+<th>Recommended StorageClass</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MySQL / PostgreSQL</td>
+<td><code>longhorn</code> (replication, snapshot)</td>
+</tr>
+<tr>
+<td>Static website</td>
+<td><code>nfs-client</code> (read-only shared)</td>
+</tr>
+<tr>
+<td>Temp processing</td>
+<td><code>local-path</code> (fast, ephemeral)</td>
+</tr>
+<tr>
+<td><strong>Mostly the same steps apply to Kubernetes (k8s)</strong> as well, but there are a few key differences between <strong>K3s and standard K8s</strong> you need to be aware of when working with <strong>StorageClasses</strong> and CSI drivers.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="whats-the-same-k3s-vs-k8s">✅ What’s the Same (K3s vs. K8s)<a class="headerlink" href="#whats-the-same-k3s-vs-k8s" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Same in K3s &amp; K8s?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multiple StorageClasses</td>
+<td>✅</td>
+<td>Use <code>storageClassName</code> in PVC</td>
+</tr>
+<tr>
+<td>Setting default class</td>
+<td>✅</td>
+<td>Use patch on annotation</td>
+</tr>
+<tr>
+<td>Installing CSI drivers (Longhorn, NFS, etc.)</td>
+<td>✅</td>
+<td>Helm/YAML-based, works in both</td>
+</tr>
+<tr>
+<td>Creating/Binding PVCs</td>
+<td>✅</td>
+<td>Same syntax in YAML</td>
+</tr>
+<tr>
+<td>Velero + CSI Snapshots</td>
+<td>✅</td>
+<td>Requires CSI plugin + VolumeSnapshotClass</td>
+</tr>
+<tr>
+<td>## ⚠️ What’s Different (K3s vs. Full K8s)</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>K3s</th>
+<th>K8s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Default StorageClass</strong></td>
+<td><code>local-path</code></td>
+<td>Often none (or GCE/AWS default)</td>
+</tr>
+<tr>
+<td><strong>Pre-installed CSI drivers</strong></td>
+<td><code>local-path-provisioner</code> only</td>
+<td>None (must install manually)</td>
+</tr>
+<tr>
+<td><strong>Kubelet root path</strong></td>
+<td><code>/var/lib/rancher/k3s</code></td>
+<td><code>/var/lib/kubelet</code></td>
+</tr>
+<tr>
+<td><strong>CRDs (CSI snapshot, etc.)</strong></td>
+<td>Might not be present</td>
+<td>Needs to be installed manually too</td>
+</tr>
+<tr>
+<td><strong>Component Management</strong></td>
+<td>Bundled into single binary</td>
+<td>Modular (API, controller, etc.)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example-differences">🧱 Example Differences<a class="headerlink" href="#example-differences" title="Permanent link">&para;</a></h2>
+<h3 id="in-k3s">📦 In K3s:<a class="headerlink" href="#in-k3s" title="Permanent link">&para;</a></h3>
+<ul>
+<li>You already have a <code>local-path</code> StorageClass</li>
+<li>You might already have embedded controller support</li>
+<li>Easier to deploy Longhorn with one Helm chart</li>
+</ul>
+<h3 id="in-k8s-vanilla">📦 In K8s (Vanilla):<a class="headerlink" href="#in-k8s-vanilla" title="Permanent link">&para;</a></h3>
+<ul>
+<li>You must install a default StorageClass yourself</li>
+<li>Some CRDs (like <code>volumesnapshotclass</code>) might be missing</li>
+<li>CSI drivers require RBAC, webhook, snapshot-controller setup</li>
+</ul>
+<h2 id="installation-nuances">🧰 Installation Nuances<a class="headerlink" href="#installation-nuances" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>CSI Driver</th>
+<th>K3s</th>
+<th>K8s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Longhorn</td>
+<td>✅ Helm with built-in defaults</td>
+<td>✅ Helm, but ensure <code>defaultStorageClass</code> is manually set</td>
+</tr>
+<tr>
+<td>NFS</td>
+<td>✅ Easy if NFS server reachable</td>
+<td>✅ Same</td>
+</tr>
+<tr>
+<td>Ceph/Rook</td>
+<td>✅ Works but heavy</td>
+<td>✅ Designed for full K8s clusters</td>
+</tr>
+<tr>
+<td>Velero</td>
+<td>✅ Works out of the box if CSI plugin used</td>
+<td>✅ Same, but might need manual snapshot-controller install</td>
+</tr>
+<tr>
+<td>## 🔚 Final Verdict</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Want same behavior on both?</td>
+<td>Use CSI-based StorageClass and test PVC binding</td>
+</tr>
+<tr>
+<td>Need advanced features (e.g., replication, off-node backup)?</td>
+<td>Use Longhorn or Ceph with CSI</td>
+</tr>
+<tr>
+<td>Working across clusters?</td>
+<td>Use Velero with CSI snapshot for cross-cluster portability</td>
 </tr>
 </tbody>
 </table>

@@ -248,6 +248,7 @@
 - [Git file attributes](git/Git file attributes.md)
 - [How to Set Up Git Aliases](git/How to Set Up Git Aliases.md)
 - [View your configured for Git](git/View your configured for Git.md)
+- [git commits - hacks](git/git commits - hacks.md)
 - [git errors](git/git errors.md)
 
 ## Images

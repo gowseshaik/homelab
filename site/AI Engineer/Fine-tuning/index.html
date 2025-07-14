@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Longhorn/Longhorn%20in%20Kubernetes/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/AI%20Engineer/Fine-tuning/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Longhorn in Kubernetes - Gouse Shaik</title>
+        <title>Fine tuning - Gouse Shaik</title>
       
     
     
@@ -69,11 +69,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#longhorn-features-overview" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -105,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Longhorn in Kubernetes
+              Fine tuning
             
           </span>
         </div>
@@ -354,7 +349,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Longhorn/Longhorn in Kubernetes.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/AI Engineer/Fine-tuning.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,372 +357,9 @@
   
 
 
-  <h1>Longhorn in Kubernetes</h1>
+  <h1>Fine tuning</h1>
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-22</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<p>Longhorn is a <strong>Kubernetes-native, lightweight block storage solution</strong> that runs inside your K8s/K3s cluster and provides <strong>high-availability persistent volumes (PVs)</strong> using <strong>replication, snapshots, and backups</strong>.</p>
-<h2 id="longhorn-features-overview">🔑 Longhorn Features Overview<a class="headerlink" href="#longhorn-features-overview" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Block Storage</strong></td>
-<td>Provides RWO PVCs (ReadWriteOnce) using local disks of Kubernetes nodes</td>
-</tr>
-<tr>
-<td><strong>High Availability</strong></td>
-<td>Replicates volumes across multiple nodes (1, 2, 3 replicas)</td>
-</tr>
-<tr>
-<td><strong>Snapshots</strong></td>
-<td>Instant, crash-consistent, internal snapshots</td>
-</tr>
-<tr>
-<td><strong>Backups</strong></td>
-<td>Backups to S3/MinIO; usable across clusters</td>
-</tr>
-<tr>
-<td><strong>Incremental Backup</strong></td>
-<td>Smart, delta-based backups to reduce data transfer</td>
-</tr>
-<tr>
-<td><strong>CSI Driver</strong></td>
-<td>Fully CSI-compliant — integrates with PVCs, Velero, VolumeSnapshots</td>
-</tr>
-<tr>
-<td><strong>Web UI</strong></td>
-<td>Intuitive UI to manage volumes, nodes, backups, replicas, snapshots</td>
-</tr>
-<tr>
-<td><strong>Live Volume Expansion</strong></td>
-<td>PVCs can be resized without downtime</td>
-</tr>
-<tr>
-<td><strong>Node/Volume Health Monitoring</strong></td>
-<td>Auto-recovery, replica rebalancing, volume rebuilding on failure</td>
-</tr>
-<tr>
-<td><strong>Cross-Cluster Restore</strong></td>
-<td>You can backup from one cluster and restore into another</td>
-</tr>
-<tr>
-<td><strong>Disaster Recovery (DR) Volumes</strong></td>
-<td>Automatically syncs DR volumes from backups to a secondary cluster</td>
-</tr>
-<tr>
-<td><strong>Soft Anti-Affinity</strong></td>
-<td>Replicas are placed across nodes to tolerate failures</td>
-</tr>
-<tr>
-<td><strong>Data Locality</strong></td>
-<td>Optimizes read IO to prefer local replicas for performance</td>
-</tr>
-<tr>
-<td><strong>Recurring Jobs</strong></td>
-<td>Automated snapshot and backup schedules</td>
-</tr>
-<tr>
-<td><strong>REST API</strong></td>
-<td>Full management access through HTTP API</td>
-</tr>
-<tr>
-<td><strong>Metrics + Prometheus Exporter</strong></td>
-<td>Exposes health, usage, and volume stats for observability</td>
-</tr>
-<tr>
-<td><strong>Security (RBAC, namespace isolation)</strong></td>
-<td>All operations secured with Kubernetes RBAC and isolation</td>
-</tr>
-<tr>
-<td><strong>Support for ARM64 &amp; x86_64</strong></td>
-<td>Works on Raspberry Pi, edge, and cloud-native infra</td>
-</tr>
-<tr>
-<td>## 📦 Storage Capabilities</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Support</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>PVC Expansion</strong></td>
-<td>✅</td>
-</tr>
-<tr>
-<td><strong>ReadWriteOnce</strong></td>
-<td>✅</td>
-</tr>
-<tr>
-<td><strong>ReadWriteMany (RWX)</strong></td>
-<td>❌ (use NFS or shared PVC)</td>
-</tr>
-<tr>
-<td><strong>Snapshot to Volume Restore</strong></td>
-<td>✅</td>
-</tr>
-<tr>
-<td><strong>Clone Volume</strong></td>
-<td>✅</td>
-</tr>
-<tr>
-<td><strong>Backup/Restore to S3</strong></td>
-<td>✅</td>
-</tr>
-<tr>
-<td><strong>Restic Integration (Velero)</strong></td>
-<td>✅</td>
-</tr>
-<tr>
-<td>## 🔧 System Management Features</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Area</th>
-<th>Features</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Volume Mgmt</strong></td>
-<td>Create, delete, expand, attach/detach</td>
-</tr>
-<tr>
-<td><strong>Replica Mgmt</strong></td>
-<td>Self-healing, auto-rebuild, anti-affinity</td>
-</tr>
-<tr>
-<td><strong>Node Mgmt</strong></td>
-<td>Drain nodes, enable/disable scheduling</td>
-</tr>
-<tr>
-<td><strong>Backup Mgmt</strong></td>
-<td>Manual/automatic backup to S3</td>
-</tr>
-<tr>
-<td><strong>Scheduling</strong></td>
-<td>Soft anti-affinity, disk tagging, node zoning</td>
-</tr>
-<tr>
-<td><strong>Monitoring</strong></td>
-<td>Alerts, metrics, Prometheus, health checks</td>
-</tr>
-<tr>
-<td>## 🛡️ HA &amp; Failure Recovery</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Scenario</th>
-<th>Longhorn Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Node failure</td>
-<td>Volume auto-detached &amp; reattached to healthy node</td>
-</tr>
-<tr>
-<td>Replica failure</td>
-<td>Auto rebuild using healthy replicas</td>
-</tr>
-<tr>
-<td>Pod rescheduling</td>
-<td>PVCs follow pods automatically</td>
-</tr>
-<tr>
-<td>Volume corruption</td>
-<td>Restore from snapshot/backup</td>
-</tr>
-<tr>
-<td>## 🎛️ Longhorn Architecture (Internal Components)</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Longhorn Manager</strong></td>
-<td>Control plane to manage volumes, replicas, scheduling</td>
-</tr>
-<tr>
-<td><strong>Instance Manager</strong></td>
-<td>Runs actual volume processes (controller/replica)</td>
-</tr>
-<tr>
-<td><strong>Engine</strong></td>
-<td>Per-volume controller that talks to replicas</td>
-</tr>
-<tr>
-<td><strong>Replica</strong></td>
-<td>Lightweight process storing blocks on disk</td>
-</tr>
-<tr>
-<td><strong>UI Frontend</strong></td>
-<td>Web dashboard</td>
-</tr>
-<tr>
-<td><strong>CSI Plugin</strong></td>
-<td>Handles PVC operations</td>
-</tr>
-</tbody>
-</table>
-<h2 id="use-cases">🧠 Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Use Case</th>
-<th>Longhorn Fit?</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>HA persistent volumes</td>
-<td>✅</td>
-<td>Use 3 replicas across nodes</td>
-</tr>
-<tr>
-<td>Stateful apps (MySQL, Mongo)</td>
-<td>✅</td>
-<td>Use crash-consistent snapshots</td>
-</tr>
-<tr>
-<td>Dev/test backup pipelines</td>
-<td>✅</td>
-<td>Automate recurring backup jobs</td>
-</tr>
-<tr>
-<td>Cross-cluster migration</td>
-<td>✅</td>
-<td>Backup on cluster A, restore on cluster B</td>
-</tr>
-<tr>
-<td>Shared volume across pods (RWX)</td>
-<td>❌</td>
-<td>Use NFS or RWX wrapper (experimental only)</td>
-</tr>
-</tbody>
-</table>
-<p>When you <strong>setup Longhorn in your cluster</strong>, it uses the storage available on the cluster nodes (e.g., the mounted <code>/mnt/longhorn</code> directory in Kind) as its <strong>underlying storage pool</strong>.</p>
-<ul>
-<li>Longhorn manages that storage to create <strong>persistent volumes</strong> (block devices).</li>
-<li>It dynamically allocates space from that pool when you create PVCs.</li>
-<li>So, total available storage = sum of the storage Longhorn can access on all nodes (like <code>/mnt/longhorn</code>).</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Action</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Mount <code>/mnt/longhorn</code> on nodes</td>
-<td>Provides raw storage space for Longhorn</td>
-</tr>
-<tr>
-<td>Deploy Longhorn</td>
-<td>Manages and exposes block storage volumes</td>
-</tr>
-<tr>
-<td>Create PVC with Longhorn SC</td>
-<td>Allocates storage from Longhorn pool</td>
-</tr>
-<tr>
-<td>#### <strong>1. What is Longhorn?</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>Longhorn is a <strong>cloud-native, distributed storage system</strong> for Kubernetes that provides <strong>persistent block storage</strong> using dynamically provisioned volumes. It is lightweight, easy to deploy, and highly resilient, making it ideal for stateful applications in Kubernetes.</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Real-Time Scenario:</strong><br />
-A company running a <strong>MySQL database</strong> on Kubernetes needs persistent storage that survives pod restarts. Longhorn provides <strong>replicated volumes</strong>, ensuring data remains available even if a node fails.  </p>
-<h4 id="2-why-use-longhorn-in-kubernetes"><strong>2. Why Use Longhorn in Kubernetes?</strong><a class="headerlink" href="#2-why-use-longhorn-in-kubernetes" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>Decentralized Storage:</strong> No single point of failure.  </li>
-<li><strong>Snapshot &amp; Backup:</strong> Supports point-in-time snapshots and backups to S3-compatible storage.  </li>
-<li><strong>Thin Provisioning:</strong> Efficient disk space usage.  </li>
-<li><strong>Cross-Cluster Replication:</strong> Enables disaster recovery.  </li>
-</ul>
-<p><strong>Real-Time Scenario:</strong><br />
-An e-commerce platform running <strong>MongoDB</strong> needs automated backups. Longhorn takes <strong>snapshots every hour</strong> and backs them up to AWS S3, ensuring data recovery in case of corruption.  </p>
-<h4 id="3-how-does-longhorn-work"><strong>3. How Does Longhorn Work?</strong><a class="headerlink" href="#3-how-does-longhorn-work" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>Volume Replication:</strong> Each volume is replicated across multiple nodes (default: 3 replicas).  </li>
-<li><strong>Scheduling:</strong> Longhorn dynamically schedules replicas based on node availability.  </li>
-<li><strong>Recovery:</strong> If a node fails, Longhorn rebuilds replicas automatically.  </li>
-</ul>
-<p><strong>Real-Time Scenario:</strong><br />
-A <strong>Node failure</strong> occurs in a Kubernetes cluster running a <strong>PostgreSQL</strong> database. Longhorn detects the failure and <strong>rebuilds the lost replica</strong> on another healthy node, ensuring high availability.  </p>
-<h4 id="4-where-is-longhorn-used"><strong>4. Where is Longhorn Used?</strong><a class="headerlink" href="#4-where-is-longhorn-used" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>On-Premises Kubernetes Clusters</strong> (e.g., Rancher, K3s)  </li>
-<li><strong>Hybrid &amp; Multi-Cloud Deployments</strong> (AWS EKS, GCP GKE, Azure AKS)  </li>
-<li><strong>Edge Computing &amp; IoT</strong> (Lightweight storage for distributed apps)  </li>
-</ul>
-<p><strong>Real-Time Scenario:</strong><br />
-A <strong>financial services firm</strong> uses Longhorn in <strong>multi-cloud Kubernetes (EKS + on-prem)</strong> to ensure consistent storage for <strong>Fraud Detection Microservices</strong>, avoiding vendor lock-in.  </p>
-<h3 id="key-benefits-challenges"><strong>Key Benefits &amp; Challenges</strong><a class="headerlink" href="#key-benefits-challenges" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th><strong>Benefits</strong></th>
-<th><strong>Challenges</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>✅ Easy to deploy &amp; manage</td>
-<td>❌ Not suitable for high-throughput workloads (e.g., big data)</td>
-</tr>
-<tr>
-<td>✅ Self-healing &amp; fault-tolerant</td>
-<td>❌ Requires proper resource planning (CPU/memory for replicas)</td>
-</tr>
-<tr>
-<td>✅ Works across multiple clouds</td>
-<td>❌ Backup performance depends on network bandwidth</td>
-</tr>
-<tr>
-<td>### <strong>Conclusion</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>Longhorn is an <strong>ideal choice for Kubernetes users</strong> needing <strong>reliable, distributed block storage</strong> with <strong>easy backup &amp; recovery</strong>. It shines in <strong>stateful applications (databases, message queues)</strong> but may not be optimal for high-performance storage needs.</td>
-<td></td>
-</tr>
-</tbody>
-</table>
+
 
 
 
