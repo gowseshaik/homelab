@@ -1,3 +1,28 @@
+| Option                  | Recommendation                                         |
+| ----------------------- | ------------------------------------------------------ |
+| `podman build --squash` | ✅ Native support                                       |
+| `docker build --squash` | ⚠️ Supported, but only with experimental + no BuildKit |
+| Multi-stage build       | ✅ Best practice for both Docker and Podman             |
+
+| Feature                       | `docker commit`                     | `podman commit`                   |
+| ----------------------------- | ----------------------------------- | --------------------------------- |
+| ✅ Create image from container | ✅ Yes                               | ✅ Yes                             |
+| 🧱 Squash layers              | ❌ No (not supported)                | ✅ `--squash` supported            |
+| 🔐 Rootless support           | ❌ No (needs root unless configured) | ✅ Fully rootless                  |
+| 🧾 Add metadata               | ✅ `--author`, `--message`           | ✅ Same                            |
+| 🧪 OCI-compliant              | ✅ (with extra steps)                | ✅ Native                          |
+| 🧰 Set image format           | ❌                                   | ✅ `--format=oci/docker`           |
+| 🚀 Systemd-aware              | ❌                                   | ✅ Better integration with systemd |
+| 🔍 Default history tracking   | ✅ via container diff                | ✅ via container diff              |
+| 🧼 Clean image from temp      | ❌ manual                            | ✅ better layered FS support       |
+
+| Scenario               | Use `docker commit` | Use `podman commit` |
+| ---------------------- | ------------------- | ------------------- |
+| One-time image capture | ✅ Yes               | ✅ Yes               |
+| Reproducible CI builds | ❌ No                | ❌ No                |
+| Secure release image   | ❌ No                | ✅ With `--squash`   |
+| Rootless environments  | ❌ Limited           | ✅ Best option       |
+
 ### 🔧 **Dockerfile** (very basic):
 
 ```Dockerfile
