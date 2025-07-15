@@ -12,7 +12,7 @@ RUN echo "hello world" > /hello.txt
 podman build --squash -t gowse/alpine-curl:v1 .
 ```
 
-### 🧱 **Explanation (First-Principles)**:
+### 🧱 **Explanation **:
 
 |Part|Meaning|
 |---|---|
@@ -78,7 +78,7 @@ You hit the **OverlayFS (OCI) limit**:
 |❌ Longer build times|Because everything builds from scratch|
 |❌ Debuggability|Can’t `podman history` to inspect past layers|
 |❌ Squash not supported in OpenShift S2I by default|You may need custom build scripts or `Containerfile` use|
-## 🔄 Long-Term Strategy: Critical Thinking
+## 🔄 Long-Term Strategy
 
 ### 🔧 Option 1: Use `--squash` for production deploys only
 
