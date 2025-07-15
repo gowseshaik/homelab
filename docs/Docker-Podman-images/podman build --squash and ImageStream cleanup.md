@@ -20,6 +20,7 @@ podman build --squash -t gowse/alpine-curl:v1 .
 |`--squash`|Combines all image layers into **one layer** (final image is smaller & cleaner)|
 |`-t gowse/alpine-curl:v1`|Tags the image with a name and version|
 |`.`|Build context is current directory (should contain Dockerfile)|
+
 ### ✅ Result:
 
 - Final image has a **single layer** (no intermediate `RUN` layers).

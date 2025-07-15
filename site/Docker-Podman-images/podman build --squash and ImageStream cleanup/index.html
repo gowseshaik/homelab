@@ -1,0 +1,870 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Docker-Podman-images/podman%20build%20--squash%20and%20ImageStream%20cleanup/">
+      
+      
+      
+      
+      <link rel="icon" href="../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>podman build squash and ImageStream cleanup - Gouse Shaik</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick+Hand:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Patrick Hand";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#dockerfile-very-basic" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Gouse Shaik" class="md-header__button md-logo" aria-label="Gouse Shaik" data-md-component="logo">
+      
+  <img src="../../images/logo-design-4.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gouse Shaik
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              podman build   squash and ImageStream cleanup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="cyan" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/gowseshaik/homelab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Homelab
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Gouse Shaik" class="md-nav__button md-logo" aria-label="Gouse Shaik" data-md-component="logo">
+      
+  <img src="../../images/logo-design-4.png" alt="logo">
+
+    </a>
+    Gouse Shaik
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/gowseshaik/homelab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Homelab
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Docker-Podman-images/podman build --squash and ImageStream cleanup.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+  <h1>podman build   squash and ImageStream cleanup</h1>
+
+<h3 id="dockerfile-very-basic">🔧 <strong>Dockerfile</strong> (very basic):<a class="headerlink" href="#dockerfile-very-basic" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c"># file: Dockerfile</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">alpine:latest</span>
+<span class="k">RUN</span><span class="w"> </span>apk<span class="w"> </span>add<span class="w"> </span>--no-cache<span class="w"> </span>curl
+<span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;hello world&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/hello.txt
+</code></pre></div>
+<h3 id="build-command">🛠️ <strong>Build Command</strong>:<a class="headerlink" href="#build-command" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>podman<span class="w"> </span>build<span class="w"> </span>--squash<span class="w"> </span>-t<span class="w"> </span>gowse/alpine-curl:v1<span class="w"> </span>.
+</code></pre></div>
+<h3 id="explanation-first-principles">🧱 <strong>Explanation (First-Principles)</strong>:<a class="headerlink" href="#explanation-first-principles" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>podman build</code></td>
+<td>Create an image from a Dockerfile</td>
+</tr>
+<tr>
+<td><code>--squash</code></td>
+<td>Combines all image layers into <strong>one layer</strong> (final image is smaller &amp; cleaner)</td>
+</tr>
+<tr>
+<td><code>-t gowse/alpine-curl:v1</code></td>
+<td>Tags the image with a name and version</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>Build context is current directory (should contain Dockerfile)</td>
+</tr>
+<tr>
+<td>### ✅ Result:</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Final image has a <strong>single layer</strong> (no intermediate <code>RUN</code> layers).</li>
+<li>Smaller and cleaner image, better for production.</li>
+</ul>
+<p>You're hitting a <strong>real-world architectural pain point</strong> that many large organizations face when dealing with <strong>incremental container builds + integration-heavy runtimes</strong> like <strong>IBM App Connect Enterprise (ACE)</strong>.</p>
+<h2 id="problem-recap">🎯 Problem Recap:<a class="headerlink" href="#problem-recap" title="Permanent link">&para;</a></h2>
+<ul>
+<li>You're continuously building and deploying <strong>IBM App Connect containers</strong>.</li>
+<li>Each <strong>Integration Server (IS)</strong> image has many <strong>.bar workflows</strong>.</li>
+<li>Over time, you <strong>incrementally build</strong> on top of previous Image Streams (possibly using S2I or <code>COPY</code>).</li>
+<li>Eventually, you're hitting this:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>error: max depth exceeded / too many layers
+</code></pre></div>
+<h2 id="deep-technical-cause-layer-limit">🧠 Deep Technical Cause (Layer Limit)<a class="headerlink" href="#deep-technical-cause-layer-limit" title="Permanent link">&para;</a></h2>
+<p>Each build adds <strong>a new image layer</strong>, especially if:</p>
+<ul>
+<li>You do <strong>not squash</strong></li>
+<li>You <strong>rebuild on top</strong> of prior image streams (<code>FROM imageStreamName</code>)</li>
+<li>You add <code>.bar</code> files via separate <code>COPY</code>/<code>RUN</code> instructions.</li>
+</ul>
+<p>You hit the <strong>OverlayFS (OCI) limit</strong>:</p>
+<ul>
+<li>Maximum = <strong>125 layers</strong> per image on <code>overlay2</code> (used by Docker, Podman, OpenShift)</li>
+<li>Many base images (e.g., ACE + Ubuntu) already have 10–30 layers</li>
+<li>Every new <code>COPY</code>, <code>RUN</code>, <code>.bar</code> deployment → new layer</li>
+</ul>
+<p>⚠️ App Connect doesn’t do "one-bar-only" builds. So these accumulate fast.</p>
+<h2 id="real-symptoms">🔍 Real Symptoms:<a class="headerlink" href="#real-symptoms" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Root Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Max layer/depth exceeded"</td>
+<td>OCI spec violation due to too many <code>diff_ids</code> (layers)</td>
+</tr>
+<tr>
+<td>App runs slow or crashes</td>
+<td>Layer lookups degrade performance</td>
+</tr>
+<tr>
+<td>Image push fails in CI/CD</td>
+<td>Registry often rejects too deep manifest trees</td>
+</tr>
+<tr>
+<td>## ✅ <code>--squash</code>: Benefits for Your Case</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Benefit</th>
+<th>Why It Matters for App Connect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>💥 Removes all intermediate <code>.bar</code> layer diffs</td>
+<td>You don't retain N history of bar files in FS layers</td>
+</tr>
+<tr>
+<td>⬇️ Greatly reduces image layer count</td>
+<td>You can continuously rebuild without hitting max layer</td>
+</tr>
+<tr>
+<td>🔐 Hides sensitive integration flow stages (if any)</td>
+<td>Good for regulatory reasons</td>
+</tr>
+<tr>
+<td>💨 Smaller images = faster deploys across DEV/QA/PROD</td>
+<td>Especially with remote registries</td>
+</tr>
+<tr>
+<td>🧹 Prevents accumulation of dead bar versions</td>
+<td>Since each squash is clean slate</td>
+</tr>
+<tr>
+<td>## ❌ Potential Downsides</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌ Caching loss</td>
+<td>Squashed images can't be layered on top of easily.</td>
+</tr>
+<tr>
+<td>❌ Longer build times</td>
+<td>Because everything builds from scratch</td>
+</tr>
+<tr>
+<td>❌ Debuggability</td>
+<td>Can’t <code>podman history</code> to inspect past layers</td>
+</tr>
+<tr>
+<td>❌ Squash not supported in OpenShift S2I by default</td>
+<td>You may need custom build scripts or <code>Containerfile</code> use</td>
+</tr>
+<tr>
+<td>## 🔄 Long-Term Strategy: Critical Thinking</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="option-1-use-squash-for-production-deploys-only">🔧 Option 1: Use <code>--squash</code> for production deploys only<a class="headerlink" href="#option-1-use-squash-for-production-deploys-only" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>DEV:</strong> Use normal layered builds for fast iteration</li>
+<li><strong>STAGE/PROD:</strong> Use squashed images to avoid layer bloat</li>
+</ul>
+<h3 id="option-2-split-workflows-by-domains">🔧 Option 2: Split Workflows by Domains<a class="headerlink" href="#option-2-split-workflows-by-domains" title="Permanent link">&para;</a></h3>
+<p>Instead of dumping 50 <code>.bar</code> files into one IS image:</p>
+<ul>
+<li>Break into <strong>domain-specific Integration Servers</strong><ul>
+<li><code>payments.is</code>, <code>orders.is</code>, <code>crm.is</code></li>
+</ul>
+</li>
+<li>Each one gets 5–10 bars max</li>
+<li>Now your <code>Dockerfile</code> looks like:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">ibm-appconnect:latest</span>
+<span class="k">COPY</span><span class="w"> </span>payment-flow1.bar<span class="w"> </span>/home/ace/ace-server/bars/
+<span class="k">COPY</span><span class="w"> </span>payment-flow2.bar<span class="w"> </span>/home/ace/ace-server/bars/
+</code></pre></div>
+<ul>
+<li>Less <code>.bar</code> layers = less layer growth over time</li>
+</ul>
+<h3 id="option-3-flatten-image-with-custom-script">🔧 Option 3: Flatten image with custom script<a class="headerlink" href="#option-3-flatten-image-with-custom-script" title="Permanent link">&para;</a></h3>
+<p>Use a <strong>build stage</strong> that unpacks <code>.bar</code> files, copies them directly, then squashes.</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">ibm-appconnect</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="s">builder</span>
+<span class="k">COPY</span><span class="w"> </span>*.bar<span class="w"> </span>/tmp/bars/
+<span class="k">RUN</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span>/tmp/bars/*.bar<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>unpack-and-verify.sh<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">scratch</span>
+<span class="k">COPY</span><span class="w"> </span>--from<span class="o">=</span>builder<span class="w"> </span>/home/ace<span class="w"> </span>/home/ace
+</code></pre></div>
+Then build with:
+<div class="highlight"><pre><span></span><code>podman<span class="w"> </span>build<span class="w"> </span>--squash<span class="w"> </span>-t<span class="w"> </span>appconnect-integrations:v1<span class="w"> </span>.
+</code></pre></div></p>
+<h2 id="bonus-audit-current-image-streams">📊 Bonus: Audit Current Image Streams<a class="headerlink" href="#bonus-audit-current-image-streams" title="Permanent link">&para;</a></h2>
+<p><div class="highlight"><pre><span></span><code>oc<span class="w"> </span>get<span class="w"> </span>istag<span class="w"> </span>-n<span class="w"> </span>your-namespace
+<span class="k">for</span><span class="w"> </span>tag<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>oc<span class="w"> </span>get<span class="w"> </span>istag<span class="w"> </span>-n<span class="w"> </span>your-namespace<span class="w"> </span>-o<span class="w"> </span>name<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$tag</span><span class="s2">: </span><span class="k">$(</span>oc<span class="w"> </span>get<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$tag</span><span class="s2">&quot;</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.image.metadata.name}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span><span class="s2"> layers&quot;</span>
+<span class="k">done</span>
+</code></pre></div>
+Helps track which image stream has grown unacceptably large.</p>
+<h2 id="final-recommendation">🎯 Final Recommendation<a class="headerlink" href="#final-recommendation" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Environment</th>
+<th>Use <code>--squash</code>?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEV</td>
+<td>❌</td>
+<td>Keep fast caching for rebuilds</td>
+</tr>
+<tr>
+<td>QA / UAT</td>
+<td>✅</td>
+<td>Use squash to test realistic image</td>
+</tr>
+<tr>
+<td>PROD</td>
+<td>✅</td>
+<td>Always squash to avoid image growth over time</td>
+</tr>
+</tbody>
+</table>
+<h4 id="periodically-clean-up-openshift-imagestreams-to-avoid-bloating-and-hitting-the-layer-limit">periodically clean up OpenShift ImageStreams to avoid bloating and hitting the layer limit:<a class="headerlink" href="#periodically-clean-up-openshift-imagestreams-to-avoid-bloating-and-hitting-the-layer-limit" title="Permanent link">&para;</a></h4>
+<h2 id="goal">✅ Goal:<a class="headerlink" href="#goal" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Clean up <strong>old image tags</strong> (ImageStreamTags)</li>
+<li>Prune <strong>unused image layers</strong> in registry</li>
+<li>Avoid <strong>OCI layer depth limit</strong></li>
+</ul>
+<h2 id="1-clean-up-old-tags-in-imagestream-appconnect-is">🧼 1. Clean Up Old Tags in ImageStream (AppConnect IS)<a class="headerlink" href="#1-clean-up-old-tags-in-imagestream-appconnect-is" title="Permanent link">&para;</a></h2>
+<h3 id="script-to-keep-only-last-n-tags">🔁 Script to Keep Only Last N Tags:<a class="headerlink" href="#script-to-keep-only-last-n-tags" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1"># keep last 5 tags in image stream</span>
+<span class="nv">N</span><span class="o">=</span><span class="m">5</span>
+<span class="nv">IMAGESTREAM</span><span class="o">=</span>my-is-name
+<span class="nv">NAMESPACE</span><span class="o">=</span>my-project
+
+<span class="nv">TAGS</span><span class="o">=</span><span class="k">$(</span>oc<span class="w"> </span>get<span class="w"> </span>istag<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>--sort-by<span class="o">=</span>.metadata.creationTimestamp<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{range .items[*]}{.metadata.name}{&#39;\n&#39;}{end}&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;^</span><span class="nv">$IMAGESTREAM</span><span class="s2">:&quot;</span><span class="k">)</span>
+
+<span class="nv">COUNT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$TAGS</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">((</span><span class="w"> </span>COUNT<span class="w"> </span>&gt;<span class="w"> </span>N<span class="w"> </span><span class="o">))</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nv">DELETE_TAGS</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$TAGS</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="k">$((</span><span class="nv">COUNT</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">N</span><span class="k">)))</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span>tag<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$DELETE_TAGS</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Deleting tag: </span><span class="nv">$tag</span><span class="s2">&quot;</span>
+<span class="w">    </span>oc<span class="w"> </span>delete<span class="w"> </span>istag<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$tag</span><span class="s2">&quot;</span>
+<span class="w">  </span><span class="k">done</span>
+<span class="k">fi</span>
+</code></pre></div>
+<blockquote>
+<p>💡 Run this via <strong>cronjob or Jenkins</strong>.</p>
+</blockquote>
+<h2 id="2-prune-unused-images-from-internal-registry-admin-only">🚮 2. Prune Unused Images from Internal Registry (Admin Only)<a class="headerlink" href="#2-prune-unused-images-from-internal-registry-admin-only" title="Permanent link">&para;</a></h2>
+<p>Run as cluster admin:
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>adm<span class="w"> </span>prune<span class="w"> </span>images<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--keep-tag-revisions<span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--keep-younger-than<span class="o">=</span>72h<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--confirm
+</code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--keep-tag-revisions=3</code></td>
+<td>Keep latest 3 image revisions per tag</td>
+</tr>
+<tr>
+<td><code>--keep-younger-than=72h</code></td>
+<td>Keep recent images (last 72 hours)</td>
+</tr>
+<tr>
+<td><code>--confirm</code></td>
+<td>Actually delete (omit for dry-run)</td>
+</tr>
+<tr>
+<td>&gt; ⚠️ Only affects <strong>internal OpenShift registry</strong>.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-monitor-image-layer-depth-per-imagestream">🔍 3. Monitor Image Layer Depth per ImageStream<a class="headerlink" href="#3-monitor-image-layer-depth-per-imagestream" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>get<span class="w"> </span>istag<span class="w"> </span>-n<span class="w"> </span>your-namespace<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.items[] | {name: .metadata.name, layers: .image.dockerImageLayers | length}&#39;</span>
+</code></pre></div>
+<h2 id="4-add-cicd-rule-to-prevent-deploying-images-with-too-many-layers">🛡️ 4. Add CI/CD Rule to Prevent Deploying Images with Too Many Layers<a class="headerlink" href="#4-add-cicd-rule-to-prevent-deploying-images-with-too-many-layers" title="Permanent link">&para;</a></h2>
+<p>In your Jenkins/CI:
+<div class="highlight"><pre><span></span><code><span class="nv">LAYER_COUNT</span><span class="o">=</span><span class="k">$(</span>podman<span class="w"> </span><span class="nb">history</span><span class="w"> </span>your-image<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">((</span><span class="w"> </span>LAYER_COUNT<span class="w"> </span>&gt;<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="o">))</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;ERROR: Image has too many layers (</span><span class="nv">$LAYER_COUNT</span><span class="s2">). Deployment blocked.&quot;</span>
+<span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+</code></pre></div></p>
+<h2 id="5-optionally-remove-imagestream-manually">🗑️ 5. Optionally Remove ImageStream Manually<a class="headerlink" href="#5-optionally-remove-imagestream-manually" title="Permanent link">&para;</a></h2>
+<p>If certain ImageStreams are outdated:
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>delete<span class="w"> </span>is<span class="w"> </span>appconnect-is-old<span class="w"> </span>-n<span class="w"> </span>your-namespace
+</code></pre></div></p>
+<h2 id="tips">💡 Tips<a class="headerlink" href="#tips" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Tip</th>
+<th>Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Use <code>--squash</code> in QA/PROD images</td>
+<td>Prevents future bloat</td>
+</tr>
+<tr>
+<td>Automate <code>oc delete istag</code> by age/tag count</td>
+<td>Keeps env clean</td>
+</tr>
+<tr>
+<td>Use separate ImageStreams for DEV and PROD</td>
+<td>Avoids dirty reuse</td>
+</tr>
+<tr>
+<td>Run <code>oc adm prune images</code> weekly</td>
+<td>Frees storage, resets layer chains</td>
+</tr>
+<tr>
+<td>#### production-ready OpenShift CronJob YAML to periodically <strong>clean up old ImageStreamTags</strong>, keeping only the latest <strong>5 tags</strong> in a given ImageStream.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="openshift-cronjob-cleanup-old-tags">✅ OpenShift CronJob: Cleanup Old Tags<a class="headerlink" href="#openshift-cronjob-cleanup-old-tags" title="Permanent link">&para;</a></h2>
+<h3 id="imagestream-cleanup-cronjobyaml">📁 <code>imagestream-cleanup-cronjob.yaml</code><a class="headerlink" href="#imagestream-cleanup-cronjobyaml" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">batch/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CronJob</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">imagestream-cleanup</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your-project</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span><span class="w">  </span><span class="c1"># Every day at 2 AM</span>
+<span class="w">  </span><span class="nt">jobTemplate</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cleanup</span>
+<span class="w">            </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.redhat.io/openshift4/ose-cli</span><span class="w">  </span><span class="c1"># OpenShift CLI image</span>
+<span class="w">            </span><span class="nt">command</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/bin/bash</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-c</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">              </span><span class="no">N=5</span>
+<span class="w">              </span><span class="no">IMAGESTREAM=&quot;your-image-stream-name&quot;</span>
+<span class="w">              </span><span class="no">NAMESPACE=&quot;your-project&quot;</span>
+
+<span class="w">              </span><span class="no">TAGS=$(oc get istag -n $NAMESPACE --sort-by=.metadata.creationTimestamp \</span>
+<span class="w">                </span><span class="no">-o jsonpath=&quot;{range .items[*]}{.metadata.name}{&#39;\n&#39;}{end}&quot; | grep &quot;^$IMAGESTREAM:&quot;)</span>
+
+<span class="w">              </span><span class="no">COUNT=$(echo &quot;$TAGS&quot; | wc -l)</span>
+
+<span class="w">              </span><span class="no">if (( COUNT &gt; N )); then</span>
+<span class="w">                </span><span class="no">DELETE_TAGS=$(echo &quot;$TAGS&quot; | head -n $((COUNT - N)))</span>
+<span class="w">                </span><span class="no">for tag in $DELETE_TAGS; do</span>
+<span class="w">                  </span><span class="no">echo &quot;Deleting $tag&quot;</span>
+<span class="w">                  </span><span class="no">oc delete istag -n $NAMESPACE &quot;$tag&quot;</span>
+<span class="w">                </span><span class="no">done</span>
+<span class="w">              </span><span class="no">else</span>
+<span class="w">                </span><span class="no">echo &quot;Nothing to delete. Total tags: $COUNT&quot;</span>
+<span class="w">              </span><span class="no">fi</span>
+<span class="w">          </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OnFailure</span>
+<span class="w">          </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">imagestream-cleanup-sa</span>
+</code></pre></div>
+<h2 id="service-account-permissions">🔐 Service Account &amp; Permissions<a class="headerlink" href="#service-account-permissions" title="Permanent link">&para;</a></h2>
+<h3 id="imagestream-cleanup-roleyaml">📁 <code>imagestream-cleanup-role.yaml</code><a class="headerlink" href="#imagestream-cleanup-roleyaml" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">imagestream-cleanup-sa</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your-project</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Role</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">imagestream-cleanup-role</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your-project</span>
+<span class="nt">rules</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">apiGroups</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;image.openshift.io&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;imagestreamtags&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">verbs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;get&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;list&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;delete&quot;</span><span class="p p-Indicator">]</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RoleBinding</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">imagestream-cleanup-binding</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your-project</span>
+<span class="nt">subjects</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">imagestream-cleanup-sa</span>
+<span class="nt">roleRef</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Role</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">imagestream-cleanup-role</span>
+<span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
+</code></pre></div>
+<h2 id="deploy-in-openshift">🚀 Deploy in OpenShift<a class="headerlink" href="#deploy-in-openshift" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>imagestream-cleanup-role.yaml
+oc<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>imagestream-cleanup-cronjob.yaml
+</code></pre></div>
+<h2 id="notes">📌 Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>N=5</code></td>
+<td>Keeps only the latest 5 ImageStreamTags</td>
+</tr>
+<tr>
+<td><code>IMAGESTREAM</code></td>
+<td>Replace with your ACE Integration Server image stream name</td>
+</tr>
+<tr>
+<td><code>schedule</code></td>
+<td>Change to fit your cleanup window (e.g., <code>"0 */6 * * *"</code> for every 6h)</td>
+</tr>
+<tr>
+<td><code>ose-cli</code></td>
+<td>Lightweight Red Hat image with <code>oc</code> CLI for scripting</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.top", "navigation.sections", "navigation.expand", "content.code.copy", "content.tabs.link", "toc.integrate", "content.action.edit", "content.tooltips", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
