@@ -93,6 +93,7 @@
 - [Run a container with all resource limits](Docker-Podman-images/Run a container with all resource limits.md)
 - [Tag images to push](Docker-Podman-images/Tag images to push.md)
 - [To find the memory usage of containers](Docker-Podman-images/To find the memory usage of containers.md)
+- [podman build --squash and ImageStream cleanup](Docker-Podman-images/podman build --squash and ImageStream cleanup.md)
 - [scp images in tar format to remote hosts - offline](Docker-Podman-images/scp images in tar format to remote hosts - offline.md)
 
 ## Helm
