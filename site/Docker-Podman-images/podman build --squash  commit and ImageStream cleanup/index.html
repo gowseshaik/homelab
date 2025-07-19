@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Docker-Podman-images/podman%20build%20--squash%20and%20ImageStream%20cleanup/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Docker-Podman-images/podman%20build%20--squash%20%20commit%20and%20ImageStream%20cleanup/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>podman build squash and ImageStream cleanup - Gouse Shaik</title>
+        <title>podman build squash commit and ImageStream cleanup - Gouse Shaik</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              podman build   squash and ImageStream cleanup
+              podman build   squash  commit and ImageStream cleanup
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Docker-Podman-images/podman build --squash and ImageStream cleanup.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Docker-Podman-images/podman build --squash  commit and ImageStream cleanup.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,8 +362,117 @@
   
 
 
-  <h1>podman build   squash and ImageStream cleanup</h1>
+  <h1>podman build   squash  commit and ImageStream cleanup</h1>
 
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>podman build --squash</code></td>
+<td>✅ Native support</td>
+</tr>
+<tr>
+<td><code>docker build --squash</code></td>
+<td>⚠️ Supported, but only with experimental + no BuildKit</td>
+</tr>
+<tr>
+<td>Multi-stage build</td>
+<td>✅ Best practice for both Docker and Podman</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><code>docker commit</code></th>
+<th><code>podman commit</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ Create image from container</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>🧱 Squash layers</td>
+<td>❌ No (not supported)</td>
+<td>✅ <code>--squash</code> supported</td>
+</tr>
+<tr>
+<td>🔐 Rootless support</td>
+<td>❌ No (needs root unless configured)</td>
+<td>✅ Fully rootless</td>
+</tr>
+<tr>
+<td>🧾 Add metadata</td>
+<td>✅ <code>--author</code>, <code>--message</code></td>
+<td>✅ Same</td>
+</tr>
+<tr>
+<td>🧪 OCI-compliant</td>
+<td>✅ (with extra steps)</td>
+<td>✅ Native</td>
+</tr>
+<tr>
+<td>🧰 Set image format</td>
+<td>❌</td>
+<td>✅ <code>--format=oci/docker</code></td>
+</tr>
+<tr>
+<td>🚀 Systemd-aware</td>
+<td>❌</td>
+<td>✅ Better integration with systemd</td>
+</tr>
+<tr>
+<td>🔍 Default history tracking</td>
+<td>✅ via container diff</td>
+<td>✅ via container diff</td>
+</tr>
+<tr>
+<td>🧼 Clean image from temp</td>
+<td>❌ manual</td>
+<td>✅ better layered FS support</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Use <code>docker commit</code></th>
+<th>Use <code>podman commit</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One-time image capture</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Reproducible CI builds</td>
+<td>❌ No</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Secure release image</td>
+<td>❌ No</td>
+<td>✅ With <code>--squash</code></td>
+</tr>
+<tr>
+<td>Rootless environments</td>
+<td>❌ Limited</td>
+<td>✅ Best option</td>
+</tr>
+</tbody>
+</table>
 <h3 id="dockerfile-very-basic">🔧 <strong>Dockerfile</strong> (very basic):<a class="headerlink" href="#dockerfile-very-basic" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c"># file: Dockerfile</span>
 <span class="k">FROM</span><span class="w"> </span><span class="s">alpine:latest</span>
