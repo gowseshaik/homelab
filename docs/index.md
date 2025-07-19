@@ -130,6 +130,7 @@
 
 ## Kubernetes
 - [Full Sequence to Implement Kubernetes with kubeadm](Kubernetes/Full Sequence to Implement Kubernetes with kubeadm.md)
+- [Installing metric server](Kubernetes/Installing metric server.md)
 - [K8s - manifest files structure](Kubernetes/K8s - manifest files structure.md)
 - [K8s Pod Architecture & Lifecycle](Kubernetes/K8s Pod Architecture & Lifecycle.md)
 - [Kube API server Architechture - deep dive](Kubernetes/Kube API server Architechture - deep dive.md)
