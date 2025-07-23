@@ -15,6 +15,9 @@
 
 ## Apm
 - [Add Elastic repo and install filebeat on app nodes](APM/Add Elastic repo and install filebeat on app nodes.md)
+- [Docker APM images and setup steps](APM/Docker APM images and setup steps.md)
+- [Docker Compose - setup for Elasticsearch-Kibana-Elastic APM Server](APM/Docker Compose - setup for Elasticsearch-Kibana-Elastic APM Server.md)
+- [ELK Stack - APM Setup in Multipass VM](APM/ELK Stack - APM Setup in Multipass VM.md)
 - [ELK installation and setup](APM/ELK installation and setup.md)
 - [Setup ELK with filebeat](APM/Setup ELK with filebeat.md)
 - [Steps to parse custom logs with Filebeat](APM/Steps to parse custom logs with Filebeat.md)
@@ -169,6 +172,9 @@
 - [Steps to uninstall Nexus it cleanly](Nexus/Steps to uninstall Nexus it cleanly.md)
 - [nexus3-cli-deprecated not working](Nexus/nexus3-cli-deprecated not working.md)
 
+## Nodejs
+- [Installing Node.js with Apt from the Default Repositories](Nodejs/Installing Node.js with Apt from the Default Repositories.md)
+
 ## Opentofu
 - [About OpenTofu](OpenTofu/About OpenTofu.md)
 
@@ -206,6 +212,9 @@
 ## Services
 - [Headless Services in Kubernetes](Services/Headless Services in Kubernetes.md)
 - [Types of Kubernetes Services](Services/Types of Kubernetes Services.md)
+
+## Software
+- [Best practice to follow - software versioning](Software/Best practice to follow - software versioning.md)
 
 ## Statefulsets
 - [Updating a MongoDB StatefulSet in Kubernetes](Statefulsets/Updating a MongoDB StatefulSet in Kubernetes.md)
