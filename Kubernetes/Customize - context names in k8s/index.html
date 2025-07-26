@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Nodejs/Installing%20Node.js%20with%20Apt%20from%20the%20Default%20Repositories/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Kubernetes/Customize%20-%20context%20names%20in%20k8s/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Installing Node.js with Apt from the Default Repositories - Gouse Shaik</title>
+        <title>Customize context names in k8s - Gouse Shaik</title>
       
     
     
@@ -69,11 +69,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#claude-code-overview" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -105,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Installing Node.js with Apt from the Default Repositories
+              Customize   context names in k8s
             
           </span>
         </div>
@@ -354,7 +349,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Nodejs/Installing Node.js with Apt from the Default Repositories.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Kubernetes/Customize - context names in k8s.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,42 +357,13 @@
   
 
 
-<p>Ubuntu 20.04 contains a version of Node.js in its default repositories that can be used to provide a consistent experience across multiple systems. At the time of writing, the version in the repositories is 10.19. This will not be the latest version, but it should be stable and sufficient for quick experimentation with the language.</p>
-<p><strong>Warning:</strong> the version of Node.js included with Ubuntu 20.04, version 10.19, is now unsupported and unmaintained. You should not use this version in production, and should refer to one of the other sections in this tutorial to install a more recent version of Node.</p>
-<p>To get this version, you can use the <code>apt</code> package manager. Refresh your local package index first:</p>
-<div class="highlight"><pre><span></span><code>sudo apt update
-</code></pre></div>
-<p>Then install Node.js:</p>
-<div class="highlight"><pre><span></span><code>sudo apt install nodejs
-</code></pre></div>
-<p>Check that the install was successful by querying <code>node</code> for its version number:</p>
-<div class="highlight"><pre><span></span><code>node -v
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>Outputv10.19.0
-</code></pre></div>
-<p>If the package in the repositories suits your needs, this is all you need to do to get set up with Node.js. In most cases, you’ll also want to also install <code>npm</code>, the Node.js package manager. You can do this by installing the <code>npm</code> package with <code>apt</code>:</p>
-<div class="highlight"><pre><span></span><code>sudo apt install npm
-</code></pre></div>
-<p>This allows you to install modules and packages to use with Node.js.</p>
-<p>At this point, you have successfully installed Node.js and <code>npm</code> using <code>apt</code> and the default Ubuntu software repositories. The next section will show how to use an alternate repository to install different versions of Node.js.</p>
-<h1 id="claude-code-overview">Claude Code overview<a class="headerlink" href="#claude-code-overview" title="Permanent link">&para;</a></h1>
-<p>https://docs.anthropic.com/en/docs/claude-code/overview</p>
-<p>Learn about Claude Code, Anthropic’s agentic coding tool that lives in your terminal and helps you turn ideas into code faster than ever before.</p>
-<p>https://docs.anthropic.com/en/docs/claude-code/overview#get-started-in-30-seconds</p>
-<p>Get started in 30 seconds</p>
-<p>Prerequisites: <a href="https://nodejs.org/en/download/">Node.js 18 or newer</a></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Install Claude Code</span>
-sudo<span class="w"> </span>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>@anthropic-ai/claude-code
-sudo<span class="w"> </span>npm<span class="w"> </span>i<span class="w"> </span>-g<span class="w"> </span>@anthropic-ai/claude-code
+  <h1>Customize   context names in k8s</h1>
 
-<span class="c1"># Navigate to your project</span>
-<span class="nb">cd</span><span class="w"> </span>your-awesome-project
-
-<span class="c1"># Start coding with Claude</span>
-claude
-</code></pre></div>
-<p>That’s it! You’re ready to start coding with Claude. <a href="https://docs.anthropic.com/en/docs/claude-code/quickstart">Continue with Quickstart (5 mins) →</a></p>
-<p>(Got specific setup needs or hit issues? See <a href="https://docs.anthropic.com/en/docs/claude-code/setup">advanced setup</a> or <a href="https://docs.anthropic.com/en/docs/claude-code/troubleshooting">troubleshooting</a>.)</p>
+<p>Rename Kubernetes context names using this command:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>get-contexts
+kubectl<span class="w"> </span>config<span class="w"> </span>rename-context<span class="w"> </span>kind-dev-cluster<span class="w"> </span>dev-cluster
+kubectl<span class="w"> </span>config<span class="w"> </span>rename-context<span class="w"> </span>kind-int-cluster<span class="w"> </span>int-cluster
+</code></pre></div></p>
 
 
 
