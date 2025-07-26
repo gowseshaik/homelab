@@ -99,6 +99,9 @@
 - [podman build --squash  commit and ImageStream cleanup](Docker-Podman-images/podman build --squash  commit and ImageStream cleanup.md)
 - [scp images in tar format to remote hosts - offline](Docker-Podman-images/scp images in tar format to remote hosts - offline.md)
 
+## Gateway api in k8s
+- [Gateway API in k8s](Gateway API in K8s/Gateway API in k8s.md)
+
 ## Helm
 - [1. Check Helm Release(deployed) Information](Helm/1. Check Helm Release(deployed) Information.md)
 - [Checking Traefik Helm Configuration](Helm/Checking Traefik Helm Configuration.md)
@@ -132,6 +135,7 @@
 - [Must know keywords](Keywords/Must know keywords.md)
 
 ## Kubernetes
+- [Customize - context names in k8s](Kubernetes/Customize - context names in k8s.md)
 - [Full Sequence to Implement Kubernetes with kubeadm](Kubernetes/Full Sequence to Implement Kubernetes with kubeadm.md)
 - [Installing metric server](Kubernetes/Installing metric server.md)
 - [K8s - manifest files structure](Kubernetes/K8s - manifest files structure.md)
@@ -187,6 +191,9 @@
 - [List all pods with their init containers and sidecar containers info](Pods/List all pods with their init containers and sidecar containers info.md)
 - [Types of Containers in Kubernetes](Pods/Types of Containers in Kubernetes.md)
 - [Types of Pods](Pods/Types of Pods.md)
+
+## Projects
+- [Affiliate marketing application](Projects/Affiliate marketing application.md)
 
 ## Prometheus + grafana
 - [Expose Prometheus and Grafana using Ingress](Prometheus + Grafana/Expose Prometheus and Grafana using Ingress.md)
