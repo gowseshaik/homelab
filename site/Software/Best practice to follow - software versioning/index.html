@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/APM/Why%20you%20need%20Filebeat%20and%20Logstash%20and%20when%20to%20use%20which/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Software/Best%20practice%20to%20follow%20-%20software%20versioning/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Why you need Filebeat and Logstash and when to use which - Gouse Shaik</title>
+        <title>Best practice to follow software versioning - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#why-filebeat" class="md-skip">
+        <a href="#versions-to-avoid-as-base-initial-versions" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Why you need Filebeat and Logstash and when to use which
+              Best practice to follow   software versioning
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/APM/Why you need Filebeat and Logstash and when to use which.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Software/Best practice to follow - software versioning.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,60 +362,67 @@
   
 
 
-  <h1>Why you need Filebeat and Logstash and when to use which</h1>
+  <h1>Best practice to follow   software versioning</h1>
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-06-29</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<p>Here's a simple breakdown of <strong>why you need Filebeat and Logstash</strong>, and <strong>when to use which</strong></p>
+<p>When pushing software to GitHub (or any version control system), it's generally recommended to <strong>avoid using certain version numbers as the base version</strong> to prevent confusion or follow common conventions. Here are some guidelines:</p>
+<h3 id="versions-to-avoid-as-base-initial-versions"><strong>Versions to Avoid as Base (Initial) Versions:</strong><a class="headerlink" href="#versions-to-avoid-as-base-initial-versions" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong><code>v0.0.0</code></strong>  </li>
+<li>Too ambiguous; suggests the project is not even in a pre-release state.</li>
+<li>
+<p>Often used as a placeholder in dependency systems.</p>
+</li>
+<li>
+<p><strong><code>v1.0.0</code> (unless the software is truly stable)</strong>  </p>
+</li>
+<li><code>1.0.0</code> typically signifies a stable, production-ready release.  </li>
+<li>
+<p>If your project is still experimental, starting with <code>0.x.x</code> (e.g., <code>0.1.0</code>) is better.</p>
+</li>
+<li>
+<p><strong>Unconventional or Joke Versions (e.g., <code>v999.0.0</code>, <code>v0.0.1-alpha-snapshot</code>)</strong>  </p>
+</li>
+<li>Can cause issues with dependency managers (npm, pip, Maven, etc.).  </li>
+<li>
+<p>Makes the project look unprofessional.</p>
+</li>
+<li>
+<p><strong><code>v0.0.1</code> (Too Minimal)</strong>  </p>
+</li>
+<li>While technically valid, it doesn’t convey meaningful progress.  </li>
+<li>Better to start with <code>v0.1.0</code> (first pre-release with basic features).</li>
+</ol>
+<hr />
+<h3 id="recommended-starting-versions"><strong>Recommended Starting Versions:</strong><a class="headerlink" href="#recommended-starting-versions" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Tool</th>
-<th>Purpose</th>
-<th>When to Use</th>
-<th>Pros</th>
+<th>Scenario</th>
+<th>Recommended Starting Version</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Filebeat</strong></td>
-<td>Lightweight log shipper (agent)</td>
-<td>On app VMs to <strong>forward logs</strong></td>
-<td>Low CPU/RAM, reliable, easy to use</td>
+<td><strong>Experimental / Early Development</strong></td>
+<td><code>v0.1.0</code> (first testable release)</td>
 </tr>
 <tr>
-<td><strong>Logstash</strong></td>
-<td>Centralized log processor &amp; parser</td>
-<td>On central VM to <strong>parse/enrich</strong></td>
-<td>Handles complex parsing, filtering</td>
+<td><strong>Stable / Production-ready from Day 1</strong> (rare)</td>
+<td><code>v1.0.0</code></td>
+</tr>
+<tr>
+<td><strong>Following Semantic Versioning (SemVer)</strong></td>
+<td><code>v0.1.0</code> → <code>v1.0.0</code> when API stabilizes</td>
 </tr>
 </tbody>
 </table>
-<h3 id="why-filebeat">🔹 Why Filebeat?<a class="headerlink" href="#why-filebeat" title="Permanent link">&para;</a></h3>
+<h3 id="best-practices"><strong>Best Practices:</strong><a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Reads logs from files (<code>/var/log/*.log</code>, app logs).</li>
-<li>Ships logs to Elasticsearch <strong>or</strong> Logstash.</li>
-<li>Lightweight, low memory usage.</li>
-<li>Ideal for deployment on many machines.</li>
+<li>Use <strong><a href="https://semver.org/">Semantic Versioning (SemVer)</a></strong> (<code>MAJOR.MINOR.PATCH</code>).  </li>
+<li>For pre-releases, use suffixes like <code>-alpha</code>, <code>-beta</code>, or <code>-rc</code> (e.g., <code>v1.0.0-beta.1</code>).  </li>
+<li>Avoid skipping versions (e.g., jumping from <code>v0.1.0</code> to <code>v2.0.0</code> without reason).  </li>
 </ul>
-<blockquote>
-<p>✅ Use Filebeat where logs are generated (e.g., app servers, web servers).</p>
-</blockquote>
-<h3 id="why-logstash">🔹 Why Logstash?<a class="headerlink" href="#why-logstash" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Used for <strong>parsing</strong>, <strong>transforming</strong>, and <strong>enriching</strong> logs.</li>
-<li>Can handle complex data (JSON, multiline, grok patterns).</li>
-<li>Used to preprocess logs <strong>before</strong> sending to Elasticsearch.</li>
-</ul>
-<blockquote>
-<p>✅ Use Logstash centrally, when logs need parsing before indexing.</p>
-</blockquote>
-<h3 id="summary-use-case">🔧 Summary Use-Case:<a class="headerlink" href="#summary-use-case" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>[App Server] → Filebeat → [Logstash] → [Elasticsearch] → [Kibana]
-</code></pre></div>
-<p>Or if logs are already clean:</p>
-<div class="highlight"><pre><span></span><code>[App Server] → Filebeat → [Elasticsearch] → [Kibana]
-</code></pre></div>
-<p>Let me know your use case (plain logs or complex?) and I’ll suggest the best combo.</p>
+<p>Would you like recommendations for a specific programming language or package manager (npm, pip, etc.)?</p>
 
 
 

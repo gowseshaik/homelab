@@ -36,6 +36,7 @@ At this point, you have successfully installed Node.js and `npm` using `apt` and
 
 # Claude Code overview
 https://docs.anthropic.com/en/docs/claude-code/overview
+
 Learn about Claude Code, Anthropic’s agentic coding tool that lives in your terminal and helps you turn ideas into code faster than ever before.
 
 https://docs.anthropic.com/en/docs/claude-code/overview#get-started-in-30-seconds
@@ -47,6 +48,7 @@ Prerequisites: [Node.js 18 or newer](https://nodejs.org/en/download/)
 ```bash
 # Install Claude Code
 sudo npm install -g @anthropic-ai/claude-code
+sudo npm i -g @anthropic-ai/claude-code
 
 # Navigate to your project
 cd your-awesome-project
