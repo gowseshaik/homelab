@@ -34,6 +34,88 @@ This allows you to install modules and packages to use with Node.js.
 
 At this point, you have successfully installed Node.js and `npm` using `apt` and the default Ubuntu software repositories. The next section will show how to use an alternate repository to install different versions of Node.js.
 
+# Clean steps to install **Node.js v20 LTS** on Ubuntu:
+
+## ✅ Method 1: Using **NodeSource (APT-based, recommended)**
+
+### 🔧 Step-by-step:
+
+```bash
+# 1. Update packages
+sudo apt update
+
+# 2. Add Node.js 20.x repo
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+
+# 3. Install Node.js
+sudo apt install -y nodejs
+
+# 4. Confirm installation
+node -v   # should show v20.x
+npm -v    # should show latest npm
+```
+
+---
+
+## ✅ Method 2: Using **NVM (Node Version Manager)**
+
+> Use this if you want to switch between versions easily.
+
+### 🔧 Step-by-step:
+
+```bash
+# 1. Install NVM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+# 2. Load nvm immediately (or restart terminal)
+export NVM_DIR="$HOME/.nvm"
+source "$NVM_DIR/nvm.sh"
+
+# 3. Install Node.js 20
+nvm install 20
+
+# 4. Set it as default
+nvm use 20
+nvm alias default 20
+
+# 5. Confirm
+node -v
+npm -v
+
+
+# Download and install nvm:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+# in lieu of restarting the shell
+\. "$HOME/.nvm/nvm.sh"
+
+# Download and install Node.js:
+nvm install 22
+
+# Verify the Node.js version:
+node -v # Should print "v22.17.1".
+nvm current # Should print "v22.17.1".
+
+# Verify npm version:
+npm -v # Should print "10.9.2".
+
+```
+
+---
+
+### 💡 Which to choose?
+
+|Method|Use When|
+|---|---|
+|**APT (Method 1)**|You want system-wide setup|
+|**NVM (Method 2)**|You want per-user versions / easier upgrades|
+
+---
+
+Let me know if you're on a different distro or need a minimal install (no npm).
+
 # Claude Code overview
 https://docs.anthropic.com/en/docs/claude-code/overview
 

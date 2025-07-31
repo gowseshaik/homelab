@@ -1,0 +1,317 @@
+* 88c57ac (origin/gh-pages, origin/HEAD, gh-pages) Deployed bb787cf with MkDocs version: 1.6.1
+* af687cc Deployed 16a2f98 with MkDocs version: 1.6.1
+* 9bc56d9 Deployed 94b4a32 with MkDocs version: 1.6.1
+* 1dba7b8 Deployed f5cee78 with MkDocs version: 1.6.1
+* 4f5ff04 Deployed da2bc55 with MkDocs version: 1.6.1
+* 26ab411 Deployed 229273f with MkDocs version: 1.6.1
+* 93bb5f7 Deployed dfc18ab with MkDocs version: 1.6.1
+* 3202021 Deployed ebfb7b0 with MkDocs version: 1.6.1
+* df9a245 Deployed ddd9f10 with MkDocs version: 1.6.1
+* df662c3 Deployed 99e3f7b with MkDocs version: 1.6.1
+* e4caa14 Deployed 8d43ecf with MkDocs version: 1.6.1
+* 007fb21 Deployed 00e4a36 with MkDocs version: 1.6.1
+* 5212d4e Deployed da2fd79 with MkDocs version: 1.6.1
+* 5386f7d Deployed 3efefbb with MkDocs version: 1.6.1
+* 0b97446 Deployed 9dbf1a6 with MkDocs version: 1.6.1
+* 4e2a418 Deployed 655f327 with MkDocs version: 1.6.1
+* 116a30f Deployed 31e9b24 with MkDocs version: 1.6.1
+* 2525ff1 Deployed b14f90e with MkDocs version: 1.6.1
+* 7f2e25d Deployed 5ead4db with MkDocs version: 1.6.1
+* a164e09 Deployed 92f9084 with MkDocs version: 1.6.1
+* 7265bd8 Deployed 051b9df with MkDocs version: 1.6.1
+* 1fe8f6f Deployed c8d7630 with MkDocs version: 1.6.1
+* def0dcf Deployed b887894 with MkDocs version: 1.6.1
+* 8fb8471 Deployed 2a4344b with MkDocs version: 1.6.1
+* 1526f81 Deployed 5fc6964 with MkDocs version: 1.6.1
+* daf0e60 Deployed ff933b9 with MkDocs version: 1.6.1
+* 5f3ce1c Deployed 7b0681d with MkDocs version: 1.6.1
+* 26d232b Deployed 6c77965 with MkDocs version: 1.6.1
+* 1c6fde6 Deployed 9df8b12 with MkDocs version: 1.6.1
+* 447e5a7 Deployed d2184ea with MkDocs version: 1.6.1
+* 4d799ec Deployed a5d51ed with MkDocs version: 1.6.1
+* 04ceaa1 Deployed a1c9387 with MkDocs version: 1.6.1
+* 9ee55f2 Deployed ff0359e with MkDocs version: 1.6.1
+* 2e7ffd3 Deployed 30285fd with MkDocs version: 1.6.1
+* f60481e Deployed 4960fc5 with MkDocs version: 1.6.1
+* eebb111 Deployed d0b8716 with MkDocs version: 1.6.1
+* 7f5cfbc Deployed 5709591 with MkDocs version: 1.6.1
+* 0c0e6c9 Deployed 98abac0 with MkDocs version: 1.6.1
+* d466cb7 Deployed c45f07d with MkDocs version: 1.6.1
+* a52aa79 Deployed 28d93ca with MkDocs version: 1.6.1
+* b739b8b Deployed fcdbd32 with MkDocs version: 1.6.1
+* 7b24a14 Deployed fcdbd32 with MkDocs version: 1.6.1
+* 698f3e6 Deployed e1fe57c with MkDocs version: 1.6.1
+* b80b37d Deployed b998043 with MkDocs version: 1.6.1
+* 8b82f68 Deployed 9f2970a with MkDocs version: 1.6.1
+* 6b28560 Deployed 312f6fd with MkDocs version: 1.6.1
+* a3656e5 Deployed 25d3fad with MkDocs version: 1.6.1
+* c302bbe Deployed f172eb8 with MkDocs version: 1.6.1
+* fea6f22 Deployed 288982d with MkDocs version: 1.6.1
+* e360198 Deployed dea6562 with MkDocs version: 1.6.1
+* 8cfd3c5 Deployed 6c9b9d3 with MkDocs version: 1.6.1
+* a2bf93a Deployed 015d973 with MkDocs version: 1.6.1
+* 7908870 Deployed 720e228 with MkDocs version: 1.6.1
+* 2f64f88 Deployed 0fc9cba with MkDocs version: 1.6.1
+* 6c3fa57 Deployed 4630c0c with MkDocs version: 1.6.1
+* 7d2aa59 Deployed c14d937 with MkDocs version: 1.6.1
+* c8174c8 Deployed b6ea9d5 with MkDocs version: 1.6.1
+* 17e27cf Deployed d152daf with MkDocs version: 1.6.1
+* 3dce015 Deployed cf7c9fe with MkDocs version: 1.6.1
+* f13ec1a Deployed f10c675 with MkDocs version: 1.6.1
+* a02865a Deployed 762e4d1 with MkDocs version: 1.6.1
+* d4a4ee0 Deployed dd42d89 with MkDocs version: 1.6.1
+* 0105580 Deployed 3f85f3d with MkDocs version: 1.6.1
+* da01914 Deployed d408bb4 with MkDocs version: 1.6.1
+* e8b0e6f Deployed b3593c8 with MkDocs version: 1.6.1
+* 20dce94 Deployed c91f278 with MkDocs version: 1.6.1
+* 438956b Deployed 0d05358 with MkDocs version: 1.6.1
+* 6be7817 Deployed 6f47911 with MkDocs version: 1.6.1
+* 9010350 Deployed d13f7aa with MkDocs version: 1.6.1
+* 32b2525 Deployed 2051d10 with MkDocs version: 1.6.1
+* 08bb14e Deployed 131a295 with MkDocs version: 1.6.1
+* 9dacf37 Deployed b42dbdd with MkDocs version: 1.6.1
+* 3cc9fc7 Deployed 72684f6 with MkDocs version: 1.6.1
+* 0aa7d0b Deployed 40f5539 with MkDocs version: 1.6.1
+* 137359e Deployed 84d6120 with MkDocs version: 1.6.1
+* a0e7f04 Deployed 47b6105 with MkDocs version: 1.6.1
+* ff2659d Deployed 47b6105 with MkDocs version: 1.6.1
+* 8ef8161 Deployed f9b0f73 with MkDocs version: 1.6.1
+* 08b3c2a Deployed a5d5dd5 with MkDocs version: 1.6.1
+* 8c951eb Deployed a5d5dd5 with MkDocs version: 1.6.1
+* 9101b83 Deployed a5d5dd5 with MkDocs version: 1.6.1
+* f509bc8 Deployed a5d5dd5 with MkDocs version: 1.6.1
+* b5e9ac5 Deployed a5d5dd5 with MkDocs version: 1.6.1
+* c96b9f6 Deployed 4fc585e with MkDocs version: 1.6.1
+* e70a46c Deployed 9c96b06 with MkDocs version: 1.6.1
+* 2d0cbee Deployed 508da44 with MkDocs version: 1.6.1
+* da7da4e Deployed 15c5926 with MkDocs version: 1.6.1
+* 80aecca Deployed b251e63 with MkDocs version: 1.6.1
+* e5741e6 Deployed f8e0f6e with MkDocs version: 1.6.1
+* 60c00ac Deployed f8e0f6e with MkDocs version: 1.6.1
+* 64e452b Deployed f8e0f6e with MkDocs version: 1.6.1
+* 2766c2e Deployed f8e0f6e with MkDocs version: 1.6.1
+* d5dce7e Deployed 73a3f67 with MkDocs version: 1.6.1
+* bcf4fc7 Deployed f4906b8 with MkDocs version: 1.6.1
+* eda4121 Deployed f4906b8 with MkDocs version: 1.6.1
+* 7d8dbf8 Deployed 00e406e with MkDocs version: 1.6.1
+* 7a1d0cc Deployed 00e406e with MkDocs version: 1.6.1
+* cd6457b Deployed aef10cd with MkDocs version: 1.6.1
+* bd81157 Deployed aef10cd with MkDocs version: 1.6.1
+* 8c97584 Deployed b9a6aa1 with MkDocs version: 1.6.1
+* 9ab5009 Deployed ec47446 with MkDocs version: 1.6.1
+* f7c8d58 Deployed e0d6742 with MkDocs version: 1.6.1
+* 8a635aa Deployed 18a5b0c with MkDocs version: 1.6.1
+* fa74fcc Deployed dab0128 with MkDocs version: 1.6.1
+* 82b7474 Deployed f6fb239 with MkDocs version: 1.6.1
+* 5ff3a49 Deployed f6fb239 with MkDocs version: 1.6.1
+* ab7ae62 Deployed 89393ac with MkDocs version: 1.6.1
+* d53e608 Deployed 22fb6d2 with MkDocs version: 1.6.1
+* 62425d9 Deployed 6acd32e with MkDocs version: 1.6.1
+* 0d04aac Deployed 56b7ee2 with MkDocs version: 1.6.1
+* 176c81a Deployed 1b7787a with MkDocs version: 1.6.1
+* b37619e Deployed 1b7787a with MkDocs version: 1.6.1
+* 5dc2794 Deployed ff4203d with MkDocs version: 1.6.1
+* 2012d4a Deployed b65c4d7 with MkDocs version: 1.6.1
+* 20c32cc Deployed b65c4d7 with MkDocs version: 1.6.1
+* 42a495b Deployed 7b35895 with MkDocs version: 1.6.1
+* cc8bc7a Deployed 7b35895 with MkDocs version: 1.6.1
+* 5ba4eaf Deployed 9304267 with MkDocs version: 1.6.1
+* 7081339 Deployed 9304267 with MkDocs version: 1.6.1
+* 20cb339 Deployed 9304267 with MkDocs version: 1.6.1
+* ee25738 Deployed 9304267 with MkDocs version: 1.6.1
+* b3f6c2d Deployed 9304267 with MkDocs version: 1.6.1
+* 28d7c2b Deployed 9304267 with MkDocs version: 1.6.1
+* 80cf44f Deployed 9304267 with MkDocs version: 1.6.1
+* c695c67 Deployed 9304267 with MkDocs version: 1.6.1
+* 935343b Deployed 9304267 with MkDocs version: 1.6.1
+* 5410eb3 Deployed 9304267 with MkDocs version: 1.6.1
+* ae1d71a Deployed 9304267 with MkDocs version: 1.6.1
+* 8220432 Deployed 9304267 with MkDocs version: 1.6.1
+* 6e3c1a8 Deployed 9304267 with MkDocs version: 1.6.1
+* 22aa60a Deployed 9304267 with MkDocs version: 1.6.1
+* 0401c6d Deployed 9304267 with MkDocs version: 1.6.1
+* 2209e90 Deployed 9304267 with MkDocs version: 1.6.1
+* 1bf1f5e Deployed 9304267 with MkDocs version: 1.6.1
+* b5291df Deployed 9304267 with MkDocs version: 1.6.1
+* 4fd5f88 Deployed 9304267 with MkDocs version: 1.6.1
+* 2714067 Deployed 9304267 with MkDocs version: 1.6.1
+* eb96334 Deployed 9304267 with MkDocs version: 1.6.1
+* 1f099a8 Deployed 9304267 with MkDocs version: 1.6.1
+* 4297698 Deployed 9304267 with MkDocs version: 1.6.1
+* 05bb3cf Deployed 9304267 with MkDocs version: 1.6.1
+* ef326cd Deployed 9304267 with MkDocs version: 1.6.1
+* b321c95 Deployed 9304267 with MkDocs version: 1.6.1
+* 4d32972 Deployed 9304267 with MkDocs version: 1.6.1
+* 2c399b7 Deployed 9304267 with MkDocs version: 1.6.1
+* fb27825 Deployed 9304267 with MkDocs version: 1.6.1
+* 05f4b2c Deployed 9304267 with MkDocs version: 1.6.1
+* df3ac4a Deployed 9304267 with MkDocs version: 1.6.1
+* 23f810a Deployed 9304267 with MkDocs version: 1.6.1
+* 5ba2b58 Deployed 9304267 with MkDocs version: 1.6.1
+* b10693e Deployed 545fe5f with MkDocs version: 1.6.1
+* b05be0b Deployed 545fe5f with MkDocs version: 1.6.1
+* a051998 Deployed 545fe5f with MkDocs version: 1.6.1
+* 77aac22 Deployed 545fe5f with MkDocs version: 1.6.1
+* cdbe8e5 Deployed 545fe5f with MkDocs version: 1.6.1
+* e7acccf Deployed 545fe5f with MkDocs version: 1.6.1
+* c5e3b6d Deployed 545fe5f with MkDocs version: 1.6.1
+* 1168acd Deployed 9b3f150 with MkDocs version: 1.6.1
+* bb787cf (HEAD -> main, origin/main) index updated
+* 2a7bf44 updated
+* 16a2f98 updated
+* 44a20fe updated
+* 94b4a32 metric server
+* c7eeec0 metric server
+* f5cee78 updated squash
+* da2bc55 updated squash
+* 229273f updated squash
+* dfc18ab updated podman
+* ebfb7b0 updated git
+* ddd9f10 git hacks
+* 99e3f7b updated
+* 8d43ecf k8s resources usecases
+* 00e4a36 updated index
+* da2fd79 updated pre-requisties
+* 3efefbb updated pre-requisties
+* 9dbf1a6 updated pre-requisties
+* 655f327 updated pre-requisties
+*   6356ed1 update
+|\  
+| * f9e9297 updated repo
+| * 31e9b24 index updated
+| * b14f90e index updated
+| * 50f9a8f updated aliases
+| * 12edb8a keyword updated
+| * 5ead4db index generated
+| * 92f9084 update nexus cli
+| * 051b9df nexus3-cli updated
+| * c8d7630 applied stashed files
+| * b887894 updated with git errors
+* | c78b898 index
+|/  
+* 2a4344b updated index
+* 5fc6964 updated with timestamps alignment
+* ff933b9 updated with timestamps alignment
+* 7b0681d updated index
+* c92e9a3 updated with timestamps
+* 6c77965 updated with templates
+* 9df8b12 updated with templates
+* d2184ea updated some plugins
+* 6d31120 checking for hooks
+* 1fbf65c checking for hooks
+* 5c04bfc updated for author
+* a5d51ed git config
+* 4214d34 updated with timestamps
+* a1c9387 updated index
+* 8e6b85d pre-hooks added
+* 5666161 Hook test
+* ff0359e git config
+* 30285fd udpated git
+* 4960fc5 updated with pre-commit
+* d0b8716 updated with python script
+* 5709591 updated with python script
+* 98abac0 updated with python script
+* c45f07d updated with python script
+* 28d93ca updated with python script
+* fcdbd32 updated with python script
+* e1fe57c updated with python script
+* b998043 updated with python script
+* 9f2970a updated with python script
+* 312f6fd updated with python script
+* 25d3fad updated with img
+* f172eb8 updated code
+* 288982d updated repo
+* dea6562 updated with images
+* 6c9b9d3 updated with images
+* c7d1958 updated with images
+* 015d973 updated index
+* edc371c updated with imgs
+* 720e228 updated
+* 0fc9cba updated index
+* 1a5da42 updated about containers cons
+* 43278ef updated docs
+| * c0fc3f2 (refs/stash) WIP on main: 4630c0c new updates on ghpages
+|/| 
+| * 0e78f4d index on main: 4630c0c new updates on ghpages
+|/  
+* 4630c0c new updates on ghpages
+* c14d937 new updates on ghpages
+* 19b735e new updates on ghpages
+* b6ea9d5 updated index
+* 3b8a8c7 nexus oss
+* d152daf updated kubeconfig
+* cf7c9fe updated
+* f10c675 index updated
+* d58b889 argocd miunderstanding
+* 762e4d1 argocd cli updated
+* dd42d89 argocd cli updated
+* 3f85f3d genindex
+* 2025a21 git push errors
+*   9b80029 new changes with local
+|\  
+| * b5826cb commited pages
+| * d408bb4 index
+| * b810e8f pushed new updates
+| * 3b78e77 updated local for site
+| * b3593c8 updated index
+| *   e7ebe46 merging with local
+| |\  
+| * \   e318bbf merged
+| |\ \  
+| * | | b2f2b00 gh pages
+* | | | f56162d commit argocd cli cmds
+* | | | ab90757 argocd cli
+* | | | bb86c4a commited
+| |_|/  
+|/| |   
+* | | c91f278 updated some docs'
+* | | 3bc900f updated
+* | | 0d05358 updated index.md
+* | | c173192 docs updated
+* | | 6f47911 k3d ha
+* | | d13f7aa updated
+* | | 2051d10 updated
+* | | 131a295 added generated files
+* | | 057b225 added generated files
+* | | b42dbdd rbac
+* | | a0f07a3 RBAC
+| |/  
+|/|   
+* | 72684f6 cheatsheet
+* | 40f5539 cheatsheet
+* | 84d6120 labels
+|/  
+* 47b6105 etcd
+* 975b743 longhorn
+* f9b0f73 updated about
+* a5d5dd5 override fixed
+* 4fc585e index.html fixed
+* 9c96b06 cluster HA
+* 508da44 HA cluster setup with k3d
+* 15c5926 updated the site
+* b251e63 python script
+* ff8c30c updated python script
+* f8e0f6e Remove .obsidian from Git tracking
+* 73a3f67 newly generated
+* ed09aef removed site
+* f4906b8 mkdocs
+* 00e406e site
+* aef10cd mkdocs
+* 5747ee2 Remove .obsidian directory from repo
+* b9a6aa1 site files
+* ec47446 updated with ignore
+* e0d6742 updated docs
+* 18a5b0c exludes
+* dab0128 updated the script
+* f6fb239 errors
+* 89393ac cmds
+* 22fb6d2 mkdocs
+* 6acd32e types of containers
+* 56b7ee2 updated storage
+* 1b7787a longhorn added
+* ff4203d updated storages
+* b65c4d7 updated storage
+* 7b35895 pushing to main branch
+* 9304267 new chagnes
+* 545fe5f docs updated
+* 9b3f150 initial commit

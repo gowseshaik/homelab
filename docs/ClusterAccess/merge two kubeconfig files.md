@@ -72,3 +72,31 @@ chmod 600 ~/.kube/config
 kubectl get nodes
 kubectl config use-context k3s-context
 ```
+
+Use the following `KUBECONFIG` and `kubectl config view --flatten` approach to **append another cluster config** to your existing `~/.kube/config`:
+
+```bash
+$ multipass exec k3s-master -- sudo cat /etc/rancher/k3s/k3s.yaml > kubeconfig
+KUBECONFIG=~/.kube/config:/home/gouse/multipassKUBEconfigs/kubeconfig
+
+KUBECONFIG=~/.kube/config:/path/to/other/cluster/config 
+kubectl config view --flatten > /tmp/merged-kubeconfig && 
+mv /tmp/merged-kubeconfig ~/.kube/config
+```
+
+### Steps:
+
+1. `KUBECONFIG=~/.kube/config:/path/to/other/cluster/config`  
+    – Temporarily sets both config files to be loaded.
+    
+2. `kubectl config view --flatten`  
+    – Merges and removes duplicate references.
+    
+3. `> /tmp/merged-kubeconfig`  
+    – Saves merged output to a temp file.
+    
+4. `mv ... ~/.kube/config`  
+    – Overwrites the current config with the merged one.
+    
+
+> You can repeat this for more clusters by adding more `:/path` in the `KUBECONFIG`.
