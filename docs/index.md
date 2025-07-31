@@ -61,6 +61,7 @@
 - [Configuring Keycloak for Kubernetes authentication](ClusterAccess/Configuring Keycloak for Kubernetes authentication.md)
 - [Create a kubeconfig file for the external users](ClusterAccess/Create a kubeconfig file for the external users.md)
 - [merge two kubeconfig files](ClusterAccess/merge two kubeconfig files.md)
+- [merge](ClusterAccess/merge.md)
 
 ## Configmaps
 - [ConfigMap is a Kubernetes object used to store non-confidential data](ConfigMaps/ConfigMap is a Kubernetes object used to store non-confidential data.md)
@@ -101,6 +102,9 @@
 
 ## Gateway api in k8s
 - [Gateway API in k8s](Gateway API in K8s/Gateway API in k8s.md)
+
+## Go-lang
+- [Untitled](Go-lang/Untitled.md)
 
 ## Helm
 - [1. Check Helm Release(deployed) Information](Helm/1. Check Helm Release(deployed) Information.md)
@@ -178,6 +182,7 @@
 
 ## Nodejs
 - [Installing Node.js with Apt from the Default Repositories](Nodejs/Installing Node.js with Apt from the Default Repositories.md)
+- [To completely uninstall your current Node.js](Nodejs/To completely uninstall your current Node.js.md)
 
 ## Opentofu
 - [About OpenTofu](OpenTofu/About OpenTofu.md)
@@ -214,6 +219,7 @@
 - [Some real-world examples of secrets mismanagement](Secrets/Some real-world examples of secrets mismanagement.md)
 
 ## Serviceaccounts
+- [Create Service Account to access cluster namespace](ServiceAccounts/Create Service Account to access cluster namespace.md)
 - [ServiceAccounts in Kubernetes](ServiceAccounts/ServiceAccounts in Kubernetes.md)
 
 ## Services
@@ -268,12 +274,16 @@
 - [View your configured for Git](git/View your configured for Git.md)
 - [git commits - hacks](git/git commits - hacks.md)
 - [git errors](git/git errors.md)
+- [push to new branch](git/push to new branch.md)
 
 ## Images
 
 ## Mailhog
 - [Steps to deploy MailHog with Ingress](mailhog/Steps to deploy MailHog with Ingress.md)
 - [Usecase of mailhog](mailhog/Usecase of mailhog.md)
+
+## Metric-server
+- [Steps to install metric server](metric-server/Steps to install metric server.md)
 
 ## Mkdocs
 - [mkdocs to github projects](mkdocs/mkdocs to github projects.md)
