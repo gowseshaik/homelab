@@ -283,6 +283,7 @@
 - [View your configured for Git](git/View your configured for Git.md)
 - [git commits - hacks](git/git commits - hacks.md)
 - [git errors](git/git errors.md)
+- [git push - failed](git/git push - failed.md)
 - [push to new branch](git/push to new branch.md)
 
 ## Gitlab
