@@ -147,8 +147,6 @@
 - [Kuberentes usecases-deepdive flow](Kubernetes/Kuberentes usecases-deepdive flow.md)
 - [Kubernetes history](Kubernetes/Kubernetes history.md)
 
-## Linux
-
 ## Loadbalancers types
 - [Loadbalancer Types](Loadbalancers Types/Loadbalancer Types.md)
 - [Reverse proxy means](Loadbalancers Types/Reverse proxy means.md)
