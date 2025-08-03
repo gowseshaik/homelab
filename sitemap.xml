@@ -169,6 +169,10 @@
          <lastmod>2025-08-03</lastmod>
     </url>
     <url>
+         <loc>https://github.com/gowseshaik/homelab/ClusterAccess/merge/</loc>
+         <lastmod>2025-08-03</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/gowseshaik/homelab/ConfigMaps/ConfigMap%20is%20a%20Kubernetes%20object%20used%20to%20store%20non-confidential%20data/</loc>
          <lastmod>2025-08-03</lastmod>
     </url>
@@ -405,7 +409,7 @@
          <lastmod>2025-08-03</lastmod>
     </url>
     <url>
-         <loc>https://github.com/gowseshaik/homelab/Longhorn/Can%20You%20Use%20Longhorn%20on%20top%20of%20NFS/</loc>
+         <loc>https://github.com/gowseshaik/homelab/Longhorn/Can%20You%20Use%20Longhorn%20_on%20top%20of_%20NFS%20%3F/</loc>
          <lastmod>2025-08-03</lastmod>
     </url>
     <url>
@@ -482,6 +486,10 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/Nexus/nexus3-cli-deprecated%20not%20working/</loc>
+         <lastmod>2025-08-03</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/Nodejs/Gaming%20app%20for%20kids/</loc>
          <lastmod>2025-08-03</lastmod>
     </url>
     <url>
@@ -629,6 +637,10 @@
          <lastmod>2025-08-03</lastmod>
     </url>
     <url>
+         <loc>https://github.com/gowseshaik/homelab/Ubuntu/To%20get%20the%20ip%20of%20your%20host/</loc>
+         <lastmod>2025-08-03</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/gowseshaik/homelab/Ubuntu/list%20of%20good%20tools%20to%20extract%20rar%20part%20files/</loc>
          <lastmod>2025-08-03</lastmod>
     </url>
@@ -701,6 +713,22 @@
          <lastmod>2025-08-03</lastmod>
     </url>
     <url>
+         <loc>https://github.com/gowseshaik/homelab/gitlab/Gitlab%20-%20Runners%20setup/</loc>
+         <lastmod>2025-08-03</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/gitlab/Gitlab%20-%20port%20changing/</loc>
+         <lastmod>2025-08-03</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/gitlab/Gitlab%20to%20import%20Gitea%20repos%20-fix/</loc>
+         <lastmod>2025-08-03</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/gitlab/gitlab%20-%20Executors/</loc>
+         <lastmod>2025-08-03</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/gowseshaik/homelab/mailhog/Steps%20to%20deploy%20MailHog%20with%20Ingress/</loc>
          <lastmod>2025-08-03</lastmod>
     </url>
@@ -746,6 +774,10 @@
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/nginx/Installing%20and%20Configuring%20Nginx%20on%20Ubuntu/</loc>
+         <lastmod>2025-08-03</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/nginx/nignx-multipass-tailscale/</loc>
          <lastmod>2025-08-03</lastmod>
     </url>
     <url>
