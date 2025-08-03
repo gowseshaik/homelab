@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/gitlab/Gitlab%20-%20port%20changing/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/gitlab/Gitlab%20-%20Telegram%20integration/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Gitlab port changing - Gouse Shaik</title>
+        <title>Gitlab Telegram integration - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#why-8080-is-common" class="md-skip">
+        <a href="#1-create-a-telegram-bot" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Gitlab   port changing
+              Gitlab   Telegram integration
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/gitlab/Gitlab - port changing.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/gitlab/Gitlab - Telegram integration.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,96 +362,119 @@
   
 
 
-  <h1>Gitlab   port changing</h1>
+  <h1>Gitlab   Telegram integration</h1>
 
 <p><span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<p>You can use <strong>any free port</strong> — not just 8080. 8080 is simply a <strong>common convention</strong> for web apps when port 80 is taken or reserved.</p>
-<h3 id="why-8080-is-common">✅ Why 8080 is Common:<a class="headerlink" href="#why-8080-is-common" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Create a Telegram bot with <strong>BotFather</strong>.</li>
+<li>Get your Telegram chat ID.</li>
+<li>Create a GitLab webhook that triggers on events.</li>
+<li>Build or use a middleware service that receives GitLab webhook and sends a message via Telegram bot API.</li>
+</ul>
 <table>
 <thead>
 <tr>
-<th>Port</th>
-<th>Usage</th>
+<th>Tool / Service</th>
+<th>Purpose</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>80</td>
-<td>Default HTTP (already used by Apache2 or Nginx)</td>
+<td>GitLab</td>
+<td>Source code management</td>
+<td>Your existing GitLab instance</td>
 </tr>
 <tr>
-<td>443</td>
-<td>Default HTTPS</td>
+<td>Telegram Bot</td>
+<td>Send notifications</td>
+<td>Create a bot via BotFather</td>
 </tr>
 <tr>
-<td>8080</td>
-<td>Common alternative for HTTP (easy to remember)</td>
+<td>GitLab Webhook</td>
+<td>Trigger Telegram notifications</td>
+<td>Configure webhook in GitLab repo</td>
 </tr>
 <tr>
-<td>8888</td>
-<td>Also used often for apps (like Jupyter, test servers)</td>
+<td>Middleware</td>
+<td>Optional: relay webhook to Telegram API</td>
+<td>Can be a simple script or service</td>
 </tr>
 <tr>
-<td>3000</td>
-<td>Common for dev servers (Node.js, React, etc.)</td>
+<td>IF You're looking to configure <strong>Telegram integration directly via GitLab’s built-in integration panel</strong> (under <strong>Settings → Integrations → Telegram</strong>).</td>
+<td></td>
+<td></td>
 </tr>
 <tr>
-<td>9090</td>
-<td>Often used by monitoring tools (e.g., Prometheus)</td>
+<td>Here's how to fill it out properly:</td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<h3 id="so-you-can-pick">✅ So you can pick:<a class="headerlink" href="#so-you-can-pick" title="Permanent link">&para;</a></h3>
+<hr />
+<h3 id="1-create-a-telegram-bot">✅ 1. <strong>Create a Telegram Bot</strong><a class="headerlink" href="#1-create-a-telegram-bot" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>8081</code>, <code>8082</code>, <code>8888</code>, <code>3001</code>, <code>5000</code>, etc.</li>
-<li>Just make sure the port is:<ul>
-<li><strong>Not used</strong> (<code>sudo lsof -i :&lt;port&gt;</code>)</li>
-<li><strong>Allowed by firewall</strong> (<code>sudo ufw allow &lt;port&gt;</code>)</li>
+<li>Open Telegram, search for <code>@BotFather</code></li>
+<li>Run <code>/newbot</code> and follow prompts</li>
+<li>Copy the <strong>bot token</strong> → you'll use this in GitLab</li>
+</ul>
+<hr />
+<h3 id="2-get-your-chat-id-or-channel-id">✅ 2. <strong>Get Your Chat ID or Channel ID</strong><a class="headerlink" href="#2-get-your-chat-id-or-channel-id" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Add the bot to your Telegram group or channel</li>
+<li>Promote the bot as <strong>Admin</strong></li>
+<li>To get the <strong>channel ID</strong>:<ul>
+<li>Use <code>https://api.telegram.org/bot&lt;your_bot_token&gt;/getUpdates</code></li>
+<li>Send a message to your channel after adding the bot</li>
+<li>You'll get a response containing something like:
+    <div class="highlight"><pre><span></span><code>&quot;chat&quot;: { &quot;id&quot;: -1001234567890, ... }
+</code></pre></div></li>
+<li>That <code>-1001234567890</code> is your <strong>Channel Identifier</strong></li>
 </ul>
 </li>
 </ul>
 <hr />
-<h3 id="example">🔄 Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
-<p>You want GitLab on port <strong>8888</strong>:</p>
-<ol>
-<li>
-<p>In <code>/etc/gitlab/gitlab.rb</code>:
-<div class="highlight"><pre><span></span><code><span class="n">external_url</span><span class="w"> </span><span class="s1">&#39;http://100.189.165.169:8888&#39;</span>
-</code></pre></div></p>
-</li>
-<li>
-<p>Then:
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>gitlab-ctl<span class="w"> </span>reconfigure
-sudo<span class="w"> </span>gitlab-ctl<span class="w"> </span>restart
-sudo<span class="w"> </span>lsof<span class="w"> </span>-i<span class="w"> </span>:8888
-sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">8888</span>
-</code></pre></div></p>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><code>buntu@gitlab-ce:~$<span class="w"> </span>sudo<span class="w"> </span>lsof<span class="w"> </span>-i<span class="w"> </span>:8888
-COMMAND<span class="w">     </span>PID<span class="w">       </span>USER<span class="w">   </span>FD<span class="w">   </span>TYPE<span class="w"> </span>DEVICE<span class="w"> </span>SIZE/OFF<span class="w"> </span>NODE<span class="w"> </span>NAME
-gitlab-ka<span class="w"> </span><span class="m">37234</span><span class="w">        </span>git<span class="w">    </span>6u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">196486</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>gitlab-ce.multipass:52078-&gt;gitlab-ce.multipass:8888<span class="w"> </span><span class="o">(</span>ESTABLISHED<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37245</span><span class="w">       </span>root<span class="w">    </span>7u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">197636</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>*:8888<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37246</span><span class="w"> </span>gitlab-www<span class="w">    </span>3u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">196808</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>gitlab-ce.multipass:8888-&gt;gitlab-ce.multipass:52078<span class="w"> </span><span class="o">(</span>ESTABLISHED<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37246</span><span class="w"> </span>gitlab-www<span class="w">    </span>7u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">197636</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>*:8888<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37247</span><span class="w"> </span>gitlab-www<span class="w">    </span>7u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">197636</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>*:8888<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37248</span><span class="w"> </span>gitlab-www<span class="w">    </span>7u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">197636</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>*:8888<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37249</span><span class="w"> </span>gitlab-www<span class="w">    </span>7u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">197636</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>*:8888<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-
-ubuntu@gitlab-ce:~$<span class="w"> </span>sudo<span class="w"> </span>lsof<span class="w"> </span>-i<span class="w"> </span>:9090
-COMMAND<span class="w">     </span>PID<span class="w">              </span>USER<span class="w">   </span>FD<span class="w">   </span>TYPE<span class="w"> </span>DEVICE<span class="w"> </span>SIZE/OFF<span class="w"> </span>NODE<span class="w"> </span>NAME
-prometheu<span class="w"> </span><span class="m">36090</span><span class="w"> </span>gitlab-prometheus<span class="w">    </span>6u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">184641</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>localhost:9090<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-prometheu<span class="w"> </span><span class="m">36090</span><span class="w"> </span>gitlab-prometheus<span class="w">   </span>23u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">184209</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>localhost:42624-&gt;localhost:9090<span class="w"> </span><span class="o">(</span>ESTABLISHED<span class="o">)</span>
-prometheu<span class="w"> </span><span class="m">36090</span><span class="w"> </span>gitlab-prometheus<span class="w">   </span>24u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">184210</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>localhost:9090-&gt;localhost:42624<span class="w"> </span><span class="o">(</span>ESTABLISHED<span class="o">)</span>
-ubuntu@gitlab-ce:~$<span class="w"> </span>sudo<span class="w"> </span>lsof<span class="w"> </span>-i<span class="w"> </span>:80
-ubuntu@gitlab-ce:~$<span class="w"> </span>
-</code></pre></div>
-<ol>
-<li>Access:
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://100.189.165.169:8888
-</code></pre></div></li>
-</ol>
-<p>Use whatever port works for you — just avoid conflicts with existing services.</p>
+<h3 id="3-gitlab-integrations-telegram">✅ 3. <strong>GitLab → Integrations → Telegram</strong><a class="headerlink" href="#3-gitlab-integrations-telegram" title="Permanent link">&para;</a></h3>
+<p>Fill in as below:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Active</strong></td>
+<td>✅ Check it</td>
+</tr>
+<tr>
+<td><strong>Hostname</strong></td>
+<td><code>https://api.telegram.org</code></td>
+</tr>
+<tr>
+<td><strong>Token</strong></td>
+<td>Your Telegram Bot Token from BotFather</td>
+</tr>
+<tr>
+<td><strong>Channel Identifier</strong></td>
+<td>e.g. <code>-1001234567890</code></td>
+</tr>
+<tr>
+<td><strong>Message thread ID</strong></td>
+<td>(Optional, for threads in forums/supergroups)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="4-enable-events-to-notify">✅ 4. Enable Events to Notify<a class="headerlink" href="#4-enable-events-to-notify" title="Permanent link">&para;</a></h3>
+<p>Scroll down and check:
+- Push events
+- Merge request events
+- Issue events<br />
+    ... or any others you want.</p>
+<p>Then <strong>click "Save changes"</strong>.</p>
 
 
 

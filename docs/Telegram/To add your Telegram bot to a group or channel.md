@@ -82,6 +82,6 @@ curl https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates
 ---
 gitlab integration configuration snapshots
 
-![[Pasted-image-20250803131344](../images/Pasted-image-20250803131344.png)
+![Pasted-image-20250803131344](../images/Pasted-image-20250803131344.png)
 
-![[Pasted-image-20250803131522](../images/Pasted-image-20250803131522.png)
+![Pasted-image-20250803131522](../images/Pasted-image-20250803131522.png)

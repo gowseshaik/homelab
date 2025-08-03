@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Go-lang/Untitled/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/python/trading%20bot%20creation/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Untitled - Gouse Shaik</title>
+        <title>Trading bot creation - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#build" class="md-skip">
+        <a href="#first-choose-your-setup" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Untitled
+              Trading bot creation
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Go-lang/Untitled.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/python/trading bot creation.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,25 +362,71 @@
   
 
 
-  <h1>Untitled</h1>
+  <h1>Trading bot creation</h1>
 
-<h5 id="build">Build<a class="headerlink" href="#build" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code>go build -o k8sgo k8sgo.go
+<p>Build a trading bot that receives updates and runs in Docker.</p>
+<hr />
+<h3 id="first-choose-your-setup">🔧 First, choose your setup:<a class="headerlink" href="#first-choose-your-setup" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Exchange source</strong>:<br />
+    Do you want to fetch updates from:</p>
+<ul>
+<li>Binance?</li>
+<li>Coinbase?</li>
+<li>NSE/BSE (India)? -Yes</li>
+<li>Yahoo Finance?</li>
+<li>Any other?</li>
+</ul>
+</li>
+<li>
+<p><strong>Updates type</strong>:</p>
+<ul>
+<li>Price changes?</li>
+<li>Volume? -&gt; yes</li>
+<li>Order book?</li>
+<li>Trade signals?</li>
+</ul>
+</li>
+<li>
+<p><strong>Notification method</strong>:</p>
+<ul>
+<li>Console logs?</li>
+<li>Telegram? - Yes</li>
+<li>Email?</li>
+<li>Dashboard?</li>
+</ul>
+</li>
+<li>
+<p><strong>Bot behavior (optional)</strong>:</p>
+<ul>
+<li>Just monitor?</li>
+<li>Simulated trading?</li>
+<li>Real trading with API keys?</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="basic-skeleton-plan">✅ Basic Skeleton Plan<a class="headerlink" href="#basic-skeleton-plan" title="Permanent link">&para;</a></h3>
+<h4 id="1-project-structure">1. <strong>Project Structure</strong><a class="headerlink" href="#1-project-structure" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>trading-bot/
+├── bot.py
+├── requirements.txt
+├── Dockerfile
+└── config.json  (optional)
 </code></pre></div>
-<h5 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code>./k8sgo
-</code></pre></div>
-<p>📦 For Distribution</p>
-<p>When building for different platforms:</p>
-<h5 id="for-linux">For Linux<a class="headerlink" href="#for-linux" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code>GOOS=linux GOARCH=amd64 go build -o k8sgo-linux k8sgo.go  
-</code></pre></div>
-<h5 id="for-windows">For Windows<a class="headerlink" href="#for-windows" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code>GOOS=windows GOARCH=amd64 go build -o k8sgo-windows.exe k8sgo.go
-</code></pre></div>
-<h5 id="for-macos">For macOS<a class="headerlink" href="#for-macos" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code>GOOS=darwin GOARCH=amd64 go build -o k8sgo-macos k8sgo.go
-</code></pre></div>
+<h4 id="2-python-example-binance-client-skeleton">2. <strong>Python example (binance client skeleton)</strong><a class="headerlink" href="#2-python-example-binance-client-skeleton" title="Permanent link">&para;</a></h4>
+<p>Want me to start with a simple Binance (or Yahoo) live price poller + Telegram notifier?<br />
+Once confirmed, I’ll give you:</p>
+<ul>
+<li>Clean Python code (polling + Telegram send)</li>
+<li><code>requirements.txt</code></li>
+<li><code>Dockerfile</code></li>
+<li><code>docker run</code> command</li>
+</ul>
+<p>Just tell me:
+- Your preferred data source (e.g., Binance, Yahoo)
+- Whether to send alerts via Telegram or just print in logs</p>
 
 
 
