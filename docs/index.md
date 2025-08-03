@@ -141,7 +141,10 @@
 ## Kubernetes
 - [Customize - context names in k8s](Kubernetes/Customize - context names in k8s.md)
 - [Full Sequence to Implement Kubernetes with kubeadm](Kubernetes/Full Sequence to Implement Kubernetes with kubeadm.md)
+<<<<<<< HEAD
 - [Installing metric server](Kubernetes/Installing metric server.md)
+=======
+>>>>>>> 5c53e79 (updated index)
 - [K8s - manifest files structure](Kubernetes/K8s - manifest files structure.md)
 - [K8s Pod Architecture & Lifecycle](Kubernetes/K8s Pod Architecture & Lifecycle.md)
 - [Kube API server Architechture - deep dive](Kubernetes/Kube API server Architechture - deep dive.md)
@@ -154,7 +157,10 @@
 
 ## Longhorn
 - [Can You Use Longhorn on top of NFS](Longhorn/Can You Use Longhorn on top of NFS.md)
+<<<<<<< HEAD
 - [Create a PV and PVC using longhorn-static](Longhorn/Create a PV and PVC using longhorn-static.md)
+=======
+>>>>>>> 5c53e79 (updated index)
 - [Hands-On - Deploying Longhorn on Kubernetes](Longhorn/Hands-On - Deploying Longhorn on Kubernetes.md)
 - [Longhorn Access Modes & Volume Resizing Guide](Longhorn/Longhorn Access Modes & Volume Resizing Guide.md)
 - [Longhorn for stateful applications](Longhorn/Longhorn for stateful applications.md)
