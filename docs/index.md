@@ -153,6 +153,7 @@
 - [Reverse proxy means](Loadbalancers Types/Reverse proxy means.md)
 
 ## Longhorn
+- [Can You Use Longhorn on top of NFS](Longhorn/Can You Use Longhorn on top of NFS.md)
 - [Create a PV and PVC using longhorn-static](Longhorn/Create a PV and PVC using longhorn-static.md)
 - [Hands-On - Deploying Longhorn on Kubernetes](Longhorn/Hands-On - Deploying Longhorn on Kubernetes.md)
 - [Longhorn Access Modes & Volume Resizing Guide](Longhorn/Longhorn Access Modes & Volume Resizing Guide.md)
