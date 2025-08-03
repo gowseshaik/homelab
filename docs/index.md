@@ -148,6 +148,8 @@
 - [Kuberentes usecases-deepdive flow](Kubernetes/Kuberentes usecases-deepdive flow.md)
 - [Kubernetes history](Kubernetes/Kubernetes history.md)
 
+## Linux
+
 ## Loadbalancers types
 - [Loadbalancer Types](Loadbalancers Types/Loadbalancer Types.md)
 - [Reverse proxy means](Loadbalancers Types/Reverse proxy means.md)
@@ -181,6 +183,7 @@
 - [nexus3-cli-deprecated not working](Nexus/nexus3-cli-deprecated not working.md)
 
 ## Nodejs
+- [Gaming app for kids](Nodejs/Gaming app for kids.md)
 - [Installing Node.js with Apt from the Default Repositories](Nodejs/Installing Node.js with Apt from the Default Repositories.md)
 - [To completely uninstall your current Node.js](Nodejs/To completely uninstall your current Node.js.md)
 
@@ -249,6 +252,7 @@
 
 ## Ubuntu
 - [Check memory slots available](Ubuntu/Check memory slots available.md)
+- [To get the ip of your host](Ubuntu/To get the ip of your host.md)
 - [list of good tools to extract rar part files](Ubuntu/list of good tools to extract rar part files.md)
 
 ## Annotations
@@ -276,6 +280,12 @@
 - [git errors](git/git errors.md)
 - [push to new branch](git/push to new branch.md)
 
+## Gitlab
+- [Gitlab - Runners setup](gitlab/Gitlab - Runners setup.md)
+- [Gitlab - port changing](gitlab/Gitlab - port changing.md)
+- [Gitlab to import Gitea repos -fix](gitlab/Gitlab to import Gitea repos -fix.md)
+- [gitlab - Executors](gitlab/gitlab - Executors.md)
+
 ## Images
 
 ## Mailhog
@@ -299,6 +309,7 @@
 ## Nginx
 - [Configuring Multiple Services on Common Ports](nginx/Configuring Multiple Services on Common Ports.md)
 - [Installing and Configuring Nginx on Ubuntu](nginx/Installing and Configuring Nginx on Ubuntu.md)
+- [nignx-multipass-tailscale](nginx/nignx-multipass-tailscale.md)
 
 ## Python
 - [Microservice for Amazon affiliate marketing data scraping](python/Microservice for Amazon affiliate marketing data scraping.md)
