@@ -88,6 +88,9 @@
 - [Deployments Strategies](Deployments/Deployments Strategies.md)
 - [Deployments in kubernetes](Deployments/Deployments in kubernetes.md)
 
+## Devops sites
+- [DevOps - Knowledge Websites](DevOps Sites/DevOps - Knowledge Websites.md)
+
 ## Docker-podman-images
 - [Build Docker images directly from Git repos](Docker-Podman-images/Build Docker images directly from Git repos.md)
 - [Docker-compose to K8s](Docker-Podman-images/Docker-compose to K8s.md)
@@ -103,7 +106,7 @@
 - [Gateway API in k8s](Gateway API in K8s/Gateway API in k8s.md)
 
 ## Go-lang
-- [Building package as a tool for ARCH](Building%20package%20as%20a%20tool%20for%20ARCH.md)
+- [Building package as a tool for ARCH](Go-lang/Building package as a tool for ARCH.md)
 
 ## Helm
 - [1. Check Helm Release(deployed) Information](Helm/1. Check Helm Release(deployed) Information.md)
@@ -243,6 +246,11 @@
 - [Understanding Tolerations in Kubernetes](Taint-Tolerations/Understanding Tolerations in Kubernetes.md)
 - [What is taint-toleration](Taint-Tolerations/What is taint-toleration.md)
 
+## Telegram
+- [Telegram - Create Bot](Telegram/Telegram - Create Bot.md)
+- [Telegram bots - deletions](Telegram/Telegram bots - deletions.md)
+- [To add your Telegram bot to a group or channel](Telegram/To add your Telegram bot to a group or channel.md)
+
 ## Traefik
 - [Securing Traefik Dashboard with Keycloak (OIDC or OAuth2)](Traefik/Securing Traefik Dashboard with Keycloak (OIDC or OAuth2).md)
 - [Traefik Dashboard only for Visibility not for Administration](Traefik/Traefik Dashboard only for Visibility not for Administration.md)
@@ -279,6 +287,7 @@
 
 ## Gitlab
 - [Gitlab - Runners setup](gitlab/Gitlab - Runners setup.md)
+- [Gitlab - Telegram integration](gitlab/Gitlab - Telegram integration.md)
 - [Gitlab - port changing](gitlab/Gitlab - port changing.md)
 - [Gitlab to import Gitea repos -fix](gitlab/Gitlab to import Gitea repos -fix.md)
 - [gitlab - Executors](gitlab/gitlab - Executors.md)
@@ -313,6 +322,7 @@
 - [Microservices - Project](python/Microservices - Project.md)
 - [mkdocs to github pages](python/mkdocs to github pages.md)
 - [python pyautogui](python/python pyautogui.md)
+- [trading bot creation](python/trading bot creation.md)
 
 ## Templates
 - [frontmatter](templates/frontmatter.md)
