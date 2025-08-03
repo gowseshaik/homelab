@@ -61,7 +61,6 @@
 - [Configuring Keycloak for Kubernetes authentication](ClusterAccess/Configuring Keycloak for Kubernetes authentication.md)
 - [Create a kubeconfig file for the external users](ClusterAccess/Create a kubeconfig file for the external users.md)
 - [merge two kubeconfig files](ClusterAccess/merge two kubeconfig files.md)
-- [merge](ClusterAccess/merge.md)
 
 ## Configmaps
 - [ConfigMap is a Kubernetes object used to store non-confidential data](ConfigMaps/ConfigMap is a Kubernetes object used to store non-confidential data.md)
@@ -162,7 +161,6 @@
 - [Longhorn with loopback file on Kind](Longhorn/Longhorn with loopback file on Kind.md)
 - [Nginx pod with a volume backed by Longhorn](Longhorn/Nginx pod with a volume backed by Longhorn.md)
 - [Steps to Install Longhorn on K3d](Longhorn/Steps to Install Longhorn on K3d.md)
-- [Untitled](Longhorn/Untitled.md)
 - [Use Longhorn for PV and mount to MinIO](Longhorn/Use Longhorn for PV and mount to MinIO.md)
 - [Using Longhorn Storage with Kind Cluster](Longhorn/Using Longhorn Storage with Kind Cluster.md)
 
