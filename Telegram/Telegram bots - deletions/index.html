@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/gitlab/Gitlab%20-%20port%20changing/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Telegram/Telegram%20bots%20-%20deletions/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Gitlab port changing - Gouse Shaik</title>
+        <title>Telegram bots deletions - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#why-8080-is-common" class="md-skip">
+        <a href="#steps-to-delete-a-telegram-bot" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Gitlab   port changing
+              Telegram bots   deletions
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/gitlab/Gitlab - port changing.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Telegram/Telegram bots - deletions.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,96 +362,59 @@
   
 
 
-  <h1>Gitlab   port changing</h1>
-
 <p><span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<p>You can use <strong>any free port</strong> — not just 8080. 8080 is simply a <strong>common convention</strong> for web apps when port 80 is taken or reserved.</p>
-<h3 id="why-8080-is-common">✅ Why 8080 is Common:<a class="headerlink" href="#why-8080-is-common" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Port</th>
-<th>Usage</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>80</td>
-<td>Default HTTP (already used by Apache2 or Nginx)</td>
-</tr>
-<tr>
-<td>443</td>
-<td>Default HTTPS</td>
-</tr>
-<tr>
-<td>8080</td>
-<td>Common alternative for HTTP (easy to remember)</td>
-</tr>
-<tr>
-<td>8888</td>
-<td>Also used often for apps (like Jupyter, test servers)</td>
-</tr>
-<tr>
-<td>3000</td>
-<td>Common for dev servers (Node.js, React, etc.)</td>
-</tr>
-<tr>
-<td>9090</td>
-<td>Often used by monitoring tools (e.g., Prometheus)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="so-you-can-pick">✅ So you can pick:<a class="headerlink" href="#so-you-can-pick" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>8081</code>, <code>8082</code>, <code>8888</code>, <code>3001</code>, <code>5000</code>, etc.</li>
-<li>Just make sure the port is:<ul>
-<li><strong>Not used</strong> (<code>sudo lsof -i :&lt;port&gt;</code>)</li>
-<li><strong>Allowed by firewall</strong> (<code>sudo ufw allow &lt;port&gt;</code>)</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h3 id="example">🔄 Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
-<p>You want GitLab on port <strong>8888</strong>:</p>
+<p>You can delete Telegram bots via <strong>BotFather</strong>, but technically you <em>can't fully delete</em> a bot — you can only <strong>revoke its token</strong> and <strong>make it unusable</strong>.</p>
+<h3 id="steps-to-delete-a-telegram-bot">✅ Steps to "delete" a Telegram bot:<a class="headerlink" href="#steps-to-delete-a-telegram-bot" title="Permanent link">&para;</a></h3>
 <ol>
+<li>Open Telegram and go to <code>@BotFather</code></li>
 <li>
-<p>In <code>/etc/gitlab/gitlab.rb</code>:
-<div class="highlight"><pre><span></span><code><span class="n">external_url</span><span class="w"> </span><span class="s1">&#39;http://100.189.165.169:8888&#39;</span>
-</code></pre></div></p>
-</li>
-<li>
-<p>Then:
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>gitlab-ctl<span class="w"> </span>reconfigure
-sudo<span class="w"> </span>gitlab-ctl<span class="w"> </span>restart
-sudo<span class="w"> </span>lsof<span class="w"> </span>-i<span class="w"> </span>:8888
-sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">8888</span>
-</code></pre></div></p>
-</li>
-</ol>
-<div class="highlight"><pre><span></span><code>buntu@gitlab-ce:~$<span class="w"> </span>sudo<span class="w"> </span>lsof<span class="w"> </span>-i<span class="w"> </span>:8888
-COMMAND<span class="w">     </span>PID<span class="w">       </span>USER<span class="w">   </span>FD<span class="w">   </span>TYPE<span class="w"> </span>DEVICE<span class="w"> </span>SIZE/OFF<span class="w"> </span>NODE<span class="w"> </span>NAME
-gitlab-ka<span class="w"> </span><span class="m">37234</span><span class="w">        </span>git<span class="w">    </span>6u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">196486</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>gitlab-ce.multipass:52078-&gt;gitlab-ce.multipass:8888<span class="w"> </span><span class="o">(</span>ESTABLISHED<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37245</span><span class="w">       </span>root<span class="w">    </span>7u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">197636</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>*:8888<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37246</span><span class="w"> </span>gitlab-www<span class="w">    </span>3u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">196808</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>gitlab-ce.multipass:8888-&gt;gitlab-ce.multipass:52078<span class="w"> </span><span class="o">(</span>ESTABLISHED<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37246</span><span class="w"> </span>gitlab-www<span class="w">    </span>7u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">197636</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>*:8888<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37247</span><span class="w"> </span>gitlab-www<span class="w">    </span>7u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">197636</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>*:8888<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37248</span><span class="w"> </span>gitlab-www<span class="w">    </span>7u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">197636</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>*:8888<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-nginx<span class="w">     </span><span class="m">37249</span><span class="w"> </span>gitlab-www<span class="w">    </span>7u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">197636</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>*:8888<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-
-ubuntu@gitlab-ce:~$<span class="w"> </span>sudo<span class="w"> </span>lsof<span class="w"> </span>-i<span class="w"> </span>:9090
-COMMAND<span class="w">     </span>PID<span class="w">              </span>USER<span class="w">   </span>FD<span class="w">   </span>TYPE<span class="w"> </span>DEVICE<span class="w"> </span>SIZE/OFF<span class="w"> </span>NODE<span class="w"> </span>NAME
-prometheu<span class="w"> </span><span class="m">36090</span><span class="w"> </span>gitlab-prometheus<span class="w">    </span>6u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">184641</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>localhost:9090<span class="w"> </span><span class="o">(</span>LISTEN<span class="o">)</span>
-prometheu<span class="w"> </span><span class="m">36090</span><span class="w"> </span>gitlab-prometheus<span class="w">   </span>23u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">184209</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>localhost:42624-&gt;localhost:9090<span class="w"> </span><span class="o">(</span>ESTABLISHED<span class="o">)</span>
-prometheu<span class="w"> </span><span class="m">36090</span><span class="w"> </span>gitlab-prometheus<span class="w">   </span>24u<span class="w">  </span>IPv4<span class="w"> </span><span class="m">184210</span><span class="w">      </span>0t0<span class="w">  </span>TCP<span class="w"> </span>localhost:9090-&gt;localhost:42624<span class="w"> </span><span class="o">(</span>ESTABLISHED<span class="o">)</span>
-ubuntu@gitlab-ce:~$<span class="w"> </span>sudo<span class="w"> </span>lsof<span class="w"> </span>-i<span class="w"> </span>:80
-ubuntu@gitlab-ce:~$<span class="w"> </span>
+<p>Send the command:</p>
+<div class="highlight"><pre><span></span><code>/mybots
 </code></pre></div>
-<ol>
-<li>Access:
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://100.189.165.169:8888
-</code></pre></div></li>
+</li>
+<li>
+<p>Select the bot you want to delete</p>
+</li>
+<li>Tap <strong>"Edit Bot"</strong></li>
+<li>Tap <strong>"Delete Bot"</strong></li>
+<li>Confirm when prompted</li>
 </ol>
-<p>Use whatever port works for you — just avoid conflicts with existing services.</p>
+<blockquote>
+<p>💡 This will revoke the token and unregister it — nobody can use it again.</p>
+</blockquote>
+<hr />
+<p>If you prefer to just disable it:
+- Use <code>/revoke</code> or <code>/token</code> in BotFather to invalidate the bot’s token.</p>
+<h1 id="i-can-help-you-create-and-manage-telegram-bots">I can help you create and manage Telegram bots.<a class="headerlink" href="#i-can-help-you-create-and-manage-telegram-bots" title="Permanent link">&para;</a></h1>
+<p>If you're new to the Bot API, please see the manual (https://core.telegram.org/bots).</p>
+<p>You can control me by sending these commands:
+<div class="highlight"><pre><span></span><code><span class="err">/</span><span class="kc">ne</span><span class="err">wbo</span><span class="kc">t</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">crea</span><span class="kc">te</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="kc">ne</span><span class="err">w</span><span class="w"> </span><span class="err">bo</span><span class="kc">t</span>
+<span class="err">/mybo</span><span class="kc">ts</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">edi</span><span class="kc">t</span><span class="w"> </span><span class="err">your</span><span class="w"> </span><span class="err">bo</span><span class="kc">ts</span><span class="w"> </span><span class="p">[</span><span class="err">be</span><span class="kc">ta</span><span class="p">]</span>
+</code></pre></div></p>
+<p>Edit Bots
+<div class="highlight"><pre><span></span><code><span class="err">/se</span><span class="kc">tna</span><span class="err">me</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">cha</span><span class="kc">n</span><span class="err">ge</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">bo</span><span class="kc">t</span><span class="err">&#39;s</span><span class="w"> </span><span class="kc">na</span><span class="err">me</span>
+<span class="err">/se</span><span class="kc">t</span><span class="err">descrip</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">cha</span><span class="kc">n</span><span class="err">ge</span><span class="w"> </span><span class="err">bo</span><span class="kc">t</span><span class="w"> </span><span class="err">descrip</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span>
+<span class="err">/se</span><span class="kc">ta</span><span class="err">bou</span><span class="kc">tte</span><span class="err">x</span><span class="kc">t</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">cha</span><span class="kc">n</span><span class="err">ge</span><span class="w"> </span><span class="err">bo</span><span class="kc">t</span><span class="w"> </span><span class="err">abou</span><span class="kc">t</span><span class="w"> </span><span class="err">i</span><span class="kc">nf</span><span class="err">o</span>
+<span class="err">/se</span><span class="kc">tuser</span><span class="err">pic</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">cha</span><span class="kc">n</span><span class="err">ge</span><span class="w"> </span><span class="err">bo</span><span class="kc">t</span><span class="w"> </span><span class="err">pro</span><span class="kc">f</span><span class="err">ile</span><span class="w"> </span><span class="err">pho</span><span class="kc">t</span><span class="err">o</span>
+<span class="err">/se</span><span class="kc">t</span><span class="err">comma</span><span class="kc">n</span><span class="err">ds</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">cha</span><span class="kc">n</span><span class="err">ge</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">lis</span><span class="kc">t</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="err">comma</span><span class="kc">n</span><span class="err">ds</span>
+<span class="err">/dele</span><span class="kc">te</span><span class="err">bo</span><span class="kc">t</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">dele</span><span class="kc">te</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">bo</span><span class="kc">t</span>
+</code></pre></div></p>
+<p>Bot Settings
+<div class="highlight"><pre><span></span><code><span class="err">/</span><span class="kc">t</span><span class="err">oke</span><span class="kc">n</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">ge</span><span class="kc">nerate</span><span class="w"> </span><span class="err">au</span><span class="kc">t</span><span class="err">horiza</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="w"> </span><span class="kc">t</span><span class="err">oke</span><span class="kc">n</span>
+<span class="err">/revoke</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">revoke</span><span class="w"> </span><span class="err">bo</span><span class="kc">t</span><span class="w"> </span><span class="err">access</span><span class="w"> </span><span class="kc">t</span><span class="err">oke</span><span class="kc">n</span>
+<span class="err">/se</span><span class="kc">t</span><span class="err">i</span><span class="kc">nl</span><span class="err">i</span><span class="kc">ne</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="kc">t</span><span class="err">oggle</span><span class="w"> </span><span class="err">i</span><span class="kc">nl</span><span class="err">i</span><span class="kc">ne</span><span class="w"> </span><span class="err">mode</span><span class="w"> </span><span class="err">(h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="c1">//core.telegram.org/bots/inline)</span>
+<span class="err">/se</span><span class="kc">t</span><span class="err">i</span><span class="kc">nl</span><span class="err">i</span><span class="kc">ne</span><span class="err">geo</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="kc">t</span><span class="err">oggle</span><span class="w"> </span><span class="err">i</span><span class="kc">nl</span><span class="err">i</span><span class="kc">ne</span><span class="w"> </span><span class="err">loca</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="w"> </span><span class="err">reques</span><span class="kc">ts</span><span class="w"> </span><span class="err">(h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="c1">//core.telegram.org/bots/inline#location-based-results)</span>
+<span class="err">/se</span><span class="kc">t</span><span class="err">i</span><span class="kc">nl</span><span class="err">i</span><span class="kc">nefee</span><span class="err">dback</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">cha</span><span class="kc">n</span><span class="err">ge</span><span class="w"> </span><span class="err">i</span><span class="kc">nl</span><span class="err">i</span><span class="kc">ne</span><span class="w"> </span><span class="kc">fee</span><span class="err">dback</span><span class="w"> </span><span class="err">(h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="c1">//core.telegram.org/bots/inline#collecting-feedback) settings</span>
+<span class="err">/se</span><span class="kc">t</span><span class="err">joi</span><span class="kc">n</span><span class="err">groups</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">ca</span><span class="kc">n</span><span class="w"> </span><span class="err">your</span><span class="w"> </span><span class="err">bo</span><span class="kc">t</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">added</span><span class="w"> </span><span class="kc">t</span><span class="err">o</span><span class="w"> </span><span class="err">groups?</span>
+<span class="err">/se</span><span class="kc">t</span><span class="err">privacy</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="kc">t</span><span class="err">oggle</span><span class="w"> </span><span class="err">privacy</span><span class="w"> </span><span class="err">mode</span><span class="w"> </span><span class="err">(h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="c1">//core.telegram.org/bots#privacy-mode) in groups</span>
+</code></pre></div></p>
+<p>Games
+<div class="highlight"><pre><span></span><code><span class="err">/mygames</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">edi</span><span class="kc">t</span><span class="w"> </span><span class="err">your</span><span class="w"> </span><span class="err">games</span><span class="w"> </span><span class="err">(h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="c1">//core.telegram.org/bots/games) [beta]</span>
+<span class="err">/</span><span class="kc">ne</span><span class="err">wgame</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">crea</span><span class="kc">te</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="kc">ne</span><span class="err">w</span><span class="w"> </span><span class="err">game</span><span class="w"> </span><span class="err">(h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="c1">//core.telegram.org/bots/games)</span>
+<span class="err">/lis</span><span class="kc">t</span><span class="err">games</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">ge</span><span class="kc">t</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">lis</span><span class="kc">t</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="err">your</span><span class="w"> </span><span class="err">games</span>
+<span class="err">/edi</span><span class="kc">t</span><span class="err">game</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">edi</span><span class="kc">t</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">game</span>
+<span class="err">/dele</span><span class="kc">te</span><span class="err">game</span><span class="w"> </span><span class="mi">-</span><span class="w"> </span><span class="err">dele</span><span class="kc">te</span><span class="w"> </span><span class="err">a</span><span class="kc">n</span><span class="w"> </span><span class="err">exis</span><span class="kc">t</span><span class="err">i</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="err">game</span>
+</code></pre></div></p>
 
 
 
