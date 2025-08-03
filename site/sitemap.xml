@@ -377,6 +377,10 @@
          <lastmod>2025-07-26</lastmod>
     </url>
     <url>
+         <loc>https://github.com/gowseshaik/homelab/Kubernetes/K8s%20-%20manifest%20files%20structure/</loc>
+         <lastmod>2025-07-09</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/gowseshaik/homelab/Kubernetes/K8s%20Pod%20Architecture%20%26%20Lifecycle/</loc>
          <lastmod>2025-07-26</lastmod>
     </url>
@@ -455,6 +459,10 @@
     <url>
          <loc>https://github.com/gowseshaik/homelab/Namespace/Default%20namespaces/</loc>
          <lastmod>2025-07-26</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/gowseshaik/homelab/Namespace/Default%20namespaces/</loc>
+         <lastmod>2025-07-09</lastmod>
     </url>
     <url>
          <loc>https://github.com/gowseshaik/homelab/Namespace/Delete%20all%20resources%20from%20namespace/</loc>
