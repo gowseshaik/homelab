@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/Longhorn/Untitled.md",
+                "file": "docs/Longhorn/Create a PV and PVC using longhorn-static.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Untitled"
+              "title": "Create a PV and PVC using longhorn-static"
             }
           }
         ]
@@ -170,8 +170,8 @@
   },
   "active": "e87aa31bb6cd3006",
   "lastOpenFiles": [
-    "docs/Longhorn/Create a PV and PVC using longhorn-static.md",
     "docs/Longhorn/Untitled.md",
+    "docs/Longhorn/Create a PV and PVC using longhorn-static.md",
     "docs/Kubernetes/K8s - manifest files structure.md",
     "docs/Longhorn/Can You Use Longhorn on top of NFS.md",
     "site/velero - for migration/Velero backup and restore command examples/index.html",
