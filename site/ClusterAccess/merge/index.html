@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/metric-server/Steps%20to%20install%20metric%20server/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/ClusterAccess/merge/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Steps to install metric server - Gouse Shaik</title>
+        <title>Merge - Gouse Shaik</title>
       
     
     
@@ -69,11 +69,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#fix-patch-all-required-args-explicitly" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -105,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Steps to install metric server
+              Merge
             
           </span>
         </div>
@@ -354,7 +349,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/metric-server/Steps to install metric server.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/ClusterAccess/merge.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,55 +357,9 @@
   
 
 
-  <h1>Steps to install metric server</h1>
+  <h1>Merge</h1>
 
-<<<<<<< HEAD
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-=======
->>>>>>> fde2d51 (updating with local)
->>>>>>> 6482ad7 (updated with remote)
->>>>>>> 2bb263d241b4534c4dfee6de498178a076757860
-<p>Step 1:
-<div class="highlight"><pre><span></span><code>$ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-</code></pre></div></p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>k<span class="w"> </span>get<span class="w"> </span>all<span class="w"> </span>-A
-NAMESPACE<span class="w">    </span>NAME<span class="w">                                </span>READY<span class="w"> </span>STATUS<span class="w">  </span>RESTARTS<span class="w">  </span>AGE
-kube-system<span class="w">  </span>pod/metrics-server-64c95ff7bb-gw692<span class="w">  </span><span class="m">0</span>/1<span class="w">  </span>Running<span class="w">      </span><span class="m">0</span><span class="w">     </span>32s
 
-$<span class="w"> </span>k<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>metrics-server-64c95ff7bb-gw692
-Events:
-<span class="w">  </span>Type<span class="w">     </span>Reason<span class="w">     </span>Age<span class="w">               </span>From<span class="w">               </span>Message
-<span class="w">  </span>----<span class="w">     </span>------<span class="w">     </span>----<span class="w">              </span>----<span class="w">               </span>-------
-<span class="w">  </span>Normal<span class="w">   </span>Scheduled<span class="w">  </span>51s<span class="w">               </span>default-scheduler<span class="w">  </span>Successfully<span class="w"> </span>assigned<span class="w"> </span>kube-system/metrics-server-64c95ff7bb-gw692<span class="w"> </span>to<span class="w"> </span>int-cluster-control-plane
-<span class="w">  </span>Normal<span class="w">   </span>Pulling<span class="w">    </span>52s<span class="w">               </span>kubelet<span class="w">            </span>Pulling<span class="w"> </span>image<span class="w"> </span><span class="s2">&quot;registry.k8s.io/metrics-server/metrics-server:v0.8.0&quot;</span>
-<span class="w">  </span>Normal<span class="w">   </span>Pulled<span class="w">     </span>45s<span class="w">               </span>kubelet<span class="w">            </span>Successfully<span class="w"> </span>pulled<span class="w"> </span>image<span class="w"> </span><span class="s2">&quot;registry.k8s.io/metrics-server/metrics-server:v0.8.0&quot;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">6</span>.406172997s<span class="w"> </span><span class="o">(</span><span class="m">6</span>.406182876s<span class="w"> </span>including<span class="w"> </span>waiting<span class="o">)</span>
-<span class="w">  </span>Normal<span class="w">   </span>Created<span class="w">    </span>45s<span class="w">               </span>kubelet<span class="w">            </span>Created<span class="w"> </span>container<span class="w"> </span>metrics-server
-<span class="w">  </span>Normal<span class="w">   </span>Started<span class="w">    </span>45s<span class="w">               </span>kubelet<span class="w">            </span>Started<span class="w"> </span>container<span class="w"> </span>metrics-server
-<span class="w">  </span>Warning<span class="w">  </span>Unhealthy<span class="w">  </span>2s<span class="w"> </span><span class="o">(</span>x3<span class="w"> </span>over<span class="w"> </span>22s<span class="o">)</span><span class="w">  </span>kubelet<span class="w">            </span>Readiness<span class="w"> </span>probe<span class="w"> </span>failed:<span class="w"> </span>HTTP<span class="w"> </span>probe<span class="w"> </span>failed<span class="w"> </span>with<span class="w"> </span>statuscode:<span class="w"> </span><span class="m">500</span>
-</code></pre></div>
-<p>The <code>Readiness probe failed: HTTP probe failed with statuscode: 500</code> usually means <strong>Metrics Server is running</strong> but <strong>can't scrape metrics from kubelets</strong> — even after adding <code>--kubelet-insecure-tls</code>.</p>
-<h3 id="fix-patch-all-required-args-explicitly">✅ Fix: Patch all required args explicitly<a class="headerlink" href="#fix-patch-all-required-args-explicitly" title="Permanent link">&para;</a></h3>
-<p>Kind clusters often require <strong>multiple flags</strong>. Apply this <strong>one-shot full patch</strong>:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>deployment<span class="w"> </span>metrics-server<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>--type<span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="w"> </span>-p<span class="o">=</span><span class="s1">&#39;[</span>
-<span class="s1">  {&quot;op&quot;:&quot;add&quot;,&quot;path&quot;:&quot;/spec/template/spec/containers/0/args/-&quot;,&quot;value&quot;:&quot;--kubelet-preferred-address-types=InternalIP&quot;},</span>
-<span class="s1">  {&quot;op&quot;:&quot;add&quot;,&quot;path&quot;:&quot;/spec/template/spec/containers/0/args/-&quot;,&quot;value&quot;:&quot;--kubelet-insecure-tls&quot;}</span>
-<span class="s1">]&#39;</span>
-</code></pre></div>
-<p>Then <strong>restart the pod</strong> to force changes:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>-l<span class="w"> </span>k8s-app<span class="o">=</span>metrics-server
-</code></pre></div>
-<hr />
-<h3 id="verify">Verify:<a class="headerlink" href="#verify" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>top<span class="w"> </span>nodes
-kubectl<span class="w"> </span>top<span class="w"> </span>pods<span class="w"> </span>-A
-</code></pre></div>
-<hr />
-<p>Let me know if it still fails — I’ll give a complete working manifest override for Kind.</p>
 
 
 
