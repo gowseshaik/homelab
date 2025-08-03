@@ -169,10 +169,6 @@
          <lastmod>2025-08-03</lastmod>
     </url>
     <url>
-         <loc>https://github.com/gowseshaik/homelab/ClusterAccess/merge/</loc>
-         <lastmod>2025-08-03</lastmod>
-    </url>
-    <url>
          <loc>https://github.com/gowseshaik/homelab/ConfigMaps/ConfigMap%20is%20a%20Kubernetes%20object%20used%20to%20store%20non-confidential%20data/</loc>
          <lastmod>2025-08-03</lastmod>
     </url>
@@ -409,7 +405,7 @@
          <lastmod>2025-08-03</lastmod>
     </url>
     <url>
-         <loc>https://github.com/gowseshaik/homelab/Longhorn/Can%20You%20Use%20Longhorn%20_on%20top%20of_%20NFS%20%3F/</loc>
+         <loc>https://github.com/gowseshaik/homelab/Longhorn/Can%20You%20Use%20Longhorn%20on%20top%20of%20NFS/</loc>
          <lastmod>2025-08-03</lastmod>
     </url>
     <url>
