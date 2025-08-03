@@ -1,4 +1,4 @@
-## Can You Use Longhorn on top of NFS?
+## Can You Use Longhorn on top of NFS
 
 **🔴 No — Longhorn does not support NFS as a backend.**  
 Longhorn **requires direct block storage** (local SSD/HDD attached to nodes).  
