@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#claude-code-overview" class="md-skip">
+        <a href="#clean-steps-to-install-nodejs-v20-lts-on-ubuntu" class="md-skip">
           Skip to content
         </a>
       
@@ -380,6 +380,87 @@
 </code></pre></div>
 <p>This allows you to install modules and packages to use with Node.js.</p>
 <p>At this point, you have successfully installed Node.js and <code>npm</code> using <code>apt</code> and the default Ubuntu software repositories. The next section will show how to use an alternate repository to install different versions of Node.js.</p>
+<h1 id="clean-steps-to-install-nodejs-v20-lts-on-ubuntu">Clean steps to install <strong>Node.js v20 LTS</strong> on Ubuntu:<a class="headerlink" href="#clean-steps-to-install-nodejs-v20-lts-on-ubuntu" title="Permanent link">&para;</a></h1>
+<h2 id="method-1-using-nodesource-apt-based-recommended">✅ Method 1: Using <strong>NodeSource (APT-based, recommended)</strong><a class="headerlink" href="#method-1-using-nodesource-apt-based-recommended" title="Permanent link">&para;</a></h2>
+<h3 id="step-by-step">🔧 Step-by-step:<a class="headerlink" href="#step-by-step" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Update packages</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+
+<span class="c1"># 2. Add Node.js 20.x repo</span>
+curl<span class="w"> </span>-fsSL<span class="w"> </span>https://deb.nodesource.com/setup_20.x<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>-E<span class="w"> </span>bash<span class="w"> </span>-
+
+<span class="c1"># 3. Install Node.js</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>nodejs
+
+<span class="c1"># 4. Confirm installation</span>
+node<span class="w"> </span>-v<span class="w">   </span><span class="c1"># should show v20.x</span>
+npm<span class="w"> </span>-v<span class="w">    </span><span class="c1"># should show latest npm</span>
+</code></pre></div>
+<hr />
+<h2 id="method-2-using-nvm-node-version-manager">✅ Method 2: Using <strong>NVM (Node Version Manager)</strong><a class="headerlink" href="#method-2-using-nvm-node-version-manager" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Use this if you want to switch between versions easily.</p>
+</blockquote>
+<h3 id="step-by-step_1">🔧 Step-by-step:<a class="headerlink" href="#step-by-step_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Install NVM</span>
+curl<span class="w"> </span>-o-<span class="w"> </span>https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+
+curl<span class="w"> </span>-o-<span class="w"> </span>https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+
+<span class="c1"># 2. Load nvm immediately (or restart terminal)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.nvm&quot;</span>
+<span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NVM_DIR</span><span class="s2">/nvm.sh&quot;</span>
+
+<span class="c1"># 3. Install Node.js 20</span>
+nvm<span class="w"> </span>install<span class="w"> </span><span class="m">20</span>
+
+<span class="c1"># 4. Set it as default</span>
+nvm<span class="w"> </span>use<span class="w"> </span><span class="m">20</span>
+nvm<span class="w"> </span><span class="nb">alias</span><span class="w"> </span>default<span class="w"> </span><span class="m">20</span>
+
+<span class="c1"># 5. Confirm</span>
+node<span class="w"> </span>-v
+npm<span class="w"> </span>-v
+
+
+<span class="c1"># Download and install nvm:</span>
+curl<span class="w"> </span>-o-<span class="w"> </span>https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+
+<span class="c1"># in lieu of restarting the shell</span>
+<span class="se">\.</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.nvm/nvm.sh&quot;</span>
+
+<span class="c1"># Download and install Node.js:</span>
+nvm<span class="w"> </span>install<span class="w"> </span><span class="m">22</span>
+
+<span class="c1"># Verify the Node.js version:</span>
+node<span class="w"> </span>-v<span class="w"> </span><span class="c1"># Should print &quot;v22.17.1&quot;.</span>
+nvm<span class="w"> </span>current<span class="w"> </span><span class="c1"># Should print &quot;v22.17.1&quot;.</span>
+
+<span class="c1"># Verify npm version:</span>
+npm<span class="w"> </span>-v<span class="w"> </span><span class="c1"># Should print &quot;10.9.2&quot;.</span>
+</code></pre></div>
+<hr />
+<h3 id="which-to-choose">💡 Which to choose?<a class="headerlink" href="#which-to-choose" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Use When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>APT (Method 1)</strong></td>
+<td>You want system-wide setup</td>
+</tr>
+<tr>
+<td><strong>NVM (Method 2)</strong></td>
+<td>You want per-user versions / easier upgrades</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>Let me know if you're on a different distro or need a minimal install (no npm).</p>
 <h1 id="claude-code-overview">Claude Code overview<a class="headerlink" href="#claude-code-overview" title="Permanent link">&para;</a></h1>
 <p>https://docs.anthropic.com/en/docs/claude-code/overview</p>
 <p>Learn about Claude Code, Anthropic’s agentic coding tool that lives in your terminal and helps you turn ideas into code faster than ever before.</p>
