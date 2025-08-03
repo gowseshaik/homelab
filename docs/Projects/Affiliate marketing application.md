@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 I can help you design the microservice architecture and workflow structure for an affiliate marketing application, though I don't have specific  Code syntax details.
 
 Here's how you could structure a microservice-based affiliate marketing platform:

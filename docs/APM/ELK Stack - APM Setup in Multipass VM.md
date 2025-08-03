@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 I'll help you set up Elasticsearch, Kibana, and APM Server in a Multipass VM. This is a comprehensive setup that requires several steps.This guide will help you set up a complete ELK stack with APM monitoring in a Multipass VM. Here are some key points to keep in mind:
 
 **Resource Requirements:**

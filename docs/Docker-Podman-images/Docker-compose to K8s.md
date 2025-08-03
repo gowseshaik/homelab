@@ -1,3 +1,7 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
+# Does the Docker Compose and Kubernetes are separate deployment methods ?
+
 Great question! This is a common confusion. **Docker Compose and Kubernetes are separate deployment methods** - you don't deploy docker-compose.yaml to Kubernetes directly.
 
 ## The Confusion Explained

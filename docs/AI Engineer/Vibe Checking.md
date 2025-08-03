@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 ## 🔍 What is **Vibe Checking**?
 
 **Vibe checking** is an informal, often subjective way to **assess the emotional atmosphere** of a person, group, situation, or even content. It's not about facts — it's about **how something feels**.

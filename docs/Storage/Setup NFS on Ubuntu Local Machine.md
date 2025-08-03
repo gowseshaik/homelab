@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 ✅ Yes, you can **easily set up an NFS server on your Ubuntu machine**, and then use it in **K3s or Kubernetes** with the **NFS CSI driver** for dynamic volume provisioning.
 
 #### ❓ Can You Use Longhorn _on top of_ NFS?

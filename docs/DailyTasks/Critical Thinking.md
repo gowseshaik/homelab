@@ -1,3 +1,4 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-07-08</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
 #### **Critical Thinking: A Structured Approach**  
 Critical thinking is the disciplined process of **analyzing, evaluating, and synthesizing information** to form reasoned judgments. It involves questioning assumptions, identifying biases, and applying logic to solve problems effectively. Below is a breakdown of its core components, methods, and applications.
 

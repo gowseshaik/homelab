@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 ## 💡Question
 
 > Should I deploy MinIO **inside K3s using Helm** with Longhorn PVC, or install it **externally** and point Velero to it?

@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/ClusterAccess/merge%20two%20kubeconfig%20files/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Longhorn/Can%20You%20Use%20Longhorn%20on%20top%20of%20NFS/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Merge two kubeconfig files - Gouse Shaik</title>
+        <title>Can You Use Longhorn on top of NFS - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#one-liner-to-merge-and-apply" class="md-skip">
+        <a href="#can-you-use-longhorn-on-top-of-nfs" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Merge two kubeconfig files
+              Can You Use Longhorn on top of NFS
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/ClusterAccess/merge two kubeconfig files.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Longhorn/Can You Use Longhorn on top of NFS.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,95 +362,117 @@
   
 
 
-  <h1>Merge two kubeconfig files</h1>
+  <h1>Can You Use Longhorn on top of NFS</h1>
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-07-06</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-07-06</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
-Here are the commands to <strong>merge two kubeconfig files</strong> (<code>k1config</code> and <code>k2config</code>) and use them from another machine:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Set your base config (usually your default ~/.kube/config)</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">KUBECONFIG</span><span class="o">=</span>/home/gouse/DevOps/multipass_scripts/k1config:/home/gouse/DevOps/multipass_scripts/k2config
+<h2 id="can-you-use-longhorn-on-top-of-nfs">Can You Use Longhorn on top of NFS<a class="headerlink" href="#can-you-use-longhorn-on-top-of-nfs" title="Permanent link">&para;</a></h2>
+<p><strong>🔴 No — Longhorn does not support NFS as a backend.</strong><br />
+Longhorn <strong>requires direct block storage</strong> (local SSD/HDD attached to nodes).<br />
+You <strong>cannot map NFS to Longhorn</strong> as storage.</p>
+<h2 id="what-you-can-do-instead">✅ What You <em>Can</em> Do Instead<a class="headerlink" href="#what-you-can-do-instead" title="Permanent link">&para;</a></h2>
+<p>You have <strong>two correct and supported paths</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Option A: Use NFS separately</strong></td>
+<td>Setup NFS, deploy NFS CSI driver, and use it for PV/PVC (for shared read or general storage)</td>
+</tr>
+<tr>
+<td><strong>Option B: Use Longhorn normally</strong></td>
+<td>Use Longhorn's default storage (local disks), and export Longhorn volumes via NFS if needed (advanced)</td>
+</tr>
+<tr>
+<td>## ✅ Option A: Use NFS Directly for PVCs (Recommended for Shared Storage)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-you-already-installed-nfs-server">1. ✅ You already installed NFS server<a class="headerlink" href="#1-you-already-installed-nfs-server" title="Permanent link">&para;</a></h3>
+<p>(from your Ubuntu host)</p>
+<h3 id="2-install-nfs-subdir-external-provisioner-in-k3s">2. 🔽 Install NFS Subdir External Provisioner (in K3s)<a class="headerlink" href="#2-install-nfs-subdir-external-provisioner-in-k3s" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>ns<span class="w"> </span>nfs-provisioner
 
-<span class="c1"># Merge the configs and write to ~/.kube/config</span>
-kubectl<span class="w"> </span>config<span class="w"> </span>view<span class="w"> </span>--flatten<span class="w"> </span>&gt;<span class="w"> </span>~/.kube/config
-</code></pre></div>
-<h3 id="one-liner-to-merge-and-apply">One-liner to merge and apply:<a class="headerlink" href="#one-liner-to-merge-and-apply" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>k1config:k2config<span class="w"> </span>kubectl<span class="w"> </span>config<span class="w"> </span>view<span class="w"> </span>--flatten<span class="w"> </span>&gt;<span class="w"> </span>~/.kube/config
+helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>nfs-subdir-external-provisioner<span class="w"> </span>https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+helm<span class="w"> </span>repo<span class="w"> </span>update
+
+helm<span class="w"> </span>install<span class="w"> </span>nfs-client<span class="w"> </span>nfs-subdir-external-provisioner/nfs-subdir-external-provisioner<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--namespace<span class="w"> </span>nfs-provisioner<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>nfs.server<span class="o">=</span>&lt;NFS_SERVER_IP&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>nfs.path<span class="o">=</span>/srv/nfs/k3s-volumes<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>storageClass.name<span class="o">=</span>nfs-client<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>storageClass.defaultClass<span class="o">=</span><span class="nb">false</span>
 </code></pre></div>
 <blockquote>
-<p><strong>Make sure you are in <code>/home/gouse/DevOps/multipass_scripts</code> or use absolute paths.</strong></p>
+<p>Replace <code>&lt;NFS_SERVER_IP&gt;</code> with your Ubuntu IP (e.g. <code>192.168.122.1</code> if you're using Multipass)</p>
 </blockquote>
-<hr />
-<h3 id="after-merge-check-available-contexts">After merge, check available contexts:<a class="headerlink" href="#after-merge-check-available-contexts" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>get-contexts
+<h3 id="3-use-nfs-storageclass-in-pvc">3. 📦 Use NFS StorageClass in PVC<a class="headerlink" href="#3-use-nfs-storageclass-in-pvc" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nfs-pvc</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteMany</span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
+<span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nfs-client</span>
 </code></pre></div>
-<h3 id="to-switch-between-clusters">To switch between clusters:<a class="headerlink" href="#to-switch-between-clusters" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>&lt;context-name&gt;
-</code></pre></div>
-<blockquote>
-<p>Replace <code>&lt;context-name&gt;</code> with the actual name listed in <code>get-contexts</code> output.</p>
-</blockquote>
-<hr />
-<p>Error:
-<div class="highlight"><pre><span></span><code>ouse@gouse:~/DevOps/multipass_scripts$<span class="w"> </span>k<span class="w"> </span>config<span class="w"> </span>get-contexts
-CURRENT<span class="w">   </span>NAME<span class="w">         </span>CLUSTER<span class="w">      </span>AUTHINFO<span class="w">   </span>NAMESPACE
-*<span class="w">         </span>devcluster<span class="w">   </span>devcluster<span class="w">   </span>default<span class="w">    </span>
-<span class="w">          </span>prdcluster<span class="w">   </span>prdcluster<span class="w">   </span>default<span class="w">    </span>
-gouse@gouse:~/DevOps/multipass_scripts$<span class="w"> </span>k<span class="w"> </span>get<span class="w"> </span>nodes
-E0703<span class="w"> </span><span class="m">10</span>:19:52.025850<span class="w">   </span><span class="m">36078</span><span class="w"> </span>memcache.go:265<span class="o">]</span><span class="w"> </span>couldn<span class="s1">&#39;t get current server API group list: the server has asked for the client to provide credentials</span>
-<span class="s1">E0703 10:19:52.036931   36078 memcache.go:265] couldn&#39;</span>t<span class="w"> </span>get<span class="w"> </span>current<span class="w"> </span>server<span class="w"> </span>API<span class="w"> </span>group<span class="w"> </span>list:<span class="w"> </span>the<span class="w"> </span>server<span class="w"> </span>has<span class="w"> </span>asked<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>client<span class="w"> </span>to<span class="w"> </span>provide<span class="w"> </span>credentials
-E0703<span class="w"> </span><span class="m">10</span>:19:52.048468<span class="w">   </span><span class="m">36078</span><span class="w"> </span>memcache.go:265<span class="o">]</span><span class="w"> </span>couldn<span class="s1">&#39;t get current server API group list: the server has asked for the client to provide credentials</span>
-<span class="s1">E0703 10:19:52.060949   36078 memcache.go:265] couldn&#39;</span>t<span class="w"> </span>get<span class="w"> </span>current<span class="w"> </span>server<span class="w"> </span>API<span class="w"> </span>group<span class="w"> </span>list:<span class="w"> </span>the<span class="w"> </span>server<span class="w"> </span>has<span class="w"> </span>asked<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>client<span class="w"> </span>to<span class="w"> </span>provide<span class="w"> </span>credentials
-E0703<span class="w"> </span><span class="m">10</span>:19:52.073295<span class="w">   </span><span class="m">36078</span><span class="w"> </span>memcache.go:265<span class="o">]</span><span class="w"> </span>couldn<span class="s1">&#39;t get current server API group list: the server has asked for the client to provide credentials</span>
-<span class="s1">error: You must be logged in to the server (the server has asked for the client to provide credentials)</span>
-<span class="s1">gouse@gouse:~/DevOps/multipass_scripts$ k config set-context devcluster</span>
-<span class="s1">Context &quot;devcluster&quot; modified.</span>
-<span class="s1">gouse@gouse:~/DevOps/multipass_scripts$ k get nodes</span>
-<span class="s1">E0703 10:20:38.496594   36331 memcache.go:265] couldn&#39;</span>t<span class="w"> </span>get<span class="w"> </span>current<span class="w"> </span>server<span class="w"> </span>API<span class="w"> </span>group<span class="w"> </span>list:<span class="w"> </span>the<span class="w"> </span>server<span class="w"> </span>has<span class="w"> </span>asked<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>client<span class="w"> </span>to<span class="w"> </span>provide<span class="w"> </span>credentials
-E0703<span class="w"> </span><span class="m">10</span>:20:38.503812<span class="w">   </span><span class="m">36331</span><span class="w"> </span>memcache.go:265<span class="o">]</span><span class="w"> </span>couldn<span class="s1">&#39;t get current server API group list: the server has asked for the client to provide credentials</span>
-<span class="s1">E0703 10:20:38.509652   36331 memcache.go:265] couldn&#39;</span>t<span class="w"> </span>get<span class="w"> </span>current<span class="w"> </span>server<span class="w"> </span>API<span class="w"> </span>group<span class="w"> </span>list:<span class="w"> </span>the<span class="w"> </span>server<span class="w"> </span>has<span class="w"> </span>asked<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>client<span class="w"> </span>to<span class="w"> </span>provide<span class="w"> </span>credentials
-E0703<span class="w"> </span><span class="m">10</span>:20:38.515449<span class="w">   </span><span class="m">36331</span><span class="w"> </span>memcache.go:265<span class="o">]</span><span class="w"> </span>couldn<span class="s1">&#39;t get current server API group list: the server has asked for the client to provide credentials</span>
-<span class="s1">E0703 10:20:38.522562   36331 memcache.go:265] couldn&#39;</span>t<span class="w"> </span>get<span class="w"> </span>current<span class="w"> </span>server<span class="w"> </span>API<span class="w"> </span>group<span class="w"> </span>list:<span class="w"> </span>the<span class="w"> </span>server<span class="w"> </span>has<span class="w"> </span>asked<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>client<span class="w"> </span>to<span class="w"> </span>provide<span class="w"> </span>credentials
-error:<span class="w"> </span>You<span class="w"> </span>must<span class="w"> </span>be<span class="w"> </span>logged<span class="w"> </span><span class="k">in</span><span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>server<span class="w"> </span><span class="o">(</span>the<span class="w"> </span>server<span class="w"> </span>has<span class="w"> </span>asked<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>client<span class="w"> </span>to<span class="w"> </span>provide<span class="w"> </span>credentials<span class="o">)</span>
-</code></pre></div></p>
-<div class="highlight"><pre><span></span><code>multipass exec k3s-dev -- sudo cat /etc/rancher/k3s/k3s.yaml &gt; ~/k3s-dev.yaml
-multipass exec k3s-prd -- sudo cat /etc/rancher/k3s/k3s.yaml &gt; ~/k3s-prd.yaml
-
-KUBECONFIG=~/k3s-dev.yaml:~/k3s-prd.yaml
-kubectl config view --flatten &gt; ~/.kube/config
-chmod 600 ~/.kube/config
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>kubectl get nodes
-kubectl config use-context k3s-context
-</code></pre></div>
-<p>Use the following <code>KUBECONFIG</code> and <code>kubectl config view --flatten</code> approach to <strong>append another cluster config</strong> to your existing <code>~/.kube/config</code>:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>multipass<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>k3s-master<span class="w"> </span>--<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/rancher/k3s/k3s.yaml<span class="w"> </span>&gt;<span class="w"> </span>kubeconfig
-<span class="nv">KUBECONFIG</span><span class="o">=</span>~/.kube/config:/home/gouse/multipassKUBEconfigs/kubeconfig
-
-<span class="nv">KUBECONFIG</span><span class="o">=</span>~/.kube/config:/path/to/other/cluster/config<span class="w"> </span>
-kubectl<span class="w"> </span>config<span class="w"> </span>view<span class="w"> </span>--flatten<span class="w"> </span>&gt;<span class="w"> </span>/tmp/merged-kubeconfig<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>
-mv<span class="w"> </span>/tmp/merged-kubeconfig<span class="w"> </span>~/.kube/config
-</code></pre></div>
-<h3 id="steps">Steps:<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h3>
-<ol>
-<li>
-<p><code>KUBECONFIG=~/.kube/config:/path/to/other/cluster/config</code><br />
-    – Temporarily sets both config files to be loaded.</p>
-</li>
-<li>
-<p><code>kubectl config view --flatten</code><br />
-    – Merges and removes duplicate references.</p>
-</li>
-<li>
-<p><code>&gt; /tmp/merged-kubeconfig</code><br />
-    – Saves merged output to a temp file.</p>
-</li>
-<li>
-<p><code>mv ... ~/.kube/config</code><br />
-    – Overwrites the current config with the merged one.</p>
-</li>
-</ol>
-<blockquote>
-<p>You can repeat this for more clusters by adding more <code>:/path</code> in the <code>KUBECONFIG</code>.</p>
-</blockquote>
+<h2 id="why-you-cannot-use-nfs-with-longhorn">⛔ Why You Cannot Use NFS <em>with</em> Longhorn<a class="headerlink" href="#why-you-cannot-use-nfs-with-longhorn" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Reason</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Longhorn requires block storage</td>
+<td>It works with <code>/dev/sdX</code>, not NFS mount</td>
+</tr>
+<tr>
+<td>NFS is a file system protocol</td>
+<td>Longhorn replicates block volumes across nodes</td>
+</tr>
+<tr>
+<td>Longhorn and NFS serve different purposes</td>
+<td>Longhorn = high-availability block storageNFS = shared file system</td>
+</tr>
+</tbody>
+</table>
+<h2 id="summary">🧠 Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shared read/write across pods</td>
+<td>✅ Use NFS with CSI driver</td>
+</tr>
+<tr>
+<td>Stateful apps needing high availability</td>
+<td>✅ Use Longhorn</td>
+</tr>
+<tr>
+<td>Backups</td>
+<td>Use Velero + Longhorn snapshots or NFS</td>
+</tr>
+<tr>
+<td>Combining Longhorn + NFS</td>
+<td>❌ Not supported or needed</td>
+</tr>
+</tbody>
+</table>
 
 
 

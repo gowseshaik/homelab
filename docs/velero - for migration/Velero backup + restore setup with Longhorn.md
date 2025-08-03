@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 Here’s a **complete setup guide** for **Velero + Longhorn** for CSI **snapshot-based backup and restore** — tested with K3s/K8s and fully automated.
 ## ✅ High-Level Plan
 

@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 When pushing software to GitHub (or any version control system), it's generally recommended to **avoid using certain version numbers as the base version** to prevent confusion or follow common conventions. Here are some guidelines:
 
 ### **Versions to Avoid as Base (Initial) Versions:**

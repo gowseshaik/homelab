@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 If you installed **Nexus 3 on Ubuntu manually** (not via package manager), follow these steps to uninstall it cleanly:
 ### ✅ 1. **Stop the Nexus service**
 ```bash

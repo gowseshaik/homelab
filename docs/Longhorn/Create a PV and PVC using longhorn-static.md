@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 ## 🧾 Example Use Case
 - 1. You created a volume called `manual-volume` in Longhorn UI
 - 2. You now want to mount it to a Pod

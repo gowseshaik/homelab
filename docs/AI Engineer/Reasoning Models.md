@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 Here’s a list of **powerful reasoning-focused open-source LLMs** you can run **locally (offline)** — especially suitable for **DevOps, coding, and logic-heavy** RAG use cases like yours.
 
 ## 🧠 Top Reasoning-Capable LLMs (Open, Local)

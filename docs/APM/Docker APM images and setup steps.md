@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 ```bash
 sudo docker pull docker.elastic.co/elasticsearch/elasticsearch:8.13.0
 sudo docker pull docker.elastic.co/kibana/kibana:8.13.0

@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 RAG (Retrieval-Augmented Generation) is a **hybrid AI framework** that combines **retrieval-based systems** with **generative models** to improve the **accuracy, relevance, and factual grounding** of responses. Let’s break this down from a **first-principles** and **critical thinking** perspective.
 
 ## 🧠 Basic Principles Breakdown

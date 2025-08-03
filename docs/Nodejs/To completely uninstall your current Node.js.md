@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 To completely uninstall your current Node.js (v18.19.1) and prepare for installing a fresh Node.js v20+, follow the steps below based on how Node.js was installed.
 
 ## 🔍 Step 1: Check How Node.js Was Installed

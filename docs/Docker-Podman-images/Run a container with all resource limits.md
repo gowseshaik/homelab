@@ -1,3 +1,5 @@
+<span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span>
+
 ✅ if you're running **your own container**, you **can absolutely** define **memory**, **CPU**, **network**, and **block I/O limits** using `docker run` options.
 ### ✅ Example: Run a container with all resource limits
 
