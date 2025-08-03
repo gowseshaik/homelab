@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/Nexus/Steps to uninstall Nexus it cleanly.md",
+                "file": "docs/DevOps Sites/DevOps - Knowledge Websites.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Steps to uninstall Nexus it cleanly"
+              "title": "DevOps - Knowledge Websites"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 579
+    "width": 342
   },
   "right": {
     "id": "776676116f84eb98",
@@ -170,16 +170,34 @@
   },
   "active": "e87aa31bb6cd3006",
   "lastOpenFiles": [
-    "site/ClusterAccess/merge/index.html",
-    "site/ClusterAccess/merge",
-    "docs/nginx/nignx-multipass-tailscale.md",
+    "Pasted image 20250709104403.png",
+    "docs/DevOps Sites/DevOps - Knowledge Websites.md",
+    "docs/python/trading bot creation.md",
+    "docs/DevOps Sites",
+    "docs/Telegram/To add your Telegram bot to a group or channel.md",
+    "docs/images/Pasted-image-20250803131522.png",
+    "docs/images/Pasted-image-20250621165152.png",
+    "docs/images/Pasted-image-20250803131344.png",
+    "docs/Telegram/Telegram bots - deletions.md",
+    "docs/Telegram/Telegram - Create Bot.md",
+    "docs/Kubernetes/Full Sequence to Implement Kubernetes with kubeadm.md",
+    "docs/Kubernetes/Customize - context names in k8s.md",
+    "docs/K3d/k3d with traefik dashboard setup.md",
+    "docs/K3d/k3d cluster with traefik dashboard.md",
+    "docs/K3d/Complete Traefik Setup Guide for k3d.md",
+    "docs/K3d/k3d and kind commands.md",
+    "docs/K3d/K3d cluster setup.md",
+    "docs/Deployments/Deployments Strategies.md",
+    "docs/Deployments/Deployments in kubernetes.md",
+    "docs/gitlab/Gitlab - Telegram integration.md",
+    "docs/Telegram",
     "docs/gitlab/Gitlab to import Gitea repos -fix.md",
-    "docs/gitlab/Gitlab - Runners setup.md",
-    "docs/gitlab/Gitlab - port changing.md",
+    "docs/Go-lang/Building package as a tool for ARCH.md",
+    "docs/Helm/1. Check Helm Release(deployed) Information.md",
     "docs/gitlab/gitlab - Executors.md",
-    "docs/gitlab",
-    "docs/Ubuntu/To get the ip of your host.md",
-    "docs/Nodejs/Gaming app for kids.md",
+    "docs/gitlab/Gitlab - port changing.md",
+    "docs/gitlab/Gitlab - Runners setup.md",
+    "docs/Nexus/Steps to uninstall Nexus it cleanly.md",
     "site/search/search_index.json",
     "site/search",
     "site/velero - for migration/Velero with kind/index.html",
@@ -194,28 +212,9 @@
     "site/images/{69A7335F-2DAF-486C-8B60-0DD83CDAA5A7}.png",
     "site/images/{58929F8F-D4FD-4F7B-B8D4-08FC574675E1}.png",
     "site/images/{12236FE0-7B72-4054-9B80-86E6560C67B0}.png",
-    "site/images/logo-design-4.png",
-    "site/images/generated-image-1.png",
-    "site/images/Storage-to-pvs.png",
-    "site/images/Pre-REquisties-Cluster_setup.png",
-    "docs/Nexus/nexus3-cli-deprecated not working.md",
-    "docs/Nexus/Nexus Repository Manager OSS and integrate it with your Kubernetes.md",
-    "docs/Nexus/Nexus oss setup - On-Prem.md",
-    "docs/Nexus/Create a Docker image registry in Nexus.md",
-    "docs/multipass/Setup access your cluster from the host machine.md",
-    "docs/Namespace/Delete all resources from namespace.md",
-    "docs/Namespace/Default namespaces.md",
-    "docs/multipass/To access ports from the host machine running multipass.md",
-    "docs/multipass/k8s with hard-way - overview.md",
-    "docs/multipass/k3s with HA in multipass.md",
-    "docs/multipass/1. k8s hardway.md",
-    "docs/mkdocs/plugins list used with MkDocs-material.md",
-    "docs/mkdocs/mkdocs to github projects.md",
-    "docs/metric-server/Steps to install metric server.md",
-    "docs/MinIO/MinIO external for Velero backups.md",
-    "docs/MinIO/MinIO cli with MinIO and velero.md",
-    "docs/mailhog/Usecase of mailhog.md",
-    "docs/mailhog/Steps to deploy MailHog with Ingress.md",
+    "docs/nginx/nignx-multipass-tailscale.md",
+    "docs/Ubuntu/To get the ip of your host.md",
+    "docs/Nodejs/Gaming app for kids.md",
     "Untitled.canvas"
   ]
 }

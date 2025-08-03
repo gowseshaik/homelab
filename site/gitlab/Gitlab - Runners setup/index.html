@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Nodejs/To%20completely%20uninstall%20your%20current%20Node.js/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/gitlab/Gitlab%20-%20Runners%20setup/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>To completely uninstall your current Node.js - Gouse Shaik</title>
+        <title>Gitlab Runners setup - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#step-1-check-how-nodejs-was-installed" class="md-skip">
+        <a href="#create-a-runner-in-gitlab-under-cicd" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              To completely uninstall your current Node.js
+              Gitlab   Runners setup
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Nodejs/To completely uninstall your current Node.js.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/gitlab/Gitlab - Runners setup.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,69 +362,72 @@
   
 
 
-  <h1>To completely uninstall your current Node.js</h1>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<p>To completely uninstall your current Node.js (v18.19.1) and prepare for installing a fresh Node.js v20+, follow the steps below based on how Node.js was installed.</p>
-<h2 id="step-1-check-how-nodejs-was-installed">🔍 Step 1: Check How Node.js Was Installed<a class="headerlink" href="#step-1-check-how-nodejs-was-installed" title="Permanent link">&para;</a></h2>
-<p>Run:</p>
-<div class="highlight"><pre><span></span><code>which<span class="w"> </span>node
-which<span class="w"> </span>npm
-node<span class="w"> </span>-v
+<span class="nv">VM_NAME</span><span class="o">=</span><span class="s2">&quot;gitlab-runner&quot;</span>
+<span class="nv">VM_CPUS</span><span class="o">=</span><span class="m">2</span>
+<span class="nv">VM_MEM</span><span class="o">=</span>2G
+<span class="nv">VM_DISK</span><span class="o">=</span>20G
+
+<span class="c1"># 1. Launch Multipass VM</span>
+multipass<span class="w"> </span>launch<span class="w"> </span>--name<span class="w"> </span><span class="nv">$VM_NAME</span><span class="w"> </span>--cpus<span class="w"> </span><span class="nv">$VM_CPUS</span><span class="w"> </span>--mem<span class="w"> </span><span class="nv">$VM_MEM</span><span class="w"> </span>--disk<span class="w"> </span><span class="nv">$VM_DISK</span>
 </code></pre></div>
-<p>Typical outputs:</p>
-<table>
-<thead>
-<tr>
-<th>Output Location</th>
-<th>Install Method</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/usr/bin/node</code></td>
-<td>Ubuntu APT</td>
-</tr>
-<tr>
-<td><code>/usr/local/bin/node</code></td>
-<td>Manual or global binary</td>
-</tr>
-<tr>
-<td><code>~/.nvm/versions/node</code></td>
-<td>NVM (Node Version Manager)</td>
-</tr>
-</tbody>
-</table>
-<h2 id="step-2-uninstall-based-on-install-method">🧹 Step 2: Uninstall Based on Install Method<a class="headerlink" href="#step-2-uninstall-based-on-install-method" title="Permanent link">&para;</a></h2>
-<h3 id="a-if-installed-via-apt-ubuntu-package-manager">🔸 A. If installed via <strong>APT</strong> (Ubuntu package manager):<a class="headerlink" href="#a-if-installed-via-apt-ubuntu-package-manager" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>remove<span class="w"> </span>nodejs<span class="w"> </span>npm<span class="w"> </span>-y
-sudo<span class="w"> </span>apt<span class="w"> </span>purge<span class="w"> </span>nodejs<span class="w"> </span>npm<span class="w"> </span>-y
-sudo<span class="w"> </span>apt<span class="w"> </span>autoremove<span class="w"> </span>-y
+<h3 id="create-a-runner-in-gitlab-under-cicd">Create a runner in gitlab under CI/CD<a class="headerlink" href="#create-a-runner-in-gitlab-under-cicd" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="err">Dow</span><span class="kc">nl</span><span class="err">oad</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">bi</span><span class="kc">nar</span><span class="err">y</span><span class="w"> </span><span class="kc">f</span><span class="err">or</span><span class="w"> </span><span class="err">your</span><span class="w"> </span><span class="err">sys</span><span class="kc">te</span><span class="err">m</span>
+<span class="err">sudo</span><span class="w"> </span><span class="err">curl</span><span class="w"> </span><span class="mi">-</span><span class="err">L</span><span class="w"> </span><span class="mi">--</span><span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">t</span><span class="w"> </span><span class="err">/usr/local/bi</span><span class="kc">n</span><span class="err">/gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span><span class="w"> </span><span class="err">h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="c1">//gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64</span>
+
+<span class="err">#</span><span class="w"> </span><span class="err">Give</span><span class="w"> </span><span class="err">i</span><span class="kc">t</span><span class="w"> </span><span class="err">permissio</span><span class="kc">n</span><span class="w"> </span><span class="kc">t</span><span class="err">o</span><span class="w"> </span><span class="err">execu</span><span class="kc">te</span>
+<span class="err">sudo</span><span class="w"> </span><span class="err">chmod</span><span class="w"> </span><span class="err">+x</span><span class="w"> </span><span class="err">/usr/local/bi</span><span class="kc">n</span><span class="err">/gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span>
+
+<span class="err">#</span><span class="w"> </span><span class="err">Crea</span><span class="kc">te</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">Gi</span><span class="kc">t</span><span class="err">Lab</span><span class="w"> </span><span class="err">Ru</span><span class="kc">nner</span><span class="w"> </span><span class="err">user</span>
+<span class="err">sudo</span><span class="w"> </span><span class="err">useradd</span><span class="w"> </span><span class="mi">--</span><span class="err">comme</span><span class="kc">nt</span><span class="w"> </span><span class="err">&#39;Gi</span><span class="kc">t</span><span class="err">Lab</span><span class="w"> </span><span class="err">Ru</span><span class="kc">nner</span><span class="err">&#39;</span><span class="w"> </span><span class="mi">--</span><span class="err">crea</span><span class="kc">te</span><span class="mi">-</span><span class="err">home</span><span class="w"> </span><span class="err">gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span><span class="w"> </span><span class="mi">--</span><span class="err">shell</span><span class="w"> </span><span class="err">/bi</span><span class="kc">n</span><span class="err">/bash</span>
+
+<span class="err">#</span><span class="w"> </span><span class="err">I</span><span class="kc">nstall</span><span class="w"> </span><span class="err">a</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">ru</span><span class="kc">n</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">service</span>
+<span class="err">sudo</span><span class="w"> </span><span class="err">gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span><span class="w"> </span><span class="err">i</span><span class="kc">nstall</span><span class="w"> </span><span class="mi">--</span><span class="err">user=gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span><span class="w"> </span><span class="mi">--</span><span class="err">worki</span><span class="kc">n</span><span class="err">g</span><span class="mi">-</span><span class="err">direc</span><span class="kc">t</span><span class="err">ory=/home/gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span>
+<span class="err">sudo</span><span class="w"> </span><span class="err">gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span><span class="w"> </span><span class="err">s</span><span class="kc">tart</span>
+
+<span class="err">#</span><span class="w"> </span><span class="err">check</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">s</span><span class="kc">tatus</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="err">gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span>
+<span class="err">sudo</span><span class="w"> </span><span class="err">gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span><span class="w"> </span><span class="err">s</span><span class="kc">tatus</span>
+
+<span class="err">#</span><span class="w"> </span><span class="err">gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span><span class="w"> </span><span class="err">regis</span><span class="kc">ter</span>
+<span class="err">gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span><span class="w"> </span><span class="err">regis</span><span class="kc">ter</span><span class="w"> </span><span class="mi">--</span><span class="err">url</span><span class="w"> </span><span class="err">h</span><span class="kc">tt</span><span class="err">p</span><span class="p">:</span><span class="c1">//10.189.65.69:8888 --token glrt-TdgV8Xa-lkMLhdKPO0l-aG86MQp0OjdafaEKdToxCw.01.121bfaadavgu32</span>
+
+<span class="err">E</span><span class="kc">nter</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">Gi</span><span class="kc">t</span><span class="err">Lab</span><span class="w"> </span><span class="err">i</span><span class="kc">nstan</span><span class="err">ce</span><span class="w"> </span><span class="err">URL</span><span class="w"> </span><span class="err">(</span><span class="kc">f</span><span class="err">or</span><span class="w"> </span><span class="err">example</span><span class="p">,</span><span class="w"> </span><span class="err">h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="c1">//gitlab.com/):</span>
+<span class="err">h</span><span class="kc">tt</span><span class="err">p</span><span class="p">:</span><span class="c1">//&lt;your_gitlab_vm_ip&gt;:&lt;port&gt;</span>
+
+<span class="err">i</span><span class="kc">f</span><span class="w"> </span><span class="err">i</span><span class="kc">t</span><span class="w"> </span><span class="kc">fa</span><span class="err">ils</span><span class="w"> </span><span class="err">wi</span><span class="kc">t</span><span class="err">h</span><span class="w"> </span><span class="s2">&quot;command not found&quot;</span>
+<span class="err">rm</span><span class="w"> </span><span class="err">~/.gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span><span class="err">/co</span><span class="kc">nf</span><span class="err">ig.</span><span class="kc">t</span><span class="err">oml</span>
+<span class="err">a</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="kc">tr</span><span class="err">y</span><span class="w"> </span><span class="err">agai</span><span class="kc">n</span>
+
+<span class="err">sudo</span><span class="w"> </span><span class="err">gi</span><span class="kc">tla</span><span class="err">b</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span><span class="w"> </span><span class="err">regis</span><span class="kc">ter</span><span class="w"> </span><span class="mi">--</span><span class="kc">n</span><span class="err">o</span><span class="kc">n</span><span class="mi">-</span><span class="err">i</span><span class="kc">ntera</span><span class="err">c</span><span class="kc">t</span><span class="err">ive</span><span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="mi">--</span><span class="err">url</span><span class="w"> </span><span class="s2">&quot;http://10.189.65.69:8888&quot;</span><span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="mi">--</span><span class="err">regis</span><span class="kc">trat</span><span class="err">io</span><span class="kc">n</span><span class="mi">-</span><span class="kc">t</span><span class="err">oke</span><span class="kc">n</span><span class="w"> </span><span class="s2">&quot;glrt-TdgV8Xa-lkMLhdKPO0l-aG86MQp0OjEKdToxCw.01.121bvgu32&quot;</span><span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="mf">--e</span><span class="err">xecu</span><span class="kc">t</span><span class="err">or</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="mi">--</span><span class="err">descrip</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="w"> </span><span class="s2">&quot;brmdev&quot;</span><span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="mi">--</span><span class="kc">ta</span><span class="err">g</span><span class="mi">-</span><span class="err">lis</span><span class="kc">t</span><span class="w"> </span><span class="s2">&quot;shell,brm&quot;</span><span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="mi">--</span><span class="err">ru</span><span class="kc">n</span><span class="mi">-</span><span class="err">u</span><span class="kc">nta</span><span class="err">gged=</span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="mi">--</span><span class="err">locked=</span><span class="s2">&quot;false&quot;</span>
 </code></pre></div>
-<p>Then check:</p>
-<div class="highlight"><pre><span></span><code>node<span class="w"> </span>-v
-npm<span class="w"> </span>-v
+<p>re-run
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>gitlab-runner<span class="w"> </span>register<span class="w"> </span>--non-interactive<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--url<span class="w"> </span><span class="s2">&quot;http://10.189.65.69:8888&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--registration-token<span class="w"> </span><span class="s2">&quot;glrt-TdgV8Xa-lkMLhdKPO0l-aG86MQp0OjEKdToxCw.01.121bvgu32&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--executor<span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--description<span class="w"> </span><span class="s2">&quot;brmdev&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tag-list<span class="w"> </span><span class="s2">&quot;shell,brm&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--run-untagged<span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--locked<span class="o">=</span><span class="s2">&quot;false&quot;</span>
+
+
+-<span class="w"> </span>now<span class="w"> </span>it<span class="w"> </span>went<span class="w"> </span>successful
+</code></pre></div></p>
+<h1 id="recommend-the-best-executors">Recommend the best executors:<a class="headerlink" href="#recommend-the-best-executors" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><span class="err">E</span><span class="kc">nter</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">Gi</span><span class="kc">t</span><span class="err">Lab</span><span class="w"> </span><span class="err">i</span><span class="kc">nstan</span><span class="err">ce</span><span class="w"> </span><span class="err">URL</span><span class="p">:</span><span class="w"> </span><span class="err">h</span><span class="kc">tt</span><span class="err">p</span><span class="p">:</span><span class="c1">//gitlab.local:8888/</span>
+<span class="err">E</span><span class="kc">nter</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">regis</span><span class="kc">trat</span><span class="err">io</span><span class="kc">n</span><span class="w"> </span><span class="kc">t</span><span class="err">oke</span><span class="kc">n</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;your_</span><span class="kc">t</span><span class="err">oke</span><span class="kc">n</span><span class="err">&gt;</span>
+<span class="err">E</span><span class="kc">nter</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">descrip</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">:</span><span class="w"> </span><span class="err">mul</span><span class="kc">t</span><span class="err">ipass</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nner</span>
+<span class="err">E</span><span class="kc">nter</span><span class="w"> </span><span class="kc">ta</span><span class="err">gs</span><span class="p">:</span><span class="w"> </span><span class="err">shell</span><span class="p">,</span><span class="err">local</span>
+<span class="err">E</span><span class="kc">nter</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">execu</span><span class="kc">t</span><span class="err">or</span><span class="p">:</span><span class="w"> </span><span class="err">shell</span>
 </code></pre></div>
-<p>They should return: <code>command not found</code></p>
-<h3 id="b-if-installed-manually-or-via-curl-in-usrlocal">🔸 B. If installed <strong>manually or via curl (in /usr/local)</strong>:<a class="headerlink" href="#b-if-installed-manually-or-via-curl-in-usrlocal" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/usr/local/bin/node
-sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/usr/local/bin/npm
-sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/usr/local/lib/node_modules
-</code></pre></div>
-<h3 id="c-if-installed-via-nvm-node-version-manager">🔸 C. If installed via <strong>nvm (Node Version Manager)</strong>:<a class="headerlink" href="#c-if-installed-via-nvm-node-version-manager" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>nvm<span class="w"> </span>uninstall<span class="w"> </span><span class="m">18</span>.19.1
-nvm<span class="w"> </span>deactivate
-nvm<span class="w"> </span>use<span class="w"> </span>system
-</code></pre></div>
-<p>Then:</p>
-<div class="highlight"><pre><span></span><code>nvm<span class="w"> </span>ls
-</code></pre></div>
-<p>Remove any extra versions if needed.</p>
-<h2 id="step-3-clean-check">✅ Step 3: Clean Check<a class="headerlink" href="#step-3-clean-check" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>which<span class="w"> </span>node
-node<span class="w"> </span>-v
-</code></pre></div>
-<p>You should now see either <strong>nothing</strong> or <code>command not found</code>.</p>
 
 
 

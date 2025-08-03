@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Nodejs/To%20completely%20uninstall%20your%20current%20Node.js/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/nginx/nignx-multipass-tailscale/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>To completely uninstall your current Node.js - Gouse Shaik</title>
+        <title>Nignx multipass tailscale - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#step-1-check-how-nodejs-was-installed" class="md-skip">
+        <a href="#nginx-site-config-eg-etcnginxsites-availablegitlab" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              To completely uninstall your current Node.js
+              Nignx multipass tailscale
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Nodejs/To completely uninstall your current Node.js.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/nginx/nignx-multipass-tailscale.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,69 +362,80 @@
   
 
 
-  <h1>To completely uninstall your current Node.js</h1>
+<div class="highlight"><pre><span></span><code><span class="err">vi</span><span class="w"> </span><span class="err">/e</span><span class="kc">t</span><span class="err">c/</span><span class="kc">n</span><span class="err">gi</span><span class="kc">n</span><span class="err">x/si</span><span class="kc">tes</span><span class="mi">-</span><span class="err">available/gi</span><span class="kc">tla</span><span class="err">b</span>
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<p>To completely uninstall your current Node.js (v18.19.1) and prepare for installing a fresh Node.js v20+, follow the steps below based on how Node.js was installed.</p>
-<h2 id="step-1-check-how-nodejs-was-installed">🔍 Step 1: Check How Node.js Was Installed<a class="headerlink" href="#step-1-check-how-nodejs-was-installed" title="Permanent link">&para;</a></h2>
-<p>Run:</p>
-<div class="highlight"><pre><span></span><code>which<span class="w"> </span>node
-which<span class="w"> </span>npm
-node<span class="w"> </span>-v
+<span class="err">#</span><span class="w"> </span><span class="err">/e</span><span class="kc">t</span><span class="err">c/</span><span class="kc">n</span><span class="err">gi</span><span class="kc">n</span><span class="err">x/si</span><span class="kc">tes</span><span class="mi">-</span><span class="err">available/argocd.local</span>
+<span class="err">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="err">lis</span><span class="kc">ten</span><span class="w"> </span><span class="mi">80</span><span class="err">;</span>
+<span class="w">    </span><span class="err">server_</span><span class="kc">na</span><span class="err">me</span><span class="w"> </span><span class="err">argocd.local;</span>
+
+<span class="w">    </span><span class="err">loca</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="w"> </span><span class="err">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="err">proxy_pass</span><span class="w"> </span><span class="err">h</span><span class="kc">tt</span><span class="err">p</span><span class="p">:</span><span class="c1">//localhost:3000;  # Your service&#39;s actual port</span>
+<span class="w">        </span><span class="err">proxy_se</span><span class="kc">t</span><span class="err">_header</span><span class="w"> </span><span class="err">Hos</span><span class="kc">t</span><span class="w"> </span><span class="err">$hos</span><span class="kc">t</span><span class="err">;</span>
+<span class="w">        </span><span class="err">proxy_se</span><span class="kc">t</span><span class="err">_header</span><span class="w"> </span><span class="err">X</span><span class="mi">-</span><span class="err">Real</span><span class="mi">-</span><span class="err">IP</span><span class="w"> </span><span class="err">$remo</span><span class="kc">te</span><span class="err">_addr;</span>
+<span class="w">        </span><span class="err">proxy_se</span><span class="kc">t</span><span class="err">_header</span><span class="w"> </span><span class="err">X</span><span class="mi">-</span><span class="err">Forwarded</span><span class="mi">-</span><span class="err">For</span><span class="w"> </span><span class="err">$proxy_add_x_</span><span class="kc">f</span><span class="err">orwarded_</span><span class="kc">f</span><span class="err">or;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="err">h</span><span class="kc">tt</span><span class="err">p</span><span class="p">:</span><span class="c1">//&lt;multipassip&gt;:8888/</span>
 </code></pre></div>
-<p>Typical outputs:</p>
-<table>
-<thead>
-<tr>
-<th>Output Location</th>
-<th>Install Method</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/usr/bin/node</code></td>
-<td>Ubuntu APT</td>
-</tr>
-<tr>
-<td><code>/usr/local/bin/node</code></td>
-<td>Manual or global binary</td>
-</tr>
-<tr>
-<td><code>~/.nvm/versions/node</code></td>
-<td>NVM (Node Version Manager)</td>
-</tr>
-</tbody>
-</table>
-<h2 id="step-2-uninstall-based-on-install-method">🧹 Step 2: Uninstall Based on Install Method<a class="headerlink" href="#step-2-uninstall-based-on-install-method" title="Permanent link">&para;</a></h2>
-<h3 id="a-if-installed-via-apt-ubuntu-package-manager">🔸 A. If installed via <strong>APT</strong> (Ubuntu package manager):<a class="headerlink" href="#a-if-installed-via-apt-ubuntu-package-manager" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>remove<span class="w"> </span>nodejs<span class="w"> </span>npm<span class="w"> </span>-y
-sudo<span class="w"> </span>apt<span class="w"> </span>purge<span class="w"> </span>nodejs<span class="w"> </span>npm<span class="w"> </span>-y
-sudo<span class="w"> </span>apt<span class="w"> </span>autoremove<span class="w"> </span>-y
+<p>Here's a <strong>reverse proxy config</strong> for Nginx to access GitLab running at <code>http://&lt;multipassip&gt;:8888/</code>:</p>
+<h3 id="nginx-site-config-eg-etcnginxsites-availablegitlab">✅ Nginx Site Config (e.g., <code>/etc/nginx/sites-available/gitlab</code>)<a class="headerlink" href="#nginx-site-config-eg-etcnginxsites-availablegitlab" title="Permanent link">&para;</a></h3>
+<ul>
+<li>vi /etc/nginx/sites-available/gitlab
+<div class="highlight"><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">gitlab.local</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://&lt;multipassip&gt;:8888/</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-Proto</span><span class="w"> </span><span class="nv">$scheme</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></li>
+</ul>
+<hr />
+<h3 id="enable-the-config">✅ Enable the Config<a class="headerlink" href="#enable-the-config" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/etc/nginx/sites-available/gitlab<span class="w"> </span>/etc/nginx/sites-enabled/
+sudo<span class="w"> </span>nginx<span class="w"> </span>-t
+sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx
+Failed<span class="w"> </span>to<span class="w"> </span>allocate<span class="w"> </span>directory<span class="w"> </span>watch:<span class="w"> </span>Too<span class="w"> </span>many<span class="w"> </span>open<span class="w"> </span>files
+
+gouse@gouse:~$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>nginx
+Failed<span class="w"> </span>to<span class="w"> </span>allocate<span class="w"> </span>directory<span class="w"> </span>watch:<span class="w"> </span>Too<span class="w"> </span>many<span class="w"> </span>open<span class="w"> </span>files
+
+so,<span class="w"> </span>i<span class="w"> </span>killed<span class="w"> </span>the<span class="w"> </span>pids<span class="w"> </span><span class="k">for</span><span class="w"> </span>nginx<span class="w"> </span>and<span class="w"> </span>restarted<span class="w"> </span>nginx
+gouse@gouse:~$<span class="w"> </span>pidof<span class="w"> </span>nginx
+<span class="m">15682</span><span class="w"> </span><span class="m">15537</span><span class="w"> </span><span class="m">15536</span><span class="w"> </span><span class="m">15535</span><span class="w"> </span><span class="m">15533</span><span class="w"> </span><span class="m">15532</span><span class="w"> </span><span class="m">15531</span><span class="w"> </span><span class="m">15530</span><span class="w"> </span><span class="m">15529</span>
+gouse@gouse:~$<span class="w"> </span>sudo<span class="w"> </span><span class="nb">kill</span><span class="w"> </span>-9<span class="w"> </span><span class="m">15682</span><span class="w"> </span><span class="m">15537</span><span class="w"> </span><span class="m">15536</span><span class="w"> </span><span class="m">15535</span><span class="w"> </span><span class="m">15533</span><span class="w"> </span><span class="m">15532</span><span class="w"> </span><span class="m">15531</span><span class="w"> </span><span class="m">15530</span><span class="w"> </span><span class="m">15529</span>
+gouse@gouse:~$<span class="w"> </span>pidof<span class="w"> </span>nginx
+gouse@gouse:~$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>nginx
 </code></pre></div>
-<p>Then check:</p>
-<div class="highlight"><pre><span></span><code>node<span class="w"> </span>-v
-npm<span class="w"> </span>-v
+<hr />
+<h3 id="add-domain-mapping-on-client">✅ Add Domain Mapping on Client<a class="headerlink" href="#add-domain-mapping-on-client" title="Permanent link">&para;</a></h3>
+<p>On your <strong>local or remote client</strong> system (not server), add this to <code>/etc/hosts</code>:</p>
+<div class="highlight"><pre><span></span><code>&lt;your-server-public-ip&gt; gitlab.local
 </code></pre></div>
-<p>They should return: <code>command not found</code></p>
-<h3 id="b-if-installed-manually-or-via-curl-in-usrlocal">🔸 B. If installed <strong>manually or via curl (in /usr/local)</strong>:<a class="headerlink" href="#b-if-installed-manually-or-via-curl-in-usrlocal" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/usr/local/bin/node
-sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/usr/local/bin/npm
-sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/usr/local/lib/node_modules
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code>100.120.130.140 gitlab.local
 </code></pre></div>
-<h3 id="c-if-installed-via-nvm-node-version-manager">🔸 C. If installed via <strong>nvm (Node Version Manager)</strong>:<a class="headerlink" href="#c-if-installed-via-nvm-node-version-manager" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>nvm<span class="w"> </span>uninstall<span class="w"> </span><span class="m">18</span>.19.1
-nvm<span class="w"> </span>deactivate
-nvm<span class="w"> </span>use<span class="w"> </span>system
+<hr />
+<h3 id="now-access-gitlab">✅ Now Access GitLab<a class="headerlink" href="#now-access-gitlab" title="Permanent link">&para;</a></h3>
+<p>Open browser:</p>
+<div class="highlight"><pre><span></span><code>http://gitlab.local:8888
 </code></pre></div>
-<p>Then:</p>
-<div class="highlight"><pre><span></span><code>nvm<span class="w"> </span>ls
+<hr />
+<h1 id="tailscale-ip-threw-nginx-proxy">tailscale ip threw nginx proxy<a class="headerlink" href="#tailscale-ip-threw-nginx-proxy" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code>configure<span class="w"> </span><span class="k">in</span><span class="w"> </span>remote<span class="w"> </span>host
+open<span class="w"> </span>/etc/hosts
+&lt;tailscaleIP&gt;<span class="w"> </span>gitlab.local
+
+and<span class="w"> </span>access<span class="w"> </span>with<span class="w"> </span>http://gitlab.local
 </code></pre></div>
-<p>Remove any extra versions if needed.</p>
-<h2 id="step-3-clean-check">✅ Step 3: Clean Check<a class="headerlink" href="#step-3-clean-check" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>which<span class="w"> </span>node
-node<span class="w"> </span>-v
-</code></pre></div>
-<p>You should now see either <strong>nothing</strong> or <code>command not found</code>.</p>
 
 
 
