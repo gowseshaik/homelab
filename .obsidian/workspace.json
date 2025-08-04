@@ -170,8 +170,6 @@
   },
   "active": "e87aa31bb6cd3006",
   "lastOpenFiles": [
-    "docs/Telegram/To add your Telegram bot to a group or channel.md",
-    "docs/git/git push - failed.md",
     "site/search/search_index.json",
     "site/search",
     "site/velero - for migration/Velero with kind/index.html",
@@ -182,6 +180,7 @@
     "site/velero - for migration/Velero backup + restore setup with Longhorn",
     "site/velero - for migration/Schedule backups of NFS volumes using Velero/index.html",
     "site/velero - for migration/Schedule backups of NFS volumes using Velero",
+    "site/velero - for migration",
     "site/assets/images/favicon.png",
     "site/images/{E0C131A8-497C-493E-A36A-ED5A2BF6BBF5}.png",
     "site/images/{A8F2395B-ADE9-4E93-B2B8-948260932F3C}.png",
@@ -192,6 +191,8 @@
     "site/images/generated-image-1.png",
     "site/images/Storage-to-pvs.png",
     "site/images/Pre-REquisties-Cluster_setup.png",
+    "docs/Telegram/To add your Telegram bot to a group or channel.md",
+    "docs/git/git push - failed.md",
     "docs/Storage/About StorageClass fields.md",
     "docs/Storage/Common Kubernetes storage types.md",
     "docs/Storage/Setup NFS on Ubuntu Local Machine.md",
@@ -215,7 +216,6 @@
     "docs/Helm/1. Check Helm Release(deployed) Information.md",
     "docs/gitlab/gitlab - Executors.md",
     "docs/gitlab/Gitlab - port changing.md",
-    "docs/gitlab/Gitlab - Runners setup.md",
     "Untitled.canvas"
   ]
 }

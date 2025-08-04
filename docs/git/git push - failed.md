@@ -38,3 +38,27 @@ To http://100.75.49.6:3000/gouse/TrendyBot.git
  * [new branch]      main -> main
 branch 'main' set up to track 'origin/main'.
 ```
+
+```bash
+switch to available branch
+then push it
+$ git push -u origin main
+remote: Failed to authenticate user
+fatal: Authentication failed for 'http://100.175.149.160:3000/gouse/k8sGO.git/'
+
+$ git remote set-url origin http://<username>@100.175.149.160:3000/gouse/k8sGO.git
+
+$ git push -u origin main
+warning: use of unencrypted HTTP remote URLs is not recommended; see https://aka.ms/gcm/unsaferemotes for more information.
+Enumerating objects: 40, done.
+Counting objects: 100% (40/40), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (34/34), done.
+Writing objects: 100% (40/40), 64.34 KiB | 2.80 MiB/s, done.
+Total 40 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: . Processing 1 references
+remote: Processed 1 references in total
+To http://100.75.49.6:3000/gouse/k8sGO.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+```
