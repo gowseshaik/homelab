@@ -253,3 +253,56 @@ After setup, your pipeline will:
 5. ✅ Send Telegram with link
 
 **Total cost: $0 forever** 🎉
+
+
+```
+test_google_auth:
+  stage: test
+  image: google/cloud-sdk:stable
+  before_script:
+    - echo "🐍 Setting up environment..."
+    - python --version
+    - pip --version
+    - echo "📦 Installing Python dependencies..."
+    - pip install --no-cache-dir gspread google-auth
+  script:
+    - |
+      echo "🔐 Starting Google Sheets authentication test..."
+      python <<EOF
+      import os
+      import json
+      import gspread
+      from google.oauth2.service_account import Credentials
+      
+      print("1️⃣ Checking credentials...")
+      creds_json = os.getenv('TRENDYLYNE_GOOGLE_SA_JSON')
+      if not creds_json:
+          raise Exception("Missing service account JSON")
+      
+      try:
+          print("2️⃣ Initializing client...")
+          creds = Credentials.from_service_account_info(json.loads(creds_json), scopes=[
+              'https://www.googleapis.com/auth/spreadsheets',
+              'https://www.googleapis.com/auth/drive'
+          ])
+          gc = gspread.authorize(creds)
+          
+          print("3️⃣ Testing API access...")
+          sheets = gc.openall(limit=1)
+          print(f"✅ Success! Found {len(sheets)} spreadsheets")
+          if sheets:
+              print(f"First sheet: {sheets[0].title}")
+      
+      except Exception as e:
+          print(f"❌ Failed: {str(e)}")
+          exit(1)
+      EOF
+    - echo "✅ Google Sheets test completed"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: always
+    - if: $CI_COMMIT_BRANCH != "main"
+      when: manual
+  tags:
+    - dev
+```
