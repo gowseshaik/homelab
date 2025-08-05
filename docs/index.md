@@ -148,6 +148,7 @@
 - [K8s Pod Architecture & Lifecycle](Kubernetes/K8s Pod Architecture & Lifecycle.md)
 - [Kube API server Architechture - deep dive](Kubernetes/Kube API server Architechture - deep dive.md)
 - [Kuberentes usecases-deepdive flow](Kubernetes/Kuberentes usecases-deepdive flow.md)
+- [Kubernetes Goat](Kubernetes/Kubernetes Goat.md)
 - [Kubernetes history](Kubernetes/Kubernetes history.md)
 
 ## Loadbalancers types
@@ -287,6 +288,7 @@
 - [push to new branch](git/push to new branch.md)
 
 ## Gitlab
+- [Gitlab - Google ServiceAccount](gitlab/Gitlab - Google ServiceAccount.md)
 - [Gitlab - Runners setup](gitlab/Gitlab - Runners setup.md)
 - [Gitlab - Telegram integration](gitlab/Gitlab - Telegram integration.md)
 - [Gitlab - port changing](gitlab/Gitlab - port changing.md)
