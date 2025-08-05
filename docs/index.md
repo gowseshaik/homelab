@@ -292,6 +292,7 @@
 - [Gitlab - Runners setup](gitlab/Gitlab - Runners setup.md)
 - [Gitlab - Telegram integration](gitlab/Gitlab - Telegram integration.md)
 - [Gitlab - port changing](gitlab/Gitlab - port changing.md)
+- [Gitlab - to send telegram notifications](gitlab/Gitlab - to send telegram notifications.md)
 - [Gitlab to import Gitea repos -fix](gitlab/Gitlab to import Gitea repos -fix.md)
 - [gitlab - Executors](gitlab/gitlab - Executors.md)
 
