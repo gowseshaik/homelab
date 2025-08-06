@@ -249,6 +249,7 @@
 
 ## Telegram
 - [Telegram - Create Bot](Telegram/Telegram - Create Bot.md)
+- [Telegram Bot API commands](Telegram/Telegram Bot API commands.md)
 - [Telegram bots - deletions](Telegram/Telegram bots - deletions.md)
 - [To add your Telegram bot to a group or channel](Telegram/To add your Telegram bot to a group or channel.md)
 
