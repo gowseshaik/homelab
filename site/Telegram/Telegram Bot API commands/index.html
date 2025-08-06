@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://github.com/gowseshaik/homelab/gitlab/Gitlab%20-%20Telegram%20integration/">
+        <link rel="canonical" href="https://github.com/gowseshaik/homelab/Telegram/Telegram%20Bot%20API%20commands/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Gitlab Telegram integration - Gouse Shaik</title>
+        <title>Telegram Bot API commands - Gouse Shaik</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-create-a-telegram-bot" class="md-skip">
+        <a href="#commonly-used-telegram-bot-api-methods" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Gitlab   Telegram integration
+              Telegram Bot API commands
             
           </span>
         </div>
@@ -354,7 +354,7 @@
 
 
   
-    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/gitlab/Gitlab - Telegram integration.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/gowseshaik/homelab/edit/master/docs/Telegram/Telegram Bot API commands.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -362,308 +362,281 @@
   
 
 
-  <h1>Gitlab   Telegram integration</h1>
+  <h1>Telegram Bot API commands</h1>
 
-<p><span style="color:#4caf50;"><b>Created:</b> 2025-08-03</span> | <span style="color:#ff9800;"><b>Updated:</b> 2025-08-03</span> | <span style="color:#2196f3;"><b>Author:</b> Gouse Shaik</span></p>
-<ul>
-<li>Create a Telegram bot with <strong>BotFather</strong>.</li>
-<li>Get your Telegram chat ID.</li>
-<li>Create a GitLab webhook that triggers on events.</li>
-<li>Build or use a middleware service that receives GitLab webhook and sends a message via Telegram bot API.</li>
-</ul>
+<p>A concise list of <strong>Telegram Bot API commands</strong> (methods) you can use via <code>curl</code> or HTTP calls:</p>
+<hr />
+<h3 id="commonly-used-telegram-bot-api-methods">✅ Commonly Used Telegram Bot API Methods<a class="headerlink" href="#commonly-used-telegram-bot-api-methods" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Tool / Service</th>
+<th>Method</th>
 <th>Purpose</th>
-<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>GitLab</td>
-<td>Source code management</td>
-<td>Your existing GitLab instance</td>
+<td><code>getMe</code></td>
+<td>Get bot info (username, ID, etc.)</td>
 </tr>
 <tr>
-<td>Telegram Bot</td>
-<td>Send notifications</td>
-<td>Create a bot via BotFather</td>
+<td><code>getUpdates</code></td>
+<td>Poll new messages and events</td>
 </tr>
 <tr>
-<td>GitLab Webhook</td>
-<td>Trigger Telegram notifications</td>
-<td>Configure webhook in GitLab repo</td>
+<td><code>sendMessage</code></td>
+<td>Send text message to a chat</td>
 </tr>
 <tr>
-<td>Middleware</td>
-<td>Optional: relay webhook to Telegram API</td>
-<td>Can be a simple script or service</td>
+<td><code>sendPhoto</code></td>
+<td>Send image/photo</td>
 </tr>
 <tr>
-<td>IF You're looking to configure <strong>Telegram integration directly via GitLab’s built-in integration panel</strong> (under <strong>Settings → Integrations → Telegram</strong>).</td>
-<td></td>
-<td></td>
+<td><code>sendDocument</code></td>
+<td>Send file (PDF, DOC, etc.)</td>
 </tr>
 <tr>
-<td>Here's how to fill it out properly:</td>
-<td></td>
-<td></td>
+<td><code>sendVideo</code></td>
+<td>Send video file</td>
+</tr>
+<tr>
+<td><code>sendAudio</code></td>
+<td>Send audio/music file</td>
+</tr>
+<tr>
+<td><code>sendVoice</code></td>
+<td>Send voice message</td>
+</tr>
+<tr>
+<td><code>sendMediaGroup</code></td>
+<td>Send multiple media (album)</td>
+</tr>
+<tr>
+<td><code>sendLocation</code></td>
+<td>Send GPS location</td>
+</tr>
+<tr>
+<td><code>sendChatAction</code></td>
+<td>Send "typing", "uploading", etc.</td>
+</tr>
+<tr>
+<td><code>forwardMessage</code></td>
+<td>Forward message from one chat to another</td>
+</tr>
+<tr>
+<td><code>copyMessage</code></td>
+<td>Copy message without linking</td>
+</tr>
+<tr>
+<td><code>editMessageText</code></td>
+<td>Edit existing message text</td>
+</tr>
+<tr>
+<td><code>deleteMessage</code></td>
+<td>Delete a message</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h3 id="1-create-a-telegram-bot">✅ 1. <strong>Create a Telegram Bot</strong><a class="headerlink" href="#1-create-a-telegram-bot" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Open Telegram, search for <code>@BotFather</code></li>
-<li>Run <code>/newbot</code> and follow prompts</li>
-<li>Copy the <strong>bot token</strong> → you'll use this in GitLab</li>
-</ul>
-<hr />
-<h3 id="2-get-your-chat-id-or-channel-id">✅ 2. <strong>Get Your Chat ID or Channel ID</strong><a class="headerlink" href="#2-get-your-chat-id-or-channel-id" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Add the bot to your Telegram group or channel</li>
-<li>Promote the bot as <strong>Admin</strong></li>
-<li>To get the <strong>channel ID</strong>:<ul>
-<li>Use <code>https://api.telegram.org/bot&lt;your_bot_token&gt;/getUpdates</code></li>
-<li>Send a message to your channel after adding the bot</li>
-<li>You'll get a response containing something like:
-    <div class="highlight"><pre><span></span><code>&quot;chat&quot;: { &quot;id&quot;: -1001234567890, ... }
-</code></pre></div></li>
-<li>That <code>-1001234567890</code> is your <strong>Channel Identifier</strong></li>
-<li>Chat ID or Topic ID Correctness : Confirm the <code>chat_id</code> or <code>message_thread_id</code> (for topics) is <strong>valid and matches</strong> the bot's chat.</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h3 id="3-gitlab-integrations-telegram">✅ 3. <strong>GitLab → Integrations → Telegram</strong><a class="headerlink" href="#3-gitlab-integrations-telegram" title="Permanent link">&para;</a></h3>
-<p>Fill in as below:</p>
+<h3 id="chat-group-management">🔧 Chat &amp; Group Management<a class="headerlink" href="#chat-group-management" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Field</th>
-<th>Value</th>
+<th>Method</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Active</strong></td>
-<td>✅ Check it</td>
+<td><code>getChat</code></td>
+<td>Get chat info</td>
 </tr>
 <tr>
-<td><strong>Hostname</strong></td>
-<td><code>https://api.telegram.org</code></td>
+<td><code>getChatAdministrators</code></td>
+<td>List admins in a group</td>
 </tr>
 <tr>
-<td><strong>Token</strong></td>
-<td>Your Telegram Bot Token from BotFather</td>
+<td><code>getChatMember</code></td>
+<td>Get info of a user in a chat</td>
 </tr>
 <tr>
-<td><strong>Channel Identifier</strong></td>
-<td>e.g. <code>-1001234567890</code></td>
+<td><code>getChatMemberCount</code></td>
+<td>Get number of members</td>
 </tr>
 <tr>
-<td><strong>Message thread ID</strong></td>
-<td>(Optional, for threads in forums/supergroups)</td>
+<td><code>leaveChat</code></td>
+<td>Bot leaves the chat</td>
+</tr>
+<tr>
+<td><code>kickChatMember</code></td>
+<td>Remove user from group</td>
+</tr>
+<tr>
+<td><code>banChatMember</code></td>
+<td>Ban a user</td>
+</tr>
+<tr>
+<td><code>unbanChatMember</code></td>
+<td>Unban a user</td>
+</tr>
+<tr>
+<td><code>restrictChatMember</code></td>
+<td>Restrict user permissions</td>
+</tr>
+<tr>
+<td><code>promoteChatMember</code></td>
+<td>Grant admin rights</td>
+</tr>
+<tr>
+<td><code>setChatPermissions</code></td>
+<td>Set default permissions for group</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h3 id="4-enable-events-to-notify">✅ 4. Enable Events to Notify<a class="headerlink" href="#4-enable-events-to-notify" title="Permanent link">&para;</a></h3>
-<p>Scroll down and check:
-- Push events
-- Merge request events
-- Issue events<br />
-    ... or any others you want.</p>
-<p>Then <strong>click "Save changes"</strong>.</p>
-<hr />
-<h3 id="step-by-step-root-cause-diagnosis-first-principles">✅ Step-by-step Root Cause Diagnosis (First Principles)<a class="headerlink" href="#step-by-step-root-cause-diagnosis-first-principles" title="Permanent link">&para;</a></h3>
+<h3 id="forum-topics-supergroups-with-topics">💬 Forum &amp; Topics (Supergroups with topics)<a class="headerlink" href="#forum-topics-supergroups-with-topics" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Step</th>
-<th>Check</th>
-<th>One-liner Explanation</th>
+<th>Method</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td><strong>Bot Token Validity</strong></td>
-<td>Ensure the Telegram bot token is <strong>correct</strong>, not expired or revoked.</td>
+<td><code>createForumTopic</code></td>
+<td>Create a new topic/thread</td>
 </tr>
 <tr>
-<td>2</td>
-<td><strong>Chat ID or Topic ID Correctness</strong></td>
-<td>Confirm the <code>chat_id</code> or <code>message_thread_id</code> (for topics) is <strong>valid and matches</strong> the bot's chat.</td>
+<td><code>editForumTopic</code></td>
+<td>Rename topic</td>
 </tr>
 <tr>
-<td>3</td>
-<td><strong>Bot Added to Group/Channel</strong></td>
-<td>Make sure the bot is <strong>added to the group/channel</strong> and has <strong>admin rights</strong> to send messages.</td>
+<td><code>closeForumTopic</code></td>
+<td>Close the topic</td>
 </tr>
 <tr>
-<td>4</td>
-<td><strong>Bot Privacy Mode</strong></td>
-<td>If group is a supergroup and Privacy Mode is ON, <strong>disable it</strong> via [BotFather &gt; /setprivacy].</td>
+<td><code>reopenForumTopic</code></td>
+<td>Reopen topic</td>
 </tr>
 <tr>
-<td>5</td>
-<td><strong>Test Message API Call</strong></td>
-<td>Manually call Telegram API to check if message is sent with correct params (use curl).</td>
+<td><code>deleteForumTopic</code></td>
+<td>Delete topic</td>
 </tr>
 <tr>
-<td>6</td>
-<td><strong>Outbound Connectivity</strong></td>
-<td>GitLab runner/server must have <strong>internet access</strong> to connect to Telegram API.</td>
+<td><code>unpinAllForumTopicMessages</code></td>
+<td>Unpin all messages in topic</td>
 </tr>
 <tr>
-<td>7</td>
-<td><strong>Correct Endpoint URL</strong></td>
-<td>Ensure GitLab webhook is posting to <code>https://api.telegram.org/bot&lt;token&gt;/sendMessage</code> and not mistyped.</td>
-</tr>
-<tr>
-<td>8</td>
-<td><strong>GitLab Integration Format</strong></td>
-<td>Make sure you’re using <strong>supported payload format</strong> GitLab expects (especially when using topics).</td>
+<td><code>getForumTopicIconStickers</code></td>
+<td>Get available stickers for topic icons</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h3 id="test-with-curl-manual-check-for-telegram-api">🧪 Test with <code>curl</code> (manual check for Telegram API):<a class="headerlink" href="#test-with-curl-manual-check-for-telegram-api" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://api.telegram.org/bot&lt;YOUR_BOT_TOKEN&gt;/sendMessage<span class="w"> </span><span class="se">\</span>
--d<span class="w"> </span><span class="nv">chat_id</span><span class="o">=</span>&lt;CHAT_ID&gt;<span class="w"> </span><span class="se">\</span>
--d<span class="w"> </span><span class="nv">text</span><span class="o">=</span><span class="s2">&quot;Test from curl&quot;</span>
-</code></pre></div>
-<blockquote>
-<p>Replace <code>&lt;YOUR_BOT_TOKEN&gt;</code> and <code>&lt;CHAT_ID&gt;</code> with actual values.</p>
-</blockquote>
-<ul>
-<li>✅ If this works: your bot/token/chat ID is <strong>fine</strong>.</li>
-<li>❌ If this fails: fix based on Telegram response message.</li>
-</ul>
-<hr />
-<h3 id="handling-topics-in-supergroups">🔁 Handling Topics in Supergroups<a class="headerlink" href="#handling-topics-in-supergroups" title="Permanent link">&para;</a></h3>
-<p>If you are using <strong>topics</strong>, you must provide both:</p>
-<ul>
-<li><code>chat_id</code> (group ID with <code>-100...</code>)</li>
-<li><code>message_thread_id</code> (topic ID)</li>
-</ul>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://api.telegram.org/bot&lt;YOUR_BOT_TOKEN&gt;/sendMessage<span class="w"> </span><span class="se">\</span>
--d<span class="w"> </span><span class="nv">chat_id</span><span class="o">=</span>-1001234567890<span class="w"> </span><span class="se">\</span>
--d<span class="w"> </span><span class="nv">message_thread_id</span><span class="o">=</span><span class="m">1234</span><span class="w"> </span><span class="se">\</span>
--d<span class="w"> </span><span class="nv">text</span><span class="o">=</span><span class="s2">&quot;Test for topic&quot;</span>
-
-
-<span class="w">      </span>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;https://api.telegram.org/bot</span><span class="si">${</span><span class="nv">TELEGRAM_BOT_TOKEN</span><span class="si">}</span><span class="s2">/sendDocument&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">        </span>-F<span class="w"> </span><span class="nv">chat_id</span><span class="o">=</span><span class="si">${</span><span class="nv">TELEGRAM_CHAT_ID</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">        </span>-F<span class="w"> </span><span class="nv">message_thread_id</span><span class="o">=</span><span class="si">${</span><span class="nv">TELEGRAM_THREAD_ID</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">        </span>-F<span class="w"> </span><span class="nv">document</span><span class="o">=</span>@<span class="si">${</span><span class="nv">CSV_FILE</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">        </span>-F<span class="w"> </span><span class="nv">caption</span><span class="o">=</span><span class="s2">&quot;📊 </span><span class="si">${</span><span class="nv">CI_PROJECT_NAME</span><span class="si">}</span><span class="s2"> Report - </span><span class="k">$(</span>date<span class="w"> </span><span class="s1">&#39;+%Y-%m-%d %H:%M&#39;</span><span class="k">)</span>
-
-<span class="s2">        </span><span class="k">$(</span>cat<span class="w"> </span><span class="nv">$REPORT_FILE</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">        </span>-F<span class="w"> </span><span class="nv">parse_mode</span><span class="o">=</span>Markdown
-</code></pre></div>
-<blockquote>
-<p><code>message_thread_id</code> must be valid (get it via Telegram client or API).</p>
-</blockquote>
-<hr />
-<h3 id="final-checklist-for-gitlab-integration-no-bias">🔧 Final Checklist for GitLab Integration (No Bias)<a class="headerlink" href="#final-checklist-for-gitlab-integration-no-bias" title="Permanent link">&para;</a></h3>
+<h3 id="webhook-auth">🔒 Webhook &amp; Auth<a class="headerlink" href="#webhook-auth" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Item</th>
-<th>Expected Value</th>
+<th>Method</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Bot token</td>
-<td>Starts with <code>bot</code> and is <strong>correct</strong></td>
+<td><code>setWebhook</code></td>
+<td>Set webhook URL</td>
 </tr>
 <tr>
-<td>Chat ID</td>
-<td>Correct numeric ID, for groups starts with <code>-100</code></td>
+<td><code>deleteWebhook</code></td>
+<td>Remove webhook</td>
 </tr>
 <tr>
-<td>Thread ID (if topic)</td>
-<td>Must be a valid <code>message_thread_id</code></td>
-</tr>
-<tr>
-<td>Bot in group</td>
-<td>Yes, with send message rights</td>
-</tr>
-<tr>
-<td>GitLab server outbound access</td>
-<td>Can access <code>api.telegram.org</code></td>
-</tr>
-<tr>
-<td>Proxy/Firewall</td>
-<td>No blocking Telegram API</td>
-</tr>
-<tr>
-<td>GitLab CI/CD or Integration config</td>
-<td>JSON format is <strong>valid</strong></td>
-</tr>
-<tr>
-<td>Test via curl</td>
-<td>Should work from same GitLab host</td>
+<td><code>getWebhookInfo</code></td>
+<td>Check current webhook status</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<p>If you're stuck, paste:</p>
-<ul>
-<li>Your bot's token structure (only the format, not the real token)</li>
-<li>Chat ID and topic ID you're using</li>
-<li>Exact curl or GitLab webhook output</li>
-</ul>
-<p>I'll help you debug deeper.</p>
-<p>Telegram <strong>does not currently provide an official API endpoint</strong> to directly <strong>list all topic IDs (forum threads)</strong> from a group chat.</p>
-<p>However, here’s the <strong>only working method</strong>:</p>
+<h3 id="interactive-features">🧪 Interactive Features<a class="headerlink" href="#interactive-features" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>answerCallbackQuery</code></td>
+<td>Respond to inline button clicks</td>
+</tr>
+<tr>
+<td><code>sendPoll</code></td>
+<td>Create a poll</td>
+</tr>
+<tr>
+<td><code>stopPoll</code></td>
+<td>End a poll</td>
+</tr>
+<tr>
+<td><code>sendDice</code></td>
+<td>Send dice animation</td>
+</tr>
+<tr>
+<td><code>sendGame</code></td>
+<td>Send a game (via BotFather registration)</td>
+</tr>
+<tr>
+<td>To work with your <strong>Telegram topic "gnatrading"</strong>, you first need the <strong>topic’s <code>message_thread_id</code></strong>, because Telegram uses this ID — not the name — for all API interactions with topics.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h3 id="step-by-step-method-first-principles-based">✅ Step-by-Step Method (First Principles Based)<a class="headerlink" href="#step-by-step-method-first-principles-based" title="Permanent link">&para;</a></h3>
-<h4 id="1-use-getupdates-to-capture-topic-ids-when-messages-are-posted-in-those-threads">✅ 1. Use <code>getUpdates</code> to capture topic IDs when messages are posted in those threads:<a class="headerlink" href="#1-use-getupdates-to-capture-topic-ids-when-messages-are-posted-in-those-threads" title="Permanent link">&para;</a></h4>
+<h3 id="steps-to-get-message_thread_id-for-gnatrading">✅ Steps to Get <code>message_thread_id</code> for "gnatrading"<a class="headerlink" href="#steps-to-get-message_thread_id-for-gnatrading" title="Permanent link">&para;</a></h3>
+<h4 id="1-send-a-message-to-the-gnatrading-topic">🧪 1. Send a message to the "gnatrading" topic<a class="headerlink" href="#1-send-a-message-to-the-gnatrading-topic" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Use Telegram app.</li>
+<li>Post any message <strong>into the "gnatrading" topic</strong> (from your account or bot).</li>
+</ul>
+<h4 id="2-call-getupdates-to-capture-the-thread-id">🛰️ 2. Call <code>getUpdates</code> to capture the thread ID:<a class="headerlink" href="#2-call-getupdates-to-capture-the-thread-id" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://api.telegram.org/bot&lt;YOUR_BOT_TOKEN&gt;/getUpdates
 </code></pre></div>
 <blockquote>
-<p>Replace <code>&lt;YOUR_BOT_TOKEN&gt;</code> with your actual bot token.</p>
+<p>Replace <code>&lt;YOUR_BOT_TOKEN&gt;</code> with your actual token.</p>
 </blockquote>
-<p>Then <strong>look inside the JSON response</strong> for:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;message_thread_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;chat&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-100</span><span class="err">xxxxxxxxxx</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;supergroup&quot;</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="err">...</span>
+<h4 id="3-look-for-this-block-in-the-output">🔍 3. Look for this block in the output:<a class="headerlink" href="#3-look-for-this-block-in-the-output" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;message_thread_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;chat&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-100</span><span class="err">xxxxxxxxxx</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;supergroup&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Test message in gnatrading&quot;</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>This shows the <code>message_thread_id</code> for the topic where the message was posted.</p>
-<hr />
-<h3 id="first-telegram-sends-topicthread-metadata-only-when-messages-are-posted-in-those-topics-and-the-bot-is-a-member">🧠 First: Telegram sends topic/thread metadata <strong>only when messages</strong> are posted in those topics <strong>and the bot is a member</strong>.<a class="headerlink" href="#first-telegram-sends-topicthread-metadata-only-when-messages-are-posted-in-those-topics-and-the-bot-is-a-member" title="Permanent link">&para;</a></h3>
-<hr />
-<h3 id="2-alternative-use-getforumtopiciconstickers-limited">🔁 2. Alternative: Use <code>getForumTopicIconStickers</code> (limited)<a class="headerlink" href="#2-alternative-use-getforumtopiciconstickers-limited" title="Permanent link">&para;</a></h3>
-<p>If you're using <strong>custom topic icons</strong>, you might get topic-related sticker sets but not thread IDs.</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://api.telegram.org/bot&lt;YOUR_BOT_TOKEN&gt;/getForumTopicIconStickers
-</code></pre></div>
-<blockquote>
-<p>This only helps if you’re customizing icons — still <strong>no topic IDs returned</strong>.</p>
-</blockquote>
-<hr />
-<h3 id="practical-trick-until-telegram-adds-api">🧪 Practical Trick (Until Telegram Adds API)<a class="headerlink" href="#practical-trick-until-telegram-adds-api" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Post a message in each topic manually or via bot.</li>
-<li>Call <code>getUpdates</code>.</li>
-<li>Extract all <code>message_thread_id</code> values.</li>
+<li>
+<p><code>chat.id</code>: the <strong>group ID</strong></p>
+</li>
+<li>
+<p><code>message_thread_id</code>: the <strong>ID of topic "gnatrading"</strong></p>
+</li>
 </ul>
-<hr />
-<h3 id="tip-use-jq-to-filter-topic-ids">🧰 Tip: Use jq to filter topic IDs<a class="headerlink" href="#tip-use-jq-to-filter-topic-ids" title="Permanent link">&para;</a></h3>
+<p>You can use <code>jq</code> to filter easily:</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://api.telegram.org/bot&lt;YOUR_BOT_TOKEN&gt;/getUpdates<span class="w"> </span><span class="se">\</span>
-<span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.result[].message | select(.message_thread_id != null) | {topic: .message_thread_id, text: .text}&#39;</span>
+<span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.result[].message | select(.message_thread_id != null) | {topic_id: .message_thread_id, text: .text}&#39;</span>
 </code></pre></div>
 <hr />
-<p>Let me know if you want a small Python/Golang tool to scrape all topic IDs automatically via polling.</p>
+<h3 id="now-send-messages-to-gnatrading-topic-using-this">📩 Now send messages to "gnatrading" topic using this:<a class="headerlink" href="#now-send-messages-to-gnatrading-topic-using-this" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://api.telegram.org/bot&lt;YOUR_BOT_TOKEN&gt;/sendMessage<span class="w"> </span><span class="se">\</span>
+-d<span class="w"> </span><span class="nv">chat_id</span><span class="o">=</span>-100xxxxxxxxxx<span class="w"> </span><span class="se">\</span>
+-d<span class="w"> </span><span class="nv">message_thread_id</span><span class="o">=</span><span class="m">1234</span><span class="w"> </span><span class="se">\</span>
+-d<span class="w"> </span><span class="nv">text</span><span class="o">=</span><span class="s2">&quot;Hello GNATrading!&quot;</span>
+</code></pre></div>
 
 
 
