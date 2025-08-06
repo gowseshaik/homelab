@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/gitlab/Gitlab - Google ServiceAccount.md",
+                "file": "docs/Telegram/To add your Telegram bot to a group or channel.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Gitlab - Google ServiceAccount"
+              "title": "To add your Telegram bot to a group or channel"
             }
           }
         ]
@@ -170,8 +170,12 @@
   },
   "active": "e87aa31bb6cd3006",
   "lastOpenFiles": [
-    "docs/gitlab/Gitlab - to send telegram notifications.md",
+    "docs/Telegram/Telegram Bot API commands.md",
+    "docs/Telegram/To add your Telegram bot to a group or channel.md",
+    "docs/Telegram/Telegram bots - deletions.md",
+    "docs/Telegram/Telegram - Create Bot.md",
     "docs/gitlab/Gitlab - Telegram integration.md",
+    "docs/gitlab/Gitlab - to send telegram notifications.md",
     "docs/gitlab/Gitlab - Google ServiceAccount.md",
     "site/search/search_index.json",
     "site/search",
@@ -195,7 +199,6 @@
     "site/images/Pre-REquisties-Cluster_setup.png",
     "docs/Kubernetes/Kubernetes Goat.md",
     "docs/git/git push - failed.md",
-    "docs/Telegram/To add your Telegram bot to a group or channel.md",
     "docs/Storage/About StorageClass fields.md",
     "docs/Storage/Common Kubernetes storage types.md",
     "docs/Storage/Setup NFS on Ubuntu Local Machine.md",
@@ -204,8 +207,6 @@
     "docs/Kubernetes/Full Sequence to Implement Kubernetes with kubeadm.md",
     "docs/DevOps Sites/DevOps - Knowledge Websites.md",
     "docs/python/trading bot creation.md",
-    "docs/Telegram/Telegram bots - deletions.md",
-    "docs/Telegram/Telegram - Create Bot.md",
     "docs/K3d/k3d with traefik dashboard setup.md",
     "docs/K3d/k3d cluster with traefik dashboard.md",
     "docs/K3d/Complete Traefik Setup Guide for k3d.md",
@@ -215,7 +216,6 @@
     "docs/Deployments/Deployments in kubernetes.md",
     "docs/gitlab/Gitlab to import Gitea repos -fix.md",
     "docs/Go-lang/Building package as a tool for ARCH.md",
-    "docs/Helm/1. Check Helm Release(deployed) Information.md",
     "Untitled.canvas"
   ]
 }

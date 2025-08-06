@@ -579,6 +579,56 @@ Click &quot;Add variable&quot;
 <li>✅ Send Telegram with link</li>
 </ol>
 <p><strong>Total cost: $0 forever</strong> 🎉</p>
+<div class="highlight"><pre><span></span><code>test_google_auth:
+  stage: test
+  image: google/cloud-sdk:stable
+  before_script:
+    - echo &quot;🐍 Setting up environment...&quot;
+    - python --version
+    - pip --version
+    - echo &quot;📦 Installing Python dependencies...&quot;
+    - pip install --no-cache-dir gspread google-auth
+  script:
+    - |
+      echo &quot;🔐 Starting Google Sheets authentication test...&quot;
+      python &lt;&lt;EOF
+      import os
+      import json
+      import gspread
+      from google.oauth2.service_account import Credentials
+
+      print(&quot;1️⃣ Checking credentials...&quot;)
+      creds_json = os.getenv(&#39;TRENDYLYNE_GOOGLE_SA_JSON&#39;)
+      if not creds_json:
+          raise Exception(&quot;Missing service account JSON&quot;)
+
+      try:
+          print(&quot;2️⃣ Initializing client...&quot;)
+          creds = Credentials.from_service_account_info(json.loads(creds_json), scopes=[
+              &#39;https://www.googleapis.com/auth/spreadsheets&#39;,
+              &#39;https://www.googleapis.com/auth/drive&#39;
+          ])
+          gc = gspread.authorize(creds)
+
+          print(&quot;3️⃣ Testing API access...&quot;)
+          sheets = gc.openall(limit=1)
+          print(f&quot;✅ Success! Found {len(sheets)} spreadsheets&quot;)
+          if sheets:
+              print(f&quot;First sheet: {sheets[0].title}&quot;)
+
+      except Exception as e:
+          print(f&quot;❌ Failed: {str(e)}&quot;)
+          exit(1)
+      EOF
+    - echo &quot;✅ Google Sheets test completed&quot;
+  rules:
+    - if: $CI_COMMIT_BRANCH == &quot;main&quot;
+      when: always
+    - if: $CI_COMMIT_BRANCH != &quot;main&quot;
+      when: manual
+  tags:
+    - dev
+</code></pre></div>
 
 
 

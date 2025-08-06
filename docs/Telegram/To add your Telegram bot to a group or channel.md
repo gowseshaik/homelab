@@ -84,4 +84,27 @@ gitlab integration configuration snapshots
 
 ![Pasted-image-20250803131344](../images/Pasted-image-20250803131344.png)
 
+for Channel identifier, use the "-100*******" value instead of your @botusername
+example:
+```json
+https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates
+"chat": {
+            "id": -100-channel identifier no-,
+            "title": "Techcircle-DevOps-Tools-Topics",
+            "is_forum": true,
+            "type": "supergroup"
+          },
+          "date": 1754215204,
+          "message_thread_id": 169,
+          "forum_topic_created": {
+            "name": "gnatrading",
+            "icon_color": 16749490
+          },
+          "is_topic_message": true
+        },
+        "text": "Hi",
+        "is_topic_message": true
+      }
+```
+
 ![Pasted-image-20250803131522](../images/Pasted-image-20250803131522.png)
